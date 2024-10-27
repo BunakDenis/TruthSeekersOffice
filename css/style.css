@@ -1,0 +1,329 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  background: url(./../images/cabinet.jpg) fixed 50%;
+  background-size: cover;
+}
+
+html {
+  height: 100%;
+}
+
+.page1 {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.page-video {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.page-video:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+}
+
+.page-video .video {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Nav_pannel */
+.nav_pannel {
+  width: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  background: rgba(255, 255, 255, 0);
+}
+
+.container_nav_pannel {
+  padding-left: 20px;
+}
+
+.link {
+  display: inline-block;
+  height: 40px;
+
+  text-align: center;
+  line-height: 40px;
+
+  text-decoration: none;
+
+  padding: 1em;
+  color: rgb(143, 128, 128);
+  text-decoration: none;
+  font-family: "Lobster", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  transition: 0.5s linear;
+}
+
+.al_vadud {
+  height: 40px;
+  padding-top: 20px;
+  padding-right: 50px;
+}
+
+#user_icon img {
+  height: 30px;
+  width: 30px;
+}
+
+#user_icon {
+  position: absolute;
+  padding-top: 30px;
+  right: 100px;
+}
+
+.nav_pannel a:hover {
+  color: white;
+}
+
+/* Greeding */
+.greeding {
+  position: absolute;
+  width: 100%;
+  justify-content: center;
+
+  padding-top: 0px;
+}
+
+h1 {
+  left: 50%;
+  padding-top: 50px;
+  font-family: "Orelega One", serif;
+  font-weight: 500;
+  font-size: 50px;
+  font-style: normal;
+  color: black;
+  text-align: center;
+  text-indent: 20px;
+}
+
+p {
+  left: 50%;
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-size: 25px;
+  font-style: italic;
+  color: black;
+  text-align: center;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+
+  margin-top: 725px;
+  margin-bottom: 0px;
+
+  text-align: center;
+  vertical-align: middle;
+
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.school_info {
+  padding-top: 5%;
+}
+
+.school_info p {
+  font-family: "Orelega One", serif;
+  font-weight: 100;
+  font-size: 15px;
+  font-style: italic;
+  color: black;
+}
+
+.social_media_icon img {
+  height: 20px;
+  padding-top: 20px;
+  padding-right: 30px;
+}
+
+/* Страница - кабинет искателя */
+.page2 {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.bg-image {
+  background: url("./../images/cabinet.jpg") center center cover no-repeat fixed;
+}
+
+/* Footer */
+.page2 .content .footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+
+  margin-top: 725px;
+  margin-bottom: 0px;
+
+  text-align: center;
+  vertical-align: middle;
+
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Nav_pannel */
+.nav_pannel {
+  width: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Sidebar */
+
+.side-bar {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  width: 350px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  overflow-y: auto;
+  transition: 0.6s ease;
+  transition-property: left;
+}
+
+.side-bar.active {
+  left: 0;
+}
+
+.side-bar .menu {
+  width: 100%;
+  margin-top: 80px;
+}
+
+.side-bar .menu .item {
+  position: relative;
+  cursor: pointer;
+}
+
+.side-bar .menu .item a {
+  color: #fff;
+  font-size: 16px;
+  text-decoration: none;
+  display: block;
+  padding: 5px 30px;
+  line-height: 60px;
+}
+
+.side-bar .menu .item a:hover {
+  background: #cecb9e;
+  transition: 0.3s ease;
+}
+
+.side-bar .menu .item i {
+  margin-right: 15px;
+}
+
+.side-bar .menu .item a .dropdown {
+  position: absolute;
+  right: 0;
+  margin: 20px;
+  transition: 0.3s ease;
+}
+
+.side-bar .menu .item .sub-menu {
+  background: rgba(255, 255, 255, 0.1);
+  display: none;
+}
+
+.side-bar .menu .item .sub-menu a {
+  padding-left: 50px;
+  padding-top: 0;
+}
+
+.rotate {
+  transform: rotate(90deg);
+}
+
+.close-btn {
+  position: absolute;
+  color: #fff;
+  font-size: 20px;
+  right: 0;
+  margin: 25px;
+  cursor: pointer;
+}
+
+.menu-btn {
+  position: absolute;
+  color: #fff;
+  font-size: 20px;
+  margin: 25px;
+  cursor: pointer;
+}
+
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.main h1 {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 60px;
+  text-align: center;
+  line-height: 80px;
+}
+
+@media (max-width: 900px) {
+  .main h1 {
+    font-size: 40px;
+    line-height: 60px;
+  }
+}
