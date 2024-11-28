@@ -219,13 +219,6 @@ a:hover {
   fill: gold;
 }
 
-.site-navbar .site-logo {
-  font-weight: 200;
-  line-height: 0;
-  top: -7px;
-  position: relative;
-}
-
 .site-navbar .site-navigation .site-menu {
   margin-bottom: 0;
 }
@@ -251,7 +244,7 @@ a:hover {
   color: #fff;
 }
 .site-navbar .site-navigation .site-menu > li > a:hover {
-  color: #fff;
+  color: gold;
 }
 .site-navbar .site-navigation .site-menu > li:last-child {
   padding-right: 0;
@@ -374,7 +367,7 @@ a:hover {
   > li
   > a:hover {
   background: #ebeef0;
-  color: #212529;
+  color: gold;
 }
 .site-navbar
   .site-navigation
@@ -425,7 +418,7 @@ a:hover {
   > li.has-children:focus
   > a {
   background: #ebeef0;
-  color: #212529;
+  color: gold;
 }
 .site-navbar .site-navigation .site-menu .has-children:hover > a,
 .site-navbar .site-navigation .site-menu .has-children:focus > a,
@@ -521,13 +514,6 @@ End of navbar configuration
 .footer-basic ul a {
   color: inherit;
   text-decoration: none;
-  opacity: 0.8;
-}
-
-.footer-basic ul a:hover i,
-.footer-basic ul a:hover svg {
-  color: red;
-  fill: red;
 }
 
 .footer-basic .social {
@@ -540,7 +526,8 @@ End of navbar configuration
   text-align: center;
   margin: 0 8px;
   color: inherit;
-  opacity: 0.75;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .footer-basic .social > a > i {
@@ -560,8 +547,8 @@ End of navbar configuration
 .footer-basic .social > a:hover,
 .footer-basic .social > a:hover > svg {
   opacity: 0.9;
-  color: red;
-  fill: red;
+  color: gold;
+  fill: gold;
 }
 
 .footer-basic .copyright {
@@ -645,7 +632,7 @@ End of navbar configuration
 }
 
 .side-bar .menu .item a:hover {
-  background: #cecb9e;
+  background: gold;
   transition: 0.3s ease;
 }
 
@@ -712,3 +699,192 @@ End of navbar configuration
     line-height: 60px;
   }
 }
+
+/* Page - UserService */
+
+.user-signin-signout-container {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: 30%;
+  height: 450px;
+  width: 700px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 20px;
+
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-signin-signout {
+  position: relative;
+  width: 550px;
+  height: 300px;
+}
+
+/* Стили меню входа или регистрации юзера */
+
+#wrapper,
+label,
+#arrow,
+button span {
+  transition: all 0.5s cubic-bezier(0.6, 0, 0.4, 1);
+}
+
+#wrapper {
+  overflow: hidden;
+}
+
+#signin:checked ~ #wrapper {
+  height: 178px;
+}
+#signin:checked ~ #wrapper #arrow {
+  left: 32px;
+}
+#signin:checked ~ button span {
+  transform: translate3d(0, 75px, 0);
+}
+#signin:checked ~ button {
+  transform: translate3d(0, -50px, 0);
+}
+#signin:checked ~ button > .signup-span,
+button > .reset-span {
+  display: none;
+}
+
+#signup:checked ~ #wrapper {
+  height: 262px;
+}
+#signup:checked ~ #wrapper #arrow {
+  left: 137px;
+}
+#signup:checked ~ button {
+  transform: translate3d(0, -70px, 0);
+}
+#signup:checked ~ button > span {
+  transform: translate3d(0, 75px, 0);
+}
+#signup:checked ~ button > .signin-span,
+button > .reset-span {
+  display: none;
+}
+#signup:checked ~ button > .signup-span {
+  display: block;
+}
+
+#reset:checked ~ #wrapper {
+  height: 94px;
+}
+#reset:checked ~ #wrapper #arrow {
+  left: 404px;
+}
+#reset:checked ~ button > span {
+  transform: translate3d(0, 70px, 0);
+}
+#reset:checked ~ button {
+  transform: translate3d(0, -25px, 0);
+}
+#reset:checked ~ button > .signin-span,
+button > .signup-span {
+  display: none;
+}
+#reset:checked ~ button > .reset-span {
+  display: block;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 800;
+  opacity: 0.5;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+label:hover {
+  transition: all 0.3s cubic-bezier(0.6, 0, 0.4, 1);
+  opacity: 1;
+}
+label[for="signin"] {
+  margin-right: 20px;
+}
+label[for="reset"] {
+  float: right;
+}
+input[type="radio"]:checked + label {
+  opacity: 1;
+}
+
+input[type="text"],
+input[type="password"] {
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 27px;
+  font-family: "Raleway", sans-serif;
+  height: 50px;
+  width: 100%;
+  margin-bottom: 10px;
+  opacity: 1;
+  text-indent: 20px;
+  transition: all 0.2s ease-in-out;
+}
+button {
+  background: #079bcf;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Raleway", sans-serif;
+  font-size: 27px;
+  height: 72px;
+  width: 100%;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.5, 0, 0.4, 1);
+}
+button span {
+  line-height: 72px;
+  position: relative;
+  top: -75px;
+  transform: translate3d(0, 0, 0);
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.signin-span,
+.signup-span,
+.reset-span {
+  display: block;
+}
+button:hover {
+  background: #007ba5;
+}
+
+#arrow {
+  height: 0;
+  width: 0;
+  border-bottom: 10px solid #fff;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  position: relative;
+  left: 32px;
+}
+
+#hint {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 20px;
+}
+
+/*--------------------------------------------------*/
