@@ -49,3 +49,19 @@ function check() {
     c3.style.display = "block";
   }
 }
+
+//Изменения видимости пароля
+$("body").on("click", "#hide-password", function () {
+  if ($(this).is(":hover")) {
+    $("#pass").attr("type", "text");
+    document.querySelector("#hide-password").style.display = "none";
+    document.querySelector("#show-password").style.display = "block";
+  }
+});
+$("body").on("click", "#show-password", function () {
+  if ($(this).is(":hover")) {
+    $("#pass").attr("type", "password");
+    document.querySelector("#hide-password").style.display = "block";
+    document.querySelector("#show-password").style.display = "none";
+  }
+});
