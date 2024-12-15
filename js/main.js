@@ -3,10 +3,12 @@
 document.querySelector(".al-vadud").onmouseover = function () {
   document.querySelector(".school-name").style.color = "gold";
   document.querySelector(".al-vadud").style.fill = "gold";
+  document.querySelector(".al-vadud").style.stroke = "gold";
 };
 document.querySelector(".al-vadud").onmouseout = function () {
   document.querySelector(".school-name").style.color = "rgb(230, 98, 98)";
   document.querySelector(".al-vadud").style.fill = "red";
+  document.querySelector(".al-vadud").style.border = "none";
 };
 
 document.querySelector(".school-name").onmouseover = function () {
@@ -27,28 +29,23 @@ document.querySelector("#user").onmouseout = function () {
 };
 
 //Search box
-const body = (searchToggle = document.querySelector(".searchToggle"));
+const searchBox = (searchToggle = document.querySelector(".searchToggle"));
 
 // js code to toggle search box
 searchToggle.addEventListener("click", () => {
   searchToggle.classList.toggle("active");
 });
 
-function check() {
-  var rarr = document.getElementsByName("action");
-  const c1 = document.getElementsByClassName("signin-span");
-  const c2 = document.getElementsByClassName("signup-span");
-  const c3 = document.getElementsByClassName("reset-span");
-  if (rarr[0].checked) {
-    c1.style.display = "block";
-  }
-  if (rarr[1].checked) {
-    c2.style.display = "block";
-  }
-  if (rarr[2].checked) {
-    c3.style.display = "block";
-  }
-}
+const signInBox = (singInForm = document.querySelector(".userserviceToggle"));
+singInCancelSvg = document.querySelector(".sign-in-form-cancel");
+
+// js code to toggle sign in form
+singInForm.addEventListener("click", () => {
+  singInForm.classList.toggle("active");
+});
+singInCancelSvg.addEventListener("click", () => {
+  singInForm.classList.toggle("active");
+});
 
 //Изменения видимости пароля
 $("body").on("click", "#hide-password", function () {
