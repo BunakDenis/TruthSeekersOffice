@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Вход/Регистрация | Кабинет Искателя</title>
+    <title>Регистрация | Кабинет Искателя</title>
     <link rel="icon" href="images/al_vadud_vector_title.svg" type="image/svg" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -127,7 +127,7 @@
                         class="site-menu main-menu js-clone-nav d-none d-lg-block"
                       >
                         <li>
-                          <a href="index.html" class="nav-link">Главная</a>
+                          <a href="./index.html" class="nav-link">Главная</a>
                         </li>
                         <li>
                           <a href="./cabinet.html" class="nav-link"
@@ -225,9 +225,11 @@
                         <label>Введите електронную почту</label>
                       </div>
                       <div class="input-sign-in-field">
-                        <input type="password" required />
+                        <input type="password" id="pass" required />
                         <label>Введите пароль</label>
                       </div>
+                      <i class="fa fa-eye fa-xs" id="show-password"></i>
+                      <i class="fa fa-eye-slash fa-xs" id="hide-password"></i>
                       <div class="forget">
                         <label for="remember">
                           <input type="checkbox" id="remember" />
@@ -265,15 +267,19 @@
 
                 <div class="fields">
                   <div class="input-field">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Enter your name" required />
+                    <label>Имя пользователя</label>
+                    <input
+                      type="text"
+                      placeholder="Введите имя пользователя"
+                      required
+                    />
                   </div>
 
                   <div class="input-field">
-                    <label>Date of Birth</label>
+                    <label>Пароль</label>
                     <input
-                      type="date"
-                      placeholder="Enter birth date"
+                      type="password"
+                      placeholder="Введите пароль"
                       required
                     />
                   </div>
@@ -281,100 +287,103 @@
                   <div class="input-field">
                     <label>Email</label>
                     <input
-                      type="text"
-                      placeholder="Enter your email"
+                      type="email"
+                      placeholder="Введите свой email"
                       required
                     />
                   </div>
 
                   <div class="input-field">
-                    <label>Mobile Number</label>
+                    <label>Имя</label>
+                    <input
+                      type="text"
+                      placeholder="Введите своё имя"
+                      required
+                    />
+                  </div>
+
+                  <div class="input-field">
+                    <label>Фамилия</label>
+                    <input
+                      type="text"
+                      placeholder="Введите свою фамилию"
+                      required
+                    />
+                  </div>
+
+                  <div class="input-field">
+                    <label>День рождения</label>
+                    <input
+                      type="date"
+                      placeholder="Введите свой день рождения"
+                      required
+                    />
+                  </div>
+
+                  <div class="input-field">
+                    <label>Номер телефона</label>
                     <input
                       type="number"
-                      placeholder="Enter mobile number"
+                      placeholder="Введите номер своего телефона"
                       required
                     />
                   </div>
 
                   <div class="input-field">
-                    <label>Gender</label>
+                    <label>Пол</label>
                     <select required>
-                      <option disabled selected>Select gender</option>
-                      <option>Male</option>
-                      <option>Female</option>
-                      <option>Others</option>
+                      <option disabled selected>Выберите свой пол</option>
+                      <option>Мужской</option>
+                      <option>Женский</option>
                     </select>
-                  </div>
-
-                  <div class="input-field">
-                    <label>Occupation</label>
-                    <input
-                      type="text"
-                      placeholder="Enter your ccupation"
-                      required
-                    />
                   </div>
                 </div>
               </div>
 
               <div class="details ID">
-                <span class="title">Identity Details</span>
+                <span class="title">Дополнительный данные</span>
 
                 <div class="fields">
                   <div class="input-field">
-                    <label>ID Type</label>
-                    <input type="text" placeholder="Enter ID type" required />
-                  </div>
-
-                  <div class="input-field">
-                    <label>ID Number</label>
+                    <label>Аватар</label>
                     <input
-                      type="number"
-                      placeholder="Enter ID number"
+                      type="file"
+                      placeholder="Загрузите фото на аватар"
                       required
                     />
                   </div>
 
                   <div class="input-field">
-                    <label>Issued Authority</label>
+                    <label>Место нахождения</label>
                     <input
+                      id="resident-city"
                       type="text"
-                      placeholder="Enter issued authority"
+                      placeholder="Начните вводить город..."
                       required
                     />
+                    <div id="suggestions" class="suggestions"></div>
                   </div>
 
                   <div class="input-field">
-                    <label>Issued State</label>
-                    <input
-                      type="text"
-                      placeholder="Enter issued state"
-                      required
-                    />
+                    <label>Дата начала учёбы в Школе</label>
+                    <input type="date" required />
                   </div>
 
                   <div class="input-field">
-                    <label>Issued Date</label>
-                    <input
-                      type="date"
-                      placeholder="Enter your issued date"
-                      required
-                    />
-                  </div>
-
-                  <div class="input-field">
-                    <label>Expiry Date</label>
-                    <input
-                      type="date"
-                      placeholder="Enter expiry date"
-                      required
-                    />
+                    <label>Ваш куратор</label>
+                    <select required>
+                      <option disabled selected>
+                        Выберите своего куратора
+                      </option>
+                      <option>Руслан Жуковец</option>
+                      <option>Алексей Киселёв</option>
+                      <option>Александр Циганков</option>
+                    </select>
                   </div>
                 </div>
 
-                <button class="nextBtn">
-                  <span class="btnText">Next</span>
-                  <i class="uil uil-navigator"></i>
+                <button class="nextBtn" type="submit">
+                  <span class="btnText">Зарегистрироваться</span>
                 </button>
               </div>
             </div>

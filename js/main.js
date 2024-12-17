@@ -62,3 +62,90 @@ $("body").on("click", "#show-password", function () {
     document.querySelector("#show-password").style.display = "none";
   }
 });
+
+//Автозаполнение города
+const input = document.getElementById("resident-city");
+const suggestionsContainer = document.getElementById("suggestions");
+
+const cache = {}; // Кэш для хранения предыдущих запросов
+let debounceTimeout;
+
+// Дебаунс для оптимизации количества запросов
+function debounce(func, delay) {
+  return function (...args) {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// Функция запроса к Nominatim API с форматом GeocodeJSON
+async function fetchCitySuggestions(query) {
+  if (!query || query.length < 3) {
+    suggestionsContainer.innerHTML = "";
+    return;
+  }
+
+  if (cache[query]) {
+    displaySuggestions(cache[query]); // Используем данные из кэша
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=geocodejson&q=${query}&addressdetails=1&limit=8`
+    );
+    const data = await response.json();
+    const features = data.features || [];
+
+    cache[query] = features; // Кэшируем результаты
+    displaySuggestions(features);
+  } catch (error) {
+    console.error("Ошибка при получении данных с Nominatim API:", error);
+  }
+}
+
+// Функция для отображения подсказок
+function displaySuggestions(suggestions) {
+  suggestionsContainer.innerHTML = ""; // Очистка контейнера
+
+  if (suggestions.length === 0) {
+    suggestionsContainer.innerHTML = "<div>Город не найден</div>";
+    return;
+  }
+
+  suggestions.forEach((suggestion) => {
+    const cityName =
+      suggestion.properties.geocoding.name || "Неизвестный город";
+    const country =
+      suggestion.properties.geocoding.country || "Неизвестная страна";
+    const displayName = suggestion.properties.geocoding.label || "";
+
+    const suggestionItem = document.createElement("div");
+    suggestionItem.textContent = `${cityName}, ${country}`;
+
+    // Обработчик клика по подсказке
+    suggestionItem.addEventListener("click", () => {
+      input.value = displayName;
+      suggestionsContainer.innerHTML = "";
+      console.log("Выбранный город:", displayName);
+    });
+
+    suggestionsContainer.appendChild(suggestionItem);
+  });
+}
+
+// Обработчик ввода с дебаунсом
+input.addEventListener(
+  "input",
+  debounce(() => {
+    const query = input.value.trim();
+    fetchCitySuggestions(query);
+  }, 300)
+); // Задержка 300 мс
+
+// Закрываем подсказки при клике вне контейнера
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".autocomplete-container")) {
+    suggestionsContainer.innerHTML = "";
+  }
+});
