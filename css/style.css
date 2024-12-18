@@ -620,6 +620,53 @@ a:hover {
   color: black;
   margin-top: 30px;
 }
+
+/*
+    Notification information
+*/
+.notification-container {
+  /*display: none;*/
+
+  position: absolute;
+  bottom: 700px;
+  right: 10%;
+  width: 400px;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  border: 1px solid rgba(214, 179, 179, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(238, 226, 226, 0.1);
+
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-size: 25px;
+  z-index: 1;
+}
+
+.userserviceToggle.active ~ .notification-container {
+  bottom: -520px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.notification-form-cancel {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  fill: #4b4c4d;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.notification-form-cancel:hover {
+  fill: gold;
+}
+
 /* User registration form
 -----------------------------------------------------------------------------------------------------------------------
 */
@@ -629,7 +676,7 @@ a:hover {
   width: 100%;
   border-radius: 6px;
   padding: 10px 15px;
-  margin: 10px 10% 0 10%;
+  margin: 30px 10% 0 10%;
 
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -654,6 +701,16 @@ a:hover {
   width: 27px;
   border-radius: 8px;
   background-color: #4070f4;
+}
+.registration-container .title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 3px;
+  width: 100px;
+  border-radius: 8px;
+  background-color: gold;
 }
 .registration-container form {
   position: relative;
@@ -716,10 +773,10 @@ select {
 }
 .input-field select,
 .input-field input[type="date"] {
-  color: #707070;
+  color: #9b8e8e;
 }
 .input-field input[type="date"]:valid {
-  color: #333;
+  color: #0a0a0a;
 }
 .registration-container form button {
   display: flex;

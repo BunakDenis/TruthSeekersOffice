@@ -36,17 +36,53 @@ searchToggle.addEventListener("click", () => {
   searchToggle.classList.toggle("active");
 });
 
-const signInBox = (singInForm = document.querySelector(".userserviceToggle"));
-singInCancelSvg = document.querySelector(".sign-in-form-cancel");
+//------------------------------------------
+// Toggle sign in menu with user details menu
+// Предполагаемое состояние пользователя
+const userAuthorization = false; // Замените на реальную проверку авторизации
 
-// js code to toggle sign in form
-singInForm.addEventListener("click", () => {
-  singInForm.classList.toggle("active");
+// Элементы интерфейса
+const userServiceToggle = document.querySelector(".userserviceToggle");
+const signInContainer = document.querySelector(".sign-in-container");
+const notificationContainer = document.querySelector(".notification-container");
+
+// Обработчик клика по SVG-картинке
+userServiceToggle.addEventListener("click", () => {
+  if (userAuthorization) {
+    // Отображаем контейнер уведомлений
+    notificationContainer.classList.add("active");
+    signInContainer.classList.remove("active"); // Скрываем другую форму
+  } else {
+    // Отображаем контейнер формы входа
+    signInContainer.classList.add("active");
+    notificationContainer.classList.remove("active"); // Скрываем другую форму
+  }
+});
+
+/*
+//Toggle sign in menu with user details menu
+const userDetailsBox = (userDetailsForm =
+  document.querySelector(".userserviceToggle"));
+
+const signInForm = document.querySelector(".signInForm");
+const notificationForm = document.querySelector(".notificationForm");
+
+singInCancelSvg = document.querySelector(".sign-in-form-cancel");
+notificationCancelSvg = document.querySelector(".notification-form-cancel");
+
+// Toggle sign in form
+userDetailsForm.addEventListener("click", () => {
+  signInForm.classList.toggle("active");
+  //notificationForm.classList.remove("active");
 });
 singInCancelSvg.addEventListener("click", () => {
   singInForm.classList.toggle("active");
 });
-
+notificationCancelSvg.addEventListener("click", () => {
+  singInForm.classList.toggle("active");
+});
+*/
+//------------------------------------------
 //Изменения видимости пароля
 $("body").on("click", "#hide-password", function () {
   if ($(this).is(":hover")) {
@@ -63,11 +99,12 @@ $("body").on("click", "#show-password", function () {
   }
 });
 
-//Автозаполнение города
+//------------------------------------------
+//АВТОЗАПОЛНЕНИЕ НАЗВАНИЯ ГОРОДА
 const input = document.getElementById("resident-city");
 const suggestionsContainer = document.getElementById("suggestions");
 
-const cache = {}; // Кэш для хранения предыдущих запросов
+const cache = new Map(); // Используем Map для лучшей производительности
 let debounceTimeout;
 
 // Дебаунс для оптимизации количества запросов
@@ -78,6 +115,17 @@ function debounce(func, delay) {
   };
 }
 
+// Определяем язык ввода на основе запроса
+function detectLanguage(query) {
+  const cyrillicPattern = /[\u0400-\u04FF]/;
+  const ukrainianPattern = /[\u0400-\u045F]/; // Украинские символы входят в диапазон кириллицы
+
+  if (ukrainianPattern.test(query)) {
+    return "uk";
+  }
+  return cyrillicPattern.test(query) ? "ru" : "en";
+}
+
 // Функция запроса к Nominatim API с форматом GeocodeJSON
 async function fetchCitySuggestions(query) {
   if (!query || query.length < 3) {
@@ -85,19 +133,23 @@ async function fetchCitySuggestions(query) {
     return;
   }
 
-  if (cache[query]) {
-    displaySuggestions(cache[query]); // Используем данные из кэша
+  const lang = detectLanguage(query); // Определяем язык
+
+  if (cache.has(query)) {
+    displaySuggestions(cache.get(query)); // Используем данные из кэша
     return;
   }
 
   try {
     const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=geocodejson&q=${query}&addressdetails=1&limit=8`
+      `https://nominatim.openstreetmap.org/search?format=geocodejson&q=${encodeURIComponent(
+        query
+      )}&addressdetails=1&limit=8&accept-language=${lang}`
     );
     const data = await response.json();
     const features = data.features || [];
 
-    cache[query] = features; // Кэшируем результаты
+    cache.set(query, features); // Кэшируем результаты
     displaySuggestions(features);
   } catch (error) {
     console.error("Ошибка при получении данных с Nominatim API:", error);
@@ -113,12 +165,14 @@ function displaySuggestions(suggestions) {
     return;
   }
 
+  const fragment = document.createDocumentFragment();
+
   suggestions.forEach((suggestion) => {
     const cityName =
-      suggestion.properties.geocoding.name || "Неизвестный город";
+      suggestion.properties?.geocoding?.name || "Неизвестный город";
     const country =
-      suggestion.properties.geocoding.country || "Неизвестная страна";
-    const displayName = suggestion.properties.geocoding.label || "";
+      suggestion.properties?.geocoding?.country || "Неизвестная страна";
+    const displayName = suggestion.properties?.geocoding?.label || "";
 
     const suggestionItem = document.createElement("div");
     suggestionItem.textContent = `${cityName}, ${country}`;
@@ -130,8 +184,10 @@ function displaySuggestions(suggestions) {
       console.log("Выбранный город:", displayName);
     });
 
-    suggestionsContainer.appendChild(suggestionItem);
+    fragment.appendChild(suggestionItem);
   });
+
+  suggestionsContainer.appendChild(fragment);
 }
 
 // Обработчик ввода с дебаунсом

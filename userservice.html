@@ -263,7 +263,7 @@
           <form action="#">
             <div class="form first">
               <div class="details personal">
-                <span class="title">Персональные данные</span>
+                <header class="title">Персональные данные</header>
 
                 <div class="fields">
                   <div class="input-field">
@@ -322,10 +322,12 @@
 
                   <div class="input-field">
                     <label>Номер телефона</label>
+                    <span class="validity"></span>
                     <input
-                      type="number"
-                      placeholder="Введите номер своего телефона"
-                      required
+                      id="phone-number"
+                      type="tel"
+                      placeholder="+380664988869"
+                      pattern="[0-9]{5}-[0-9]{2}-[0-9]{3}-[0-9]{2}"
                     />
                   </div>
 
@@ -341,16 +343,12 @@
               </div>
 
               <div class="details ID">
-                <span class="title">Дополнительный данные</span>
+                <header class="title">Дополнительный данные</header>
 
                 <div class="fields">
                   <div class="input-field">
                     <label>Аватар</label>
-                    <input
-                      type="file"
-                      placeholder="Загрузите фото на аватар"
-                      required
-                    />
+                    <input type="file" placeholder="Загрузите фото на аватар" />
                   </div>
 
                   <div class="input-field">
@@ -359,7 +357,6 @@
                       id="resident-city"
                       type="text"
                       placeholder="Начните вводить город..."
-                      required
                     />
                     <div id="suggestions" class="suggestions"></div>
                   </div>
