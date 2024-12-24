@@ -460,8 +460,12 @@ a:hover {
 -----------------------------------------------------------------------------------------------------------------------
 */
 .sign-in-container {
+  display: none;
   position: absolute;
-  bottom: 700px;
+  bottom: -520px;
+  opacity: 1;
+  pointer-events: auto;
+
   right: 10%;
   width: 400px;
   border-radius: 8px;
@@ -477,12 +481,6 @@ a:hover {
   font-weight: 300;
   font-size: 25px;
   z-index: 1;
-}
-
-.userserviceToggle.active ~ .sign-in-container {
-  bottom: -520px;
-  opacity: 1;
-  pointer-events: auto;
 }
 
 .userserviceToggle.active svg.user {
@@ -625,12 +623,18 @@ a:hover {
     Notification information
 */
 .notification-container {
-  /*display: none;*/
+  display: none;
 
-  position: absolute;
-  bottom: 700px;
-  right: 10%;
-  width: 400px;
+  position: fixed;
+
+  top: 18%;
+  right: 1%;
+
+  width: 500px;
+  height: 40%;
+  max-height: 70%;
+  overflow-y: auto;
+
   border-radius: 8px;
   padding: 30px;
   text-align: center;
@@ -639,17 +643,12 @@ a:hover {
   -webkit-backdrop-filter: blur(8px);
   background-color: rgba(238, 226, 226, 0.1);
 
-  font-family: "Jost", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-size: 25px;
   z-index: 1;
 }
 
-.userserviceToggle.active ~ .notification-container {
-  bottom: -520px;
-  opacity: 1;
-  pointer-events: auto;
+.notification-container form {
+  padding: 0;
+  margin: 0;
 }
 
 .notification-form-cancel {
@@ -665,6 +664,31 @@ a:hover {
 }
 .notification-form-cancel:hover {
   fill: gold;
+}
+
+.notification-container h2 {
+  margin-bottom: 20px;
+  font-family: "Orelega One", serif;
+  font-style: normal;
+  font-size: 24px;
+  color: black;
+}
+
+.notification-container .notification-title {
+  justify-content: left;
+  font-family: "Orelega One", serif;
+  font-style: normal;
+  font-size: 14px;
+  color: black;
+}
+
+.notification-container .notification-content {
+  justify-content: left;
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-size: 14px;
+  color: black;
 }
 
 /* User registration form

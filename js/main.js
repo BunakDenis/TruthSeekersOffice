@@ -28,60 +28,46 @@ document.querySelector("#user").onmouseout = function () {
   document.querySelector("#user").style.fill = "#4b4c4d";
 };
 
-//Search box
+//Контейнер поиска по сайту
 const searchBox = (searchToggle = document.querySelector(".searchToggle"));
-
-// js code to toggle search box
 searchToggle.addEventListener("click", () => {
   searchToggle.classList.toggle("active");
 });
-
 //------------------------------------------
-// Toggle sign in menu with user details menu
-// Предполагаемое состояние пользователя
-const userAuthorization = false; // Замените на реальную проверку авторизации
+// Переключатель меню входа юзера и меню уведомлений
+// Переменная для определения авторизации пользователя
+let userAuthorization = true;
 
-// Элементы интерфейса
-const userServiceToggle = document.querySelector(".userserviceToggle");
+// Элементы HTML
+const userIcon = document.querySelector(".user"); // SVG с классом user
 const signInContainer = document.querySelector(".sign-in-container");
 const notificationContainer = document.querySelector(".notification-container");
+const signInCancelButton = document.querySelector(".sign-in-form-cancel");
+const notificationCancelButton = document.querySelector(
+  ".notification-form-cancel"
+);
 
-// Обработчик клика по SVG-картинке
-userServiceToggle.addEventListener("click", () => {
+// Функция для обработки нажатия на SVG
+userIcon.addEventListener("click", () => {
   if (userAuthorization) {
-    // Отображаем контейнер уведомлений
-    notificationContainer.classList.add("active");
-    signInContainer.classList.remove("active"); // Скрываем другую форму
+    // Если пользователь авторизован, показать контейнер уведомлений
+    signInContainer.style.display = "none";
+    notificationContainer.style.display = "block";
   } else {
-    // Отображаем контейнер формы входа
-    signInContainer.classList.add("active");
-    notificationContainer.classList.remove("active"); // Скрываем другую форму
+    // Если пользователь не авторизован, показать контейнер входа
+    notificationContainer.style.display = "none";
+    signInContainer.style.display = "block";
   }
 });
 
-/*
-//Toggle sign in menu with user details menu
-const userDetailsBox = (userDetailsForm =
-  document.querySelector(".userserviceToggle"));
-
-const signInForm = document.querySelector(".signInForm");
-const notificationForm = document.querySelector(".notificationForm");
-
-singInCancelSvg = document.querySelector(".sign-in-form-cancel");
-notificationCancelSvg = document.querySelector(".notification-form-cancel");
-
-// Toggle sign in form
-userDetailsForm.addEventListener("click", () => {
-  signInForm.classList.toggle("active");
-  //notificationForm.classList.remove("active");
+signInCancelButton.addEventListener("click", () => {
+  signInContainer.style.display = "none";
 });
-singInCancelSvg.addEventListener("click", () => {
-  singInForm.classList.toggle("active");
+
+notificationCancelButton.addEventListener("click", () => {
+  notificationContainer.style.display = "none";
 });
-notificationCancelSvg.addEventListener("click", () => {
-  singInForm.classList.toggle("active");
-});
-*/
+
 //------------------------------------------
 //Изменения видимости пароля
 $("body").on("click", "#hide-password", function () {
