@@ -28,44 +28,84 @@ document.querySelector("#user").onmouseout = function () {
   document.querySelector("#user").style.fill = "#4b4c4d";
 };
 
+// Изменение цвета логотипа уведомлений
+document.querySelector(".notification-svg").onmouseover = function () {
+  document.querySelector(".notification-svg").style.fill = "gold";
+};
+document.querySelector(".notification-svg").onmouseout = function () {
+  document.querySelector(".notification-svg").style.fill = "#4b4c4d";
+};
+
 //Контейнер поиска по сайту
 const searchBox = (searchToggle = document.querySelector(".searchToggle"));
 searchToggle.addEventListener("click", () => {
   searchToggle.classList.toggle("active");
 });
+
 //------------------------------------------
+
 // Переключатель меню входа юзера и меню уведомлений
 // Переменная для определения авторизации пользователя
 let userAuthorization = true;
 
 // Элементы HTML
-const userIcon = document.querySelector(".user"); // SVG с классом user
+const userIcon = document.querySelector(".userserviceToggle"); // SVG с классом user
 const signInContainer = document.querySelector(".sign-in-container");
-const notificationContainer = document.querySelector(".notification-container");
+const userInformationContainer = document.querySelector(
+  ".user-information-container"
+);
 const signInCancelButton = document.querySelector(".sign-in-form-cancel");
-const notificationCancelButton = document.querySelector(
-  ".notification-form-cancel"
+const userInformationCancelButton = document.querySelector(
+  ".user-information-form-cancel"
 );
 
 // Функция для обработки нажатия на SVG
 userIcon.addEventListener("click", () => {
   if (userAuthorization) {
     // Если пользователь авторизован, показать контейнер уведомлений
-    signInContainer.style.display = "none";
-    notificationContainer.style.display = "block";
+    if (userInformationContainer.style.display == "none") {
+      signInContainer.style.display = "none";
+      userInformationContainer.style.display = "block";
+    } else {
+      userInformationContainer.style.display = "none";
+    }
   } else {
     // Если пользователь не авторизован, показать контейнер входа
-    notificationContainer.style.display = "none";
-    signInContainer.style.display = "block";
+    if (signInContainer.style.display == "none") {
+      signInContainer.style.display = "block";
+      userInformationContainer.style.display = "none";
+    } else {
+      signInContainer.style.display = "none";
+    }
   }
 });
 
+//Функция скрытия формы при нажатии на крестик
 signInCancelButton.addEventListener("click", () => {
   signInContainer.style.display = "none";
 });
 
+userInformationCancelButton.addEventListener("click", () => {
+  userInformationContainer.style.display = "none";
+});
+
+//------------------------------------------
+
+// Переключатель меню уведомлений
+
+const notificationCancelButton = document.querySelector(
+  ".notification-form-cancel"
+);
+
+const notificationhBox = (notificationToggle = document.querySelector(
+  ".notification-toggle"
+));
+notificationToggle.addEventListener("click", () => {
+  notificationToggle.classList.toggle("active");
+});
+
 notificationCancelButton.addEventListener("click", () => {
-  notificationContainer.style.display = "none";
+  notificationToggle.classList.toggle("active");
 });
 
 //------------------------------------------
