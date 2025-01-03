@@ -38,6 +38,7 @@ document.querySelector(".notification-svg").onmouseout = function () {
 
 //Контейнер поиска по сайту
 const searchBox = (searchToggle = document.querySelector(".searchToggle"));
+
 searchToggle.addEventListener("click", () => {
   searchToggle.classList.toggle("active");
 });
@@ -89,8 +90,22 @@ userInformationCancelButton.addEventListener("click", () => {
   userInformationContainer.style.display = "none";
 });
 
-//------------------------------------------
+/*Переключение форм входа юзера и информации о юзере. При нажатии на кнопку "выйти" и последующем обновлении страницы в информации о юзере будет 
+    отображаться форма регистрации юзера.
+    При нажатии на кнопку "войти" в форме регистрации юзера, при следующем обновлении страницы будет отображаться форма информации о юзере
+*/
+const signOutLink = document.querySelector(".sign-out-link");
+const signInButton = document.querySelector(".sign-in-button");
 
+signOutLink.addEventListener("click", () => {
+  userAuthorization = false;
+});
+
+signInButton.addEventListener("click", () => {
+  userAuthorization = true;
+});
+
+//------------------------------------------
 // Переключатель меню уведомлений
 
 const notificationCancelButton = document.querySelector(
