@@ -1191,7 +1191,7 @@ form .buttons button,
   }
 }
 
-/* Page - UserService */
+/* Page - User Sign Up */
 
 .user-signin-signout-container {
   position: absolute;
@@ -1276,7 +1276,7 @@ form .buttons button,
 .searching-result-content {
   background-color: rgba(255, 255, 255, 0.1);
 
-  width: 70vw;
+  width: 80vw;
   min-height: 40vh;
   max-height: 70vh;
   overflow-y: auto;
@@ -1292,8 +1292,31 @@ form .buttons button,
   padding: 2vw 3vw 0 3vw;
 }
 
-.searching-result-content .container {
+.searching-result-content ol {
   padding-top: 1vw;
+  padding-left: 0;
+
+  list-style-type: none; /* Убираем исходные маркеры */
+  counter-reset: num; /* Задаём имя счетчика */
+}
+
+.searching-result-content li::before {
+  content: counter(num) ". "; /* Выводим число */
+  counter-increment: num; /* Увеличиваем значение счётчика */
+
+  font-weight: 800;
+}
+
+.searching-result-content li {
+  display: grid;
+
+  grid-template-columns: 1vw 50vw;
+
+  text-align: left;
+
+  padding-left: 1vw;
+
+  padding-bottom: 1vw;
 }
 
 .searching-result-content h3 {
@@ -1316,4 +1339,126 @@ form .buttons button,
   font-family: "Jost", sans-serif;
   font-weight: 300;
   font-size: 18px;
+
+  text-align: justify;
+}
+
+.searching-result-text {
+  display: grid;
+  grid-template-columns: 15vw 55vw;
+
+  text-align: left;
+
+  padding-left: 2vw;
+}
+
+.searching-result-content li::after {
+  content: "";
+  display: block;
+
+  background-color: #978181;
+  width: 70vw;
+  height: 0.01vw;
+}
+
+/*--------------------------------------------------*/
+
+/* Page - User Profile */
+.user-infromation-profile {
+  position: absolute;
+
+  background-color: rgba(255, 255, 255, 0.1);
+
+  height: 30vw;
+  width: 90vw;
+
+  top: 10vw;
+  left: 5vw;
+}
+
+:root {
+  --page-text-color: #8e9196;
+  --page-text-color-hover: gold;
+  --tab-display: grid;
+  --tab-background-color: rgba(255, 255, 255, 0.1);
+  --display-none: none;
+  --box-sizing: border-box;
+}
+*:before,
+*:after,
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+tab-container {
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+
+  display: var(--tab-display);
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr;
+}
+/*
+TAB CONTROLS
+Hide radios */
+tab-container > input {
+  display: none;
+}
+tab-container input:checked + label {
+  color: var(--page-text-color-hover);
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 250ms;
+}
+tab-container > label {
+  cursor: pointer;
+  transition: color 250ms;
+  padding: 1em;
+  border-right: solid 2px var(--page-background-color);
+  background-color: var(--tab-background-color);
+  text-align: center;
+  transition: all 250ms;
+}
+tab-container > label:last-of-type {
+  border: none;
+}
+tab-container > label:hover {
+  color: var(--page-text-color-hover);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+tab-content {
+  display: var(--tab-display);
+  grid-column: 1 / -1;
+  padding-left: 30vw;
+}
+
+tab-content .input-field label {
+  width: 10vw;
+  padding-right: 1vw;
+}
+
+tab-content input:disabled,
+tab-content select:disabled {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: black;
+  border-radius: 0px;
+  border: 0px solid rgba(255, 255, 255, 0.1);
+}
+
+tab-content input {
+  width: 10vw;
+}
+
+/*
+Why doesn't this work!? 
+input ~ tab-content {display: none;}
+input:checked ~ tab-content {display: var(--tab-display);}*/
+
+input#tabToggle01:checked ~ tab-content:not(:nth-of-type(1)),
+input#tabToggle02:checked ~ tab-content:not(:nth-of-type(2)),
+input#tabToggle03:checked ~ tab-content:not(:nth-of-type(3)) {
+  display: none;
 }
