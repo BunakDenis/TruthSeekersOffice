@@ -1,3 +1,38 @@
+/*--------------------------------------------------*/
+
+/* Page - User Profile */
+const pancilSvg = document.querySelector(".pencil-icon");
+
+function editPersonalInfomation(inputId) {
+  const inputField = document.querySelector(inputId);
+  inputField.disabled = !inputField.disabled;
+}
+
+function cancelEditedProfileInfo(inputId) {
+  const inputField = document.querySelector(inputId);
+  inputField.value = "";
+}
+function showSeekerDetailInformation() {
+  $(".profile-seeker-detail-information").css("display", "flex");
+}
+function hideSeekerDetailInformation() {
+  $(".profile-seeker-detail-information").css("display", "none");
+}
+
+//Сортировка таблицы
+function sortTable(tableColoumn) {
+  const table = document.querySelector();
+  let sortedRows = Array.from(table.rows)
+    .slice(tableColoumn)
+    .sort((rowA, rowB) =>
+      rowA.cells[0].innerHTML > rowB.cells[0].innerHTML ? 1 : -1
+    );
+
+  table.tBodies[0].append(...sortedRows);
+}
+
+/*--------------------------------------------------*/
+
 // Изменение цвета логотипа Єгрегора и названия Школы при наведении или на логотип или на текст
 
 document.querySelector(".al-vadud").onmouseover = function () {
@@ -124,7 +159,7 @@ notificationCancelButton.addEventListener("click", () => {
 });
 
 //------------------------------------------
-//Изменения видимости пароля
+//Изменения видимости пароля в форме входа юзера
 $("body").on("click", "#hide-password", function () {
   if ($(this).is(":hover")) {
     $("#pass").attr("type", "text");
@@ -137,6 +172,40 @@ $("body").on("click", "#show-password", function () {
     $("#pass").attr("type", "password");
     document.querySelector("#hide-password").style.display = "block";
     document.querySelector("#show-password").style.display = "none";
+  }
+});
+
+//------------------------------------------
+//Изменения видимости пароля в форме регистрации юзера
+$("body").on("click", "#sign-up-hide-password", function () {
+  if ($(this).is(":hover")) {
+    $("#sign-up-pass").attr("type", "text");
+    document.querySelector("#sign-up-hide-password").style.display = "none";
+    document.querySelector("#sign-up-show-password").style.display = "block";
+  }
+});
+$("body").on("click", "#sign-up-show-password", function () {
+  if ($(this).is(":hover")) {
+    $("#sign-up-pass").attr("type", "password");
+    document.querySelector("#sign-up-hide-password").style.display = "block";
+    document.querySelector("#sign-up-show-password").style.display = "none";
+  }
+});
+
+//------------------------------------------
+//Изменения видимости пароля в профайле юзера
+$("body").on("click", "#profile-hide-password", function () {
+  if ($(this).is(":hover")) {
+    $("#profile-user-password").attr("type", "text");
+    document.querySelector("#profile-hide-password").style.display = "none";
+    document.querySelector("#profile-show-password").style.display = "block";
+  }
+});
+$("body").on("click", "#profile-show-password", function () {
+  if ($(this).is(":hover")) {
+    $("#profile-user-password").attr("type", "password");
+    document.querySelector("#profile-hide-password").style.display = "block";
+    document.querySelector("#profile-show-password").style.display = "none";
   }
 });
 

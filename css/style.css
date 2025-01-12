@@ -8,6 +8,12 @@ html {
   height: 100%;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .page1 {
   position: relative;
   min-height: 100vh;
@@ -82,20 +88,18 @@ a:hover {
 }
 
 .site-navbar-wrap {
+  position: absolute;
+  top: 0;
   background-color: rgba(255, 255, 255, 0.1);
   width: 100%;
-  height: 150px;
+  height: 8vw;
   padding-top: 30px;
-  top: 0;
-  left: 0;
 }
 
 .site-navbar-wrap a {
   color: #fff;
 }
-.site-navbar-top {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-}
+
 .site-navbar {
   margin-bottom: 0px;
   width: 100%;
@@ -592,10 +596,7 @@ a:hover {
 #hide-password {
   display: block;
 }
-.fa-eye:hover {
-  color: gold;
-}
-.fa-eye-slash:hover {
+.fa:hover {
   color: gold;
 }
 
@@ -682,7 +683,7 @@ a:hover {
 .notification-container {
   position: fixed;
 
-  top: -200%;
+  top: -300%;
   right: 1%;
 
   width: 500px;
@@ -858,7 +859,7 @@ select {
   outline: none;
   font-size: 14px;
   font-weight: 400;
-  color: #333;
+  color: black;
   border-radius: 5px;
   border: 1px solid #aaa;
   padding: 0 10px;
@@ -873,9 +874,26 @@ select {
 .input-field input[type="date"] {
   color: #9b8e8e;
 }
-.input-field input[type="date"]:valid {
+.input-field input[type="date"]:valid,
+.input-field select:valid {
   color: #0a0a0a;
 }
+
+/* Icons of show or hide password */
+#sign-up-show-password,
+#sign-up-hide-password {
+  top: 4.2vw;
+  right: 28vw;
+  position: absolute;
+  z-index: 99;
+}
+#sign-up-show-password {
+  display: none;
+}
+#sign-up-hide-password {
+  display: block;
+}
+
 .registration-container form button {
   display: flex;
   align-items: center;
@@ -930,29 +948,30 @@ form .buttons button,
   width: 100%;
   justify-content: center;
 
-  padding-top: 100px;
+  padding-top: 30vh;
 }
 
 .greeding h1 {
-  left: 50%;
-  padding-top: 50px;
   font-family: "Orelega One", serif;
   font-weight: 500;
   font-size: 50px;
   font-style: normal;
+
   color: black;
+
   text-align: center;
   text-indent: 20px;
 }
 
 .greeding p {
-  left: 50%;
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
   font-weight: 300;
   font-size: 25px;
   font-style: italic;
+
   color: black;
+
   text-align: center;
 }
 
@@ -1365,22 +1384,44 @@ form .buttons button,
 
 /* Page - User Profile */
 .user-infromation-profile {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
   position: absolute;
 
   background-color: rgba(255, 255, 255, 0.1);
 
-  height: 30vw;
+  height: 33vw;
   width: 90vw;
 
-  top: 10vw;
+  top: 9vw;
   left: 5vw;
+}
+
+.user-infromation-profile-content {
+  position: relative;
+  display: flex;
+
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: 100%;
 }
 
 :root {
   --page-text-color: #8e9196;
   --page-text-color-hover: gold;
+
   --tab-display: grid;
   --tab-background-color: rgba(255, 255, 255, 0.1);
+
+  --tbl-lable-font-family: "Jost", sans-serif;
+  --tbl-lable-font-optical-sizing: auto;
+  --tbl-lable-font-weight: 500;
+
   --display-none: none;
   --box-sizing: border-box;
 }
@@ -1393,38 +1434,45 @@ form .buttons button,
 }
 
 tab-container {
-  font-family: "Jost", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
+  position: absolute;
+  font-family: var(--tbl-lable-font-family);
+  font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+  font-weight: var(--tbl-lable-font-weight);
 
   display: var(--tab-display);
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto 1fr;
+
+  width: 100%;
+  height: 100%;
 }
 /*
 TAB CONTROLS
 Hide radios */
-tab-container > input {
+.page-user-profile .input-tab-toggle {
   display: none;
 }
-tab-container input:checked + label {
+.page-user-profile .input-tab-toggle:checked + .lable-tab-toggle {
   color: var(--page-text-color-hover);
   background-color: rgba(255, 255, 255, 0.2);
   transition: all 250ms;
 }
-tab-container > label {
+.page-user-profile .lable-tab-toggle {
   cursor: pointer;
   transition: color 250ms;
+
   padding: 1em;
+  margin: 0;
+
   border-right: solid 2px var(--page-background-color);
   background-color: var(--tab-background-color);
   text-align: center;
   transition: all 250ms;
 }
-tab-container > label:last-of-type {
+.page-user-profile .lable-tab-toggle:last-of-type {
   border: none;
 }
-tab-container > label:hover {
+.page-user-profile .lable-tab-toggle:hover {
   color: var(--page-text-color-hover);
   background-color: rgba(255, 255, 255, 0.05);
 }
@@ -1432,24 +1480,184 @@ tab-container > label:hover {
 tab-content {
   display: var(--tab-display);
   grid-column: 1 / -1;
-  padding-left: 30vw;
+
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
 }
 
-tab-content .input-field label {
+.page-user-profile .input-field label {
   width: 10vw;
   padding-right: 1vw;
 }
 
-tab-content input:disabled,
-tab-content select:disabled {
+.page-user-profile .input-field input:disabled,
+.page-user-profile .input-field select:disabled {
   background-color: rgba(255, 255, 255, 0.1);
-  color: black;
+  color: #333;
   border-radius: 0px;
   border: 0px solid rgba(255, 255, 255, 0.1);
 }
 
-tab-content input {
+.page-user-profile .input-field input,
+.page-user-profile .input-field select {
   width: 10vw;
+}
+
+tab-content svg {
+  padding-left: 1vw;
+
+  position: relative;
+
+  width: 2vw;
+  height: 2vw;
+
+  fill: black;
+}
+
+tab-content svg:hover {
+  fill: gold;
+}
+
+/* Icons of show or hide password */
+#profile-show-password,
+#profile-hide-password {
+  top: 5vw;
+  right: 38vw;
+  position: absolute;
+  z-index: 99;
+}
+#profile-show-password {
+  display: none;
+}
+#profile-hide-password {
+  display: block;
+}
+
+.profile-btn-container {
+  text-align: center;
+}
+.page-user-profile .profile-save-button {
+  height: 45px;
+  width: 10vw;
+
+  margin-top: 2vw;
+  margin-bottom: 2vw;
+
+  background: #fff;
+  color: #000;
+
+  border: none;
+
+  cursor: pointer;
+  border-radius: 3px;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+}
+.profile-save-button:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.profile-save-button-text {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.profile-seekers-tbl {
+  position: absolute;
+
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.profile-seekers-tbl-container {
+  position: relative;
+  height: 100%;
+}
+
+.profile-seekers-tbl-body {
+  width: 100%;
+  min-height: 30%;
+  max-height: 89.5%;
+
+  overflow-y: auto;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-seekers-tbl table {
+  table-layout: fixed;
+  width: 100%;
+
+  margin-top: 0;
+}
+
+.profile-seekers-tbl thead {
+  background-color: var(--tab-background-color);
+  height: 2vh;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-seekers-tbl tbody {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  height: 1vh;
+}
+
+.profile-seekers-tbl table thead th {
+  height: 2vw;
+  padding: 20px 15px;
+
+  text-align: center;
+
+  font-weight: 500;
+  font-size: 12px;
+
+  color: #fff;
+
+  text-transform: uppercase;
+}
+
+.profile-seekers-tbl td {
+  padding: 15px;
+
+  text-align: center;
+  vertical-align: middle;
+
+  font-weight: 300;
+  font-size: 12px;
+  word-wrap: break-word;
+
+  color: #fff;
+
+  border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+.profile-edit-btn {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 2vw;
+  height: 2vh;
+
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: none;
 }
 
 /*
@@ -1462,3 +1670,96 @@ input#tabToggle02:checked ~ tab-content:not(:nth-of-type(2)),
 input#tabToggle03:checked ~ tab-content:not(:nth-of-type(3)) {
   display: none;
 }
+
+/* Profile Modal form of seekers details information */
+.profile-seeker-detail-information {
+  display: none;
+  position: fixed;
+  flex-wrap: nowrap;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 100500;
+}
+
+.profile-seeker-modal-dialog {
+  position: relative;
+
+  border-radius: 3px;
+
+  margin-top: 40%;
+  margin-left: 120%;
+
+  width: 30vw;
+  height: 20vw;
+
+  font-family: var(--tbl-lable-font-family);
+  font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+  font-weight: var(--tbl-lable-font-weight);
+
+  background-color: rgba(247, 253, 251, 0.3);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  z-index: 100500;
+}
+
+.profile-seeker-modal-content {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+.profile-seeker-modal-header {
+  width: 100%;
+  height: 20%;
+
+  text-align: center;
+
+  margin-bottom: 2vh;
+}
+
+.profile-seeker-detail-information h4 {
+  padding-top: 2vw;
+
+  color: #000;
+}
+
+#profile-seeker-modal-cross-svg {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+
+  width: 2vw;
+  height: 2vh;
+
+  fill: #fff;
+}
+
+#profile-seeker-modal-cross-svg:hover {
+  fill: gold;
+}
+
+.profile-edit-seeker-modal-body {
+  display: var(--tab-display);
+  grid-column: 1 / -1;
+
+  align-items: center;
+  justify-content: center;
+
+  padding-top: 2vw;
+}
+
+.profile-edit-seeker-modal-body input + label {
+  text-align: left;
+}
+
+.profile-edit-seeker-modal-footer {
+  text-align: center;
+}
+/* ---------------------------------------------------------- */
