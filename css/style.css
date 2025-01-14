@@ -12,8 +12,12 @@ html {
 *::before,
 *::after {
   box-sizing: border-box;
-}
 
+  --page-content-background-color: rgba(255, 255, 255, 0.1);
+
+  --fornt-family-for-title: "Orelega One", serif;
+  --fornt-family-for-content: "Jost", serif;
+}
 .page1 {
   position: relative;
   min-height: 100vh;
@@ -90,9 +94,12 @@ a:hover {
 .site-navbar-wrap {
   position: absolute;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.1);
+
+  background-color: rgba(255, 255, 255, 0.2);
+
   width: 100%;
-  height: 8vw;
+  height: 15vh;
+
   padding-top: 30px;
 }
 
@@ -159,18 +166,23 @@ a:hover {
 
 .searchBox .search-field {
   position: absolute;
-  bottom: -85px;
-  right: 5px;
-  height: 50px;
-  width: 500px;
+
+  top: 10vh;
+  right: 1vw;
+  height: 5vh;
+  width: 25vw;
+
   display: flex;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.1);
+
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+
   color: black;
   padding: 3px;
   border-radius: 6px;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-  font-family: "Jost", sans-serif;
+  font-family: var(--fornt-family-for-content);
   font-optical-sizing: auto;
   font-weight: 200;
   font-size: 20px;
@@ -181,7 +193,7 @@ a:hover {
 }
 
 .searchToggle.active ~ .search-field {
-  bottom: -94px;
+  top: 10vh;
   opacity: 1;
   pointer-events: auto;
   z-index: 2;
@@ -190,11 +202,14 @@ a:hover {
 .search-field::before {
   content: "";
   position: absolute;
+
   right: 14px;
   top: -4px;
   height: 12px;
   width: 12px;
+
   background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
   transform: rotate(-45deg);
   z-index: -1;
 }
@@ -211,6 +226,7 @@ a:hover {
   font-weight: 300;
   color: black;
   background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
 }
 
 .search-field i {
@@ -511,7 +527,7 @@ a:hover {
   position: absolute;
   width: 30px;
   height: 30px;
-  fill: #4b4c4d;
+  fill: black;
   font-size: 22px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -623,7 +639,7 @@ a:hover {
   margin-top: 30px;
 }
 
-.user-information-container {
+.site-navbar-wrap .site-navbar .user-information-container {
   display: none;
   position: absolute;
 
@@ -640,11 +656,11 @@ a:hover {
   text-align: center;
   border-radius: 8px;
   border: 1px solid rgba(214, 179, 179, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  background-color: rgba(238, 226, 226, 0.1);
 
-  font-family: "Jost", sans-serif;
+  background-color: rgba(238, 226, 226, 0.2);
+  backdrop-filter: blur(10px);
+
+  font-family: var(--fornt-family-for-content);
   font-optical-sizing: auto;
   font-weight: 300;
   font-size: 20px;
@@ -661,7 +677,7 @@ a:hover {
   position: absolute;
   width: 30px;
   height: 30px;
-  fill: #4b4c4d;
+  fill: black;
   font-size: 22px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -674,13 +690,36 @@ a:hover {
 /*
     Notification information
 */
-.notification-toggle.active ~ .notification-container {
+.site-navbar-wrap .site-navbar .notification-toggle {
+  position: relative;
+}
+
+.site-navbar-wrap .site-navbar .notification-count {
+  position: absolute;
+
+  top: -1vh;
+  right: 5vw;
+
+  font-family: "Jost", sans-serif;
+  font-size: 12px;
+  font-optical-sizing: auto;
+  font-weight: 500;
+
+  background-color: gold;
+  border: 3px solid gold;
+  border-radius: 20px;
+}
+
+.site-navbar-wrap
+  .site-navbar
+  .notification-toggle.active
+  ~ .notification-container {
   top: 18%;
   opacity: 1;
   pointer-events: auto;
 }
 
-.notification-container {
+.site-navbar-wrap .site-navbar .notification-container {
   position: fixed;
 
   top: -300%;
@@ -713,7 +752,7 @@ a:hover {
   position: absolute;
   width: 30px;
   height: 30px;
-  fill: #4b4c4d;
+  fill: black;
   font-size: 22px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -985,7 +1024,7 @@ form .buttons button,
   align-items: center;
   justify-content: center;
 
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
   color: #4b4c4d;
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
@@ -1057,13 +1096,6 @@ form .buttons button,
 }
 
 /* Страница - кабинет искателя */
-.page2 {
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
 
 .body-cabinet-page > #body-bg-image {
   width: 100%;
@@ -1073,12 +1105,11 @@ form .buttons button,
 }
 
 .cabinet-page .site-navbar-wrap {
-  background-color: rgba(255, 255, 255, 0.5);
-  width: 100%;
-  height: 150px;
-  padding-top: 30px;
-  top: 0;
-  left: 0;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.cabinet-page .site-navbar-wrap .site-navigation ul li a {
+  color: #4b4c4d;
 }
 
 /* Footer */
@@ -1238,11 +1269,15 @@ form .buttons button,
 }
 
 /*--------------------------------------------------*/
-
 /* Page - Contacts */
 
 .contacts-information-container {
-  background-color: rgba(180, 164, 164, 0.4);
+  position: absolute;
+
+  background-color: var(--page-content-background-color);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
   width: 50vw;
   height: 50vh;
@@ -1251,7 +1286,9 @@ form .buttons button,
   justify-content: center;
   text-align: center;
 
-  margin: 5vw auto 0 auto;
+  top: 25vh;
+  left: 25vw;
+
   padding: 6vw 3vw 0 3vw;
 }
 
@@ -1292,7 +1329,12 @@ form .buttons button,
 
 /* Page - Searching Result */
 
+.searching-result-container {
+  position: relative;
+}
+
 .searching-result-content {
+  position: absolute;
   background-color: rgba(255, 255, 255, 0.1);
 
   width: 80vw;
@@ -1307,8 +1349,10 @@ form .buttons button,
   justify-content: center;
   text-align: center;
 
-  margin: 0.5vw auto 0 auto;
-  padding: 2vw 3vw 0 3vw;
+  top: 18vh;
+  left: 10vw;
+
+  padding: 2vh 3vw 0 3vh;
 }
 
 .searching-result-content ol {
@@ -1323,7 +1367,8 @@ form .buttons button,
   content: counter(num) ". "; /* Выводим число */
   counter-increment: num; /* Увеличиваем значение счётчика */
 
-  font-weight: 800;
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 .searching-result-content li {
@@ -1339,14 +1384,14 @@ form .buttons button,
 }
 
 .searching-result-content h3 {
-  font-family: "Jost", sans-serif;
+  font-family: var(--fornt-family-for-title);
   font-optical-sizing: auto;
   font-weight: 500;
   font-size: 25px;
 }
 
 .searching-result-content h4 {
-  font-family: "Jost", sans-serif;
+  font-family: var(--fornt-family-for-content);
   font-optical-sizing: auto;
   font-weight: 500;
   font-size: 20px;
@@ -1355,7 +1400,7 @@ form .buttons button,
 }
 
 .searching-result-content p {
-  font-family: "Jost", sans-serif;
+  font-family: var(--fornt-family-for-content);
   font-weight: 300;
   font-size: 18px;
 
@@ -1375,9 +1420,9 @@ form .buttons button,
   content: "";
   display: block;
 
-  background-color: #978181;
-  width: 70vw;
-  height: 0.01vw;
+  background-color: #c4bdbd;
+  width: 75vw;
+  height: 0.01vh;
 }
 
 /*--------------------------------------------------*/
