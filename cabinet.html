@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Кабинет Искателя</title>
     <link rel="icon" href="images/al_vadud_vector_title.svg" type="image/svg" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <link rel="stylesheet" href="./css/sidebar.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -39,6 +41,12 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/navbar/bootstrap.min.css" />
+
+    <!-- Boxiocns CDN Link -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body class="body-cabinet-page">
     <div class="bg-image" id="body-bg-image">
@@ -103,7 +111,7 @@
                     </div>
                   </div>
                   <div class="col-5 my-auto">
-                    <nav class="site-navigation text-right" role="navigation">
+                    <nav class="site-navigation text-right">
                       <div class="container">
                         <ul
                           class="site-menu main-menu js-clone-nav d-none d-lg-block"
@@ -147,7 +155,7 @@
                         <svg
                           class="search"
                           version="1.1"
-                          id="Capa_1"
+                          id="search"
                           xmlns="http://www.w3.org/2000/svg"
                           xmlns:xlink="http://www.w3.org/1999/xlink"
                           viewBox="0 0 488.4 488.4"
@@ -221,7 +229,7 @@
                         <div class="forget">
                           <label for="remember">
                             <input type="checkbox" id="remember" />
-                            <p>Запомнить меня</p>
+                            <span>Запомнить меня</span>
                           </label>
                           <a class="sign-in-form-link" href="#"
                             >Забыли пароль?</a
@@ -277,12 +285,11 @@
                   <!-- Notification infomation -->
                   <div class="col-1 my-auto">
                     <div class="notification-toggle">
-                      <?xml version="1.0" encoding="iso-8859-1"?>
                       <svg
                         class="notification-svg"
                         fill="#000000"
                         version="1.1"
-                        id="Capa_1"
+                        id="notification-svg"
                         xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                         viewBox="0 0 611.999 611.999"
@@ -349,48 +356,115 @@
               </div>
             </div>
           </div>
-          <!-- 
-            SideBar 
-          -->
-          <div class="menu-btn">
-            <i class="fas fa-bars"></i>
-          </div>
-          <div class="side-bar">
-            <div class="close-btn">
-              <i class="fas fa-times"></i>
-            </div>
-            <div class="menu">
-              <div class="item">
-                <a href="#"><i class="fas fa-desktop"></i>Результаты работы</a>
-              </div>
-              <div class="item">
-                <a href="#"><i class="fas fa-th"></i>Послания</a>
-              </div>
-              <div class="item">
-                <a class="sub-btn"
-                  ><i class="fas fa-table"></i>Практики<i
-                    class="fas fa-angle-right dropdown"
-                  ></i
-                ></a>
-                <div class="sub-menu">
-                  <a href="#" class="sub-item">Основная практика</a>
-                  <a href="#" class="sub-item">Дополнительная практика №1</a>
-                  <a href="#" class="sub-item">Дополнительная практика №2</a>
+          <!-- SideBar -->
+          <div class="sidebar close">
+            <ul class="nav-links">
+              <li>
+                <a href="#">
+                  <i class="bx bx-grid-alt"></i>
+                  <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blank">
+                  <li><a class="link_name" href="#">Category</a></li>
+                </ul>
+              </li>
+              <li>
+                <div class="iocn-link">
+                  <a href="#">
+                    <i class="bx bx-collection"></i>
+                    <span class="link_name">Category</span>
+                  </a>
+                  <i class="bx bxs-chevron-down arrow"></i>
                 </div>
-              </div>
-              <div class="item">
-                <a href="#"
-                  ><i class="fa fa-book" aria-hidden="false"></i>Книги</a
-                >
-              </div>
-              <div class="item">
-                <a href="#"><i class="fa fa-cogs"></i>Настройки</a>
-              </div>
-              <div class="item">
-                <a href="#"><i class="fas fa-info-circle"></i>Контакты</a>
-              </div>
-            </div>
+                <ul class="sub-menu">
+                  <li><a class="link_name" href="#">Category</a></li>
+                  <li><a href="#">HTML & CSS</a></li>
+                  <li><a href="#">JavaScript</a></li>
+                  <li><a href="#">PHP & MySQL</a></li>
+                </ul>
+              </li>
+              <li>
+                <div class="iocn-link">
+                  <a href="#">
+                    <i class="bx bx-book-alt"></i>
+                    <span class="link_name">Posts</span>
+                  </a>
+                  <i class="bx bxs-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                  <li><a class="link_name" href="#">Posts</a></li>
+                  <li><a href="#">Web Design</a></li>
+                  <li><a href="#">Login Form</a></li>
+                  <li><a href="#">Card Design</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="bx bx-pie-chart-alt-2"></i>
+                  <span class="link_name">Analytics</span>
+                </a>
+                <ul class="sub-menu blank">
+                  <li><a class="link_name" href="#">Analytics</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="bx bx-line-chart"></i>
+                  <span class="link_name">Chart</span>
+                </a>
+                <ul class="sub-menu blank">
+                  <li><a class="link_name" href="#">Chart</a></li>
+                </ul>
+              </li>
+              <li>
+                <div class="iocn-link">
+                  <a href="#">
+                    <i class="bx bx-plug"></i>
+                    <span class="link_name">Plugins</span>
+                  </a>
+                  <i class="bx bxs-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                  <li><a class="link_name" href="#">Plugins</a></li>
+                  <li><a href="#">UI Face</a></li>
+                  <li><a href="#">Pigments</a></li>
+                  <li><a href="#">Box Icons</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="bx bx-compass"></i>
+                  <span class="link_name">Explore</span>
+                </a>
+                <ul class="sub-menu blank">
+                  <li><a class="link_name" href="#">Explore</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="bx bx-history"></i>
+                  <span class="link_name">History</span>
+                </a>
+                <ul class="sub-menu blank">
+                  <li><a class="link_name" href="#">History</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="bx bx-cog"></i>
+                  <span class="link_name">Setting</span>
+                </a>
+                <ul class="sub-menu blank">
+                  <li><a class="link_name" href="#">Setting</a></li>
+                </ul>
+              </li>
+            </ul>
           </div>
+          <section class="home-section">
+            <div class="home-content">
+              <i class="bx bx-menu"></i>
+            </div>
+          </section>
           <div class="footer-basic">
             <footer>
               <div class="social">
@@ -430,16 +504,5 @@
     </div>
   </body>
   <script src="./js/cabinet.js"></script>
-  <!-- Navbar Script-->
-  <script src="js/navbar/bootstrap.min.js"></script>
-  <script src="js/navbar/jquery-3.3.1.min.js"></script>
-  <script src="js/navbar/jquery.sticky.js"></script>
-  <script src="js/navbar/main.js"></script>
-  <script src="js/navbar/owl.carousel.min.js"></script>
-  <script src="js/navbar/popper.min.js"></script>
-  <script
-    src="https://kit.fontawesome.com/d6a7640edd.js"
-    crossorigin="anonymous"
-  ></script>
   <script src="js/main.js"></script>
 </html>

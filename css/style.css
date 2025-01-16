@@ -8,17 +8,21 @@ html {
   height: 100%;
 }
 
+:root {
+  --page-content-background-color: rgba(255, 255, 255, 0.1);
+  --cabinet-page-menu-background-color: rgba(255, 255, 255, 0.6);
+
+  --fornt-family-for-school-name: "Lobster", sans-serif;
+  --fornt-family-for-title: "Orelega One", serif;
+  --fornt-family-for-content: "Jost", serif;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-
-  --page-content-background-color: rgba(255, 255, 255, 0.1);
-
-  --fornt-family-for-title: "Orelega One", serif;
-  --fornt-family-for-content: "Jost", serif;
 }
-.page1 {
+.main-page {
   position: relative;
   min-height: 100vh;
 
@@ -71,412 +75,6 @@ html {
   z-index: 2;
 }
 
-/* NavBar */
-a {
-  -webkit-transition: 0.3s all ease;
-  -o-transition: 0.3s all ease;
-  transition: 0.3s all ease;
-}
-a,
-a:hover {
-  text-decoration: none !important;
-}
-
-.al-vadud {
-  width: 100px;
-  height: 100px;
-  fill: red;
-  transition: fill 100ms ease-in-out;
-  stroke: #007ba5;
-  stroke-width: 10px;
-}
-
-.site-navbar-wrap {
-  position: absolute;
-  top: 0;
-
-  background-color: rgba(255, 255, 255, 0.2);
-
-  width: 100%;
-  height: 15vh;
-
-  padding-top: 30px;
-}
-
-.site-navbar-wrap a {
-  color: #fff;
-}
-
-.site-navbar {
-  margin-bottom: 0px;
-  width: 100%;
-}
-
-.school-name {
-  color: rgb(230, 98, 98);
-  font-family: "Lobster", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-  font-size: 20px;
-  transition: color 100ms ease-in-out;
-}
-
-/* Search box */
-.searchToggle {
-  height: 60px;
-  width: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 5px;
-}
-
-.searchToggle svg {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  fill: #4b4c4d;
-  font-size: 22px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.searchToggle svg:hover {
-  fill: gold;
-}
-
-.searchToggle svg.cancel {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.searchToggle.active svg.cancel {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.searchToggle.active svg.search {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.searchBox {
-  position: relative;
-}
-
-.searchBox .search-field {
-  position: absolute;
-
-  top: 10vh;
-  right: 1vw;
-  height: 5vh;
-  width: 25vw;
-
-  display: flex;
-  align-items: center;
-
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(8px);
-
-  color: black;
-  padding: 3px;
-  border-radius: 6px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-  font-family: var(--fornt-family-for-content);
-  font-optical-sizing: auto;
-  font-weight: 200;
-  font-size: 20px;
-  font-style: italic;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.searchToggle.active ~ .search-field {
-  top: 10vh;
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 2;
-}
-
-.search-field::before {
-  content: "";
-  position: absolute;
-
-  right: 14px;
-  top: -4px;
-  height: 12px;
-  width: 12px;
-
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  transform: rotate(-45deg);
-  z-index: -1;
-}
-
-#input-search-field {
-  height: 95%;
-  width: 95%;
-  margin-top: 2px;
-  padding: 0 45px 0 15px;
-  outline: none;
-  border: none;
-  border-radius: 4px;
-  font-size: 20px;
-  font-weight: 300;
-  color: black;
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
-}
-
-.search-field i {
-  right: 2px;
-  position: absolute;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.bx-search:hover {
-  color: gold;
-}
-
-#user {
-  width: 40px;
-  height: 40px;
-  fill: #4b4c4d;
-  transition: fill 100ms ease-in-out;
-}
-
-.link:hover #user {
-  fill: gold;
-}
-
-.site-navbar .site-navigation .site-menu {
-  margin-bottom: 0;
-}
-.site-navbar .site-navigation .site-menu a {
-  text-decoration: none !important;
-  display: inline-block;
-  font-weight: 500;
-}
-.site-navbar .site-navigation .site-menu > li {
-  display: inline-block;
-  padding: 10px 5px;
-}
-.site-navbar .site-navigation .site-menu > li > a {
-  padding: 20px 10px;
-  color: rgba(255, 255, 255, 0.6);
-  font-family: "Lobster", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-  font-size: 20px;
-  text-decoration: none !important;
-}
-.site-navbar .site-navigation .site-menu > li > a.active {
-  color: #fff;
-}
-.site-navbar .site-navigation .site-menu > li > a:hover {
-  color: gold;
-}
-.site-navbar .site-navigation .site-menu > li:last-child {
-  padding-right: 0;
-}
-.site-navbar .site-navigation .site-menu > li:last-child > a {
-  padding-right: 0;
-}
-.site-navbar .site-navigation .site-menu .has-children {
-  position: relative;
-}
-.site-navbar .site-navigation .site-menu .has-children > a {
-  position: relative;
-  padding-right: 20px;
-}
-.site-navbar .site-navigation .site-menu .has-children > a:before {
-  position: absolute;
-  content: "\e313";
-  font-size: 16px;
-  top: 50%;
-  right: 0;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  font-family: "icomoon";
-}
-.site-navbar .site-navigation .site-menu .has-children .dropdown {
-  visibility: hidden;
-  opacity: 0;
-  top: 100%;
-  position: absolute;
-  text-align: left;
-  -webkit-box-shadow: 0 0px 4px 0px rgba(0, 0, 0, 0.25);
-  box-shadow: 0 0px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: 0px 0;
-  margin-top: 20px;
-  margin-left: 0px;
-  background: #fff;
-  -webkit-transition: 0.2s 0s;
-  -o-transition: 0.2s 0s;
-  transition: 0.2s 0s;
-  border-radius: 4px;
-}
-.site-navbar .site-navigation .site-menu .has-children .dropdown.arrow-top {
-  position: absolute;
-}
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown.arrow-top:before {
-  bottom: 100%;
-  left: 20%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown.arrow-top:before {
-  border-color: rgba(136, 183, 213, 0);
-  border-bottom-color: #fff;
-  border-width: 10px;
-  margin-left: -10px;
-}
-.site-navbar .site-navigation .site-menu .has-children .dropdown a {
-  font-size: 14px;
-  text-transform: none;
-  letter-spacing: normal;
-  -webkit-transition: 0s all;
-  -o-transition: 0s all;
-  transition: 0s all;
-  color: #343a40;
-}
-.site-navbar .site-navigation .site-menu .has-children .dropdown a.active {
-  color: #007bff;
-}
-.site-navbar .site-navigation .site-menu .has-children .dropdown .active > a {
-  color: #fff !important;
-}
-.site-navbar .site-navigation .site-menu .has-children .dropdown > li {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  min-width: 200px;
-}
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown
-  > li:first-child
-  > a {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown
-  > li:last-child
-  > a {
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-.site-navbar .site-navigation .site-menu .has-children .dropdown > li > a {
-  padding: 9px 20px;
-  display: block;
-}
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown
-  > li
-  > a:hover {
-  background: #ebeef0;
-  color: gold;
-}
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown
-  > li.has-children
-  > a:before {
-  content: "\e315";
-  right: 20px;
-}
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown
-  > li.has-children
-  > .dropdown,
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown
-  > li.has-children
-  > ul {
-  left: 100%;
-  top: 0;
-}
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown
-  > li.has-children:hover
-  > a,
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown
-  > li.has-children:active
-  > a,
-.site-navbar
-  .site-navigation
-  .site-menu
-  .has-children
-  .dropdown
-  > li.has-children:focus
-  > a {
-  background: #ebeef0;
-  color: gold;
-}
-.site-navbar .site-navigation .site-menu .has-children:hover > a,
-.site-navbar .site-navigation .site-menu .has-children:focus > a,
-.site-navbar .site-navigation .site-menu .has-children:active > a {
-  color: #fff;
-}
-.site-navbar .site-navigation .site-menu .has-children:hover,
-.site-navbar .site-navigation .site-menu .has-children:focus,
-.site-navbar .site-navigation .site-menu .has-children:active {
-  cursor: pointer;
-}
-.site-navbar .site-navigation .site-menu .has-children:hover > .dropdown,
-.site-navbar .site-navigation .site-menu .has-children:focus > .dropdown,
-.site-navbar .site-navigation .site-menu .has-children:active > .dropdown {
-  -webkit-transition-delay: 0s;
-  -o-transition-delay: 0s;
-  transition-delay: 0s;
-  margin-top: 0px;
-  visibility: visible;
-  opacity: 1;
-}
-
-/* End of navbar configuration
------------------------------------------------------------------------------------------------------------------------
-*/
-
 /* User sign in form
 -----------------------------------------------------------------------------------------------------------------------
 */
@@ -484,8 +82,8 @@ a:hover {
   display: none;
   position: absolute;
 
-  bottom: -520px;
-  right: 10%;
+  top: 10vh;
+  right: 1%;
   padding: 30px;
   opacity: 1;
   pointer-events: auto;
@@ -499,7 +97,7 @@ a:hover {
   -webkit-backdrop-filter: blur(8px);
   background-color: rgba(238, 226, 226, 0.1);
 
-  font-family: "Jost", sans-serif;
+  font-family: var(--fornt-family-for-content);
   font-optical-sizing: auto;
   font-weight: 300;
   font-size: 25px;
@@ -514,7 +112,7 @@ a:hover {
   flex-direction: column;
 }
 .sign-in-form h2 {
-  font-family: "Orelega One", serif;
+  font-family: var(--fornt-family-for-title);
   font-style: normal;
   font-size: 2rem;
   margin-bottom: 20px;
@@ -580,17 +178,17 @@ a:hover {
   display: flex;
   align-items: center;
 }
-.forget label p {
+.forget label span {
   margin-left: 8px;
-  margin-top: 20px;
+  font-size: 0.8rem;
 }
 .sign-in-container p {
-  font-size: 15px;
+  font-size: 1rem;
 }
 .sign-in-form a {
   color: black;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 1rem;
 }
 .sign-in-form a:hover,
 .sign-in-form a:focus {
@@ -620,9 +218,12 @@ a:hover {
 .sign-in-button {
   background: #fff;
   color: #000;
+
   font-weight: 600;
-  border: none;
+
   padding: 12px 10px;
+  margin-top: 2vh;
+
   cursor: pointer;
   border-radius: 3px;
   font-size: 16px;
@@ -643,7 +244,7 @@ a:hover {
   display: none;
   position: absolute;
 
-  top: 100px;
+  top: 10vh;
   right: 10%;
   padding: 30px;
   opacity: 1;
@@ -714,7 +315,7 @@ a:hover {
   .site-navbar
   .notification-toggle.active
   ~ .notification-container {
-  top: 18%;
+  top: 16vh;
   opacity: 1;
   pointer-events: auto;
 }
@@ -1096,7 +697,9 @@ form .buttons button,
 }
 
 /* Страница - кабинет искателя */
-
+.body-cabinet-page {
+  overflow: hidden;
+}
 .body-cabinet-page > #body-bg-image {
   width: 100%;
   height: 100%;

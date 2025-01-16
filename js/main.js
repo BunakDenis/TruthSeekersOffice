@@ -19,18 +19,6 @@ function hideSeekerDetailInformation() {
   $(".profile-seeker-detail-information").css("display", "none");
 }
 
-//Сортировка таблицы
-function sortTable(tableColoumn) {
-  const table = document.querySelector();
-  let sortedRows = Array.from(table.rows)
-    .slice(tableColoumn)
-    .sort((rowA, rowB) =>
-      rowA.cells[0].innerHTML > rowB.cells[0].innerHTML ? 1 : -1
-    );
-
-  table.tBodies[0].append(...sortedRows);
-}
-
 /*--------------------------------------------------*/
 
 // Изменение цвета логотипа Єгрегора и названия Школы при наведении или на логотип или на текст
@@ -82,7 +70,7 @@ searchToggle.addEventListener("click", () => {
 
 // Переключатель меню входа юзера и меню уведомлений
 // Переменная для определения авторизации пользователя
-let userAuthorization = true;
+let userAuthorization = false;
 
 // Элементы HTML
 const userIcon = document.querySelector(".userserviceToggle"); // SVG с классом user
