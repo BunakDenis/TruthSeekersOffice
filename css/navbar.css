@@ -27,9 +27,9 @@
   background-color: rgba(255, 255, 255, 0.2);
 
   width: 100%;
-  height: 18vh;
+  height: 100%;
 
-  padding-top: 30px;
+  padding-top: 2vh;
 
   z-index: 100;
 }
@@ -403,11 +403,11 @@
   opacity: 1;
 }
 
-.cabinet-page .site-navbar-wrap {
+.body-cabinet-page .site-navbar-wrap {
   background: var(--cabinet-page-menu-background-color);
 }
 
-.cabinet-page .site-navbar-wrap .site-navigation ul li a {
+.body-cabinet-page .site-navbar-wrap .site-navigation ul li a {
   color: #4b4c4d;
 }
 

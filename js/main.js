@@ -131,19 +131,24 @@ signInButton.addEventListener("click", () => {
 //------------------------------------------
 // Переключатель меню уведомлений
 
+// Элементы HTML
+const notificationIcon = document.querySelector(".notification-svg"); // SVG с классом user
+const notificationContainer = document.querySelector(".notification-container");
 const notificationCancelButton = document.querySelector(
   ".notification-form-cancel"
 );
 
-const notificationhBox = (notificationToggle = document.querySelector(
-  ".notification-toggle"
-));
-notificationToggle.addEventListener("click", () => {
-  notificationToggle.classList.toggle("active");
+// Функция для обработки нажатия на SVG
+notificationIcon.addEventListener("click", () => {
+  if (notificationContainer.style.display == "none") {
+    notificationContainer.style.display = "block";
+  } else {
+    notificationContainer.style.display = "none";
+  }
 });
 
 notificationCancelButton.addEventListener("click", () => {
-  notificationToggle.classList.toggle("active");
+  notificationContainer.style.display = "none";
 });
 
 //------------------------------------------
