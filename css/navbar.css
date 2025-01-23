@@ -27,9 +27,11 @@
   background-color: rgba(255, 255, 255, 0.2);
 
   width: 100%;
-  height: 15vh;
+  height: 18vh;
 
   padding-top: 30px;
+
+  z-index: 100;
 }
 
 .site-navbar-wrap a {
@@ -399,6 +401,14 @@
   margin-top: 0px;
   visibility: visible;
   opacity: 1;
+}
+
+.cabinet-page .site-navbar-wrap {
+  background: var(--cabinet-page-menu-background-color);
+}
+
+.cabinet-page .site-navbar-wrap .site-navigation ul li a {
+  color: #4b4c4d;
 }
 
 /* End of navbar configuration

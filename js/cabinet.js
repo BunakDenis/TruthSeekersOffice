@@ -12,3 +12,15 @@ console.log(sidebarBtn);
 sidebarBtn.addEventListener("click", () => {
   sidebar.classList.toggle("close");
 });
+
+function calculateSideBarWidth() {
+  const sidebarHeight =
+    document.querySelector(".site-navbar-wrap").style.height +
+    document.querySelector(".footer-basic").style.height;
+  console.log(".site-navbar-wrap");
+  console.log($(".site-navbar-wrap").height());
+  console.log("footer-basic");
+  console.log($(".footer-basic").height());
+}
+
+calculateSideBarWidth();
