@@ -70,7 +70,7 @@ searchToggle.addEventListener("click", () => {
 
 // Переключатель меню входа юзера и меню уведомлений
 // Переменная для определения авторизации пользователя
-let userAuthorization = false;
+let userAuthorization = true;
 
 // Элементы HTML
 const userIcon = document.querySelector(".userserviceToggle"); // SVG с классом user

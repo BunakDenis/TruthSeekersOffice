@@ -95,35 +95,37 @@
 }
 
 .searchBox .search-field {
-  position: absolute;
-
-  top: 10vh;
-  right: 1vw;
-  height: 5vh;
-  width: 25vw;
-
   display: flex;
   align-items: center;
+
+  position: fixed;
+
+  top: 20vh;
+  right: 21vw;
+  height: 6vh;
+  width: 25vw;
 
   background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(8px);
 
   color: black;
   padding: 3px;
-  border-radius: 6px;
+  border-radius: 0.5vh;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+
   font-family: var(--fornt-family-for-content);
   font-optical-sizing: auto;
   font-weight: 200;
   font-size: 20px;
   font-style: italic;
+
   opacity: 0;
   pointer-events: none;
   transition: all 0.3s ease;
 }
 
 .searchToggle.active ~ .search-field {
-  top: 10vh;
+  top: 16vh;
   opacity: 1;
   pointer-events: auto;
   z-index: 2;
@@ -146,14 +148,19 @@
 
 #input-search-field {
   height: 95%;
-  width: 95%;
-  margin-top: 2px;
-  padding: 0 45px 0 15px;
+  width: 94%;
+
+  margin-left: 0.1vw;
+  padding: 1vh 5vw 1vh 1vw;
+
   outline: none;
   border: none;
-  border-radius: 4px;
+
+  border-radius: 0.5vh;
+
   font-size: 20px;
   font-weight: 300;
+
   color: black;
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
@@ -180,6 +187,325 @@
 .link:hover #user {
   fill: gold;
 }
+
+/* User sign in form
+-----------------------------------------------------------------------------------------------------------------------
+*/
+.sign-in-container {
+  display: none;
+  position: absolute;
+
+  top: 17vh;
+  right: 1%;
+  padding: 30px;
+  opacity: 1;
+  pointer-events: auto;
+
+  width: 400px;
+
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid rgba(214, 179, 179, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(238, 226, 226, 0.1);
+
+  font-family: var(--fornt-family-for-content);
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-size: 25px;
+  z-index: var(--z-index-for-forms);
+}
+
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+}
+.sign-in-form h2 {
+  font-family: var(--fornt-family-for-title);
+  font-style: normal;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.sign-in-form-cancel {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  fill: black;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.sign-in-form-cancel:hover {
+  fill: gold;
+}
+.input-sign-in-field {
+  position: relative;
+  border-bottom: 2px solid #ccc;
+  margin: 15px 0;
+}
+.input-sign-in-field label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: black;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.15s ease;
+}
+.input-sign-in-field input {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: black;
+}
+.input-sign-in-field input:focus ~ label,
+.input-sign-in-field input:valid ~ label {
+  font-size: 0.8rem;
+  top: 10px;
+  transform: translateY(-120%);
+}
+
+/* Block of fogetting password */
+.forget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: black;
+}
+#remember {
+  accent-color: #0e0b0b;
+}
+.forget label {
+  display: flex;
+  align-items: center;
+}
+.forget label span {
+  margin-left: 8px;
+  font-size: 0.8rem;
+}
+.sign-in-container p {
+  font-size: 1rem;
+}
+.sign-in-form a {
+  color: black;
+  text-decoration: none !important;
+  font-size: 1rem;
+}
+.sign-in-form a:hover,
+.sign-in-form a:focus {
+  text-decoration: underline;
+  color: gold;
+}
+
+/* Icons of show or hide password */
+#show-password,
+#hide-password {
+  top: 200px;
+  right: 40px;
+  position: absolute;
+  z-index: var(--z-index-for-icons-in-form);
+}
+#show-password {
+  display: none;
+}
+#hide-password {
+  display: block;
+}
+.fa:hover {
+  color: gold;
+}
+
+/* Sign in button */
+.sign-in-button {
+  background: #fff;
+  color: #000;
+
+  font-weight: 600;
+
+  padding: 12px 10px;
+  margin-top: 2vh;
+
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+}
+.sign-in-button:hover {
+  color: black;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+.register {
+  color: black;
+  margin-top: 30px;
+}
+
+body header .user-information-container {
+  display: none;
+  position: fixed;
+
+  top: 16vh;
+  right: 10%;
+  padding: 5vh;
+  opacity: 1;
+  pointer-events: auto;
+
+  max-height: 28vh;
+  width: 20vw;
+
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid rgba(214, 179, 179, 0.8);
+
+  background-color: rgba(238, 226, 226, 0.2);
+  backdrop-filter: blur(10px);
+
+  font-family: var(--fornt-family-for-content);
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-size: 1em;
+  z-index: var(--z-index-for-forms);
+}
+
+body header .user-information-container h2 {
+  font-size: 1.5em;
+}
+
+.user-information-container .container-fluid {
+  margin-top: 4vh;
+}
+
+.user-information-container a {
+  color: #fff;
+}
+.user-information-container a:hover {
+  color: gold;
+  text-decoration: none;
+}
+
+.user-information-form-cancel {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  fill: black;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.user-information-form-cancel:hover {
+  fill: gold;
+}
+
+/*
+    Notification information
+*/
+
+.notification-count {
+  position: absolute;
+
+  top: -1vh;
+  right: 5vw;
+
+  font-family: "Jost", sans-serif;
+  font-size: 12px;
+  font-optical-sizing: auto;
+  font-weight: 500;
+
+  background-color: gold;
+  border: 3px solid gold;
+  border-radius: 20px;
+}
+
+.notification-container {
+  display: none;
+  position: fixed;
+
+  top: 17vh;
+  right: 1%;
+
+  width: 25vw;
+  min-height: 20vh;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  border: 1px solid rgba(214, 179, 179, 0.8);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(238, 226, 226, 0.1);
+
+  z-index: var(--z-index-for-forms);
+}
+
+.notification-container form {
+  padding: 0;
+  margin: 0;
+}
+
+.notification-form-cancel {
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  fill: black;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.notification-form-cancel:hover {
+  fill: gold;
+}
+
+.notification-container h2 {
+  margin-bottom: 20px;
+  font-family: "Orelega One", serif;
+  font-style: normal;
+  font-size: 24px;
+  color: black;
+}
+
+.notification-container .notification-title {
+  justify-content: left;
+  font-family: "Orelega One", serif;
+  font-style: normal;
+  font-size: 14px;
+  color: black;
+}
+
+.notification-container .notification-content {
+  justify-content: left;
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-size: 14px;
+  color: black;
+}
+
+.notification-svg {
+  width: 40px;
+  height: 40px;
+  fill: #4b4c4d;
+  transition: fill 100ms ease-in-out;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------*/
 
 .site-navbar .site-navigation .site-menu {
   margin-bottom: 0;
