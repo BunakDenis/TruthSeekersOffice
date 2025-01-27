@@ -5,68 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Кабинет Искателя</title>
     <link rel="icon" href="images/al_vadud_vector_title.svg" type="image/svg" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/navbar.css" />
-    <link rel="stylesheet" href="./css/sidebar.css" />
-    <link
-      rel="canonical"
-      href="https://getbootstrap.com/docs/5.0/examples/sidebars/"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap"
-      rel="stylesheet"
-    />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-
-    <link
-      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet prefetch"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-
-    <!-- Navbar CSS -->
-    <link rel="stylesheet" href="fonts/icomoon/style.css" />
-    <link rel="stylesheet" href="css/navbar/owl.carousel.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <link rel="stylesheet" href="css/cabinetPage.css" />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/navbar/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap/style.css" />
+    <!-- ===== Boxicons CSS ===== -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body class="body-cabinet-page">
     <div class="bg-image" id="body-bg-image"></div>
     <header>
       <!-- NavBar -->
       <div class="site-navbar-wrap">
-        <div class="site-navbar site-navbar-target js-sticky-header">
+        <div class="site-navbar site-navbar-target">
           <div class="container-fluid">
             <div class="row justify-content-center">
               <div class="col-1"></div>
-              <div class="col-1">
+              <!-- Лого эгрегора -->
+              <div class="col-1 text-center my-auto">
                 <a class="link" href="index.html">
                   <svg
                     class="al-vadud"
-                    height="40px"
-                    width="40px"
                     preserveAspectRatio="xMidYMid meet"
                     viewBox="0 0 16000 16000"
                     xmlns="http://www.w3.org/2000/svg"
@@ -103,6 +68,7 @@
                   </svg>
                 </a>
               </div>
+              <!-- Название Школы -->
               <div class="col-2 my-auto">
                 <div class="school-title">
                   <h1 class="school-name">
@@ -111,8 +77,9 @@
                   </h1>
                 </div>
               </div>
+              <!-- Меню навигации по сайту -->
               <div class="col-5 my-auto">
-                <nav class="site-navigation text-right">
+                <nav class="site-navigation text-right" role="navigation">
                   <div class="container">
                     <ul
                       class="site-menu main-menu js-clone-nav d-none d-lg-block"
@@ -139,6 +106,7 @@
                   </div>
                 </nav>
               </div>
+              <!-- Меню поиска -->
               <div class="col-1 my-auto">
                 <div class="searchBox">
                   <div class="searchToggle">
@@ -186,6 +154,7 @@
                   </div>
                 </div>
               </div>
+              <!-- Меню юзера -->
               <div class="col-1 my-auto">
                 <div class="userserviceToggle">
                   <svg
@@ -201,79 +170,8 @@
                     />
                   </svg>
                 </div>
-
-                <!-- Форма входа юзера -->
-                <div class="sign-in-container">
-                  <form class="sign-in-form" action="#">
-                    <h2>Войти</h2>
-                    <svg
-                      class="sign-in-form-cancel"
-                      viewBox="0 -0.5 25 25"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M6.96967 16.4697C6.67678 16.7626 6.67678 17.2374 6.96967 17.5303C7.26256 17.8232 7.73744 17.8232 8.03033 17.5303L6.96967 16.4697ZM13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697L13.0303 12.5303ZM11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303L11.9697 11.4697ZM18.0303 7.53033C18.3232 7.23744 18.3232 6.76256 18.0303 6.46967C17.7374 6.17678 17.2626 6.17678 16.9697 6.46967L18.0303 7.53033ZM13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303L13.0303 11.4697ZM16.9697 17.5303C17.2626 17.8232 17.7374 17.8232 18.0303 17.5303C18.3232 17.2374 18.3232 16.7626 18.0303 16.4697L16.9697 17.5303ZM11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697L11.9697 12.5303ZM8.03033 6.46967C7.73744 6.17678 7.26256 6.17678 6.96967 6.46967C6.67678 6.76256 6.67678 7.23744 6.96967 7.53033L8.03033 6.46967ZM8.03033 17.5303L13.0303 12.5303L11.9697 11.4697L6.96967 16.4697L8.03033 17.5303ZM13.0303 12.5303L18.0303 7.53033L16.9697 6.46967L11.9697 11.4697L13.0303 12.5303ZM11.9697 12.5303L16.9697 17.5303L18.0303 16.4697L13.0303 11.4697L11.9697 12.5303ZM13.0303 11.4697L8.03033 6.46967L6.96967 7.53033L11.9697 12.5303L13.0303 11.4697Z"
-                      />
-                    </svg>
-                    <div class="input-sign-in-field">
-                      <input type="text" required />
-                      <label>Введите електронную почту</label>
-                    </div>
-                    <div class="input-sign-in-field">
-                      <input type="password" id="pass" required />
-                      <label>Введите пароль</label>
-                    </div>
-                    <i class="fa fa-eye fa-xs" id="show-password"></i>
-                    <i class="fa fa-eye-slash fa-xs" id="hide-password"></i>
-                    <div class="forget">
-                      <label for="remember">
-                        <input type="checkbox" id="remember" />
-                        <span>Запомнить меня</span>
-                      </label>
-                      <a class="sign-in-form-link" href="#">Забыли пароль?</a>
-                    </div>
-                    <button class="sign-in-button" type="submit">Войти</button>
-                    <div class="register">
-                      <p>
-                        У вас нет аккаунта?
-                        <a class="sign-in-form-link" href="./userSignUp.html"
-                          >Зарегистрироваться</a
-                        >
-                      </p>
-                    </div>
-                  </form>
-                </div>
-
-                <!-- Информация про пользователя и уведомления -->
-                <div class="user-information-container">
-                  <form class="user-information-form" action="#">
-                    <h2>Добро пожаловать, Имя и Фамилия Искателя</h2>
-                    <svg
-                      class="user-information-form-cancel"
-                      viewBox="0 -0.5 25 25"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M6.96967 16.4697C6.67678 16.7626 6.67678 17.2374 6.96967 17.5303C7.26256 17.8232 7.73744 17.8232 8.03033 17.5303L6.96967 16.4697ZM13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697L13.0303 12.5303ZM11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303L11.9697 11.4697ZM18.0303 7.53033C18.3232 7.23744 18.3232 6.76256 18.0303 6.46967C17.7374 6.17678 17.2626 6.17678 16.9697 6.46967L18.0303 7.53033ZM13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303L13.0303 11.4697ZM16.9697 17.5303C17.2626 17.8232 17.7374 17.8232 18.0303 17.5303C18.3232 17.2374 18.3232 16.7626 18.0303 16.4697L16.9697 17.5303ZM11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697L11.9697 12.5303ZM8.03033 6.46967C7.73744 6.17678 7.26256 6.17678 6.96967 6.46967C6.67678 6.76256 6.67678 7.23744 6.96967 7.53033L8.03033 6.46967ZM8.03033 17.5303L13.0303 12.5303L11.9697 11.4697L6.96967 16.4697L8.03033 17.5303ZM13.0303 12.5303L18.0303 7.53033L16.9697 6.46967L11.9697 11.4697L13.0303 12.5303ZM11.9697 12.5303L16.9697 17.5303L18.0303 16.4697L13.0303 11.4697L11.9697 12.5303ZM13.0303 11.4697L8.03033 6.46967L6.96967 7.53033L11.9697 12.5303L13.0303 11.4697Z"
-                      />
-                    </svg>
-                    <div class="container-fluid gx-0 px-0">
-                      <div class="row gy-20 text-left">
-                        <div class="col-12">
-                          <p class="user-information-content">user@gmailcom</p>
-                        </div>
-                        <div class="col-12">
-                          <a href="./userProfile.html">Профиль</a>
-                        </div>
-                        <div class="col-12">
-                          <a class="sign-out-link" href="#">Выйти</a>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
               </div>
-              <!-- Notification infomation -->
+              <!-- Меню уведомлений -->
               <div class="col-1 my-auto">
                 <div class="notification-toggle">
                   <svg
@@ -314,150 +212,189 @@
                 </div>
 
                 <span class="notification-count">99+</span>
-
-                <!-- Content of notification -->
-                <div class="notification-container">
-                  <form class="notification-form" action="#">
-                    <h2>Уведомления</h2>
-                    <svg
-                      class="notification-form-cancel"
-                      viewBox="0 -0.5 25 25"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M6.96967 16.4697C6.67678 16.7626 6.67678 17.2374 6.96967 17.5303C7.26256 17.8232 7.73744 17.8232 8.03033 17.5303L6.96967 16.4697ZM13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697L13.0303 12.5303ZM11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303L11.9697 11.4697ZM18.0303 7.53033C18.3232 7.23744 18.3232 6.76256 18.0303 6.46967C17.7374 6.17678 17.2626 6.17678 16.9697 6.46967L18.0303 7.53033ZM13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303L13.0303 11.4697ZM16.9697 17.5303C17.2626 17.8232 17.7374 17.8232 18.0303 17.5303C18.3232 17.2374 18.3232 16.7626 18.0303 16.4697L16.9697 17.5303ZM11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697L11.9697 12.5303ZM8.03033 6.46967C7.73744 6.17678 7.26256 6.17678 6.96967 6.46967C6.67678 6.76256 6.67678 7.23744 6.96967 7.53033L8.03033 6.46967ZM8.03033 17.5303L13.0303 12.5303L11.9697 11.4697L6.96967 16.4697L8.03033 17.5303ZM13.0303 12.5303L18.0303 7.53033L16.9697 6.46967L11.9697 11.4697L13.0303 12.5303ZM11.9697 12.5303L16.9697 17.5303L18.0303 16.4697L13.0303 11.4697L11.9697 12.5303ZM13.0303 11.4697L8.03033 6.46967L6.96967 7.53033L11.9697 12.5303L13.0303 11.4697Z"
-                      />
-                    </svg>
-                    <div class="container-fluid gx-0 px-0">
-                      <div class="row gy-20 text-left">
-                        <div class="col-4">
-                          <p class="notification-title">Уведомление №1</p>
-                        </div>
-                        <div class="col-8">
-                          <p class="notification-content">
-                            Практика с Послания Доверие не сделана
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Форма входа юзера -->
+      <div class="sign-in-container">
+        <form class="sign-in-form" action="#">
+          <h2>Войти</h2>
+          <svg
+            class="sign-in-form-cancel"
+            viewBox="0 -0.5 25 25"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.96967 16.4697C6.67678 16.7626 6.67678 17.2374 6.96967 17.5303C7.26256 17.8232 7.73744 17.8232 8.03033 17.5303L6.96967 16.4697ZM13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697L13.0303 12.5303ZM11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303L11.9697 11.4697ZM18.0303 7.53033C18.3232 7.23744 18.3232 6.76256 18.0303 6.46967C17.7374 6.17678 17.2626 6.17678 16.9697 6.46967L18.0303 7.53033ZM13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303L13.0303 11.4697ZM16.9697 17.5303C17.2626 17.8232 17.7374 17.8232 18.0303 17.5303C18.3232 17.2374 18.3232 16.7626 18.0303 16.4697L16.9697 17.5303ZM11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697L11.9697 12.5303ZM8.03033 6.46967C7.73744 6.17678 7.26256 6.17678 6.96967 6.46967C6.67678 6.76256 6.67678 7.23744 6.96967 7.53033L8.03033 6.46967ZM8.03033 17.5303L13.0303 12.5303L11.9697 11.4697L6.96967 16.4697L8.03033 17.5303ZM13.0303 12.5303L18.0303 7.53033L16.9697 6.46967L11.9697 11.4697L13.0303 12.5303ZM11.9697 12.5303L16.9697 17.5303L18.0303 16.4697L13.0303 11.4697L11.9697 12.5303ZM13.0303 11.4697L8.03033 6.46967L6.96967 7.53033L11.9697 12.5303L13.0303 11.4697Z"
+            />
+          </svg>
+          <div class="input-sign-in-field">
+            <input type="text" required />
+            <label>Введите електронную почту</label>
+          </div>
+          <div class="input-sign-in-field">
+            <input type="password" id="pass" required />
+            <label>Введите пароль</label>
+          </div>
+          <i class="fa fa-eye fa-xs" id="show-password"></i>
+          <i class="fa fa-eye-slash fa-xs" id="hide-password"></i>
+          <div class="forget">
+            <label for="remember">
+              <input type="checkbox" id="remember" />
+              <span>Запомнить меня</span>
+            </label>
+            <a class="sign-in-form-link" href="#">Забыли пароль?</a>
+          </div>
+          <button class="sign-in-button" type="submit">Войти</button>
+          <div class="register">
+            <p>
+              У вас нет аккаунта?
+              <a class="sign-in-form-link" href="./userSignUp.html"
+                >Зарегистрироваться</a
+              >
+            </p>
+          </div>
+        </form>
+      </div>
+      <!-- Форма информации про пользователя -->
+      <div class="user-information-container" id="user-information-container">
+        <form
+          class="user-information-form"
+          id="user-information-form"
+          action="#"
+        >
+          <h2 class="user-information-form-title">
+            Добро пожаловать,<br />
+            Имя и Фамилия Искателя!
+          </h2>
+          <svg
+            class="user-information-form-cancel"
+            viewBox="0 -0.5 25 25"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.96967 16.4697C6.67678 16.7626 6.67678 17.2374 6.96967 17.5303C7.26256 17.8232 7.73744 17.8232 8.03033 17.5303L6.96967 16.4697ZM13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697L13.0303 12.5303ZM11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303L11.9697 11.4697ZM18.0303 7.53033C18.3232 7.23744 18.3232 6.76256 18.0303 6.46967C17.7374 6.17678 17.2626 6.17678 16.9697 6.46967L18.0303 7.53033ZM13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303L13.0303 11.4697ZM16.9697 17.5303C17.2626 17.8232 17.7374 17.8232 18.0303 17.5303C18.3232 17.2374 18.3232 16.7626 18.0303 16.4697L16.9697 17.5303ZM11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697L11.9697 12.5303ZM8.03033 6.46967C7.73744 6.17678 7.26256 6.17678 6.96967 6.46967C6.67678 6.76256 6.67678 7.23744 6.96967 7.53033L8.03033 6.46967ZM8.03033 17.5303L13.0303 12.5303L11.9697 11.4697L6.96967 16.4697L8.03033 17.5303ZM13.0303 12.5303L18.0303 7.53033L16.9697 6.46967L11.9697 11.4697L13.0303 12.5303ZM11.9697 12.5303L16.9697 17.5303L18.0303 16.4697L13.0303 11.4697L11.9697 12.5303ZM13.0303 11.4697L8.03033 6.46967L6.96967 7.53033L11.9697 12.5303L13.0303 11.4697Z"
+            />
+          </svg>
+          <div class="container-fluid gx-0 px-0">
+            <div class="row gy-20 text-left">
+              <div class="col-12">
+                <p class="user-information-content">user@gmailcom</p>
+              </div>
+              <div class="col-12">
+                <a href="./userProfile.html">Профиль</a>
+              </div>
+              <div class="col-12">
+                <a class="sign-out-link" href="#">Выйти</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Форма уведомлений -->
+      <div class="notification-container">
+        <form class="notification-form" action="#">
+          <h2>Уведомления</h2>
+          <svg
+            class="notification-form-cancel"
+            viewBox="0 -0.5 25 25"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.96967 16.4697C6.67678 16.7626 6.67678 17.2374 6.96967 17.5303C7.26256 17.8232 7.73744 17.8232 8.03033 17.5303L6.96967 16.4697ZM13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697L13.0303 12.5303ZM11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303L11.9697 11.4697ZM18.0303 7.53033C18.3232 7.23744 18.3232 6.76256 18.0303 6.46967C17.7374 6.17678 17.2626 6.17678 16.9697 6.46967L18.0303 7.53033ZM13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303L13.0303 11.4697ZM16.9697 17.5303C17.2626 17.8232 17.7374 17.8232 18.0303 17.5303C18.3232 17.2374 18.3232 16.7626 18.0303 16.4697L16.9697 17.5303ZM11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697L11.9697 12.5303ZM8.03033 6.46967C7.73744 6.17678 7.26256 6.17678 6.96967 6.46967C6.67678 6.76256 6.67678 7.23744 6.96967 7.53033L8.03033 6.46967ZM8.03033 17.5303L13.0303 12.5303L11.9697 11.4697L6.96967 16.4697L8.03033 17.5303ZM13.0303 12.5303L18.0303 7.53033L16.9697 6.46967L11.9697 11.4697L13.0303 12.5303ZM11.9697 12.5303L16.9697 17.5303L18.0303 16.4697L13.0303 11.4697L11.9697 12.5303ZM13.0303 11.4697L8.03033 6.46967L6.96967 7.53033L11.9697 12.5303L13.0303 11.4697Z"
+            />
+          </svg>
+          <div class="container-fluid gx-0 px-0">
+            <div class="row gy-20 text-left">
+              <div class="col-4">
+                <p class="notification-title">Уведомление №1</p>
+              </div>
+              <div class="col-8">
+                <p class="notification-content">
+                  Практика с Послания Доверие не сделана
+                </p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </header>
     <main>
-      <!-- SideBar -->
-      <div class="sidebar close">
-        <ul class="nav-links">
-          <li>
-            <a href="#">
-              <i class="bx bx-grid-alt"></i>
-              <span class="link_name">Dashboard</span>
-            </a>
-            <ul class="sub-menu blank">
-              <li><a class="link_name" href="#">Category</a></li>
-            </ul>
-          </li>
-          <li>
-            <div class="iocn-link">
-              <a href="#">
-                <i class="bx bx-collection"></i>
-                <span class="link_name">Category</span>
-              </a>
-              <i class="bx bxs-chevron-down arrow"></i>
-            </div>
-            <ul class="sub-menu">
-              <li><a class="link_name" href="#">Category</a></li>
-              <li><a href="#">HTML & CSS</a></li>
-              <li><a href="#">JavaScript</a></li>
-              <li><a href="#">PHP & MySQL</a></li>
-            </ul>
-          </li>
-          <li>
-            <div class="iocn-link">
-              <a href="#">
-                <i class="bx bx-book-alt"></i>
-                <span class="link_name">Posts</span>
-              </a>
-              <i class="bx bxs-chevron-down arrow"></i>
-            </div>
-            <ul class="sub-menu">
-              <li><a class="link_name" href="#">Posts</a></li>
-              <li><a href="#">Web Design</a></li>
-              <li><a href="#">Login Form</a></li>
-              <li><a href="#">Card Design</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bx bx-pie-chart-alt-2"></i>
-              <span class="link_name">Analytics</span>
-            </a>
-            <ul class="sub-menu blank">
-              <li><a class="link_name" href="#">Analytics</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bx bx-line-chart"></i>
-              <span class="link_name">Chart</span>
-            </a>
-            <ul class="sub-menu blank">
-              <li><a class="link_name" href="#">Chart</a></li>
-            </ul>
-          </li>
-          <li>
-            <div class="iocn-link">
-              <a href="#">
-                <i class="bx bx-plug"></i>
-                <span class="link_name">Plugins</span>
-              </a>
-              <i class="bx bxs-chevron-down arrow"></i>
-            </div>
-            <ul class="sub-menu">
-              <li><a class="link_name" href="#">Plugins</a></li>
-              <li><a href="#">UI Face</a></li>
-              <li><a href="#">Pigments</a></li>
-              <li><a href="#">Box Icons</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bx bx-compass"></i>
-              <span class="link_name">Explore</span>
-            </a>
-            <ul class="sub-menu blank">
-              <li><a class="link_name" href="#">Explore</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bx bx-history"></i>
-              <span class="link_name">History</span>
-            </a>
-            <ul class="sub-menu blank">
-              <li><a class="link_name" href="#">History</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bx bx-cog"></i>
-              <span class="link_name">Setting</span>
-            </a>
-            <ul class="sub-menu blank">
-              <li><a class="link_name" href="#">Setting</a></li>
-            </ul>
-          </li>
-        </ul>
+      <div class="btn">
+        <span class="fas fa-light fa-circle-arrow-right"></span>
+        <span class="fas fa-light fa-circle-arrow-left"></span>
       </div>
-      <section class="home-section">
-        <div class="home-content">
-          <i class="bx bx-menu"></i>
-        </div>
-      </section>
+      <aside class="sidebar">
+        <ul>
+          <li>
+            <a href="#"
+              ><span class="fa fa-regular fa-clipboard"></span>Результаты
+              работы</a
+            >
+          </li>
+          <li class="God">
+            <a href="#" class="serv-btn"
+              >Господь
+              <span class="fas fa-caret-down first"></span>
+            </a>
+            <ul class="serv-show">
+              <li><a href="#">Воля</a></li>
+              <li><a href="#">Вопрошание</a></li>
+              <li><a href="#">Ведение</a></li>
+              <li><a href="#">Послания</a></li>
+              <li><a href="#">Молитвы</a></li>
+              <li><a href="#">Обеты</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="serv-btn"
+              >Работа
+              <span class="fas fa-caret-down second"></span>
+            </a>
+            <ul class="serv-show">
+              <li><a href="#">Основная практика</a></li>
+              <li><a href="#">Дополнительные практики</a></li>
+              <li><a href="#">Созерцание</a></li>
+              <li><a href="#">Маршруты</a></li>
+              <li><a href="#">Целительство</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="serv-btn"
+              >Ученику
+              <span class="fas fa-caret-down second"></span>
+            </a>
+            <ul class="serv-show">
+              <li><a href="#">Книги</a></li>
+              <li><a href="#">Аудиокниги</a></li>
+              <li><a href="#">Статьи</a></li>
+              <li><a href="#">Аудио-видео лекции</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="serv-btn"
+              >Администрирование
+              <span class="fas fa-caret-down second"></span>
+            </a>
+            <ul class="serv-show">
+              <li><a href="#">Практики</a></li>
+              <li><a href="#">Послания</a></li>
+              <li><a href="#">Молитвы</a></li>
+              <li><a href="#">Маршруты</a></li>
+              <li><a href="#">Книги</a></li>
+              <li><a href="#">Аудиокниги</a></li>
+              <li><a href="#">Статьи</a></li>
+              <li><a href="#">Аудио-видео лекции</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Настройки</a></li>
+        </ul>
+      </aside>
+
+      <div class="cabinet-content"></div>
     </main>
     <!-- Footer -->
     <footer>
@@ -490,10 +427,25 @@
             </svg>
           </a>
         </div>
-        <p class="copyright">«Восходящий Поток» © 2015 — 2024</p>
+        <p class="copyright">
+          «Восходящий Поток» &copy; 2015 —
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+        </p>
       </div>
     </footer>
   </body>
+  <!-- Navbar Script-->
+  <script src="js/bootstrap/bootstrap.min.js"></script>
+  <script src="js/bootstrap/jquery.min.js"></script>
+  <script src="js/bootstrap/main.js"></script>
+  <script src="js/bootstrap/popper.js"></script>
+  <script
+    src="https://kit.fontawesome.com/d6a7640edd.js"
+    crossorigin="anonymous"
+  ></script>
+
   <script src="js/cabinet.js" defer></script>
   <script src="js/main.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>

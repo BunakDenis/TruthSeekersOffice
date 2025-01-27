@@ -7,41 +7,15 @@
     <link rel="icon" href="images/al_vadud_vector_title.svg" type="image/svg" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/navbar.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap"
-      rel="stylesheet"
-    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
-    />
-
     <!-- Navbar CSS -->
-    <link rel="stylesheet" href="fonts/icomoon/style.css" />
-
-    <link rel="stylesheet" href="css/navbar/owl.carousel.min.css" />
     <link
       rel="stylesheet prefetch"
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/navbar/bootstrap.min.css" />
-
     <!-- ===== Boxicons CSS ===== -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -64,18 +38,17 @@
     </div>
 
     <header>
-      <!-- .site-mobile-menu -->
+      <!-- NavBar -->
       <div class="site-navbar-wrap">
-        <div class="site-navbar site-navbar-target js-sticky-header">
+        <div class="site-navbar site-navbar-target">
           <div class="container-fluid">
             <div class="row justify-content-center">
               <div class="col-1"></div>
-              <div class="col-1">
+              <!-- Лого эгрегора -->
+              <div class="col-1 text-center my-auto">
                 <a class="link" href="index.html">
                   <svg
                     class="al-vadud"
-                    height="40px"
-                    width="40px"
                     preserveAspectRatio="xMidYMid meet"
                     viewBox="0 0 16000 16000"
                     xmlns="http://www.w3.org/2000/svg"
@@ -112,6 +85,7 @@
                   </svg>
                 </a>
               </div>
+              <!-- Название Школы -->
               <div class="col-2 my-auto">
                 <div class="school-title">
                   <h1 class="school-name">
@@ -120,6 +94,7 @@
                   </h1>
                 </div>
               </div>
+              <!-- Меню навигации по сайту -->
               <div class="col-5 my-auto">
                 <nav class="site-navigation text-right" role="navigation">
                   <div class="container">
@@ -148,6 +123,7 @@
                   </div>
                 </nav>
               </div>
+              <!-- Меню поиска -->
               <div class="col-1 my-auto">
                 <div class="searchBox">
                   <div class="searchToggle">
@@ -195,6 +171,7 @@
                   </div>
                 </div>
               </div>
+              <!-- Меню юзера -->
               <div class="col-1 my-auto">
                 <div class="userserviceToggle">
                   <svg
@@ -211,7 +188,7 @@
                   </svg>
                 </div>
               </div>
-              <!-- Notification infomation -->
+              <!-- Меню уведомлений -->
               <div class="col-1 my-auto">
                 <div class="notification-toggle">
                   <svg
@@ -300,9 +277,13 @@
         </form>
       </div>
       <!-- Форма информации про пользователя -->
-      <div class="user-information-container">
-        <form class="user-information-form" action="#">
-          <h2>
+      <div class="user-information-container" id="user-information-container">
+        <form
+          class="user-information-form"
+          id="user-information-form"
+          action="#"
+        >
+          <h2 class="user-information-form-title">
             Добро пожаловать,<br />
             Имя и Фамилия Искателя!
           </h2>
@@ -400,10 +381,14 @@
             </svg>
           </a>
         </div>
-        <p class="copyright">«Восходящий Поток» © 2015 — 2024</p>
+        <p class="copyright">
+          «Восходящий Поток» &copy; 2015 —
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+        </p>
       </div>
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
     <!-- Navbar Script-->
     <script src="js/navbar/bootstrap.min.js"></script>

@@ -1,6 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lobster&family=Orelega+One&display=swap");
+
 :root {
   --page-content-background-color: rgba(255, 255, 255, 0.1);
   --cabinet-page-menu-background-color: rgba(255, 255, 255, 0.6);
+  --cabinet-page-menu-item-hover-background-color: rgba(255, 255, 255, 0.2);
+
+  --backdrop-filter-blur: blur(0.5em);
 
   --fornt-family-for-school-name: "Lobster", sans-serif;
   --fornt-family-for-title: "Orelega One", serif;
@@ -19,11 +24,18 @@
   --display-none: none;
   --box-sizing: border-box;
 
+  --marging-top-nav-bar-forms: 13vh;
+
   --z-index-for-background-media: 0;
   --z-index-for-content: 1;
   --z-index-for-forms: 10;
   --z-index-for-icons-in-form: 20;
   --z-index-for-modal-form: 30;
+
+  --transition--all--0-ease: 0s;
+  --transition--all--03-ease: all 0.3s ease;
+  --transition--all--04-ease: all 0.4s ease;
+  --transition--all--05-ease: all 0.5s ease;
 }
 
 *,
@@ -54,7 +66,7 @@ body {
 
   height: 100%;
 
-  grid-template-rows: 15% 75% 10%;
+  grid-template-rows: 12% 78% 10%;
 
   margin: 0;
   padding: 0;
@@ -199,7 +211,6 @@ a {
   list-style: none;
   text-align: center;
   font-size: 18px;
-  line-height: 1.6;
   margin-bottom: 0;
 }
 
@@ -230,14 +241,12 @@ a {
   font-size: 24px;
   width: 40px;
   height: 40px;
-  line-height: 40px;
 }
 
 .footer-basic .social > a > svg {
   fill: #4b4c4d;
   width: 30px;
   height: 30px;
-  line-height: 40px;
 }
 
 .footer-basic .social > a:hover,
@@ -252,30 +261,6 @@ a {
   text-align: center;
   color: black;
   margin-bottom: 0;
-}
-
-/* Страница - кабинет искателя */
-
-.body-cabinet-page > #body-bg-image {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  overflow: visible;
-
-  background-image: url("./../images/cabinet.jpg");
-  background-size: cover;
-
-  z-index: var(--z-index-for-background-media);
-}
-
-/* Cabinet Page Footer */
-.body-cabinet-page footer {
-  background: var(--cabinet-page-menu-background-color);
 }
 
 /* Page - User Sign Up */

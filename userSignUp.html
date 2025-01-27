@@ -64,18 +64,17 @@
     </div>
 
     <header>
-      <!-- .site-mobile-menu -->
+      <!-- NavBar -->
       <div class="site-navbar-wrap">
-        <div class="site-navbar site-navbar-target js-sticky-header">
+        <div class="site-navbar site-navbar-target">
           <div class="container-fluid">
             <div class="row justify-content-center">
               <div class="col-1"></div>
-              <div class="col-1">
+              <!-- Лого эгрегора -->
+              <div class="col-1 text-center my-auto">
                 <a class="link" href="index.html">
                   <svg
                     class="al-vadud"
-                    height="40px"
-                    width="40px"
                     preserveAspectRatio="xMidYMid meet"
                     viewBox="0 0 16000 16000"
                     xmlns="http://www.w3.org/2000/svg"
@@ -112,6 +111,7 @@
                   </svg>
                 </a>
               </div>
+              <!-- Название Школы -->
               <div class="col-2 my-auto">
                 <div class="school-title">
                   <h1 class="school-name">
@@ -120,6 +120,7 @@
                   </h1>
                 </div>
               </div>
+              <!-- Меню навигации по сайту -->
               <div class="col-5 my-auto">
                 <nav class="site-navigation text-right" role="navigation">
                   <div class="container">
@@ -148,6 +149,7 @@
                   </div>
                 </nav>
               </div>
+              <!-- Меню поиска -->
               <div class="col-1 my-auto">
                 <div class="searchBox">
                   <div class="searchToggle">
@@ -195,6 +197,7 @@
                   </div>
                 </div>
               </div>
+              <!-- Меню юзера -->
               <div class="col-1 my-auto">
                 <div class="userserviceToggle">
                   <svg
@@ -211,7 +214,7 @@
                   </svg>
                 </div>
               </div>
-              <!-- Notification infomation -->
+              <!-- Меню уведомлений -->
               <div class="col-1 my-auto">
                 <div class="notification-toggle">
                   <svg
@@ -300,9 +303,16 @@
         </form>
       </div>
       <!-- Форма информации про пользователя -->
-      <div class="user-information-container">
-        <form class="user-information-form" action="#">
-          <h2>Добро пожаловать, Имя и Фамилия Искателя</h2>
+      <div class="user-information-container" id="user-information-container">
+        <form
+          class="user-information-form"
+          id="user-information-form"
+          action="#"
+        >
+          <h2 class="user-information-form-title">
+            Добро пожаловать,<br />
+            Имя и Фамилия Искателя!
+          </h2>
           <svg
             class="user-information-form-cancel"
             viewBox="0 -0.5 25 25"
@@ -521,7 +531,12 @@
             </svg>
           </a>
         </div>
-        <p class="copyright">«Восходящий Поток» © 2015 — 2024</p>
+        <p class="copyright">
+          «Восходящий Поток» &copy; 2015 —
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+        </p>
       </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
