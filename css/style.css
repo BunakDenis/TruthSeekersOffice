@@ -231,10 +231,15 @@ a {
 .footer-basic .social > a {
   display: inline-block;
   text-align: center;
+
   margin: 0 8px;
+
   color: inherit;
   cursor: pointer;
-  transition: all 0.3s ease;
+
+  -webkit-transition: var(--transition--all--03-ease);
+  -o-transition: var(--transition--all--03-ease);
+  transition: var(--transition--all--03-ease);
 }
 
 .footer-basic .social > a > i {

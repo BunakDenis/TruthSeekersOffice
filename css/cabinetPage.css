@@ -31,13 +31,14 @@
 }
 
 .cabinet-content {
+  display: none;
   position: absolute;
 
-  width: 98%;
+  width: 80%;
   height: 90%;
 
   top: 5%;
-  left: 1%;
+  left: 19%;
 
   background-color: var(--page-content-background-color);
   backdrop-filter: var(--backdrop-filter-blur);
@@ -46,4 +47,20 @@
   transition: all 0.4s ease;
 
   z-index: 0;
+}
+
+.cabinet-content.hide-sidebar {
+  width: 98%;
+
+  top: 5%;
+  left: 1%;
+}
+
+.cabinet-content div {
+  display: none;
+
+  text-align: center;
+
+  font-family: var(--fornt-family-for-title);
+  font-size: 30px;
 }

@@ -14,8 +14,12 @@ header .site-navbar-wrap a:hover {
 .al-vadud {
   width: 60%;
   height: 60%;
+
   fill: red;
-  transition: fill 100ms ease-in-out;
+
+  -webkit-transition: var(--transition--all--04-ease);
+  -o-transition: var(--transition--all--04-ease);
+  transition: var(--transition--all--04-ease);
 }
 
 header .site-navbar-wrap {
@@ -74,7 +78,10 @@ header .site-navbar {
   fill: #4b4c4d;
   font-size: 22px;
   cursor: pointer;
-  transition: all 0.3s ease;
+
+  -webkit-transition: var(--transition--all--03-ease);
+  -o-transition: var(--transition--all--03-ease);
+  transition: var(--transition--all--03-ease);
 }
 
 .searchToggle svg:hover {
@@ -363,7 +370,7 @@ body header #user-information-container {
   right: 10%;
   padding: 5vh;
 
-  max-height: 28vh;
+  max-height: 32vh;
   width: 20vw;
 
   text-align: center;
@@ -384,11 +391,11 @@ body header #user-information-container {
 }
 
 #user-information-container .user-information-form-title {
-  font-family: var(--fornt-family-for-title);
+  font-family: var(--fornt-family-for-content);
   font-optical-sizing: auto;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 2vh;
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 #user-information-container .container-fluid {
@@ -513,8 +520,12 @@ body header #user-information-container {
 .notification-svg {
   width: 40px;
   height: 40px;
+
   fill: #4b4c4d;
-  transition: fill 100ms ease-in-out;
+
+  -webkit-transition: var(--transition--all--03-ease);
+  -o-transition: var(--transition--all--03-ease);
+  transition: var(--transition--all--03-ease);
 }
 
 /*-----------------------------------------------------------------------------------------------------------------------*/

@@ -45,7 +45,7 @@ body main > .btn {
   z-index: var(--z-index-for-icons-in-form);
 }
 body main > .btn.click {
-  left: 16.5vw;
+  left: 17.2vw;
 }
 
 body main > .btn span {
@@ -55,6 +55,9 @@ body main > .btn span {
 
 body main > .btn .fa-circle-arrow-right {
   display: block;
+}
+body main > .btn .fa-circle-arrow-right.rotate {
+  transform: rotate(-180deg);
 }
 
 body main > .btn .fa-circle-arrow-left {
@@ -82,10 +85,27 @@ body main > .btn .fa-circle-arrow-left {
 }
 
 .sidebar ul .God > ul {
+  margin-left: 1vw;
   font-family: var(--fornt-family-for-school-name);
-  font-size: 1 em;
+  font-size: 0.8em;
   font-weight: 100;
   font-style: normal;
+}
+.sidebar ul .God .side-bar-god-svg {
+  width: 2vw;
+  height: auto;
+
+  margin-right: 1vw;
+
+  fill: none;
+  stroke: white;
+  stroke-width: 3vh;
+}
+.sidebar ul li.active > a .side-bar-god-svg {
+  stroke: gold;
+}
+.sidebar ul li > a:hover .side-bar-god-svg {
+  stroke: gold;
 }
 .sidebar ul li:last-child {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -103,13 +123,27 @@ body main > .btn .fa-circle-arrow-left {
 
   border-left: 3px solid transparent;
 }
+.sidebar ul li svg {
+  width: 2vw;
+  height: auto;
+
+  margin-right: 1vw;
+
+  fill: white;
+}
 .sidebar ul li.active > a {
   color: gold;
   background: var(--cabinet-page-menu-background-color);
 }
+.sidebar ul li.active > a svg {
+  fill: gold;
+}
 .sidebar ul li > a:hover {
   color: gold;
   background: var(--cabinet-page-menu-item-hover-background-color);
+}
+.sidebar ul li > a:hover svg {
+  fill: gold;
 }
 .sidebar ul ul {
   position: static;
