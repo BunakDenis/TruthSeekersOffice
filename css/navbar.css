@@ -85,7 +85,7 @@ header .site-navbar {
 }
 
 .searchToggle svg:hover {
-  fill: gold;
+  fill: var(--page-text-color-hover);
 }
 
 .searchToggle svg.cancel {
@@ -186,7 +186,7 @@ header .site-navbar {
 }
 
 .bx-search:hover {
-  color: gold;
+  color: var(--page-text-color-hover);
 }
 
 #user {
@@ -197,7 +197,7 @@ header .site-navbar {
 }
 
 .link:hover #user {
-  fill: gold;
+  fill: var(--page-text-color-hover);
 }
 
 /* User sign in form
@@ -253,7 +253,7 @@ header .site-navbar {
   transition: all 0.3s ease;
 }
 .sign-in-form-cancel:hover {
-  fill: gold;
+  fill: var(--page-text-color-hover);
 }
 .input-sign-in-field {
   position: relative;
@@ -315,7 +315,7 @@ header .site-navbar {
 .sign-in-form a:hover,
 .sign-in-form a:focus {
   text-decoration: underline;
-  color: gold;
+  color: var(--page-text-color-hover);
 }
 
 /* Icons of show or hide password */
@@ -333,7 +333,7 @@ header .site-navbar {
   display: block;
 }
 .fa:hover {
-  color: gold;
+  color: var(--page-text-color-hover);
 }
 
 /* Sign in button */
@@ -408,7 +408,7 @@ body header #user-information-container {
   color: #fff;
 }
 #user-information-container a:hover {
-  color: gold;
+  color: var(--page-text-color-hover);
   text-decoration: none;
 }
 
@@ -425,7 +425,7 @@ body header #user-information-container {
 }
 
 .user-information-form-cancel:hover {
-  fill: gold;
+  fill: var(--page-text-color-hover);
 }
 
 /*
@@ -443,7 +443,7 @@ body header #user-information-container {
   font-optical-sizing: auto;
   font-weight: 500;
 
-  background-color: gold;
+  background-color: var(--page-text-color-hover);
   border: 3px solid gold;
   border-radius: 20px;
 }
@@ -489,7 +489,7 @@ body header #user-information-container {
   transition: all 0.3s ease;
 }
 .notification-form-cancel:hover {
-  fill: gold;
+  fill: var(--page-text-color-hover);
 }
 
 .notification-container h2 {
@@ -551,7 +551,7 @@ header .site-navbar .site-navigation .site-menu > li > a.active {
   color: #fff;
 }
 header .site-navbar .site-navigation .site-menu > li > a:hover {
-  color: gold;
+  color: var(--page-text-color-hover);
 }
 header .site-navbar .site-navigation .site-menu > li:last-child {
   padding-right: 0;
@@ -704,7 +704,7 @@ header
   > li
   > a:hover {
   background: #ebeef0;
-  color: gold;
+  color: var(--page-text-color-hover);
 }
 header
   .site-navbar
@@ -761,7 +761,7 @@ header
   > li.has-children:focus
   > a {
   background: #ebeef0;
-  color: gold;
+  color: var(--page-text-color-hover);
 }
 header .site-navbar .site-navigation .site-menu .has-children:hover > a,
 header .site-navbar .site-navigation .site-menu .has-children:focus > a,

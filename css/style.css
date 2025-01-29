@@ -2,20 +2,27 @@
 
 :root {
   --page-content-background-color: rgba(255, 255, 255, 0.1);
+  --cabinet-page-content-background-color: white;
   --cabinet-page-menu-background-color: rgba(255, 255, 255, 0.6);
   --cabinet-page-menu-item-hover-background-color: rgba(255, 255, 255, 0.2);
 
   --backdrop-filter-blur: blur(0.5em);
+  --sidebar-content-backdrop-filter-blur: blur(0.5em);
 
   --fornt-family-for-school-name: "Lobster", sans-serif;
   --fornt-family-for-title: "Orelega One", serif;
   --fornt-family-for-content: "Jost", serif;
 
+  --cabinet-page-nav-menu-font-color: #4b4c4d;
+  --cabinet-page-sidebar-content-font-color: black;
   --page-text-color: #8e9196;
   --page-text-color-hover: gold;
 
   --tab-display: grid;
   --tab-background-color: rgba(255, 255, 255, 0.1);
+  --tbl-row-border-color: rgba(255, 255, 255, 0.1);
+
+  --tbl-border: 1px solid black;
 
   --tbl-lable-font-family: "Jost", sans-serif;
   --tbl-lable-font-optical-sizing: auto;
@@ -257,8 +264,8 @@ a {
 .footer-basic .social > a:hover,
 .footer-basic .social > a:hover > svg {
   opacity: 0.9;
-  color: gold;
-  fill: gold;
+  color: var(--page-text-color-hover);
+  fill: var(--page-text-color-hover);
 }
 
 .footer-basic .copyright {
@@ -344,8 +351,8 @@ a {
 }
 
 .contacts-container .contacts-information-container .school-email:hover {
-  color: gold;
-  text-decoration: underline gold !important;
+  color: var(--page-text-color-hover);
+  text-decoration: underline var(--page-text-color-hover) !important;
 }
 
 .shcool-site {
@@ -743,7 +750,7 @@ tab-content svg {
 }
 
 tab-content svg:hover {
-  fill: gold;
+  fill: var(--page-text-color-hover);
 }
 
 /* Icons of show or hide password */
@@ -965,7 +972,7 @@ input#tabToggle03:checked ~ tab-content:not(:nth-of-type(3)) {
 }
 
 #profile-seeker-modal-cross-svg:hover {
-  fill: gold;
+  fill: var(--page-text-color-hover);
 }
 
 .profile-edit-seeker-modal-body {

@@ -102,10 +102,10 @@ body main > .btn .fa-circle-arrow-left {
   stroke-width: 3vh;
 }
 .sidebar ul li.active > a .side-bar-god-svg {
-  stroke: gold;
+  stroke: var(--page-text-color-hover);
 }
 .sidebar ul li > a:hover .side-bar-god-svg {
-  stroke: gold;
+  stroke: var(--page-text-color-hover);
 }
 .sidebar ul li:last-child {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -132,18 +132,18 @@ body main > .btn .fa-circle-arrow-left {
   fill: white;
 }
 .sidebar ul li.active > a {
-  color: gold;
+  color: var(--page-text-color-hover);
   background: var(--cabinet-page-menu-background-color);
 }
 .sidebar ul li.active > a svg {
-  fill: gold;
+  fill: var(--page-text-color-hover);
 }
 .sidebar ul li > a:hover {
-  color: gold;
+  color: var(--page-text-color-hover);
   background: var(--cabinet-page-menu-item-hover-background-color);
 }
 .sidebar ul li > a:hover svg {
-  fill: gold;
+  fill: var(--page-text-color-hover);
 }
 .sidebar ul ul {
   position: static;
@@ -171,7 +171,7 @@ body main > .btn .fa-circle-arrow-left {
   background-color: none !important;
 }
 .sidebar ul ul li a:hover {
-  color: gold !important;
+  color: var(--page-text-color-hover) !important;
   background-color: none !important;
 }
 .sidebar ul li a .fas {
