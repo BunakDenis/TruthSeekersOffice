@@ -2,12 +2,13 @@
 
 :root {
   --page-content-background-color: rgba(255, 255, 255, 0.1);
-  --cabinet-page-content-background-color: white;
+  --cabinet-page-content-background-color: rgba(255, 255, 255, 0.6);
   --cabinet-page-menu-background-color: rgba(255, 255, 255, 0.6);
   --cabinet-page-menu-item-hover-background-color: rgba(255, 255, 255, 0.2);
+  --modal-form-out-background-color: rgba(27, 26, 26, 0.7);
 
-  --backdrop-filter-blur: blur(0.5em);
-  --sidebar-content-backdrop-filter-blur: blur(0.5em);
+  --backdrop-filter-blur: blur(8px);
+  --sidebar-content-backdrop-filter-blur: blur(30px);
 
   --fornt-family-for-school-name: "Lobster", sans-serif;
   --fornt-family-for-title: "Orelega One", serif;
@@ -15,14 +16,14 @@
 
   --cabinet-page-nav-menu-font-color: #4b4c4d;
   --cabinet-page-sidebar-content-font-color: black;
-  --page-text-color: #8e9196;
+  --page-text-color: white;
   --page-text-color-hover: gold;
 
   --tab-display: grid;
   --tab-background-color: rgba(255, 255, 255, 0.1);
   --tbl-row-border-color: rgba(255, 255, 255, 0.1);
 
-  --tbl-border: 1px solid black;
+  --tbl-border: 1px solid var(--cabinet-page-nav-menu-font-color);
 
   --tbl-lable-font-family: "Jost", sans-serif;
   --tbl-lable-font-optical-sizing: auto;
@@ -33,11 +34,12 @@
 
   --marging-top-nav-bar-forms: 13vh;
 
-  --z-index-for-background-media: 0;
+  --z-index-for-background-media: -1;
+  --z-index-for-site-elements: 0;
   --z-index-for-content: 1;
   --z-index-for-forms: 10;
   --z-index-for-icons-in-form: 20;
-  --z-index-for-modal-form: 30;
+  --z-index-for-modal-form: 100500;
 
   --transition--all--0-ease: 0s;
   --transition--all--03-ease: all 0.3s ease;
@@ -310,8 +312,8 @@ a {
 
   background-color: var(--page-content-background-color);
 
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
 
   width: 50vw;
   height: 45%;
@@ -347,7 +349,11 @@ a {
 }
 
 .contacts-information-container a {
-  color: #fff;
+  color: var(--page-text-color);
+}
+
+.contacts-information-container a:hover {
+  color: var(--page-text-color-hover);
 }
 
 .contacts-container .contacts-information-container .school-email:hover {
@@ -375,8 +381,8 @@ a {
   height: 70vh;
   overflow-y: auto;
 
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
 
   align-items: center;
   justify-content: center;
@@ -744,7 +750,7 @@ tab-content svg {
   position: relative;
 
   width: 2vw;
-  height: 2vw;
+  height: 2vh;
 
   fill: black;
 }
@@ -756,9 +762,13 @@ tab-content svg:hover {
 /* Icons of show or hide password */
 #profile-show-password,
 #profile-hide-password {
-  top: 5vw;
-  right: 38vw;
   position: absolute;
+
+  top: 11.5vh;
+  right: 37.5vw;
+
+  font-size: 1em;
+
   z-index: var(--z-index-for-icons-in-form);
 }
 #profile-show-password {
@@ -793,14 +803,12 @@ tab-content svg:hover {
   border-color: #fff;
   background: rgba(255, 255, 255, 0.15);
 }
-
 .profile-save-button-text {
   margin: 0;
   padding: 0;
   font-size: 16px;
   font-weight: 400;
 }
-
 .profile-seekers-tbl {
   position: absolute;
 
@@ -809,29 +817,25 @@ tab-content svg:hover {
   width: 100%;
   height: 100%;
 }
-
 .profile-seekers-tbl-container {
   position: relative;
   height: 100%;
 }
-
 .profile-seekers-tbl-body {
   width: 100%;
-  min-height: 30%;
+  min-height: 10%;
   max-height: 89.5%;
 
   overflow-y: auto;
 
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
-
 .profile-seekers-tbl table {
   table-layout: fixed;
   width: 100%;
 
   margin-top: 0;
 }
-
 .profile-seekers-tbl thead {
   background-color: var(--tab-background-color);
   height: 2vh;
@@ -912,6 +916,8 @@ input#tabToggle03:checked ~ tab-content:not(:nth-of-type(3)) {
   left: 0;
   right: 0;
 
+  background-color: var(--modal-form-out-background-color);
+
   z-index: var(--z-index-for-modal-form);
 }
 
@@ -930,10 +936,10 @@ input#tabToggle03:checked ~ tab-content:not(:nth-of-type(3)) {
   font-optical-sizing: var(--tbl-lable-font-optical-sizing);
   font-weight: var(--tbl-lable-font-weight);
 
-  background-color: rgba(247, 253, 251, 0.3);
+  background-color: var(--page-content-background-color);
 
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
 
   z-index: var(--z-index-for-modal-form);
 }
@@ -968,7 +974,7 @@ input#tabToggle03:checked ~ tab-content:not(:nth-of-type(3)) {
   width: 2vw;
   height: 2vh;
 
-  fill: #fff;
+  fill: var(--page-text-color);
 }
 
 #profile-seeker-modal-cross-svg:hover {

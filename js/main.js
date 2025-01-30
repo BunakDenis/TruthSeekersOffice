@@ -1,7 +1,6 @@
 /*--------------------------------------------------*/
 
 /* Page - User Profile */
-const pancilSvg = document.querySelector(".pencil-icon");
 
 function editPersonalInfomation(inputId) {
   const inputField = document.querySelector(inputId);
@@ -73,16 +72,15 @@ searchToggle.addEventListener("click", () => {
 let userAuthorization = true;
 
 // Элементы HTML
-const userIcon = document.querySelector(".userserviceToggle"); // SVG с классом user
+const userIcon = document.getElementById("user"); // SVG с классом user
 const signInContainer = document.querySelector(".sign-in-container");
-const userInformationContainer = document.querySelector(
-  ".user-information-container"
+const userInformationContainer = document.getElementById(
+  "user-information-container"
 );
 const signInCancelButton = document.querySelector(".sign-in-form-cancel");
 const userInformationCancelButton = document.querySelector(
   ".user-information-form-cancel"
 );
-
 // Функция для обработки нажатия на SVG
 userIcon.addEventListener("click", () => {
   if (userAuthorization) {

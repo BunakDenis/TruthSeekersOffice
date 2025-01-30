@@ -44,16 +44,16 @@
   backdrop-filter: var(--sidebar-content-backdrop-filter-blur);
   -webkit-backdrop-filter: var(--sidebar-content-backdrop-filter-blur);
 
-  transition: all 0.4s ease;
+  transition: all 0.6s ease;
 
-  z-index: 0;
+  z-index: 1;
 }
 
 .cabinet-content.hide-sidebar {
-  width: 98%;
+  width: 94%;
 
   top: 5%;
-  left: 1%;
+  left: 5%;
 }
 
 .cabinet-content > div {
@@ -67,7 +67,7 @@
   font-optical-sizing: var(--tbl-lable-font-optical-sizing);
   font-weight: var(--tbl-lable-font-weight);
 
-  color: var(--cabinet-page-sidebar-content-font-color);
+  color: var(--cabinet-page-nav-menu-font-color);
 }
 
 .cabinet-content div .sidebar-content-title {
@@ -88,19 +88,21 @@
 
   margin: 0 0 0 5%;
 
-  background-color: var(--cabinet-page-sidebar-content-font-color);
+  background-color: var(--cabinet-page-nav-menu-font-color);
 }
 
 .cabinet-content div .sidebar-content-title h3 {
-  padding-top: 2vh;
-  padding-left: 5vw;
+  padding: 2vh 0 0 6vw;
+  margin: 0;
+
+  color: var(--cabinet-page-nav-menu-font-color);
 
   font-family: var(--fornt-family-for-school-name);
   font-optical-sizing: var(--tbl-lable-font-optical-sizing);
   font-weight: var(--tbl-lable-font-weight);
   font-size: 2.5em;
 
-  color: var(--cabinet-page-sidebar-content-font-color);
+  line-height: 1;
 }
 
 .cabinet-content div .sidebar-content-tbl {
@@ -108,13 +110,9 @@
   position: relative;
 
   width: 100%;
-  height: 80%;
+  height: 65%;
 
-  overflow: hidden;
-
-  padding: 0 0.5vw 0 0.5vw;
-
-  border-bottom: var(--tbl-border);
+  padding: 2vh 0.5vw 0 0.5vw;
 }
 
 .cabinet-content div .sidebar-content-tbl table {
@@ -154,14 +152,19 @@
 
   width: 100%;
   height: 100%;
-
-  border-right: var(--tbl-border);
 }
-
-.cabinet-content div .sidebar-content-tbl table th:last-child {
-  border-right: none;
+.cabinet-content div .sidebar-content-tbl table th a {
+  color: var(--cabinet-page-nav-menu-font-color);
 }
-
+.cabinet-content div .sidebar-content-tbl table th a:hover {
+  color: var(--page-text-color-hover);
+}
+.cabinet-content div .sidebar-content-tbl table th span {
+  padding: 0 0 0 0.3vw;
+}
+.cabinet-content div .sidebar-content-tbl table th span.rotate {
+  transform: translateX(40%) rotate(-180deg);
+}
 .cabinet-content div .sidebar-content-tbl-body {
   display: grid;
   position: relative;
@@ -177,12 +180,13 @@
   font-size: 1.2em;
   font-weight: 300;
 
+  overflow-y: auto;
+
   border: var(--tbl-border);
 }
 
 .cabinet-content div .sidebar-content-tbl-body table {
-  position: relative;
-
+  width: 100%;
   height: 100%;
 }
 
@@ -208,25 +212,115 @@
   align-content: center;
 
   width: 100%;
-  height: 5vh;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  border-right: var(--tbl-border);
+  min-height: 5vh;
 }
-
-.cabinet-content div .sidebar-content-tbl table td:last-child {
-  border-right: none;
+.cabinet-content div .sidebar-content-tbl-body table .tbl-row-comment {
+  text-align: left;
+  text-indent: 1vw;
 }
 
 .cabinet-content div .sidebar-content-tbl-body table td svg {
-  fill: black;
-  width: auto;
+  fill: var(--cabinet-page-sidebar-content-font-color);
+  width: 2vw;
   height: 2vh;
 }
 
-.sidebar-content-tbl-body table td svg:hover {
+.cabinet-content div .sidebar-content-tbl-body svg:hover {
   fill: var(--page-text-color-hover);
 }
+
+/* Форма редактирования информации про Волю */
+
+.seeker-will-information {
+  display: none;
+  position: fixed;
+  flex-wrap: nowrap;
+
+  width: 100%;
+  height: 100%;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-color: rgba(10, 10, 10, 0.5);
+
+  z-index: var(--z-index-for-modal-form);
+}
+
+.seeker-will-modal-dialog {
+  position: relative;
+
+  border-radius: 3px;
+
+  margin: 0 0 0 20vw;
+
+  width: 60vw;
+  height: 60vw;
+
+  font-family: var(--tbl-lable-font-family);
+  font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+  font-weight: var(--tbl-lable-font-weight);
+
+  background-color: var(--page-content-background-color);
+
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
+
+  z-index: var(--z-index-for-modal-form);
+}
+
+.seeker-will-modal-content {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+.seeker-will-modal-header {
+  width: 100%;
+  height: 20%;
+
+  text-align: center;
+
+  margin-bottom: 2vh;
+}
+
+.seeker-will-information h4 {
+  padding-top: 2vw;
+}
+
+#seeker-will-modal-cross-svg {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+
+  width: 2vw;
+  height: 2vh;
+
+  fill: var(--cabinet-page-sidebar-content-font-color);
+}
+
+#seeker-will-modal-cross-svg:hover {
+  fill: var(--page-text-color-hover);
+}
+
+.edit-seeker-will-modal-body {
+  display: var(--tab-display);
+  grid-column: 1 / -1;
+
+  align-items: center;
+  justify-content: center;
+
+  padding-top: 2vw;
+}
+
+.edit-seeker-will-modal-body input + label {
+  text-align: left;
+}
+
+.edit-seeker-will-modal-footer {
+  text-align: center;
+}
+/* ---------------------------------------------------------- */

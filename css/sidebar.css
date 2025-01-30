@@ -4,11 +4,12 @@
 body main .sidebar {
   position: absolute;
 
-  width: 18%;
+  width: 4vw;
   height: 100%;
 
-  overflow-x: auto;
-  left: -18vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  left: 0;
 
   background: var(--page-content-background-colors);
   backdrop-filter: var(--backdrop-filter-blur);
@@ -19,13 +20,14 @@ body main .sidebar {
   font-weight: 300;
   font-optical-sizing: auto;
 
-  transition: left 0.4s ease;
+  transition: all 0.6s ease;
 
   z-index: var(--z-index-for-forms);
 }
 
 body main .sidebar.show {
-  left: 0px;
+  left: 0;
+  width: 18%;
 }
 
 body main > .btn {
@@ -41,7 +43,7 @@ body main > .btn {
   border-radius: 3px;
 
   cursor: pointer;
-  transition: left 0.4s ease;
+  transition: all 0.6s ease;
   z-index: var(--z-index-for-icons-in-form);
 }
 body main > .btn.click {
@@ -65,6 +67,7 @@ body main > .btn .fa-circle-arrow-left {
 }
 
 .sidebar > ul {
+  position: relative;
   max-height: 100%;
   width: 100%;
 
@@ -77,6 +80,11 @@ body main > .btn .fa-circle-arrow-left {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-left: 0;
 }
+
+.sidebar ul li.show-menu {
+  width: 20vw;
+}
+
 .sidebar ul .God {
   font-family: var(--fornt-family-for-school-name);
   font-size: 1.2em;
@@ -114,8 +122,11 @@ body main > .btn .fa-circle-arrow-left {
   display: block;
   position: relative;
 
+  justify-content: center;
+
   width: 100%;
-  padding-left: 1vw;
+  margin: 0;
+  padding: 0 0 0 1vw;
 
   color: white;
 
@@ -123,7 +134,13 @@ body main > .btn .fa-circle-arrow-left {
 
   border-left: 3px solid transparent;
 }
+.sidebar ul li a p {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
 .sidebar ul li svg {
+  display: inline-block;
   width: 2vw;
   height: auto;
 

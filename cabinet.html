@@ -217,7 +217,6 @@
           </div>
         </div>
       </div>
-
       <!-- Форма входа юзера -->
       <div class="sign-in-container">
         <form class="sign-in-form" action="#">
@@ -322,6 +321,7 @@
         </form>
       </div>
     </header>
+
     <main>
       <div class="btn">
         <span class="fas fa-light fa-circle-arrow-right rotate"></span>
@@ -330,13 +330,13 @@
         <ul>
           <li>
             <a class="sidebar-menu-item" id="link-work-result" href="#"
-              ><span class="fa fa-regular fa-clipboard"></span>Результаты
-              работы</a
+              ><i class="fa fa-regular fa-clipboard"></i>
+              <p class="sidebar-menu-item-text">Результаты работы</p></a
             >
           </li>
           <li class="God">
-            <a href="#" class="serv-btn sidebar-menu-item" id="link-God"
-              ><svg
+            <a href="#" class="serv-btn sidebar-menu-item" id="link-God">
+              <svg
                 class="side-bar-god-svg"
                 viewBox="0 -60.25 512 512"
                 xmlns="http://www.w3.org/2000/svg"
@@ -357,7 +357,7 @@
                   </g>
                 </g>
               </svg>
-              Господь
+              <p class="sidebar-menu-item-text">Господь</p>
               <span class="fas fa-caret-down first"></span>
             </a>
             <ul class="serv-show">
@@ -434,7 +434,7 @@
                   />
                 </g>
               </svg>
-              Работа
+              <p class="sidebar-menu-item-text">Работа</p>
               <span class="fas fa-caret-down second"></span>
             </a>
             <ul class="serv-show">
@@ -474,7 +474,7 @@
                   </g>
                 </g>
               </svg>
-              Искателю
+              <p class="sidebar-menu-item-text">Искателю</p>
               <span class="fas fa-caret-down second"></span>
             </a>
             <ul class="serv-show">
@@ -513,7 +513,7 @@
                 ></path>
                 <rect x="0" y="0" width="36" height="36" fill-opacity="0" />
               </svg>
-              Администрирование
+              <p class="sidebar-menu-item-text">Администрирование</p>
               <span class="fas fa-caret-down second"></span>
             </a>
             <ul class="serv-show">
@@ -529,20 +529,19 @@
           </li>
           <li>
             <a class="sidebar-menu-item" href="#"
-              ><span class="fa fa-cogs" aria-hidden="true"></span>Настройки</a
+              ><i class="fa fa-cogs" aria-hidden="true"></i>
+              <p class="sidebar-menu-item-text">Настройки</p></a
             >
           </li>
         </ul>
       </aside>
 
       <section class="cabinet-content hide-sidebar">
-        <div id="link-work-result-content">
-          <h1>Меню Результаты работы</h1>
-        </div>
-        <div id="link-God-content">
+        <div id="link-work-result-sidebar-content"></div>
+        <div id="link-God-sidebar-content">
           <h1>Меню Господь</h1>
         </div>
-        <div id="link-will-content">
+        <div id="link-will-sidebar-content">
           <div class="sidebar-content-title">
             <h3>Воля</h3>
           </div>
@@ -550,9 +549,22 @@
             <table>
               <thead>
                 <tr>
-                  <th>Дата получения</th>
-                  <th>Краткое описание</th>
-                  <th>Коментарии</th>
+                  <th>
+                    <a class="tbl-title-link" href="#"
+                      >Дата получения
+                      <span class="fas fa-caret-down first"></span>
+                    </a>
+                  </th>
+                  <th>
+                    <a class="tbl-title-link" href="#"
+                      >Краткое описание
+                      <span class="fas fa-caret-down first"></span>
+                    </a>
+                  </th>
+                  <th>
+                    <a class="tbl-title-link" href="#">Коментарии </a>
+                  </th>
+                  <th></th>
                 </tr>
               </thead>
             </table>
@@ -562,7 +574,28 @@
                   <tr>
                     <td>10.01.2025</td>
                     <td>Сайт - Кабинет Искателя</td>
-                    <td>По ощущениям нужно сделать до конца весны 2025 года</td>
+                    <td class="tbl-row-comment">
+                      По ощущениям нужно сделать до конца весны 2025 года
+                    </td>
+                    <td>
+                      <svg
+                        id="will-edit-svg"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 528.899 528.899"
+                        xml:space="preserve"
+                        onclick="window.parent.showSeekerWillDetailInformation()"
+                      >
+                        <g>
+                          <path
+                            d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                          />
+                        </g>
+                      </svg>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -571,14 +604,80 @@
         </div>
       </section>
     </main>
+
+    <!-- Modal Edit Seeker Infomation -->
+    <section
+      class="seeker-will-information"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <form class="edit-seeker-will-from" action="#">
+        <div class="seeker-will-modal-dialog">
+          <div class="seeker-will-modal-content">
+            <div class="seeker-will-modal-header">
+              <h4 class="seeker-will-modal-title">
+                Редактирование данных Воли
+              </h4>
+              <svg
+                version="1.1"
+                id="seeker-will-modal-cross-svg"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 612.043 612.043"
+                style="enable-background: new 0 0 612.043 612.043"
+                xml:space="preserve"
+                onclick="window.parent.hideSeekerWillDetailInformation()"
+              >
+                <g>
+                  <g id="cross">
+                    <g>
+                      <path
+                        d="M397.503,306.011l195.577-195.577c25.27-25.269,25.27-66.213,0-91.482c-25.269-25.269-66.213-25.269-91.481,0
+				L306.022,214.551L110.445,18.974c-25.269-25.269-66.213-25.269-91.482,0s-25.269,66.213,0,91.482L214.54,306.033L18.963,501.61
+				c-25.269,25.269-25.269,66.213,0,91.481c25.269,25.27,66.213,25.27,91.482,0l195.577-195.576l195.577,195.576
+				c25.269,25.27,66.213,25.27,91.481,0c25.27-25.269,25.27-66.213,0-91.481L397.503,306.011z"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <div class="input-field">
+              <label>Дата получения</label>
+              <input
+                id="will-incoming-date"
+                type="date"
+                value="2020-12-28"
+                required
+              />
+            </div>
+
+            <div class="input-field">
+              <label>Коментарий</label>
+              <textarea
+                id="will-comment"
+                type="text-aria"
+                value=""
+                required
+                style="width: 80%"
+              >
+              </textarea>
+            </div>
+          </div>
+          <div class="profile-edit-seeker-modal-footer">
+            <button type="submit" class="profile-save-button">Сохранить</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
     <!-- Footer -->
     <footer>
       <div class="footer-basic">
         <div class="social">
           <a href="https://www.youtube.com/channel/UCLprs4ksEI0Vb8Cj5z9hTtQ"
             ><svg
-              version="1.1"
-              id="Layer_1"
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
               viewBox="0 0 461.001 461.001"
@@ -623,6 +722,5 @@
 
   <script src="js/cabinet.js" defer></script>
   <script src="js/main.js"></script>
-  <script src="js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </html>
