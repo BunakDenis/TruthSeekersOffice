@@ -324,20 +324,31 @@
 
     <main>
       <div class="btn">
-        <span class="fas fa-light fa-circle-arrow-right rotate"></span>
+        <span class="fas fa-light fa-circle-arrow-right"></span>
       </div>
-      <aside class="sidebar show">
+      <aside class="sidebar">
         <ul>
           <li>
             <a class="sidebar-menu-item" id="link-work-result" href="#"
-              ><i class="fa fa-regular fa-clipboard"></i>
-              <p class="sidebar-menu-item-text">Результаты работы</p></a
+              ><i class="fa fa-regular fa-clipboard sidebar-menu-icon"></i>
+              <p class="sidebar-menu-item-text">Результаты Работы</p></a
             >
+            <ul class="serv-show blank">
+              <li class="sidebar-submenu-title">
+                <a
+                  class="sidebar-submenu-item title"
+                  id="link-work-result"
+                  href="#"
+                >
+                  Результаты Работы</a
+                >
+              </li>
+            </ul>
           </li>
-          <li class="God">
+          <li class="God" id="God">
             <a href="#" class="serv-btn sidebar-menu-item" id="link-God">
               <svg
-                class="side-bar-god-svg"
+                class="side-bar-god-svg sidebar-menu-icon"
                 viewBox="0 -60.25 512 512"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -361,20 +372,43 @@
               <span class="fas fa-caret-down first"></span>
             </a>
             <ul class="serv-show">
-              <li>
-                <a class="sidebar-menu-item" id="link-will" href="#">Воля</a>
+              <li class="sidebar-submenu-title">
+                <a href="#" class="sidebar-submenu-item title" id="link-God"
+                  >Господь</a
+                >
               </li>
-              <li><a href="#">Вопрошание</a></li>
-              <li><a href="#">Ведение</a></li>
-              <li><a href="#">Послания</a></li>
-              <li><a href="#">Молитвы</a></li>
-              <li><a href="#">Обеты</a></li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-will" href="#">Воля</a>
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-questioning" href="#"
+                  >Вопрошание</a
+                >
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-vision" href="#"
+                  >Ведение</a
+                >
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-God-message" href="#"
+                  >Послания</a
+                >
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-prayer" href="#"
+                  >Молитвы</a
+                >
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-vow" href="#">Обеты</a>
+              </li>
             </ul>
           </li>
           <li>
-            <a href="#" class="serv-btn sidebar-menu-item"
+            <a href="#" class="serv-btn sidebar-menu-item" id="link-work"
               ><svg
-                class="sidebar-work-icon"
+                class="sidebar-work-icon sidebar-menu-icon"
                 viewBox="0 0 56 56"
                 xml:space="preserve"
                 xmlns="http://www.w3.org/2000/svg"
@@ -438,17 +472,28 @@
               <span class="fas fa-caret-down second"></span>
             </a>
             <ul class="serv-show">
-              <li><a href="#">Основная практика</a></li>
-              <li><a href="#">Дополнительные практики</a></li>
-              <li><a href="#">Созерцание</a></li>
-              <li><a href="#">Маршруты</a></li>
-              <li><a href="#">Целительство</a></li>
+              <li class="sidebar-submenu-title">
+                <a href="#" class="sidebar-submenu-item title" id="link-work">
+                  Работа
+                </a>
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" href="#">Основная практика</a>
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" href="#"
+                  >Дополнительные практики</a
+                >
+              </li>
+              <li><a class="sidebar-submenu-item" href="#">Созерцание</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Маршруты</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Целительство</a></li>
             </ul>
           </li>
           <li>
-            <a href="#" class="serv-btn sidebar-menu-item"
+            <a href="#" class="serv-btn sidebar-menu-item" id="link-seeker"
               ><svg
-                class="sidebar-seeker-icon"
+                class="sidebar-seeker-icon sidebar-menu-icon"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 viewBox="-48 -48 576.00 576.00"
@@ -478,23 +523,33 @@
               <span class="fas fa-caret-down second"></span>
             </a>
             <ul class="serv-show">
-              <li><a href="#">Книги</a></li>
-              <li><a href="#">Аудиокниги</a></li>
-              <li><a href="#">Статьи</a></li>
-              <li><a href="#">Аудио-видео лекции</a></li>
+              <li class="sidebar-submenu-title">
+                <a href="#" class="sidebar-submenu-item title" id="link-seeker">
+                  Искателю
+                </a>
+              </li>
+              <li><a class="sidebar-submenu-item" href="#">Книги</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Аудиокниги</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Статьи</a></li>
+              <li>
+                <a class="sidebar-submenu-item" href="#">Аудио-видео лекции</a>
+              </li>
             </ul>
           </li>
           <li>
-            <a href="#" class="serv-btn sidebar-menu-item">
+            <a
+              href="#"
+              class="serv-btn sidebar-menu-item"
+              id="link-adminisration"
+            >
               <svg
-                class="sidebar-administrator-svg"
+                class="sidebar-administrator-svg sidebar-menu-icon"
                 viewBox="0 0 36 36"
                 version="1.1"
                 preserveAspectRatio="xMidYMid meet"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                <title>administrator-line</title>
                 <path
                   d="M14.68,14.81a6.76,6.76,0,1,1,6.76-6.75A6.77,6.77,0,0,1,14.68,14.81Zm0-11.51a4.76,4.76,0,1,0,4.76,4.76A4.76,4.76,0,0,0,14.68,3.3Z"
                   class="clr-i-outline clr-i-outline-path-1"
@@ -517,21 +572,42 @@
               <span class="fas fa-caret-down second"></span>
             </a>
             <ul class="serv-show">
-              <li><a href="#">Практики</a></li>
-              <li><a href="#">Послания</a></li>
-              <li><a href="#">Молитвы</a></li>
-              <li><a href="#">Маршруты</a></li>
-              <li><a href="#">Книги</a></li>
-              <li><a href="#">Аудиокниги</a></li>
-              <li><a href="#">Статьи</a></li>
-              <li><a href="#">Аудио-видео лекции</a></li>
+              <li class="sidebar-submenu-title">
+                <a
+                  href="#"
+                  class="sidebar-submenu-item title"
+                  id="link-adminisration"
+                >
+                  Администрирование
+                </a>
+              </li>
+              <li><a class="sidebar-submenu-item" href="#">Практики</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Послания</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Молитвы</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Маршруты</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Книги</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Аудиокниги</a></li>
+              <li><a class="sidebar-submenu-item" href="#">Статьи</a></li>
+              <li>
+                <a class="sidebar-submenu-item" href="#">Аудио-видео лекции</a>
+              </li>
             </ul>
           </li>
           <li>
-            <a class="sidebar-menu-item" href="#"
-              ><i class="fa fa-cogs" aria-hidden="true"></i>
+            <a class="sidebar-menu-item" href="#" id="link-settings"
+              ><i class="fa fa-cogs sidebar-menu-icon" aria-hidden="true"></i>
               <p class="sidebar-menu-item-text">Настройки</p></a
             >
+            <ul class="serv-show">
+              <li class="sidebar-submenu-title">
+                <a
+                  class="sidebar-submenu-item title"
+                  href="#"
+                  id="link-settings"
+                  >Настройки</a
+                >
+              </li>
+            </ul>
           </li>
         </ul>
       </aside>
@@ -562,7 +638,7 @@
                     </a>
                   </th>
                   <th>
-                    <a class="tbl-title-link" href="#">Коментарии </a>
+                    <a class="tbl-title-link" href="#">Коментарии</a>
                   </th>
                   <th></th>
                 </tr>

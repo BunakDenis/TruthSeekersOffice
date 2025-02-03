@@ -291,18 +291,20 @@ function displaySuggestions(suggestions) {
   suggestionsContainer.appendChild(fragment);
 }
 
-// Обработчик ввода с дебаунсом
-input.addEventListener(
-  "input",
-  debounce(() => {
-    const query = input.value.trim();
-    fetchCitySuggestions(query);
-  }, 300)
-); // Задержка 300 мс
+if (input) {
+  // Обработчик ввода с дебаунсом
+  input.addEventListener(
+    "input",
+    debounce(() => {
+      const query = input.value.trim();
+      fetchCitySuggestions(query);
+    }, 300)
+  ); // Задержка 300 мс
 
-// Закрываем подсказки при клике вне контейнера
-document.addEventListener("click", (e) => {
-  if (!e.target.closest(".autocomplete-container")) {
-    suggestionsContainer.innerHTML = "";
-  }
-});
+  // Закрываем подсказки при клике вне контейнера
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".autocomplete-container")) {
+      suggestionsContainer.innerHTML = "";
+    }
+  });
+}

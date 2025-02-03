@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lobster&family=Orelega+One&display=swap");
 
 :root {
+  --header-heigth: 12%;
+  --main-heigth: 78%;
+  --footer-heigth: 10%;
+
   --page-content-background-color: rgba(255, 255, 255, 0.1);
   --cabinet-page-content-background-color: rgba(255, 255, 255, 0.6);
   --cabinet-page-menu-background-color: rgba(255, 255, 255, 0.6);
@@ -23,6 +27,8 @@
   --tab-background-color: rgba(255, 255, 255, 0.1);
   --tbl-row-border-color: rgba(255, 255, 255, 0.1);
 
+  --sidebar-menu-border-top: 1px solid rgba(255, 255, 255, 0.1);
+  --sidebar-menu-border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   --tbl-border: 1px solid var(--cabinet-page-nav-menu-font-color);
 
   --tbl-lable-font-family: "Jost", sans-serif;
@@ -59,10 +65,10 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px var(--cabinet-page-menu-background-color);
 }
 ::-webkit-scrollbar-thumb {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px var(--cabinet-page-menu-background-color);
 }
 
 html {
@@ -75,7 +81,9 @@ body {
 
   height: 100%;
 
-  grid-template-rows: 12% 78% 10%;
+  grid-template-rows: var(--header-heigth) var(--main-heigth) var(
+      --footer-heigth
+    );
 
   margin: 0;
   padding: 0;

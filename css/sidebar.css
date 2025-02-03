@@ -2,13 +2,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lobster&family=Orelega+One&display=swap");
 
 body main .sidebar {
-  position: absolute;
+  position: fixed;
 
   width: 4vw;
-  height: 100%;
+  height: var(--main-heigth);
 
   overflow-y: auto;
   overflow-x: hidden;
+
   left: 0;
 
   background: var(--page-content-background-colors);
@@ -20,30 +21,28 @@ body main .sidebar {
   font-weight: 300;
   font-optical-sizing: auto;
 
-  transition: all 0.6s ease;
+  transition: var(--transition--all--04-ease);
 
   z-index: var(--z-index-for-forms);
 }
 
-body main .sidebar.show {
+body main .sidebar.expand {
   left: 0;
-  width: 18%;
+  width: 18vw;
 }
 
 body main > .btn {
   position: absolute;
 
   top: 1vh;
-  left: -0.5vw;
+  left: 5.5vh;
   height: 2vh;
   width: 2vw;
 
   text-align: center;
 
-  border-radius: 3px;
-
   cursor: pointer;
-  transition: all 0.6s ease;
+  transition: var(--transition--all--04-ease);
   z-index: var(--z-index-for-icons-in-form);
 }
 body main > .btn.click {
@@ -51,7 +50,7 @@ body main > .btn.click {
 }
 
 body main > .btn span {
-  color: white;
+  color: var(--cabinet-page-menu-background-color);
   font-size: 1.5em;
 }
 
@@ -67,7 +66,6 @@ body main > .btn .fa-circle-arrow-left {
 }
 
 .sidebar > ul {
-  position: relative;
   max-height: 100%;
   width: 100%;
 
@@ -75,31 +73,27 @@ body main > .btn .fa-circle-arrow-left {
 
   list-style: none;
 }
-.sidebar ul li {
+.sidebar ul > li {
+  position: relative;
   line-height: 7vh;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: var(--sidebar-menu-border-top);
   padding-left: 0;
 }
 
-.sidebar ul li.show-menu {
-  width: 20vw;
-}
-
-.sidebar ul .God {
+.sidebar ul #God {
   font-family: var(--fornt-family-for-school-name);
   font-size: 1.2em;
   font-weight: 100;
   font-style: normal;
 }
 
-.sidebar ul .God > ul {
-  margin-left: 1vw;
+.sidebar ul #God > ul {
   font-family: var(--fornt-family-for-school-name);
   font-size: 0.8em;
   font-weight: 100;
   font-style: normal;
 }
-.sidebar ul .God .side-bar-god-svg {
+.sidebar ul #God .side-bar-god-svg {
   width: 2vw;
   height: auto;
 
@@ -109,14 +103,14 @@ body main > .btn .fa-circle-arrow-left {
   stroke: white;
   stroke-width: 3vh;
 }
-.sidebar ul li.active > a .side-bar-god-svg {
+.sidebar ul #God.active a .side-bar-god-svg {
   stroke: var(--page-text-color-hover);
 }
-.sidebar ul li > a:hover .side-bar-god-svg {
+.sidebar ul #God a:hover .side-bar-god-svg {
   stroke: var(--page-text-color-hover);
 }
-.sidebar ul li:last-child {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+.sidebar ul > li:last-child {
+  border-bottom: var(--sidebar-menu-border-bottom);
 }
 .sidebar ul li a {
   display: block;
@@ -128,16 +122,19 @@ body main > .btn .fa-circle-arrow-left {
   margin: 0;
   padding: 0 0 0 1vw;
 
-  color: white;
+  color: var(--page-text-color);
 
   text-decoration: none;
 
   border-left: 3px solid transparent;
 }
 .sidebar ul li a p {
-  display: inline-block;
+  display: none;
   margin: 0;
   padding: 0;
+}
+.sidebar ul li a .fa-caret-down {
+  display: none;
 }
 .sidebar ul li svg {
   display: inline-block;
@@ -146,7 +143,7 @@ body main > .btn .fa-circle-arrow-left {
 
   margin-right: 1vw;
 
-  fill: white;
+  fill: var(--page-text-color);
 }
 .sidebar ul li.active > a {
   color: var(--page-text-color-hover);
@@ -162,30 +159,110 @@ body main > .btn .fa-circle-arrow-left {
 .sidebar ul li > a:hover svg {
   fill: var(--page-text-color-hover);
 }
-.sidebar ul ul {
+.sidebar ul li .serv-show {
   position: static;
   display: none;
+
+  width: 100%;
+  height: auto;
 
   font-family: var(--fornt-family-for-content);
   font-size: 0.9em;
   font-weight: 300;
   font-optical-sizing: auto;
 
+  overflow-y: auto;
+  overflow-x: hidden;
+
   list-style: none;
+  background-color: none;
 }
-.sidebar ul .serv-show.show {
+.sidebar.expand ul li .serv-show.show {
   display: block;
+  position: static;
+
+  background-color: none;
+}
+
+.sidebar ul li .serv-show.show-menu {
+  display: block;
+  position: absolute;
+
+  width: 15vw;
+  min-height: 7vh;
+  max-height: auto;
+
+  top: 0;
+  left: 100%;
+
+  padding: 0;
+  margin: 0;
+
+  background: var(--cabinet-page-menu-item-hover-background-color);
+
+  backdrop-filter: var(--sidebar-content-backdrop-filter-blur) !important;
+  -webkit-backdrop-filter: var(
+    --sidebar-content-backdrop-filter-blur
+  ) !important;
+
+  z-index: var(--z-index-for-modal-form);
 }
 .sidebar ul ul li {
   line-height: 5vh;
-  border-top: none;
 }
 .sidebar ul ul li a {
-  color: #e6e6e6;
+  padding-left: 3vw;
+}
+.sidebar ul li .serv-show li:not(:first-of-type):not(:only-of-type) {
+  border-top: var(--sidebar-menu-border-top);
+}
+.sidebar ul li .serv-show li:only-of-type {
+  border: none;
+}
+.sidebar ul .serv-show.show-menu li {
+  padding-left: 0;
+  margin-left: 0;
+  line-height: 4vh;
+}
+.sidebar ul .serv-show.show-menu li:only-of-type {
+  height: 7vh;
+
+  padding: 0;
+}
+.sidebar ul .serv-show.show-menu li:only-of-type a {
+  height: 7vh;
+  padding-top: 0;
+  margin-top: 0;
+
+  align-content: center;
+}
+.sidebar ul .serv-show.show-menu li a {
+  padding-left: 2vw;
+}
+.sidebar ul li .serv-show li .title {
+  display: none;
+}
+.sidebar ul li .serv-show.show-menu li .title {
+  display: block;
+
+  padding: 2vh 0 1vh 1vw;
+  margin: 0;
+
+  font-size: 1.2em;
+  font-weight: 500;
+
+  line-height: 0.5;
+}
+.sidebar ul li .serv-show.show-menu li #link-God {
+  font-size: 1.3em;
 }
 .sidebar ul li.active ul li a {
-  color: #e6e6e6;
+  color: var(--page-text-color);
   background-color: none !important;
+}
+.sidebar ul li.active ul li a.active {
+  color: var(--page-text-color-hover);
+  background-color: var(--cabinet-page-menu-item-hover-background-color);
 }
 .sidebar ul ul li a:hover {
   color: var(--page-text-color-hover) !important;
@@ -195,6 +272,9 @@ body main > .btn .fa-circle-arrow-left {
   position: absolute;
   top: 50%;
   right: 1vw;
+
+  font-size: 0.8em;
+
   transform: translateY(-50%);
 
   transition: transform 0.4s;
