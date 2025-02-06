@@ -1,6 +1,184 @@
-/*--------------------------------------------------*/
+//Функция иморта хедера
+fetch("/fragments/header.txt")
+  .then((response) => response.text())
+  .then((data) => {
+    document.getElementById("page-header").innerHTML = data;
+    initHeaderJS(); // Инициализация JavaScript из модуля
+  })
+  .catch((error) => console.error("Ошибка загрузки header:", error));
 
-/* Page - User Profile */
+//Функция иморта футера
+fetch("/fragments/footer.txt")
+  .then((response) => response.text())
+  .then((data) => {
+    document.getElementById("page-footer").innerHTML = data;
+    initFooterJS(); // Инициализация JavaScript из модуля
+  })
+  .catch((error) => console.error("Ошибка загрузки header:", error));
+
+//Хедер
+function initHeaderJS() {
+  // Изменение цвета логотипа Єгрегора и названия Школы при наведении или на логотип или на текст
+  document.querySelector(".al-vadud").onmouseover = function () {
+    document.querySelector(".school-name").style.color = "gold";
+    document.querySelector(".al-vadud").style.fill = "gold";
+    document.querySelector(".al-vadud").style.stroke = "gold";
+  };
+  document.querySelector(".al-vadud").onmouseout = function () {
+    document.querySelector(".school-name").style.color = "rgb(230, 98, 98)";
+    document.querySelector(".al-vadud").style.fill = "red";
+    document.querySelector(".al-vadud").style.border = "none";
+  };
+
+  document.querySelector(".school-name").onmouseover = function () {
+    document.querySelector(".school-name").style.color = "gold";
+    document.querySelector(".al-vadud").style.fill = "gold";
+  };
+  document.querySelector(".school-name").onmouseout = function () {
+    document.querySelector(".school-name").style.color = "rgb(230, 98, 98)";
+    document.querySelector(".al-vadud").style.fill = "red";
+  };
+
+  // Изменение цвета логотипа незарегистрированого юзера
+  document.querySelector("#user").onmouseover = function () {
+    document.querySelector("#user").style.fill = "gold";
+  };
+  document.querySelector("#user").onmouseout = function () {
+    document.querySelector("#user").style.fill = "#4b4c4d";
+  };
+
+  // Изменение цвета логотипа уведомлений
+  document.querySelector(".notification-svg").onmouseover = function () {
+    document.querySelector(".notification-svg").style.fill = "gold";
+  };
+  document.querySelector(".notification-svg").onmouseout = function () {
+    document.querySelector(".notification-svg").style.fill = "#4b4c4d";
+  };
+
+  //Контейнер поиска по сайту
+  const searchBox = (searchToggle = document.querySelector(".searchToggle"));
+
+  searchToggle.addEventListener("click", () => {
+    searchToggle.classList.toggle("active");
+  });
+
+  //------------------------------------------
+
+  // Переключатель меню входа юзера и меню уведомлений
+  // Переменная для определения авторизации пользователя
+  let userAuthorization = true;
+
+  // Элементы HTML
+  const userIcon = document.getElementById("user"); // SVG с классом user
+  const signInContainer = document.querySelector(".sign-in-container");
+  const userInformationContainer = document.getElementById(
+    "user-information-container"
+  );
+  const signInCancelButton = document.querySelector(".sign-in-form-cancel");
+  const userInformationCancelButton = document.querySelector(
+    ".user-information-form-cancel"
+  );
+  // Функция для обработки нажатия на SVG
+  if (userIcon) {
+    userIcon.addEventListener("click", () => {
+      if (userAuthorization) {
+        // Если пользователь авторизован, показать контейнер уведомлений
+        if (userInformationContainer.style.display == "none") {
+          signInContainer.style.display = "none";
+          userInformationContainer.style.display = "block";
+        } else {
+          userInformationContainer.style.display = "none";
+        }
+      } else {
+        // Если пользователь не авторизован, показать контейнер входа
+        if (signInContainer.style.display == "none") {
+          signInContainer.style.display = "block";
+          userInformationContainer.style.display = "none";
+        } else {
+          signInContainer.style.display = "none";
+        }
+      }
+    });
+  }
+  //Функция скрытия формы при нажатии на крестик
+  if (signInCancelButton) {
+    signInCancelButton.addEventListener("click", () => {
+      signInContainer.style.display = "none";
+    });
+  }
+
+  if (userInformationCancelButton) {
+    userInformationCancelButton.addEventListener("click", () => {
+      userInformationContainer.style.display = "none";
+    });
+  }
+  /*
+        Переключение форм входа юзера и информации о юзере. При нажатии на кнопку "выйти" и последующем обновлении страницы в информации о юзере будет 
+        отображаться форма регистрации юзера.
+        При нажатии на кнопку "войти" в форме регистрации юзера, при следующем обновлении страницы будет отображаться форма информации о юзере
+    */
+  const signOutLink = document.querySelector(".sign-out-link");
+  const signInButton = document.querySelector(".sign-in-button");
+
+  signOutLink.addEventListener("click", () => {
+    userAuthorization = false;
+  });
+
+  signInButton.addEventListener("click", () => {
+    userAuthorization = true;
+  });
+
+  //------------------------------------------
+  // Переключатель меню уведомлений
+
+  // Элементы HTML
+  const notificationIcon = document.querySelector(".notification-svg"); // SVG с классом user
+  const notificationContainer = document.querySelector(
+    ".notification-container"
+  );
+  const notificationCancelButton = document.querySelector(
+    ".notification-form-cancel"
+  );
+
+  // Функция для обработки нажатия на SVG
+  notificationIcon.addEventListener("click", () => {
+    if (notificationContainer.style.display == "none") {
+      notificationContainer.style.display = "block";
+    } else {
+      notificationContainer.style.display = "none";
+    }
+  });
+
+  notificationCancelButton.addEventListener("click", () => {
+    notificationContainer.style.display = "none";
+  });
+
+  //------------------------------------------
+  //Изменения видимости пароля в форме входа юзера
+  $("body").on("click", "#hide-password", function () {
+    if ($(this).is(":hover")) {
+      $("#pass").attr("type", "text");
+      document.querySelector("#hide-password").style.display = "none";
+      document.querySelector("#show-password").style.display = "block";
+    }
+  });
+  $("body").on("click", "#show-password", function () {
+    if ($(this).is(":hover")) {
+      $("#pass").attr("type", "password");
+      document.querySelector("#hide-password").style.display = "block";
+      document.querySelector("#show-password").style.display = "none";
+    }
+  });
+}
+
+//Футер
+function initFooterJS() {
+  document.querySelector(".copyright").textContent +=
+    " " + new Date().getFullYear();
+}
+
+//------------------------------------------
+//Страница - профайл юзера
 
 function editPersonalInfomation(inputId) {
   const inputField = document.querySelector(inputId);
@@ -18,172 +196,6 @@ function hideSeekerDetailInformation() {
   $(".profile-seeker-detail-information").css("display", "none");
 }
 
-/*--------------------------------------------------*/
-
-// Изменение цвета логотипа Єгрегора и названия Школы при наведении или на логотип или на текст
-
-document.querySelector(".al-vadud").onmouseover = function () {
-  document.querySelector(".school-name").style.color = "gold";
-  document.querySelector(".al-vadud").style.fill = "gold";
-  document.querySelector(".al-vadud").style.stroke = "gold";
-};
-document.querySelector(".al-vadud").onmouseout = function () {
-  document.querySelector(".school-name").style.color = "rgb(230, 98, 98)";
-  document.querySelector(".al-vadud").style.fill = "red";
-  document.querySelector(".al-vadud").style.border = "none";
-};
-
-document.querySelector(".school-name").onmouseover = function () {
-  document.querySelector(".school-name").style.color = "gold";
-  document.querySelector(".al-vadud").style.fill = "gold";
-};
-document.querySelector(".school-name").onmouseout = function () {
-  document.querySelector(".school-name").style.color = "rgb(230, 98, 98)";
-  document.querySelector(".al-vadud").style.fill = "red";
-};
-
-// Изменение цвета логотипа незарегистрированого юзера
-document.querySelector("#user").onmouseover = function () {
-  document.querySelector("#user").style.fill = "gold";
-};
-document.querySelector("#user").onmouseout = function () {
-  document.querySelector("#user").style.fill = "#4b4c4d";
-};
-
-// Изменение цвета логотипа уведомлений
-document.querySelector(".notification-svg").onmouseover = function () {
-  document.querySelector(".notification-svg").style.fill = "gold";
-};
-document.querySelector(".notification-svg").onmouseout = function () {
-  document.querySelector(".notification-svg").style.fill = "#4b4c4d";
-};
-
-//Контейнер поиска по сайту
-const searchBox = (searchToggle = document.querySelector(".searchToggle"));
-
-searchToggle.addEventListener("click", () => {
-  searchToggle.classList.toggle("active");
-});
-
-//------------------------------------------
-
-// Переключатель меню входа юзера и меню уведомлений
-// Переменная для определения авторизации пользователя
-let userAuthorization = true;
-
-// Элементы HTML
-const userIcon = document.getElementById("user"); // SVG с классом user
-const signInContainer = document.querySelector(".sign-in-container");
-const userInformationContainer = document.getElementById(
-  "user-information-container"
-);
-const signInCancelButton = document.querySelector(".sign-in-form-cancel");
-const userInformationCancelButton = document.querySelector(
-  ".user-information-form-cancel"
-);
-// Функция для обработки нажатия на SVG
-userIcon.addEventListener("click", () => {
-  if (userAuthorization) {
-    // Если пользователь авторизован, показать контейнер уведомлений
-    if (userInformationContainer.style.display == "none") {
-      signInContainer.style.display = "none";
-      userInformationContainer.style.display = "block";
-    } else {
-      userInformationContainer.style.display = "none";
-    }
-  } else {
-    // Если пользователь не авторизован, показать контейнер входа
-    if (signInContainer.style.display == "none") {
-      signInContainer.style.display = "block";
-      userInformationContainer.style.display = "none";
-    } else {
-      signInContainer.style.display = "none";
-    }
-  }
-});
-
-//Функция скрытия формы при нажатии на крестик
-signInCancelButton.addEventListener("click", () => {
-  signInContainer.style.display = "none";
-});
-
-userInformationCancelButton.addEventListener("click", () => {
-  userInformationContainer.style.display = "none";
-});
-
-/*Переключение форм входа юзера и информации о юзере. При нажатии на кнопку "выйти" и последующем обновлении страницы в информации о юзере будет 
-    отображаться форма регистрации юзера.
-    При нажатии на кнопку "войти" в форме регистрации юзера, при следующем обновлении страницы будет отображаться форма информации о юзере
-*/
-const signOutLink = document.querySelector(".sign-out-link");
-const signInButton = document.querySelector(".sign-in-button");
-
-signOutLink.addEventListener("click", () => {
-  userAuthorization = false;
-});
-
-signInButton.addEventListener("click", () => {
-  userAuthorization = true;
-});
-
-//------------------------------------------
-// Переключатель меню уведомлений
-
-// Элементы HTML
-const notificationIcon = document.querySelector(".notification-svg"); // SVG с классом user
-const notificationContainer = document.querySelector(".notification-container");
-const notificationCancelButton = document.querySelector(
-  ".notification-form-cancel"
-);
-
-// Функция для обработки нажатия на SVG
-notificationIcon.addEventListener("click", () => {
-  if (notificationContainer.style.display == "none") {
-    notificationContainer.style.display = "block";
-  } else {
-    notificationContainer.style.display = "none";
-  }
-});
-
-notificationCancelButton.addEventListener("click", () => {
-  notificationContainer.style.display = "none";
-});
-
-//------------------------------------------
-//Изменения видимости пароля в форме входа юзера
-$("body").on("click", "#hide-password", function () {
-  if ($(this).is(":hover")) {
-    $("#pass").attr("type", "text");
-    document.querySelector("#hide-password").style.display = "none";
-    document.querySelector("#show-password").style.display = "block";
-  }
-});
-$("body").on("click", "#show-password", function () {
-  if ($(this).is(":hover")) {
-    $("#pass").attr("type", "password");
-    document.querySelector("#hide-password").style.display = "block";
-    document.querySelector("#show-password").style.display = "none";
-  }
-});
-
-//------------------------------------------
-//Изменения видимости пароля в форме регистрации юзера
-$("body").on("click", "#sign-up-hide-password", function () {
-  if ($(this).is(":hover")) {
-    $("#sign-up-pass").attr("type", "text");
-    document.querySelector("#sign-up-hide-password").style.display = "none";
-    document.querySelector("#sign-up-show-password").style.display = "block";
-  }
-});
-$("body").on("click", "#sign-up-show-password", function () {
-  if ($(this).is(":hover")) {
-    $("#sign-up-pass").attr("type", "password");
-    document.querySelector("#sign-up-hide-password").style.display = "block";
-    document.querySelector("#sign-up-show-password").style.display = "none";
-  }
-});
-
-//------------------------------------------
 //Изменения видимости пароля в профайле юзера
 $("body").on("click", "#profile-hide-password", function () {
   if ($(this).is(":hover")) {
@@ -201,6 +213,23 @@ $("body").on("click", "#profile-show-password", function () {
 });
 
 //------------------------------------------
+//Страница - регистрации юзера
+//Изменения видимости пароля в форме регистрации юзера
+$("body").on("click", "#sign-up-hide-password", function () {
+  if ($(this).is(":hover")) {
+    $("#sign-up-pass").attr("type", "text");
+    document.querySelector("#sign-up-hide-password").style.display = "none";
+    document.querySelector("#sign-up-show-password").style.display = "block";
+  }
+});
+$("body").on("click", "#sign-up-show-password", function () {
+  if ($(this).is(":hover")) {
+    $("#sign-up-pass").attr("type", "password");
+    document.querySelector("#sign-up-hide-password").style.display = "block";
+    document.querySelector("#sign-up-show-password").style.display = "none";
+  }
+});
+
 //АВТОЗАПОЛНЕНИЕ НАЗВАНИЯ ГОРОДА
 const input = document.getElementById("resident-city");
 const suggestionsContainer = document.getElementById("suggestions");

@@ -42,7 +42,7 @@ body main > .btn {
   text-align: center;
 
   cursor: pointer;
-  transition: var(--transition--all--04-ease);
+  transition: var(--transition--all--05-ease);
   z-index: var(--z-index-for-icons-in-form);
 }
 body main > .btn.click {
@@ -133,9 +133,6 @@ body main > .btn .fa-circle-arrow-left {
   margin: 0;
   padding: 0;
 }
-.sidebar ul li a .fa-caret-down {
-  display: none;
-}
 .sidebar ul li svg {
   display: inline-block;
   width: 2vw;
@@ -145,19 +142,32 @@ body main > .btn .fa-circle-arrow-left {
 
   fill: var(--page-text-color);
 }
-.sidebar ul li.active > a {
+.sidebar ul > li.active > a {
   color: var(--page-text-color-hover);
   background: var(--cabinet-page-menu-background-color);
 }
-.sidebar ul li.active > a svg {
+.sidebar ul > li.active > a svg {
   fill: var(--page-text-color-hover);
 }
-.sidebar ul li > a:hover {
+.sidebar ul > li.active .fas {
+  color: var(--page-text-color-hover);
+}
+.sidebar ul > li > a:hover {
   color: var(--page-text-color-hover);
   background: var(--cabinet-page-menu-item-hover-background-color);
 }
-.sidebar ul li > a:hover svg {
+.sidebar ul > li > a:hover svg {
   fill: var(--page-text-color-hover);
+}
+.sidebar ul > li > a:hover + .fas {
+  color: var(--page-text-color-hover);
+}
+.sidebar ul > li > .fa-caret-down:hover {
+  color: var(--page-text-color-hover);
+}
+.fa-caret-down:hover ~ .serv-btn {
+  color: var(--page-text-color-hover);
+  background: var(--cabinet-page-menu-item-hover-background-color);
 }
 .sidebar ul li .serv-show {
   position: static;
@@ -198,7 +208,7 @@ body main > .btn .fa-circle-arrow-left {
   padding: 0;
   margin: 0;
 
-  background: var(--cabinet-page-menu-item-hover-background-color);
+  background-color: var(--cabinet-page-menu-item-hover-background-color);
 
   backdrop-filter: var(--sidebar-content-backdrop-filter-blur) !important;
   -webkit-backdrop-filter: var(
@@ -222,6 +232,7 @@ body main > .btn .fa-circle-arrow-left {
 .sidebar ul .serv-show.show-menu li {
   padding-left: 0;
   margin-left: 0;
+
   line-height: 4vh;
 }
 .sidebar ul .serv-show.show-menu li:only-of-type {
@@ -258,29 +269,38 @@ body main > .btn .fa-circle-arrow-left {
 }
 .sidebar ul li.active ul li a {
   color: var(--page-text-color);
-  background-color: none !important;
+  background-color: none;
 }
 .sidebar ul li.active ul li a.active {
   color: var(--page-text-color-hover);
-  background-color: var(--cabinet-page-menu-item-hover-background-color);
+  background: var(--cabinet-page-menu-item-hover-background-color);
 }
 .sidebar ul ul li a:hover {
   color: var(--page-text-color-hover) !important;
-  background-color: none !important;
+  background-color: none;
 }
-.sidebar ul li a .fas {
+.sidebar ul li .fas {
+  display: none;
   position: absolute;
-  top: 50%;
+  top: 1vh;
   right: 1vw;
+
+  height: 6vh;
+  width: 2vw;
+
+  text-align: center;
+  align-content: center;
+
+  color: var(--page-text-color);
 
   font-size: 0.8em;
 
-  transform: translateY(-50%);
+  cursor: pointer;
 
-  transition: transform 0.4s;
+  transition: var(--transition--all--05-ease);
 }
-.sidebar ul li a .fas.rotate {
-  transform: translateY(-50%) rotate(-180deg);
+.sidebar ul li .fas.rotate {
+  transform: translateY(-10%) rotate(-180deg);
 }
 
 .sidebar ul li a .fa {

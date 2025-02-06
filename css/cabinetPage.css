@@ -12,8 +12,7 @@
 
   overflow: visible;
 
-  background-image: url("./../images/cabinet.jpg");
-  background-size: cover;
+  background-image: url("./../images/Cabinet-bacground-picture-v2.webp");
 
   z-index: var(--z-index-for-background-media);
 }
@@ -41,10 +40,10 @@
   left: 5%;
 
   background-color: var(--cabinet-page-content-background-color);
-  backdrop-filter: var(--sidebar-content-backdrop-filter-blur);
-  -webkit-backdrop-filter: var(--sidebar-content-backdrop-filter-blur);
+  backdrop-filter: var(--sb-cnt-backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--sb-cnt-backdrop-filter-blur);
 
-  transition: var(--transition--all--04-ease);
+  transition: var(--transition--all--05-ease);
 
   z-index: 1;
 }
@@ -300,7 +299,7 @@
   width: 2vw;
   height: 2vh;
 
-  fill: var(--cabinet-page-sidebar-content-font-color);
+  fill: var(--cabinet-page-sb-cnt-font-color);
 }
 
 #seeker-will-modal-cross-svg:hover {

@@ -1,3 +1,12 @@
+// Получаем значение CSS глобальных перменных
+const rootStyles = getComputedStyle(document.documentElement);
+const pageTextColorHover = rootStyles
+  .getPropertyValue("--page-text-color-hover")
+  .trim();
+const sidebarMenuBackgroundColorHover = rootStyles
+  .getPropertyValue("--cabinet-page-menu-item-hover-background-color")
+  .trim();
+
 //Проверка развернут ли сайдабр. Если развёрнут вернёт true в обратном случае false
 function isSideBarExpand() {
   if ($(".sidebar").hasClass("expand")) {
@@ -51,8 +60,11 @@ function setVisibleOrHideSidebarOverflow(setVisible) {
 const sidebarMenuActiveContentIdKey = "sidebar-content-id";
 //Показ/скрытие контента соответсвующего меню или подменю сайдбара
 function showOrHideSidebarContent(itemId) {
+  console.log("itemId");
+  console.log(itemId);
   //ID соответствующего контейнера контента меню сайдбара
-  const itemContent = document.getElementById(`${itemId}-sidebar-content`);
+  const itemContent = document.getElementById(`${itemId}-sb-cnt`);
+
   console.log("itemContent");
   console.log(itemContent);
   //Скрываем текущий активный контент
@@ -61,15 +73,19 @@ function showOrHideSidebarContent(itemId) {
     const activeItemContentId = localStorage.getItem(
       sidebarMenuActiveContentIdKey
     );
-
+    console.log("activeItemContentId");
+    console.log(activeItemContentId);
     //Проверка на совпадение активного контента с выбранным
     //Если выбрано другое меню, отключаем текущий активный контент и отображаем выбранный
-    if (!activeItemContentId.includes(itemContent.id)) {
-      const activeItemContent = document.getElementById(activeItemContentId);
-      activeItemContent.style.display = "none";
-      localStorage.removeItem(sidebarMenuActiveContentIdKey);
-    }
+    if (activeItemContentId) {
+      if (!activeItemContentId.includes(itemContent.id)) {
+        const activeItemContent = document.getElementById(activeItemContentId);
 
+        if (activeItemContent) {
+          activeItemContent.style.display = "none";
+        }
+      }
+    }
     if (isSideBarExpand()) {
       $(".cabinet-content").addClass("expand-sidebar");
     } else {
@@ -98,62 +114,38 @@ $(".btn").click(function () {
   $(".cabinet-content").toggleClass("expand-sidebar");
 });
 
-//Переменная-ключ для добавления контента активного меню сайдбара
-const activeMenuKey = "sidebar-active-menu";
-
 function toggelerVisibilityDropMenu(item) {
+  let toggleMenuTimer;
+  const menuShowingTimeOut = 100;
+
   if (isSideBarExpand) {
     //Инициализация родительского <li> элемента
     const parentLi = item.closest("li");
     //Инициализация элемента <ul> выпадающего меню
     const servShowElement = parentLi.querySelector(".serv-show");
-    //Инициализация элемента <span> главного меню - каретка отображения открытого/закрытого меню
-    const caretSpan = item.querySelector(".fas");
 
-    //Проверка элемента <ul>
-    if (servShowElement) {
-      //Переключение видимости подменю
-      servShowElement.classList.toggle("show");
-      //Проверка развёрнуто ли подменю
-      if ($(servShowElement).hasClass("show")) {
-        parentLi.classList.toggle("active");
+    // Отменяем таймер показа/скрытия меню, если он активен
+    clearTimeout(toggleMenuTimer);
 
-        //С localStorage берём предидущее активное меню
-        const activeMenuId = localStorage.getItem(activeMenuKey);
-        const activeMenu = document.getElementById(activeMenuId).closest("li");
-
-        //Проверка инициализации предидущего активного меню и на совпадение с текущим активированым меню
-        if (activeMenu && !item.id.includes(activeMenuId)) {
-          //Проверка активно ли сейчас меню
-          if ($(activeMenu).hasClass("active")) {
-            activeMenu.classList.toggle("active");
-            localStorage.removeItem(activeMenuKey);
-          }
-          localStorage.setItem(activeMenuKey, item.id);
-        }
-      } else {
-        if ($(parentLi).hasClass("active")) {
-          parentLi.classList.toggle("active");
-        }
+    // Устанавливаем задержку перед отображением меню
+    toggleMenuTimer = setTimeout(() => {
+      //Проверка элемента <ul>
+      if (servShowElement) {
+        //Переключение видимости подменю
+        servShowElement.classList.toggle("show");
       }
-
-      if (caretSpan) {
-        //Переключение положения каретки
-        caretSpan.classList.toggle("rotate");
-      }
-    }
+    }, menuShowingTimeOut);
   }
 }
 
 //Переменная со всеми елементами главного меню сайдбара
 const sidebarMenuItems = document.querySelectorAll(".sidebar-menu-item");
 const sidebarActiveMenuIdKey = "sidebar-menu-id";
+const expandSidebarActiveMenuIdKey = "sidebar-expand-menu-id";
 const sidebarActiveSubmenuIdKey = "sidebar-submenu-id";
 
 //Прослушка главного меню сайдбара на клик
 sidebarMenuItems.forEach((item) => {
-  //ID ссыkки выбранного главного меню сайдбара
-  const itemId = item.closest("a").id;
   //Елемент Li выбранного главного меню сайдбара
   const liItem = item.closest("li");
   const liItems = liItem.children;
@@ -161,8 +153,40 @@ sidebarMenuItems.forEach((item) => {
   //Показываем/скрываем контент при нажатии на меню или подменю
   item.addEventListener("click", (event) => {
     event.preventDefault();
+    const activeMenuId = localStorage.getItem(sidebarActiveMenuIdKey);
 
-    toggelerVisibilityDropMenu(item);
+    //Если выбрано уже активное меню просто добавляем класс active, если выбрано другое меню снимаем класс active с активного и активируем текущее
+    if (!activeMenuId.includes(item.id)) {
+      localStorage.setItem(sidebarActiveMenuIdKey, item.id);
+
+      //Снимаем класс active с активного меню
+      document
+        .getElementById(activeMenuId)
+        .closest("li")
+        .classList.remove("active");
+
+      //Добавляем класс active к выбранному меню
+      item.closest("li").classList.add("active");
+
+      //Если сайдбар свёрнут, делаем ту же операцию для названия меню в выпадающем списке
+      if (isSideBarExpand) {
+        const activeSidebarMenuTitle =
+          findActiveSidebarMenuTitleById(activeMenuId);
+        activeSidebarMenuTitle.classList.remove("active");
+
+        const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
+        console.log(selectedSidebarMenu);
+        selectedSidebarMenu.classList.add("active");
+      }
+    } else {
+      localStorage.setItem(sidebarActiveMenuIdKey, item.id);
+      item.closest("li").classList.add("active");
+
+      if (isSideBarExpand) {
+        const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
+        selectedSidebarMenu.classList.add("active");
+      }
+    }
 
     showOrHideSidebarContent(item.id);
   });
@@ -172,6 +196,7 @@ sidebarMenuItems.forEach((item) => {
   const subMenuShowingTimeOut = 300;
   let ulSubMenuItem = null;
 
+  //Инициализация подменю
   for (let i = 0; i < liItems.length; i++) {
     if (liItems[i].tagName === "UL") {
       // Проверяем, является ли элемент <ul>
@@ -181,11 +206,11 @@ sidebarMenuItems.forEach((item) => {
   }
 
   if (ulSubMenuItem) {
-    //Показываем/скрываем название меню и подбемню при фокусе на елементе меню
+    //Показываем название меню и подбемню при фокусе на елементе меню
     item.addEventListener("mouseenter", () => {
       if (!isSideBarExpand()) {
         //Сравнение текущего меню с активным
-        const activeMenuId = localStorage.getItem(sidebarActiveMenuIdKey);
+        const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey);
 
         if (activeMenuId) {
           if (!item.id.includes(activeMenuId)) {
@@ -194,10 +219,9 @@ sidebarMenuItems.forEach((item) => {
               .closest("li");
             const activeSubMenu = activeMenu.querySelector(".serv-show");
             if (activeMenu) {
-              activeMenu.classList.remove("active");
               activeSubMenu.classList.remove("show-menu");
             }
-            localStorage.setItem(sidebarActiveMenuIdKey, item.id);
+            localStorage.setItem(expandSidebarActiveMenuIdKey, item.id);
           }
         }
         // Отменяем таймер скрытия меню, если он активен
@@ -208,12 +232,11 @@ sidebarMenuItems.forEach((item) => {
           setVisibleOrHideSidebarOverflow(true);
 
           ulSubMenuItem.classList.add("show-menu");
-          item.closest("li").classList.add("active");
-          localStorage.setItem(sidebarActiveMenuIdKey, item.id);
+          localStorage.setItem(expandSidebarActiveMenuIdKey, item.id);
         }, subMenuShowingTimeOut); // Задержка 300 мс
       }
     });
-
+    //Скрываем название меню и подбемню при отсутсвии фокуса на елементе меню
     item.addEventListener("mouseleave", () => {
       if (!isSideBarExpand()) {
         // Отменяем таймер отображения меню, если он активен
@@ -229,7 +252,7 @@ sidebarMenuItems.forEach((item) => {
         }, subMenuShowingTimeOut); // Задержка 300 мс
       }
     });
-
+    //Скрываем название меню и подбемню при отсутсвии фокуса на елементе подменю
     ulSubMenuItem.addEventListener("mouseleave", () => {
       if (!isSideBarExpand()) {
         // Отменяем таймер отображения меню, если он активен
@@ -239,7 +262,6 @@ sidebarMenuItems.forEach((item) => {
         hideMenuTimeout = setTimeout(() => {
           // Проверяем, находится ли курсор мыши на блоке ulSubMenuItem
           setVisibleOrHideSidebarOverflow(false);
-          item.closest("li").classList.remove("active");
           ulSubMenuItem.classList.remove("show-menu");
         }, subMenuShowingTimeOut); // Задержка 300 мс
       }
@@ -247,43 +269,98 @@ sidebarMenuItems.forEach((item) => {
   }
 });
 
+//Функции для работы с кареткой выпадающего меню
+const caretImage = document.querySelectorAll(".fa-caret-down");
+
+caretImage.forEach((caret) => {
+  //Соседний элемент <a>
+  let menuLink;
+  let menuIcon;
+
+  //Показ подменю при нажатии на каретку
+  caret.addEventListener("click", () => {
+    menuLink = caret.closest("li").querySelector(".serv-btn");
+    menuIcon = caret.closest("li").querySelector(".sidebar-menu-icon");
+
+    caret.classList.toggle("rotate");
+
+    toggelerVisibilityDropMenu(menuLink);
+  });
+
+  caret.addEventListener("mouseenter", () => {
+    menuLink = caret.closest("li").querySelector(".serv-btn");
+    menuIcon = caret.closest("li").querySelector(".sidebar-menu-icon");
+
+    menuLink.style.color = pageTextColorHover;
+    menuLink.style.backgroundColor = sidebarMenuBackgroundColorHover;
+
+    if (menuIcon.classList.contains("side-bar-god-svg")) {
+      menuIcon.style.stroke = pageTextColorHover;
+    } else {
+      menuIcon.style.fill = pageTextColorHover;
+    }
+  });
+
+  caret.addEventListener("mouseout", () => {
+    menuLink = caret.closest("li").querySelector(".serv-btn");
+    menuIcon = caret.closest("li").querySelector(".sidebar-menu-icon");
+
+    menuLink.style.color = "";
+    menuLink.style.backgroundColor = "";
+
+    if (menuIcon.classList.contains("side-bar-god-svg")) {
+      menuIcon.style.stroke = "";
+    } else {
+      menuIcon.style.fill = "";
+    }
+  });
+});
+
 //Функция активации элемента подменю
 const subMenuItems = document.querySelectorAll(".sidebar-submenu-item");
-//Переменная-ключ активного подменю сайдбара
-const activeSubMenuKey = "sb-act-sub-menu";
 subMenuItems.forEach((subMenuItem) => {
   subMenuItem.addEventListener("click", () => {
+    console.log(subMenuItem);
     //Переменная названия подменю
-    const selectedMenuIdOfSubMenu = subMenuItem
+    const selectedMenuOfSubMenu = subMenuItem
       .closest("ul")
       .closest("li")
-      .querySelector(".sidebar-menu-item").id;
-    const selectedSubMenuId = subMenuItem.id;
-    const activeMenuId = localStorage.getItem(activeMenuKey);
-    const activeSubMenuId = localStorage.getItem(activeSubMenuKey);
+      .querySelector(".sidebar-menu-item");
+    const activeMenuId = localStorage.getItem(sidebarActiveMenuIdKey);
+    const activeSubMenuId = localStorage.getItem(sidebarActiveSubmenuIdKey);
 
     //Проверка на совпадение активного меню и выбраного подменю. Если выбранное подменю относится к другому меню, деактивировать предидущее активное меню
     if (activeMenuId) {
-      if (!selectedMenuIdOfSubMenu.includes(activeMenuId)) {
-        document.getElementById(activeMenuId).classList.remove("active");
-        localStorage.removeItem(activeMenuId);
+      if (!selectedMenuOfSubMenu.id.includes(activeMenuId)) {
+        findActiveSidebarMenuByTitleId(activeMenuId).classList.remove("active");
+        findActiveSidebarMenuTitleById(activeMenuId).classList.remove("active");
+        localStorage.setItem(sidebarActiveMenuIdKey, selectedMenuOfSubMenu.id);
       }
     }
 
     //Проверка на совпадение активного подменю. Если выбрано другое подменю деактивировать предидущее
     if (activeSubMenuId) {
-      if (!selectedSubMenuId.includes(activeSubMenuId)) {
+      if (!subMenuItem.id.includes(activeSubMenuId)) {
         document.getElementById(activeSubMenuId).classList.remove("active");
-        localStorage.removeItem(activeSubMenuKey);
       }
     }
-
-    if (!$(subMenuItem).hasClass("active")) {
+    console.log(subMenuItem);
+    if (!subMenuItem.classList.contains("active")) {
       subMenuItem.classList.add("active");
-      localStorage.setItem(activeSubMenuKey, subMenuItem.id);
+
+      if (!subMenuItem.classList.contains("title")) {
+        findActiveSidebarMenuTitleById(selectedMenuOfSubMenu.id).classList.add(
+          "active"
+        );
+      }
+
+      selectedMenuOfSubMenu.closest("li").classList.add("active");
+
+      localStorage.setItem(sidebarActiveMenuIdKey, selectedMenuOfSubMenu.id);
+      localStorage.setItem(sidebarActiveSubmenuIdKey, subMenuItem.id);
     }
 
-    showOrHideSidebarContent(selectedSubMenuId);
+    showOrHideSidebarContent(subMenuItem.id);
   });
 });
 
@@ -303,3 +380,29 @@ tblTitleLinks.forEach((link) => {
     }
   });
 });
+
+//Функция возвращает при свёрнутом сайдбаре елемент <a> с названием меню
+function findActiveSidebarMenuTitleById(activeMenuId) {
+  let result;
+  const activeSideBarMenuLinks = document.querySelectorAll("#" + activeMenuId);
+
+  for (let i = 0; i < activeSideBarMenuLinks.length; i++) {
+    if (activeSideBarMenuLinks[i].classList.contains("title")) {
+      result = activeSideBarMenuLinks[i];
+    }
+  }
+  return result;
+}
+
+//Функция возвращает при свёрнутом сайдбаре елемент <a> пункта меню
+function findActiveSidebarMenuByTitleId(activeMenuId) {
+  let result;
+  const activeSideBarMenuLinks = document.querySelectorAll("#" + activeMenuId);
+
+  for (let i = 0; i < activeSideBarMenuLinks.length; i++) {
+    if (activeSideBarMenuLinks[i].classList.contains("sidebar-menu-item")) {
+      result = activeSideBarMenuLinks[i].closest("li");
+    }
+  }
+  return result;
+}
