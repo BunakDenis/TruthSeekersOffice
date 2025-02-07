@@ -171,10 +171,9 @@ body main > .btn .fa-circle-arrow-left {
 }
 .sidebar ul li .serv-show {
   position: static;
-  display: none;
 
   width: 100%;
-  height: auto;
+  max-height: 0;
 
   font-family: var(--fornt-family-for-content);
   font-size: 0.9em;
@@ -184,23 +183,41 @@ body main > .btn .fa-circle-arrow-left {
   overflow-y: auto;
   overflow-x: hidden;
 
+  opacity: 0;
+  visibility: hidden;
+
   list-style: none;
   background-color: none;
+
+  transition: opacity 0.4s ease-in-out;
+  transition-delay: 0.3s;
+}
+
+.sidebar ul li .serv-show a {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(-50%);
+
+  transition: transform 0.4s ease-in-out;
+}
+
+.sidebar ul li .serv-show.show,
+.sidebar ul li .serv-show.show-menu {
+  max-height: 100vh;
+
+  opacity: 1;
+  visibility: visible;
 }
 .sidebar.expand ul li .serv-show.show {
-  display: block;
   position: static;
 
   background-color: none;
 }
 
 .sidebar ul li .serv-show.show-menu {
-  display: block;
   position: absolute;
 
   width: 15vw;
-  min-height: 7vh;
-  max-height: auto;
 
   top: 0;
   left: 100%;
@@ -250,12 +267,11 @@ body main > .btn .fa-circle-arrow-left {
 .sidebar ul .serv-show.show-menu li a {
   padding-left: 2vw;
 }
-.sidebar ul li .serv-show li .title {
-  display: none;
+.sidebar ul li .serv-show.show li .title {
+  visibility: hidden;
+  opacity: 0;
 }
 .sidebar ul li .serv-show.show-menu li .title {
-  display: block;
-
   padding: 2vh 0 1vh 1vw;
   margin: 0;
 
