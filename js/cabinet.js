@@ -60,21 +60,16 @@ function setVisibleOrHideSidebarOverflow(setVisible) {
 const sidebarMenuActiveContentIdKey = "sidebar-content-id";
 //Показ/скрытие контента соответсвующего меню или подменю сайдбара
 function showOrHideSidebarContent(itemId) {
-  console.log("itemId");
-  console.log(itemId);
   //ID соответствующего контейнера контента меню сайдбара
   const itemContent = document.getElementById(`${itemId}-sb-cnt`);
 
-  console.log("itemContent");
-  console.log(itemContent);
   //Скрываем текущий активный контент
   if (itemContent) {
     //ID текущего активного контента меню сайдбара
     const activeItemContentId = localStorage.getItem(
       sidebarMenuActiveContentIdKey
     );
-    console.log("activeItemContentId");
-    console.log(activeItemContentId);
+
     //Проверка на совпадение активного контента с выбранным
     //Если выбрано другое меню, отключаем текущий активный контент и отображаем выбранный
     if (activeItemContentId) {
@@ -110,31 +105,39 @@ $(".btn").click(function () {
     showOrHideSideBarItemText(true);
   } else {
     showOrHideSideBarItemText(false);
+    hideVisibleDropMenuInExpandSidebar();
   }
   $(".cabinet-content").toggleClass("expand-sidebar");
 });
 
 function toggelerVisibilityDropMenu(item) {
-  let toggleMenuTimer;
-  const menuShowingTimeOut = 100;
-
   if (isSideBarExpand) {
     //Инициализация родительского <li> элемента
     const parentLi = item.closest("li");
     //Инициализация элемента <ul> выпадающего меню
     const servShowElement = parentLi.querySelector(".serv-show");
 
-    // Отменяем таймер показа/скрытия меню, если он активен
-    clearTimeout(toggleMenuTimer);
+    //Проверка элемента <ul>
+    if (servShowElement) {
+      //Переключение видимости подменю
+      servShowElement.classList.toggle("show");
+      changeVisibilityOfSubMenuItems(servShowElement);
+    }
+  }
+}
 
-    // Устанавливаем задержку перед отображением меню
-    toggleMenuTimer = setTimeout(() => {
-      //Проверка элемента <ul>
-      if (servShowElement) {
-        //Переключение видимости подменю
-        servShowElement.classList.toggle("show");
-      }
-    }, menuShowingTimeOut);
+function hideVisibleDropMenuInExpandSidebar() {
+  const menuItems = document.querySelectorAll(".serv-show");
+
+  for (let i = 0; i < menuItems.length; i++) {
+    if (menuItems[i].classList.contains("show")) {
+      changeVisibilityOfSubMenuItems(menuItems[i]);
+      menuItems[i]
+        .closest("li")
+        .querySelector(".fas")
+        .classList.remove("rotate");
+      menuItems[i].classList.remove("show");
+    }
   }
 }
 
@@ -154,6 +157,15 @@ sidebarMenuItems.forEach((item) => {
   item.addEventListener("click", (event) => {
     event.preventDefault();
     const activeMenuId = localStorage.getItem(sidebarActiveMenuIdKey);
+    const activeSubMenu = document.getElementById(
+      localStorage.getItem(sidebarActiveSubmenuIdKey)
+    );
+
+    //Снимаем класс active с активного подменю
+    if (activeSubMenu) {
+      activeSubMenu.classList.remove("active");
+      localStorage.removeItem(sidebarActiveSubmenuIdKey);
+    }
 
     //Если выбрано уже активное меню просто добавляем класс active, если выбрано другое меню снимаем класс active с активного и активируем текущее
     if (!activeMenuId.includes(item.id)) {
@@ -175,7 +187,7 @@ sidebarMenuItems.forEach((item) => {
         activeSidebarMenuTitle.classList.remove("active");
 
         const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
-        console.log(selectedSidebarMenu);
+
         selectedSidebarMenu.classList.add("active");
       }
     } else {
@@ -191,10 +203,7 @@ sidebarMenuItems.forEach((item) => {
     showOrHideSidebarContent(item.id);
   });
 
-  let showMenuTimeout; // Таймер для отображения меню
-  let hideMenuTimeout; // Таймер для скрытия меню
-  const subMenuShowingTimeOut = 300;
-  let ulSubMenuItem = null;
+  let ulSubMenuItem;
 
   //Инициализация подменю
   for (let i = 0; i < liItems.length; i++) {
@@ -221,49 +230,32 @@ sidebarMenuItems.forEach((item) => {
             if (activeMenu) {
               activeSubMenu.classList.remove("show-menu");
             }
-            localStorage.setItem(expandSidebarActiveMenuIdKey, item.id);
           }
         }
-        // Отменяем таймер скрытия меню, если он активен
-        clearTimeout(hideMenuTimeout);
+        setVisibleOrHideSidebarOverflow(true);
 
-        // Устанавливаем задержку перед отображением меню
-        showMenuTimeout = setTimeout(() => {
-          setVisibleOrHideSidebarOverflow(true);
-
-          ulSubMenuItem.classList.add("show-menu");
-          localStorage.setItem(expandSidebarActiveMenuIdKey, item.id);
-        }, subMenuShowingTimeOut); // Задержка 300 мс
+        ulSubMenuItem.classList.add("show-menu");
+        localStorage.setItem(expandSidebarActiveMenuIdKey, item.id);
+        changeVisibilityOfSubMenuItems(ulSubMenuItem);
       }
     });
     //Скрываем название меню и подбемню при отсутсвии фокуса на елементе меню
     item.addEventListener("mouseleave", () => {
       if (!isSideBarExpand()) {
-        // Отменяем таймер отображения меню, если он активен
-        clearTimeout(showMenuTimeout);
-
-        // Устанавливаем задержку перед скрытием меню
-        hideMenuTimeout = setTimeout(() => {
-          // Проверяем, находится ли курсор мыши на блоке item
-          if (!item.matches(":hover") && !ulSubMenuItem.matches(":hover")) {
-            setVisibleOrHideSidebarOverflow(false);
-            ulSubMenuItem.classList.remove("show-menu");
-          }
-        }, subMenuShowingTimeOut); // Задержка 300 мс
+        // Проверяем, находится ли курсор мыши на блоке item
+        if (!item.matches(":hover") && !ulSubMenuItem.matches(":hover")) {
+          setVisibleOrHideSidebarOverflow(false);
+          ulSubMenuItem.classList.remove("show-menu");
+          changeVisibilityOfSubMenuItems(ulSubMenuItem);
+        }
       }
     });
     //Скрываем название меню и подбемню при отсутсвии фокуса на елементе подменю
     ulSubMenuItem.addEventListener("mouseleave", () => {
       if (!isSideBarExpand()) {
-        // Отменяем таймер отображения меню, если он активен
-        clearTimeout(showMenuTimeout);
-
-        // Устанавливаем задержку перед скрытием меню
-        hideMenuTimeout = setTimeout(() => {
-          // Проверяем, находится ли курсор мыши на блоке ulSubMenuItem
-          setVisibleOrHideSidebarOverflow(false);
-          ulSubMenuItem.classList.remove("show-menu");
-        }, subMenuShowingTimeOut); // Задержка 300 мс
+        setVisibleOrHideSidebarOverflow(false);
+        ulSubMenuItem.classList.remove("show-menu");
+        changeVisibilityOfSubMenuItems(ulSubMenuItem);
       }
     });
   }
@@ -320,7 +312,6 @@ caretImage.forEach((caret) => {
 const subMenuItems = document.querySelectorAll(".sidebar-submenu-item");
 subMenuItems.forEach((subMenuItem) => {
   subMenuItem.addEventListener("click", () => {
-    console.log(subMenuItem);
     //Переменная названия подменю
     const selectedMenuOfSubMenu = subMenuItem
       .closest("ul")
@@ -344,7 +335,6 @@ subMenuItems.forEach((subMenuItem) => {
         document.getElementById(activeSubMenuId).classList.remove("active");
       }
     }
-    console.log(subMenuItem);
     if (!subMenuItem.classList.contains("active")) {
       subMenuItem.classList.add("active");
 
@@ -405,4 +395,47 @@ function findActiveSidebarMenuByTitleId(activeMenuId) {
     }
   }
   return result;
+}
+
+//Функция включения/отключения видимости елементов подменю
+function changeVisibilityOfSubMenuItems(item) {
+  const links = item.querySelectorAll(".sidebar-submenu-item");
+  const styleTransitionDelay = 100;
+  const styleTransformIfMenuHide = "translateX(0)";
+  const styleTransformIfMenuShow = "translateX(-50%)";
+
+  for (let i = 0; i < links.length; i++) {
+    if (item.classList.contains("show")) {
+      if (!links[i].classList.contains("title")) {
+        links[i].style.opacity = "1";
+        links[i].style.visibility = "visible";
+        links[i].style.transform = styleTransformIfMenuHide;
+        links[i].style.transitionDelay = i * styleTransitionDelay + "ms";
+      } else {
+        links[i].parentElement.style.visibility = "hidden";
+        links[i].parentElement.style.opacity = "0";
+        links[i].parentElement.style.lineHeight = "0";
+      }
+    } else if (item.classList.contains("show-menu")) {
+      if (!links[i].classList.contains("title")) {
+        links[i].style.opacity = "1";
+        links[i].style.visibility = "visible";
+        links[i].style.transform = styleTransformIfMenuHide;
+        links[i].style.transitionDelay = i * styleTransitionDelay + "ms";
+      } else {
+        links[i].parentElement.style.visibility = "visible";
+        links[i].parentElement.style.opacity = "1";
+        links[i].parentElement.style.lineHeight = "4vh";
+
+        links[i].style.opacity = "1";
+        links[i].style.visibility = "visible";
+        links[i].style.transform = styleTransformIfMenuHide;
+        links[i].style.transitionDelay = i * styleTransitionDelay + "ms";
+      }
+    } else {
+      links[i].style.opacity = "0";
+      links[i].style.visibility = "hidden";
+      links[i].style.transform = styleTransformIfMenuShow;
+    }
+  }
 }
