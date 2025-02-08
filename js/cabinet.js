@@ -60,21 +60,16 @@ function setVisibleOrHideSidebarOverflow(setVisible) {
 const sidebarMenuActiveContentIdKey = "sidebar-content-id";
 //Показ/скрытие контента соответсвующего меню или подменю сайдбара
 function showOrHideSidebarContent(itemId) {
-  console.log("itemId");
-  console.log(itemId);
   //ID соответствующего контейнера контента меню сайдбара
   const itemContent = document.getElementById(`${itemId}-sb-cnt`);
 
-  console.log("itemContent");
-  console.log(itemContent);
   //Скрываем текущий активный контент
   if (itemContent) {
     //ID текущего активного контента меню сайдбара
     const activeItemContentId = localStorage.getItem(
       sidebarMenuActiveContentIdKey
     );
-    console.log("activeItemContentId");
-    console.log(activeItemContentId);
+
     //Проверка на совпадение активного контента с выбранным
     //Если выбрано другое меню, отключаем текущий активный контент и отображаем выбранный
     if (activeItemContentId) {
@@ -162,6 +157,15 @@ sidebarMenuItems.forEach((item) => {
   item.addEventListener("click", (event) => {
     event.preventDefault();
     const activeMenuId = localStorage.getItem(sidebarActiveMenuIdKey);
+    const activeSubMenu = document.getElementById(
+      localStorage.getItem(sidebarActiveSubmenuIdKey)
+    );
+
+    //Снимаем класс active с активного подменю
+    if (activeSubMenu) {
+      activeSubMenu.classList.remove("active");
+      localStorage.removeItem(sidebarActiveSubmenuIdKey);
+    }
 
     //Если выбрано уже активное меню просто добавляем класс active, если выбрано другое меню снимаем класс active с активного и активируем текущее
     if (!activeMenuId.includes(item.id)) {
@@ -183,7 +187,7 @@ sidebarMenuItems.forEach((item) => {
         activeSidebarMenuTitle.classList.remove("active");
 
         const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
-        console.log(selectedSidebarMenu);
+
         selectedSidebarMenu.classList.add("active");
       }
     } else {
@@ -308,7 +312,6 @@ caretImage.forEach((caret) => {
 const subMenuItems = document.querySelectorAll(".sidebar-submenu-item");
 subMenuItems.forEach((subMenuItem) => {
   subMenuItem.addEventListener("click", () => {
-    console.log(subMenuItem);
     //Переменная названия подменю
     const selectedMenuOfSubMenu = subMenuItem
       .closest("ul")
@@ -332,7 +335,6 @@ subMenuItems.forEach((subMenuItem) => {
         document.getElementById(activeSubMenuId).classList.remove("active");
       }
     }
-    console.log(subMenuItem);
     if (!subMenuItem.classList.contains("active")) {
       subMenuItem.classList.add("active");
 
@@ -398,19 +400,42 @@ function findActiveSidebarMenuByTitleId(activeMenuId) {
 //Функция включения/отключения видимости елементов подменю
 function changeVisibilityOfSubMenuItems(item) {
   const links = item.querySelectorAll(".sidebar-submenu-item");
+  const styleTransitionDelay = 100;
+  const styleTransformIfMenuHide = "translateX(0)";
+  const styleTransformIfMenuShow = "translateX(-50%)";
+
   for (let i = 0; i < links.length; i++) {
-    if (
-      item.classList.contains("show") ||
-      item.classList.contains("show-menu")
-    ) {
-      links[i].style.opacity = "1";
-      links[i].style.visibility = "visible";
-      links[i].style.transform = "translateX(0)";
-      links[i].style.transitionDelay = i * 50 + "ms";
+    if (item.classList.contains("show")) {
+      if (!links[i].classList.contains("title")) {
+        links[i].style.opacity = "1";
+        links[i].style.visibility = "visible";
+        links[i].style.transform = styleTransformIfMenuHide;
+        links[i].style.transitionDelay = i * styleTransitionDelay + "ms";
+      } else {
+        links[i].parentElement.style.visibility = "hidden";
+        links[i].parentElement.style.opacity = "0";
+        links[i].parentElement.style.lineHeight = "0";
+      }
+    } else if (item.classList.contains("show-menu")) {
+      if (!links[i].classList.contains("title")) {
+        links[i].style.opacity = "1";
+        links[i].style.visibility = "visible";
+        links[i].style.transform = styleTransformIfMenuHide;
+        links[i].style.transitionDelay = i * styleTransitionDelay + "ms";
+      } else {
+        links[i].parentElement.style.visibility = "visible";
+        links[i].parentElement.style.opacity = "1";
+        links[i].parentElement.style.lineHeight = "4vh";
+
+        links[i].style.opacity = "1";
+        links[i].style.visibility = "visible";
+        links[i].style.transform = styleTransformIfMenuHide;
+        links[i].style.transitionDelay = i * styleTransitionDelay + "ms";
+      }
     } else {
       links[i].style.opacity = "0";
       links[i].style.visibility = "hidden";
-      links[i].style.transform = "translateX(-50%)";
+      links[i].style.transform = styleTransformIfMenuShow;
     }
   }
 }
