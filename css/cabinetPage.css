@@ -215,7 +215,7 @@
   width: 100%;
   min-height: 5vh;
 }
-.cabinet-content div .sidebar-content-tbl-body table .tbl-row-comment {
+.cabinet-content div .sidebar-content-tbl-body table .will-comment {
   text-align: left;
   text-indent: 1vw;
 }
@@ -231,13 +231,16 @@
 
 /* Форма редактирования информации про Волю */
 
-.seeker-will-information {
+.will-edit-information {
   display: none;
   position: fixed;
   flex-wrap: nowrap;
 
   width: 100%;
   height: 100%;
+
+  justify-content: center;
+  align-content: center;
 
   top: 0;
   bottom: 0;
@@ -249,15 +252,18 @@
   z-index: var(--z-index-for-modal-form);
 }
 
-.seeker-will-modal-dialog {
+html body .edit-modal-container .edit-modal-dialog {
   position: relative;
 
-  border-radius: 3px;
+  border-radius: 5px;
 
-  margin: 0 0 0 20vw;
+  margin: 0 auto;
 
-  width: 60vw;
-  height: 60vw;
+  width: 50vw;
+  min-height: 35vh;
+  max-height: 70vh;
+
+  overflow-y: auto;
 
   font-family: var(--tbl-lable-font-family);
   font-optical-sizing: var(--tbl-lable-font-optical-sizing);
@@ -271,56 +277,114 @@
   z-index: var(--z-index-for-modal-form);
 }
 
-.seeker-will-modal-content {
+html body .edit-modal-container .edit-modal-content {
   position: absolute;
 
   width: 100%;
   height: 100%;
 }
 
-.seeker-will-modal-header {
+html body .edit-modal-container .edit-modal-header {
   width: 100%;
   height: 20%;
 
+  font-family: var(--tbl-lable-font-family);
+  font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+  font-weight: var(--tbl-lable-font-weight);
+
   text-align: center;
 
-  margin-bottom: 2vh;
+  margin-bottom: 1vh;
 }
 
-.seeker-will-information h4 {
+html body .edit-modal-container .edit-modal-title {
   padding-top: 2vw;
+
+  font-family: var(--tbl-lable-font-family);
+  font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+  font-weight: var(--tbl-lable-font-weight);
 }
 
-#seeker-will-modal-cross-svg {
+html body .edit-modal-container .edit-information-close-icon {
   position: absolute;
   top: 5%;
   right: 2%;
 
-  width: 2vw;
-  height: 2vh;
+  width: 1.5vw;
+  height: 1.5vh;
 
   fill: var(--cabinet-page-sb-cnt-font-color);
 }
 
-#seeker-will-modal-cross-svg:hover {
+html body .edit-modal-container .edit-information-close-icon:hover {
   fill: var(--page-text-color-hover);
 }
 
-.edit-seeker-will-modal-body {
+html body .edit-modal-container .edit-modal-body {
   display: var(--tab-display);
-  grid-column: 1 / -1;
+  grid-template-columns: 90%;
+  grid-template-rows: repeat(auto-fit, minmax(5vh, 1fr));
 
-  align-items: center;
-  justify-content: center;
+  row-gap: 2vh;
 
-  padding-top: 2vw;
+  margin-left: 5%;
+
+  align-content: center;
+  justify-content: left;
+
+  padding-top: 0;
 }
 
-.edit-seeker-will-modal-body input + label {
+html body .edit-modal-container .edit-modal-body .input-field {
+  display: grid;
+
+  grid-template-columns: 20% 70%;
+
+  align-items: center;
+  justify-content: left;
+
+  column-gap: 10%;
+}
+
+html body .edit-modal-container .edit-modal-body input + label {
   text-align: left;
 }
 
-.edit-seeker-will-modal-footer {
+html body .edit-modal-container .edit-modal-body textarea {
+  min-height: 4vh;
+  max-height: 18vh;
+}
+
+html body .edit-modal-container .edit-modal-footer {
+  position: fixed;
+
+  width: 100%;
+  height: 5vh;
+
+  bottom: 1vh;
+
   text-align: center;
+  justify-items: center;
+}
+
+html body .edit-modal-container .edit-save-btn {
+  height: 4vh;
+  width: 10vw;
+
+  background: #fff;
+  color: #000;
+
+  border: none;
+
+  cursor: pointer;
+  border-radius: 3px;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+}
+
+html body .edit-modal-container .edit-save-btn:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
 }
 /* ---------------------------------------------------------- */

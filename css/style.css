@@ -12,7 +12,7 @@
   --modal-form-out-background-color: rgba(27, 26, 26, 0.7);
 
   --backdrop-filter-blur: blur(8px);
-  --sidebar-content-backdrop-filter-blur: blur(30px);
+  --sb-cnt-backdrop-filter-blur: blur(30px);
 
   --fornt-family-for-school-name: "Lobster", sans-serif;
   --fornt-family-for-title: "Orelega One", serif;
@@ -561,7 +561,8 @@ form .fields .input-field {
   margin: 0;
 }
 .input-field input,
-select {
+select,
+textarea {
   outline: none;
   font-size: 14px;
   font-weight: 400;
@@ -572,9 +573,11 @@ select {
   height: 42px;
   margin: 5px 0;
 }
-.input-field input :focus,
-.input-field select:focus {
+.input-field input:focus,
+.input-field select:focus,
+.input-field textarea:focus {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
+  border: 2px solid gold;
 }
 .input-field select,
 .input-field input[type="date"] {

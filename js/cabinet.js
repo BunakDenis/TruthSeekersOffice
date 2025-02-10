@@ -6,6 +6,14 @@ const pageTextColorHover = rootStyles
 const sidebarMenuBackgroundColorHover = rootStyles
   .getPropertyValue("--cabinet-page-menu-item-hover-background-color")
   .trim();
+const sidebarBackdropFilterBlur = rootStyles
+  .getPropertyValue("--sidebar-content-backdrop-filter-blur")
+  .trim();
+
+document.addEventListener(
+  "DOMContentLoaded",
+  changeModalEditInformationHeight()
+);
 
 //Проверка развернут ли сайдабр. Если развёрнут вернёт true в обратном случае false
 function isSideBarExpand() {
@@ -62,7 +70,6 @@ const sidebarMenuActiveContentIdKey = "sidebar-content-id";
 function showOrHideSidebarContent(itemId) {
   //ID соответствующего контейнера контента меню сайдбара
   const itemContent = document.getElementById(`${itemId}-sb-cnt`);
-
   //Скрываем текущий активный контент
   if (itemContent) {
     //ID текущего активного контента меню сайдбара
@@ -218,6 +225,13 @@ sidebarMenuItems.forEach((item) => {
     //Показываем название меню и подбемню при фокусе на елементе меню
     item.addEventListener("mouseenter", () => {
       if (!isSideBarExpand()) {
+        //Установка стиля размытия заднего фона меню
+        ulSubMenuItem.style.backdropFilter = sidebarBackdropFilterBlur;
+        ulSubMenuItem.style.webkitBackdropFilter = sidebarBackdropFilterBlur;
+        console.log(
+          "ulSubMenuItem style:" +
+            getComputedStyle(ulSubMenuItem).backdropFilter
+        );
         //Сравнение текущего меню с активным
         const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey);
 
@@ -354,6 +368,49 @@ subMenuItems.forEach((subMenuItem) => {
   });
 });
 
+//Модальные окна редактирования информации записей таблиц контента сайдбара
+const editIcon = document.querySelectorAll(".cnt-edit-icon");
+const closeIcon = document.querySelectorAll(".edit-information-close-icon");
+
+//Функция отображения модальных окон при клике на иконку редактирования
+editIcon.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    const iconId = icon.id;
+    const modalId = iconId.substring(0, iconId.indexOf("-icon"));
+    const modal = document.querySelector("." + modalId + "-information");
+
+    modal.style.display = "block";
+
+    // Установка значений полей в модальном окне из текущей записи
+    const willIncomingDate = icon
+      .closest("tr")
+      .querySelector(".will-incoming-date")
+      .textContent.trim();
+    const willDescription = icon
+      .closest("tr")
+      .querySelector(".will-brief-description")
+      .textContent.trim();
+    const willComment = icon
+      .closest("tr")
+      .querySelector(".will-comment")
+      .textContent.trim();
+
+    document.getElementById("edit-will-incoming-date").value = willIncomingDate;
+    document.getElementById("edit-will-brief-description").value =
+      willDescription;
+    document.getElementById("edit-will-comment").value = willComment;
+  });
+});
+
+//Закрытие модального окна
+closeIcon.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    const modal = icon.closest("section");
+
+    modal.style.display = "none";
+  });
+});
+
 //Переключение иконки сортировки
 const tblTitleLinks = document.querySelectorAll(".tbl-title-link");
 
@@ -438,4 +495,15 @@ function changeVisibilityOfSubMenuItems(item) {
       links[i].style.transform = styleTransformIfMenuShow;
     }
   }
+}
+
+//Функция отслеживания высоты модального окна редактирования информации записей таблиц контента сайдбара
+function changeModalEditInformationHeight() {
+  const modalDialog = document.querySelector(".edit-modal-dialog");
+  const observer = new ResizeObserver(() => {
+    let modalBody = document.querySelector(".edit-modal-body");
+    modalDialog.style.height = modalBody.scrollHeight + 200 + "px";
+  });
+
+  observer.observe(document.querySelector(".edit-modal-body"));
 }

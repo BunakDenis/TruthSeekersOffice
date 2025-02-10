@@ -1,4 +1,52 @@
-﻿Кабинет искателя
+﻿сайдбар
+    - добавить свойство размытия заднего фона к выпадающему меню свёрнутого сайдбара
+
+Кабинет искателя
 - Отредактировать модальное окно редактирования информации о Воле
 - Добавить на страницу контента подменю Воля:
     - Иконки переключения между видами контента (список, таблица, карточки)
+
+
+
+Ссылки для вкладок
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-main-practice"
+                  >Основная практика</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-submenu-item"
+                  id="link-additional-practices"
+                  >Дополнительные практики</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-goal">Цель</a>
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-request"
+                  >Запрос</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-contemplate"
+                  >Созерцание</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-route"
+                  >Маршруты</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-healing"
+                  >Целительство</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-seclusion"
+                  >Затвор</a
+                >
+              </li>

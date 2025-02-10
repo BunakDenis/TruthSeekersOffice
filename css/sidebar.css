@@ -12,10 +12,6 @@ body main .sidebar {
 
   left: 0;
 
-  background: var(--page-content-background-colors);
-  backdrop-filter: var(--backdrop-filter-blur);
-  -webkit-backdrop-filter: var(--backdrop-filter-blur);
-
   font-family: var(--fornt-family-for-content);
   font-size: 1.4em;
   font-weight: 300;
@@ -69,13 +65,18 @@ body main > .btn .fa-circle-arrow-left {
   display: none;
 }
 
-.sidebar > ul {
-  max-height: 100%;
+.sidebar .sidebar-menu {
+  height: 100%;
   width: 100%;
 
+  margin: 0;
   padding: 7vh 0 0 0;
 
   list-style: none;
+
+  background: var(--page-content-background-colors);
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
 }
 .sidebar ul > li {
   position: relative;
@@ -229,12 +230,12 @@ body main > .btn .fa-circle-arrow-left {
   padding: 0;
   margin: 0;
 
-  background-color: var(--cabinet-page-menu-item-hover-background-color);
+  isolation: isolate;
 
-  backdrop-filter: var(--sidebar-content-backdrop-filter-blur) !important;
-  -webkit-backdrop-filter: var(
-    --sidebar-content-backdrop-filter-blur
-  ) !important;
+  background-color: rgba(192, 188, 188, 0.9);
+
+  backdrop-filter: blur(38px) !important;
+  -webkit-backdrop-filter: blur(38px) !important;
 
   z-index: var(--z-index-for-modal-form);
 }
