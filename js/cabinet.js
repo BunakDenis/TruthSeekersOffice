@@ -225,13 +225,6 @@ sidebarMenuItems.forEach((item) => {
     //Показываем название меню и подбемню при фокусе на елементе меню
     item.addEventListener("mouseenter", () => {
       if (!isSideBarExpand()) {
-        //Установка стиля размытия заднего фона меню
-        ulSubMenuItem.style.backdropFilter = sidebarBackdropFilterBlur;
-        ulSubMenuItem.style.webkitBackdropFilter = sidebarBackdropFilterBlur;
-        console.log(
-          "ulSubMenuItem style:" +
-            getComputedStyle(ulSubMenuItem).backdropFilter
-        );
         //Сравнение текущего меню с активным
         const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey);
 
@@ -283,43 +276,45 @@ caretImage.forEach((caret) => {
   let menuLink;
   let menuIcon;
 
-  //Показ подменю при нажатии на каретку
-  caret.addEventListener("click", () => {
-    menuLink = caret.closest("li").querySelector(".serv-btn");
-    menuIcon = caret.closest("li").querySelector(".sidebar-menu-icon");
+  if (caret) {
+    //Показ подменю при нажатии на каретку
+    caret.addEventListener("click", () => {
+      menuLink = caret.closest("li").querySelector(".serv-btn");
+      menuIcon = caret.closest("li").querySelector(".sidebar-menu-icon");
 
-    caret.classList.toggle("rotate");
+      caret.classList.toggle("rotate");
 
-    toggelerVisibilityDropMenu(menuLink);
-  });
+      toggelerVisibilityDropMenu(menuLink);
+    });
 
-  caret.addEventListener("mouseenter", () => {
-    menuLink = caret.closest("li").querySelector(".serv-btn");
-    menuIcon = caret.closest("li").querySelector(".sidebar-menu-icon");
+    caret.addEventListener("mouseenter", () => {
+      menuLink = caret.closest("li").querySelector(".serv-btn");
+      menuIcon = caret.closest("li").querySelector(".sidebar-menu-icon");
 
-    menuLink.style.color = pageTextColorHover;
-    menuLink.style.backgroundColor = sidebarMenuBackgroundColorHover;
+      menuLink.style.color = pageTextColorHover;
+      menuLink.style.backgroundColor = sidebarMenuBackgroundColorHover;
 
-    if (menuIcon.classList.contains("side-bar-god-svg")) {
-      menuIcon.style.stroke = pageTextColorHover;
-    } else {
-      menuIcon.style.fill = pageTextColorHover;
-    }
-  });
+      if (menuIcon.classList.contains("side-bar-god-svg")) {
+        menuIcon.style.stroke = pageTextColorHover;
+      } else {
+        menuIcon.style.fill = pageTextColorHover;
+      }
+    });
 
-  caret.addEventListener("mouseout", () => {
-    menuLink = caret.closest("li").querySelector(".serv-btn");
-    menuIcon = caret.closest("li").querySelector(".sidebar-menu-icon");
+    caret.addEventListener("mouseout", () => {
+      menuLink = caret.closest("li").querySelector(".serv-btn");
+      menuIcon = caret.closest("li").querySelector(".sidebar-menu-icon");
 
-    menuLink.style.color = "";
-    menuLink.style.backgroundColor = "";
+      menuLink.style.color = "";
+      menuLink.style.backgroundColor = "";
 
-    if (menuIcon.classList.contains("side-bar-god-svg")) {
-      menuIcon.style.stroke = "";
-    } else {
-      menuIcon.style.fill = "";
-    }
-  });
+      if (menuIcon.classList.contains("side-bar-god-svg")) {
+        menuIcon.style.stroke = "";
+      } else {
+        menuIcon.style.fill = "";
+      }
+    });
+  }
 });
 
 //Функция активации элемента подменю
@@ -497,6 +492,31 @@ function changeVisibilityOfSubMenuItems(item) {
   }
 }
 
+//Функция отображения модального окна
+function showEditModalForm(row) {
+  const modal = document.querySelector(".edit-modal-container");
+  const inputFields = modal.querySelectorAll(".edit-modal-input-flield");
+
+  const table = row.getTable();
+  const rowData = row.getData(); // получаем данные строки
+  const columns = table.getColumns(); // получаем все колонки таблицы
+
+  for (let i = 0; i < columns.length; i++) {
+    const columnName = columns[i].getField(); // получаем название колонки
+    const columnValue = rowData[columnName]; // получаем значение колонки
+    console.log(
+      `Название колонки : ${columnName}, Значение колонки : ${columnValue}`
+    );
+    if (i == 0) {
+      modal.getElementsByTagName("form")[0].setAttribute("obj-id", columnValue);
+    } else {
+      inputFields[i - 1].value = columnValue;
+    }
+  }
+
+  modal.style.display = "block";
+}
+
 //Функция отслеживания высоты модального окна редактирования информации записей таблиц контента сайдбара
 function changeModalEditInformationHeight() {
   const modalDialog = document.querySelector(".edit-modal-dialog");
@@ -507,3 +527,144 @@ function changeModalEditInformationHeight() {
 
   observer.observe(document.querySelector(".edit-modal-body"));
 }
+/*
+--------------------------------------------------------------------------------------------------------------------
+Секция для работы с таблицами контента сайдбара
+*/
+//Константы
+const TABLE_NAME_PREFIX = "tbl";
+const LOCALSTORAGE_TABLE_NAME_KEY = "sb-cnt-act-tbl-name";
+
+//Переменные
+var generalResltTbl;
+var generalResltTblData;
+
+//Функция загрузки данных для таблицы "Общие результаты" из JSON файла
+async function loadData() {
+  try {
+    const response = await fetch("../examples/json/news.json");
+    const jsonData = await response.json(); // Парсим JSON
+    const newsData = jsonData.news; // Извлекаем только поле "news"
+    return JSON.stringify(newsData); // Возвращаем как текст
+  } catch (error) {
+    console.error("Ошибка:", error);
+    return null;
+  }
+}
+
+//Инициализация таблицы "Общие результаты" с данными
+async function initializeTable() {
+  const generalResltTblData = await loadData();
+
+  if (generalResltTblData) {
+    //create Tabulator on DOM element with id "general-results-tbl"
+    generalResltTbl = new Tabulator("#general-results-tbl", {
+      height: "auto", // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+      placeholder: "Доступных новостей ещё нет...",
+      data: generalResltTblData, //assign data to table
+      layout: "fitColumns", //fit columns to width of table (optional)
+      columns: [
+        //Define Table Columns
+        { title: "Название статьи", field: "title" },
+        {
+          title: "Краткое описание",
+          field: "summary",
+          hozAlign: "left",
+        },
+        {
+          title: "Дата публикации",
+          field: "publish_date",
+          hozAlign: "center",
+          sorter: "datetime",
+          sorterParams: {
+            format: "yyyy-MM-dd HH:mm:ss",
+            alignEmptyValues: "top",
+          },
+        },
+        {
+          title: "Автор",
+          field: "author",
+          hozAlign: "left",
+        },
+      ],
+    });
+  } else {
+    console.error("Не удалось загрузить данные для таблицы");
+  }
+}
+
+// Вызываем функцию инициализации таблицы "Общие результаты"
+initializeTable();
+
+//Инициализация данных таблицы "Воля"
+var willTabledata = [
+  {
+    id: 1,
+    dateOfReceipt: "2025-01-10",
+    briefDescription: "Сайт - Кабинет Искателя",
+    comment: "По ощущениям нужно сделать до конца весны 2025 года",
+  },
+];
+
+//Инициализация таблицы Воля
+var willTbl = new Tabulator("#will-tbl", {
+  height: "auto", // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+  placeholder: "Данных про Волю пока ещё нет...",
+  data: willTabledata, //assign data to table
+  layout: "fitColumns", //fit columns to width of table (optional)
+  columns: [
+    //Define Table Columns
+    { title: "ID", field: "id", visible: false },
+    {
+      title: "Дата получения",
+      field: "dateOfReceipt",
+      formatter: "datetime",
+      formatterParams: {
+        inputFormat: "yyyy-MM-dd",
+        outputFormat: "dd/MM/yyyy",
+      },
+    },
+    {
+      title: "Краткое описание",
+      field: "briefDescription",
+      hozAlign: "left",
+    },
+    { title: "Коментарий", field: "comment", hozAlign: "left" },
+  ],
+});
+
+//Вызов модальной формы редактирования записи при клике на строку таблицы
+willTbl.on("rowClick", function (e, row) {
+  localStorage.setItem(LOCALSTORAGE_TABLE_NAME_KEY, willTbl);
+  showEditModalForm(row);
+});
+
+//Функция сохранения отредактированных данных таблицы
+const editSbCntBtn = document.querySelectorAll(".edit-sb-ctn-save-btn");
+
+editSbCntBtn.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const form = btn.closest("form");
+    const inputFields = form.querySelectorAll(".edit-modal-input-flield");
+    const tblId = "#" + form.getAttribute("tbl-name") + "-tbl";
+    const table = Tabulator.findTable(tblId)[0];
+    const columns = table.getColumns();
+
+    //Объект для обновления данных в таблице
+    const cell = new Object();
+
+    //Записываем id объекта, который храниться в атрибуте формы "obj-id"
+    cell.id = form.getAttribute("obj-id");
+
+    for (let i = 0; i < inputFields.length; i++) {
+      const columnName = columns[i + 1].getField(); // получаем название колонки
+      const inputValue = inputFields[i].value; // получаем значение колонки
+
+      cell[columnName] = inputValue;
+    }
+
+    table.updateData("[" + JSON.stringify(cell) + "]");
+
+    btn.closest(".edit-modal-container").style.display = "none";
+  });
+});

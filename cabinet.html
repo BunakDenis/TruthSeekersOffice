@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="css/sidebar.css" />
     <link rel="stylesheet" href="css/cabinetPage.css" />
 
+    <!-- Tabulator CSS -->
+    <link
+      href="fragments/tabulator-master/dist/css/tabulator_simple.css"
+      rel="stylesheet"
+    />
+    <link
+      href="fragments/tabulator-master/dist/css/tabulator.css"
+      rel="stylesheet"
+    />
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap/style.css" />
     <!-- ===== Boxicons CSS ===== -->
@@ -348,7 +358,12 @@
       </aside>
 
       <section class="cabinet-content hide-sidebar">
-        <div id="link-general-results-sb-cnt"></div>
+        <div id="link-general-results-sb-cnt">
+          <div class="sidebar-content-title">
+            <h3>Общие результаты</h3>
+          </div>
+          <div class="ctn-tbl" id="general-results-tbl"></div>
+        </div>
         <div id="link-God-sb-cnt">
           <h1>Меню Господь</h1>
         </div>
@@ -414,6 +429,7 @@
               </table>
             </div>
           </div>
+          <div class="ctn-tbl" id="will-tbl"></div>
         </div>
         <div id="link-questioning-sb-cnt">
           <h1>Меню Вопрошание</h1>
@@ -487,7 +503,7 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <form class="edit-from edit-will-from" action="#">
+      <form class="edit-from edit-will-from" tbl-name="will" action="#">
         <div class="edit-modal-dialog will-modal-dialog">
           <div class="edit-modal-content will-modal-content">
             <div class="edit-modal-header will-modal-header">
@@ -522,6 +538,7 @@
                 <label>Дата получения</label>
                 <input
                   id="edit-will-incoming-date"
+                  class="edit-modal-input-flield"
                   type="date"
                   value="2020-12-28"
                   required
@@ -532,6 +549,7 @@
                 <label>Краткое описание</label>
                 <textarea
                   id="edit-will-brief-description"
+                  class="edit-text-aria edit-modal-input-flield"
                   type="text"
                   value="Краткое описание"
                   required
@@ -542,7 +560,7 @@
                 <label>Коментарий</label>
                 <textarea
                   id="edit-will-comment"
-                  class="edit-text-aria"
+                  class="edit-text-aria edit-modal-input-flield"
                   type="text-aria"
                   value=""
                   required
@@ -550,7 +568,9 @@
               </div>
             </div>
             <div class="edit-modal-footer">
-              <button type="submit" class="edit-save-btn">Сохранить</button>
+              <button type="submit" class="edit-sb-ctn-save-btn">
+                Сохранить
+              </button>
             </div>
           </div>
         </div>
@@ -569,8 +589,12 @@
     src="https://kit.fontawesome.com/d6a7640edd.js"
     crossorigin="anonymous"
   ></script>
+  <script src="js/luxon.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <script src="js/cabinet.js" defer></script>
+  <!-- Tabulator JavaScript -->
+  <script src="fragments/tabulator-master/dist/js/tabulator.js"></script>
+
+  <script src="js/cabinet.js" type="text/javascript"></script>
   <script src="js/main.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </html>

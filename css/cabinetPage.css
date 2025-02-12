@@ -111,8 +111,9 @@
   position: relative;
 
   width: 100%;
-  height: 65%;
+  height: auto;
 
+  margin-bottom: 3vh;
   padding: 2vh 0.5vw 0 0.5vw;
 }
 
@@ -229,9 +230,14 @@
   fill: var(--page-text-color-hover);
 }
 
+.ctn-tbl {
+  margin: 2vh 0.5vw 0 0.5vw;
+  padding: 0;
+}
+
 /* Форма редактирования информации про Волю */
 
-.will-edit-information {
+html body .edit-modal-container {
   display: none;
   position: fixed;
   flex-wrap: nowrap;
@@ -367,7 +373,7 @@ html body .edit-modal-container .edit-modal-footer {
   justify-items: center;
 }
 
-html body .edit-modal-container .edit-save-btn {
+html body .edit-modal-container .edit-sb-ctn-save-btn {
   height: 4vh;
   width: 10vw;
 
@@ -382,7 +388,7 @@ html body .edit-modal-container .edit-save-btn {
   transition: 0.3s ease;
 }
 
-html body .edit-modal-container .edit-save-btn:hover {
+html body .edit-modal-container .edit-sb-ctn-save-btn:hover {
   color: #fff;
   border-color: #fff;
   background: rgba(255, 255, 255, 0.15);
