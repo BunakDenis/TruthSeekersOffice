@@ -71,7 +71,7 @@
 .cabinet-content svg {
   fill: var(--cabinet-page-nav-menu-font-color);
 }
-.cabinet-content div .sidebar-content-title {
+.cabinet-content div .sb-cnt-title {
   display: inline-block;
 
   width: 100%;
@@ -81,7 +81,7 @@
   padding: 0;
 }
 
-.cabinet-content div .sidebar-content-title::after {
+.cabinet-content div .sb-cnt-title::after {
   content: "";
   display: inline-block;
   width: 90%;
@@ -92,7 +92,7 @@
   background-color: var(--cabinet-page-nav-menu-font-color);
 }
 
-.cabinet-content div .sidebar-content-title h3 {
+.cabinet-content div .sb-cnt-title h3 {
   padding: 2vh 0 0 6vw;
   margin: 0;
 
@@ -106,7 +106,7 @@
   line-height: 1;
 }
 
-.cabinet-content div .sidebar-content-tbl {
+.cabinet-content div .sb-cnt-tbl-container {
   display: inline-block;
   position: relative;
 
@@ -117,14 +117,14 @@
   padding: 2vh 0.5vw 0 0.5vw;
 }
 
-.cabinet-content div .sidebar-content-tbl table {
+.cabinet-content div .sb-cnt-tbl-container table {
   display: grid;
 
   table-layout: fixed;
 
   grid-template-rows: repeat(auto-fit, minmax(5vh, 1fr));
 }
-.cabinet-content div .sidebar-content-tbl table thead {
+.cabinet-content div .sb-cnt-tbl-container table thead {
   display: block;
 
   text-transform: uppercase;
@@ -133,7 +133,7 @@
   border-left: var(--tbl-border);
   border-right: var(--tbl-border);
 }
-.cabinet-content div .sidebar-content-tbl table tr {
+.cabinet-content div .sb-cnt-tbl-container table tr {
   display: grid;
   position: relative;
 
@@ -146,7 +146,7 @@
   padding: 0;
 }
 
-.cabinet-content div .sidebar-content-tbl table th {
+.cabinet-content div .sb-cnt-tbl-container table th {
   display: table-cell;
   position: relative;
 
@@ -155,19 +155,19 @@
   width: 100%;
   height: 100%;
 }
-.cabinet-content div .sidebar-content-tbl table th a {
+.cabinet-content div .sb-cnt-tbl-container table th a {
   color: var(--cabinet-page-nav-menu-font-color);
 }
-.cabinet-content div .sidebar-content-tbl table th a:hover {
+.cabinet-content div .sb-cnt-tbl-container table th a:hover {
   color: var(--page-text-color-hover);
 }
-.cabinet-content div .sidebar-content-tbl table th span {
+.cabinet-content div .sb-cnt-tbl-container table th span {
   padding: 0 0 0 0.3vw;
 }
-.cabinet-content div .sidebar-content-tbl table th span.rotate {
+.cabinet-content div .sb-cnt-tbl-container table th span.rotate {
   transform: translateX(40%) rotate(-180deg);
 }
-.cabinet-content div .sidebar-content-tbl-body {
+.cabinet-content div .sb-cnt-tbl-body-container {
   display: grid;
   position: relative;
 
@@ -187,12 +187,12 @@
   border: var(--tbl-border);
 }
 
-.cabinet-content div .sidebar-content-tbl-body table {
+.cabinet-content div .sb-cnt-tbl-body-container table {
   width: 100%;
   height: 100%;
 }
 
-.cabinet-content div .sidebar-content-tbl-body table tbody {
+.cabinet-content div .sb-cnt-tbl-body-container table tbody {
   height: 100%;
   width: 100%;
 
@@ -200,14 +200,14 @@
   overflow-x: auto;
 }
 
-.cabinet-content div .sidebar-content-tbl-body table tbody tr {
+.cabinet-content div .sb-cnt-tbl-body-container table tbody tr {
   border-bottom: var(--tbl-border);
 }
-.cabinet-content div .sidebar-content-tbl-body table tbody tr:last-child {
+.cabinet-content div .sb-cnt-tbl-body-container table tbody tr:last-child {
   border-bottom: none;
 }
 
-.cabinet-content div .sidebar-content-tbl-body table td {
+.cabinet-content div .sb-cnt-tbl-body-container table td {
   display: table-cell;
   position: relative;
 
@@ -216,23 +216,18 @@
   width: 100%;
   min-height: 5vh;
 }
-.cabinet-content div .sidebar-content-tbl-body table .will-comment {
+.cabinet-content div .sb-cnt-tbl-body-container table .will-comment {
   text-align: left;
   text-indent: 1vw;
 }
 
-.cabinet-content div .sidebar-content-tbl-body table td svg {
+.cabinet-content div .sb-cnt-tbl-body-container table td svg {
   width: 2vw;
   height: 2vh;
 }
 
-.cabinet-content div .sidebar-content-tbl-body svg:hover {
+.cabinet-content div .sb-cnt-tbl-body-container svg:hover {
   fill: var(--page-text-color-hover);
-}
-
-.ctn-tbl {
-  margin: 2vh 0.5vw 0 0.5vw;
-  padding: 0;
 }
 
 /* Форма редактирования информации про Волю */

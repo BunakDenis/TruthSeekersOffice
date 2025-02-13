@@ -89,9 +89,13 @@ function showOrHideSidebarContent(itemId) {
       }
     }
     if (isSideBarExpand()) {
-      $(".cabinet-content").addClass("expand-sidebar");
+      document
+        .querySelector(".cabinet-content")
+        .classList.add("expand-sidebar");
     } else {
-      $(".cabinet-content").removeClass("expand-sidebar");
+      document
+        .querySelector(".cabinet-content")
+        .classList.remove("expand-sidebar");
     }
 
     //Включаем отображение контента
@@ -406,23 +410,6 @@ closeIcon.forEach((icon) => {
   });
 });
 
-//Переключение иконки сортировки
-const tblTitleLinks = document.querySelectorAll(".tbl-title-link");
-
-tblTitleLinks.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent the default action of the link
-
-    //Поиск элемента <span> класса "fas fa-caret-down first"
-    const caretSpan = link.querySelector(".fas");
-
-    if (caretSpan) {
-      //Переключение класса у элемента <span> на "rotate"
-      caretSpan.classList.toggle("rotate");
-    }
-  });
-});
-
 //Функция возвращает при свёрнутом сайдбаре елемент <a> с названием меню
 function findActiveSidebarMenuTitleById(activeMenuId) {
   let result;
@@ -531,112 +518,21 @@ function changeModalEditInformationHeight() {
 --------------------------------------------------------------------------------------------------------------------
 Секция для работы с таблицами контента сайдбара
 */
-//Константы
-const TABLE_NAME_PREFIX = "tbl";
-const LOCALSTORAGE_TABLE_NAME_KEY = "sb-cnt-act-tbl-name";
 
-//Переменные
-var generalResltTbl;
-var generalResltTblData;
+//Переключение иконки сортировки
+const tblTitleLinks = document.querySelectorAll(".tbl-title-link");
+tblTitleLinks.forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault(); // Prevent the default action of the link
 
-//Функция загрузки данных для таблицы "Общие результаты" из JSON файла
-async function loadData() {
-  try {
-    const response = await fetch("../examples/json/news.json");
-    const jsonData = await response.json(); // Парсим JSON
-    const newsData = jsonData.news; // Извлекаем только поле "news"
-    return JSON.stringify(newsData); // Возвращаем как текст
-  } catch (error) {
-    console.error("Ошибка:", error);
-    return null;
-  }
-}
+    //Поиск элемента <span> класса "fas fa-caret-down first"
+    const caretSpan = link.querySelector(".fas");
 
-//Инициализация таблицы "Общие результаты" с данными
-async function initializeTable() {
-  const generalResltTblData = await loadData();
-
-  if (generalResltTblData) {
-    //create Tabulator on DOM element with id "general-results-tbl"
-    generalResltTbl = new Tabulator("#general-results-tbl", {
-      height: "auto", // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
-      placeholder: "Доступных новостей ещё нет...",
-      data: generalResltTblData, //assign data to table
-      layout: "fitColumns", //fit columns to width of table (optional)
-      columns: [
-        //Define Table Columns
-        { title: "Название статьи", field: "title" },
-        {
-          title: "Краткое описание",
-          field: "summary",
-          hozAlign: "left",
-        },
-        {
-          title: "Дата публикации",
-          field: "publish_date",
-          hozAlign: "center",
-          sorter: "datetime",
-          sorterParams: {
-            format: "yyyy-MM-dd HH:mm:ss",
-            alignEmptyValues: "top",
-          },
-        },
-        {
-          title: "Автор",
-          field: "author",
-          hozAlign: "left",
-        },
-      ],
-    });
-  } else {
-    console.error("Не удалось загрузить данные для таблицы");
-  }
-}
-
-// Вызываем функцию инициализации таблицы "Общие результаты"
-initializeTable();
-
-//Инициализация данных таблицы "Воля"
-var willTabledata = [
-  {
-    id: 1,
-    dateOfReceipt: "2025-01-10",
-    briefDescription: "Сайт - Кабинет Искателя",
-    comment: "По ощущениям нужно сделать до конца весны 2025 года",
-  },
-];
-
-//Инициализация таблицы Воля
-var willTbl = new Tabulator("#will-tbl", {
-  height: "auto", // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
-  placeholder: "Данных про Волю пока ещё нет...",
-  data: willTabledata, //assign data to table
-  layout: "fitColumns", //fit columns to width of table (optional)
-  columns: [
-    //Define Table Columns
-    { title: "ID", field: "id", visible: false },
-    {
-      title: "Дата получения",
-      field: "dateOfReceipt",
-      formatter: "datetime",
-      formatterParams: {
-        inputFormat: "yyyy-MM-dd",
-        outputFormat: "dd/MM/yyyy",
-      },
-    },
-    {
-      title: "Краткое описание",
-      field: "briefDescription",
-      hozAlign: "left",
-    },
-    { title: "Коментарий", field: "comment", hozAlign: "left" },
-  ],
-});
-
-//Вызов модальной формы редактирования записи при клике на строку таблицы
-willTbl.on("rowClick", function (e, row) {
-  localStorage.setItem(LOCALSTORAGE_TABLE_NAME_KEY, willTbl);
-  showEditModalForm(row);
+    if (caretSpan) {
+      //Переключение класса у элемента <span> на "rotate"
+      caretSpan.classList.toggle("rotate");
+    }
+  });
 });
 
 //Функция сохранения отредактированных данных таблицы

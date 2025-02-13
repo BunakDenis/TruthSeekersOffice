@@ -14,7 +14,7 @@ fetch("/fragments/footer.txt")
     document.getElementById("page-footer").innerHTML = data;
     initFooterJS(); // Инициализация JavaScript из модуля
   })
-  .catch((error) => console.error("Ошибка загрузки header:", error));
+  .catch((error) => console.error("Ошибка загрузки footer:", error));
 
 //Хедер
 function initHeaderJS() {

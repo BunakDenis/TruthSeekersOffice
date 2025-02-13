@@ -1,6 +1,5 @@
 @import url("style.css");
 @import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lobster&family=Orelega+One&display=swap");
-@import url("../fragments/tabulator-master/dist/css/tabulator.css");
 
 body main .sidebar {
   position: fixed;

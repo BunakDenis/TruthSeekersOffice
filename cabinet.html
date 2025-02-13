@@ -10,16 +10,6 @@
     <link rel="stylesheet" href="css/sidebar.css" />
     <link rel="stylesheet" href="css/cabinetPage.css" />
 
-    <!-- Tabulator CSS -->
-    <link
-      href="fragments/tabulator-master/dist/css/tabulator_simple.css"
-      rel="stylesheet"
-    />
-    <link
-      href="fragments/tabulator-master/dist/css/tabulator.css"
-      rel="stylesheet"
-    />
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap/style.css" />
     <!-- ===== Boxicons CSS ===== -->
@@ -357,34 +347,33 @@
         </ul>
       </aside>
 
-      <section class="cabinet-content hide-sidebar">
+      <section class="cabinet-content">
         <div id="link-general-results-sb-cnt">
-          <div class="sidebar-content-title">
+          <div class="sb-cnt-title">
             <h3>Общие результаты</h3>
           </div>
-          <div class="ctn-tbl" id="general-results-tbl"></div>
         </div>
         <div id="link-God-sb-cnt">
           <h1>Меню Господь</h1>
         </div>
         <div id="link-will-sb-cnt">
-          <div class="sidebar-content-title">
+          <div class="sb-cnt-title">
             <h3>Воля</h3>
           </div>
-          <div class="sidebar-content-tbl">
+          <div class="sb-cnt-tbl-container">
             <table>
               <thead>
                 <tr>
                   <th>
                     <a class="tbl-title-link" href="#"
                       >Дата получения
-                      <span class="fas fa-caret-down first"></span>
+                      <span class="fas fa-caret-down"></span>
                     </a>
                   </th>
                   <th>
                     <a class="tbl-title-link" href="#"
                       >Краткое описание
-                      <span class="fas fa-caret-down first"></span>
+                      <span class="fas fa-caret-down"></span>
                     </a>
                   </th>
                   <th>
@@ -394,7 +383,7 @@
                 </tr>
               </thead>
             </table>
-            <div class="sidebar-content-tbl-body">
+            <div class="sb-cnt-tbl-body-container">
               <table>
                 <tbody>
                   <tr>
@@ -429,7 +418,6 @@
               </table>
             </div>
           </div>
-          <div class="ctn-tbl" id="will-tbl"></div>
         </div>
         <div id="link-questioning-sb-cnt">
           <h1>Меню Вопрошание</h1>
@@ -591,9 +579,6 @@
   ></script>
   <script src="js/luxon.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <!-- Tabulator JavaScript -->
-  <script src="fragments/tabulator-master/dist/js/tabulator.js"></script>
 
   <script src="js/cabinet.js" type="text/javascript"></script>
   <script src="js/main.js"></script>
