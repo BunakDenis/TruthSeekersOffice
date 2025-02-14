@@ -273,13 +273,12 @@ sidebarMenuItems.forEach((item) => {
 });
 
 //Функции для работы с кареткой выпадающего меню
-const caretImage = document.querySelectorAll(".fa-caret-down");
+const caretImage = document.querySelectorAll(".caret-dp-mn");
 
 caretImage.forEach((caret) => {
   //Соседний элемент <a>
   let menuLink;
   let menuIcon;
-
   if (caret) {
     //Показ подменю при нажатии на каретку
     caret.addEventListener("click", () => {
@@ -367,49 +366,6 @@ subMenuItems.forEach((subMenuItem) => {
   });
 });
 
-//Модальные окна редактирования информации записей таблиц контента сайдбара
-const editIcon = document.querySelectorAll(".cnt-edit-icon");
-const closeIcon = document.querySelectorAll(".edit-information-close-icon");
-
-//Функция отображения модальных окон при клике на иконку редактирования
-editIcon.forEach((icon) => {
-  icon.addEventListener("click", () => {
-    const iconId = icon.id;
-    const modalId = iconId.substring(0, iconId.indexOf("-icon"));
-    const modal = document.querySelector("." + modalId + "-information");
-
-    modal.style.display = "block";
-
-    // Установка значений полей в модальном окне из текущей записи
-    const willIncomingDate = icon
-      .closest("tr")
-      .querySelector(".will-incoming-date")
-      .textContent.trim();
-    const willDescription = icon
-      .closest("tr")
-      .querySelector(".will-brief-description")
-      .textContent.trim();
-    const willComment = icon
-      .closest("tr")
-      .querySelector(".will-comment")
-      .textContent.trim();
-
-    document.getElementById("edit-will-incoming-date").value = willIncomingDate;
-    document.getElementById("edit-will-brief-description").value =
-      willDescription;
-    document.getElementById("edit-will-comment").value = willComment;
-  });
-});
-
-//Закрытие модального окна
-closeIcon.forEach((icon) => {
-  icon.addEventListener("click", () => {
-    const modal = icon.closest("section");
-
-    modal.style.display = "none";
-  });
-});
-
 //Функция возвращает при свёрнутом сайдбаре елемент <a> с названием меню
 function findActiveSidebarMenuTitleById(activeMenuId) {
   let result;
@@ -479,30 +435,76 @@ function changeVisibilityOfSubMenuItems(item) {
   }
 }
 
-//Функция отображения модального окна
-function showEditModalForm(row) {
-  const modal = document.querySelector(".edit-modal-container");
-  const inputFields = modal.querySelectorAll(".edit-modal-input-flield");
+/*
+--------------------------------------------------------------------------------------------------------------------
+Секция для работы с таблицами контента сайдбара
+*/
+const cntContainer = document.querySelector(".cabinet-content");
+const tblRows = document.querySelectorAll(".tbl-body-row");
 
-  const table = row.getTable();
-  const rowData = row.getData(); // получаем данные строки
-  const columns = table.getColumns(); // получаем все колонки таблицы
+//Подключение функции сортировки к таблице
+var tbl = document.getElementById("will-tbl");
+var sort = new Tablesort(tbl);
 
-  for (let i = 0; i < columns.length; i++) {
-    const columnName = columns[i].getField(); // получаем название колонки
-    const columnValue = rowData[columnName]; // получаем значение колонки
-    console.log(
-      `Название колонки : ${columnName}, Значение колонки : ${columnValue}`
-    );
-    if (i == 0) {
-      modal.getElementsByTagName("form")[0].setAttribute("obj-id", columnValue);
-    } else {
-      inputFields[i - 1].value = columnValue;
+//Включение функции сортировки данных после добавление новой записи в таблицу
+sort.refresh();
+
+//Переключение иконки сортировки
+const tblHeaderCell = cntContainer.getElementsByTagName("th");
+for (let i = 0; i < tblHeaderCell.length; i++) {
+  tblHeaderCell[i].addEventListener("click", (event) => {
+    event.preventDefault(); // Prevent the default action of the link
+
+    //Поиск элемента <span> класса "fas fa-caret-down first"
+    const caretSpan = tblHeaderCell[i].querySelector(".fas");
+
+    if (
+      caretSpan &&
+      tblHeaderCell[i].getAttribute("aria-sort").includes("ascending")
+    ) {
+      //Переключение класса у элемента <span> на "rotate"
+      caretSpan.classList.add("rotate");
+    } else if (
+      caretSpan &&
+      tblHeaderCell[i].getAttribute("aria-sort").includes("descending")
+    ) {
+      caretSpan.classList.remove("rotate");
     }
-  }
-
-  modal.style.display = "block";
+  });
 }
+
+//Иконка редактирования записи таблицы
+const editIcon = document.querySelectorAll(".tbl-edit-icon");
+
+//Функция отображения модальных окон при клике на иконку редактирования
+editIcon.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    const iconId = icon.id;
+    const modalId = iconId.substring(0, iconId.indexOf("-icon"));
+    const modal = document.querySelector("." + modalId + "-information");
+
+    modal.style.display = "block";
+
+    // Установка значений полей в модальном окне из текущей записи
+    const willIncomingDate = icon
+      .closest("tr")
+      .querySelector(".will-incoming-date")
+      .textContent.trim();
+    const willDescription = icon
+      .closest("tr")
+      .querySelector(".will-brief-description")
+      .textContent.trim();
+    const willComment = icon
+      .closest("tr")
+      .querySelector(".will-comment")
+      .textContent.trim();
+
+    document.getElementById("edit-will-incoming-date").value = willIncomingDate;
+    document.getElementById("edit-will-brief-description").value =
+      willDescription;
+    document.getElementById("edit-will-comment").value = willComment;
+  });
+});
 
 //Функция отслеживания высоты модального окна редактирования информации записей таблиц контента сайдбара
 function changeModalEditInformationHeight() {
@@ -514,31 +516,21 @@ function changeModalEditInformationHeight() {
 
   observer.observe(document.querySelector(".edit-modal-body"));
 }
-/*
---------------------------------------------------------------------------------------------------------------------
-Секция для работы с таблицами контента сайдбара
-*/
 
-//Переключение иконки сортировки
-const tblTitleLinks = document.querySelectorAll(".tbl-title-link");
-tblTitleLinks.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent the default action of the link
+//Закрытие модального окна
+const closeIcon = document.querySelectorAll(".edit-modal-close-icon");
+closeIcon.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    const modal = icon.closest("section");
 
-    //Поиск элемента <span> класса "fas fa-caret-down first"
-    const caretSpan = link.querySelector(".fas");
-
-    if (caretSpan) {
-      //Переключение класса у элемента <span> на "rotate"
-      caretSpan.classList.toggle("rotate");
-    }
+    modal.style.display = "none";
   });
 });
 
 //Функция сохранения отредактированных данных таблицы
-const editSbCntBtn = document.querySelectorAll(".edit-sb-ctn-save-btn");
+const editModalSaveBtn = document.querySelectorAll(".edit-modal-save-btn");
 
-editSbCntBtn.forEach((btn) => {
+editModalSaveBtn.forEach((btn) => {
   btn.addEventListener("click", () => {
     const form = btn.closest("form");
     const inputFields = form.querySelectorAll(".edit-modal-input-flield");
@@ -562,5 +554,21 @@ editSbCntBtn.forEach((btn) => {
     table.updateData("[" + JSON.stringify(cell) + "]");
 
     btn.closest(".edit-modal-container").style.display = "none";
+  });
+});
+
+//Функция удаления записи с таблицы
+
+const deleteTblIcon = document.querySelectorAll(".tbl-dlt-icon");
+
+deleteTblIcon.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    const cell = icon.closest("tr");
+    if (cell) {
+      cell.remove();
+      console.log("Cell removed");
+    } else {
+      console.log("Cell not found");
+    }
   });
 });

@@ -114,7 +114,7 @@
   height: auto;
 
   margin-bottom: 3vh;
-  padding: 2vh 0.5vw 0 0.5vw;
+  padding: 2vh 1vw 0 1vw;
 }
 
 .cabinet-content div .sb-cnt-tbl-container table {
@@ -123,15 +123,109 @@
   table-layout: fixed;
 
   grid-template-rows: repeat(auto-fit, minmax(5vh, 1fr));
+
+  width: 100%;
+  height: 100%;
 }
+
+.cabinet-content div .sb-cnt-tbl-container table caption {
+  display: flex;
+  position: relative;
+  align-items: center;
+
+  width: 100%;
+  height: 5vh;
+
+  margin-bottom: 2vh;
+  padding: 0 2vw 0 2vw;
+
+  font-size: 1.2em;
+
+  background-color: var(--page-text-color);
+  box-shadow: var(--cabinet-page-tbl-box-shadow);
+}
+
+.cabinet-content div .sb-cnt-tbl-container table caption .tbl-search-field {
+  display: flex;
+  position: relative;
+  align-items: center;
+
+  height: 4vh;
+  width: 12vw;
+
+  margin: 0 1vw 0 1vw;
+
+  background-color: var(--tbl-unparied-row-background-color);
+
+  color: var(--cabinet-page-sidebar-content-font-color);
+
+  border-radius: 10px;
+  border: 1px solid var(--tbl-unparied-row-background-color);
+
+  font-family: var(--fornt-family-for-content);
+  font-optical-sizing: auto;
+  font-style: italic;
+}
+
+.cabinet-content
+  div
+  .sb-cnt-tbl-container
+  table
+  caption
+  .tbl-search-field
+  input {
+  height: 95%;
+  width: 80%;
+
+  padding-left: 1vw;
+
+  outline: none;
+  border: none;
+
+  background-color: transparent;
+}
+
+.sb-cnt-tbl-container table caption .tbl-search-field:focus-within {
+  box-shadow: var(--form-element-focus-box-shadow);
+  border: var(--form-element-focus-border) !important;
+}
+
+.cabinet-content div .sb-cnt-tbl-container table caption .tbl-search-field i {
+  margin-left: 0.5vw;
+
+  font-size: 1.4em;
+}
+
+.cabinet-content div .sb-cnt-tbl-container table caption .add-tbl-btn {
+  height: 4vh;
+  width: 10vw;
+
+  background-color: var(--tbl-unparied-row-background-color);
+  color: var(--cabinet-page-sidebar-content-font-color);
+
+  cursor: pointer;
+
+  border-radius: 3px;
+  border: 2px solid transparent;
+
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
+}
+
+.cabinet-content div .sb-cnt-tbl-container table caption .add-tbl-btn:hover {
+  color: var(--tbl-unparied-row-background-color);
+  border-color: var(--tbl-unparied-row-background-color);
+  background-color: var(--page-text-color);
+}
+
 .cabinet-content div .sb-cnt-tbl-container table thead {
   display: block;
 
-  text-transform: uppercase;
+  background-color: var(--page-text-color);
 
-  border-top: var(--tbl-border);
-  border-left: var(--tbl-border);
-  border-right: var(--tbl-border);
+  box-shadow: var(--cabinet-page-tbl-box-shadow);
+
+  text-transform: uppercase;
 }
 .cabinet-content div .sb-cnt-tbl-container table tr {
   display: grid;
@@ -154,7 +248,16 @@
 
   width: 100%;
   height: 100%;
+
+  transition: var(--transition--color--04-ease-in-out),
+    var(--transition--fill--04-ease-in-out);
 }
+
+.cabinet-content div .sb-cnt-tbl-container table th:hover,
+.cabinet-content div .sb-cnt-tbl-container table th:hover * {
+  color: var(--page-text-color-hover);
+}
+
 .cabinet-content div .sb-cnt-tbl-container table th a {
   color: var(--cabinet-page-nav-menu-font-color);
 }
@@ -167,47 +270,53 @@
 .cabinet-content div .sb-cnt-tbl-container table th span.rotate {
   transform: translateX(40%) rotate(-180deg);
 }
-.cabinet-content div .sb-cnt-tbl-body-container {
-  display: grid;
-  position: relative;
 
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-
+.cabinet-content div table tbody {
   width: 100%;
   min-height: 5vh;
-  max-width: 100%;
   max-height: 100%;
 
   font-size: 1.2em;
   font-weight: 300;
 
-  overflow-y: auto;
+  background-color: var(--page-text-color);
 
-  border: var(--tbl-border);
-}
-
-.cabinet-content div .sb-cnt-tbl-body-container table {
-  width: 100%;
-  height: 100%;
-}
-
-.cabinet-content div .sb-cnt-tbl-body-container table tbody {
-  height: 100%;
-  width: 100%;
+  box-shadow: var(--cabinet-page-tbl-box-shadow);
 
   overflow-y: auto;
   overflow-x: auto;
 }
 
-.cabinet-content div .sb-cnt-tbl-body-container table tbody tr {
-  border-bottom: var(--tbl-border);
+.cabinet-content div table tbody tr {
+  cursor: pointer;
+  border-bottom: var(--cabinet-page-tbl-row-border);
+
+  transition: var(--transition--background-color--04-ease-in-out);
 }
-.cabinet-content div .sb-cnt-tbl-body-container table tbody tr:last-child {
+
+tbody tr:nth-child(even) {
+  background-color: var(--tbl-unparied-row-background-color);
+}
+
+.cabinet-content div table tbody tr:first-child {
+  border-top: var(--cabinet-page-tbl-header-border);
+}
+
+.cabinet-content div table tbody tr:last-child {
   border-bottom: none;
 }
 
-.cabinet-content div .sb-cnt-tbl-body-container table td {
+.cabinet-content div table tbody tr:hover,
+.cabinet-content div table tbody tr:focus {
+  background-color: var(--cabinet-page-tbl-row-hover-background-color);
+}
+
+.cabinet-content div table tbody tr:target,
+.cabinet-content div table tbody tr:target {
+  background-color: var(--cabinet-page-tbl-row-hover-background-color);
+}
+
+.cabinet-content div table td {
   display: table-cell;
   position: relative;
 
@@ -215,18 +324,36 @@
 
   width: 100%;
   min-height: 5vh;
+
+  transition: var(--transition--color--04-ease-in-out);
 }
-.cabinet-content div .sb-cnt-tbl-body-container table .will-comment {
+.cabinet-content div table .text-area {
   text-align: left;
   text-indent: 1vw;
 }
 
-.cabinet-content div .sb-cnt-tbl-body-container table td svg {
-  width: 2vw;
+.cabinet-content div table td svg {
+  width: auto;
   height: 2vh;
+
+  padding-right: 0.5vw;
+
+  fill: var(--cabinet-page-nav-menu-font-color);
+
+  transition: var(--transition--fill--04-ease-in-out);
 }
 
-.cabinet-content div .sb-cnt-tbl-body-container svg:hover {
+.cabinet-content div table td .tbl-open-rec-icon {
+  width: auto;
+  height: 2.5vh;
+}
+
+.cabinet-content div table td .tbl-open-rec-icon-element {
+  fill: var(--cabinet-page-nav-menu-font-color);
+}
+
+.cabinet-content div svg:hover,
+.cabinet-content div svg:hover .tbl-open-rec-icon-element {
   fill: var(--page-text-color-hover);
 }
 
@@ -248,7 +375,7 @@ html body .edit-modal-container {
   left: 0;
   right: 0;
 
-  background-color: rgba(10, 10, 10, 0.5);
+  background-color: var(--modal-form-out-background-color);
 
   z-index: var(--z-index-for-modal-form);
 }
@@ -270,7 +397,7 @@ html body .edit-modal-container .edit-modal-dialog {
   font-optical-sizing: var(--tbl-lable-font-optical-sizing);
   font-weight: var(--tbl-lable-font-weight);
 
-  background-color: var(--page-content-background-color);
+  background-color: var(--cabinet-page-menu-background-color);
 
   backdrop-filter: var(--backdrop-filter-blur);
   -webkit-backdrop-filter: var(--backdrop-filter-blur);
@@ -306,7 +433,7 @@ html body .edit-modal-container .edit-modal-title {
   font-weight: var(--tbl-lable-font-weight);
 }
 
-html body .edit-modal-container .edit-information-close-icon {
+html body .edit-modal-container .edit-modal-close-icon {
   position: absolute;
   top: 5%;
   right: 2%;
@@ -317,7 +444,7 @@ html body .edit-modal-container .edit-information-close-icon {
   fill: var(--cabinet-page-sb-cnt-font-color);
 }
 
-html body .edit-modal-container .edit-information-close-icon:hover {
+html body .edit-modal-container .edit-modal-close-icon:hover {
   fill: var(--page-text-color-hover);
 }
 
@@ -368,24 +495,24 @@ html body .edit-modal-container .edit-modal-footer {
   justify-items: center;
 }
 
-html body .edit-modal-container .edit-sb-ctn-save-btn {
+html body .edit-modal-container .edit-modal-save-btn {
   height: 4vh;
   width: 10vw;
 
-  background: #fff;
-  color: #000;
+  background-color: var(--btn-background-color);
+  color: var(--btn-color);
 
   border: none;
 
   cursor: pointer;
   border-radius: 3px;
   border: 2px solid transparent;
-  transition: 0.3s ease;
+  transition: var(--transition--all--04-ease-in-out);
 }
 
-html body .edit-modal-container .edit-sb-ctn-save-btn:hover {
-  color: #fff;
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.15);
+html body .edit-modal-container .edit-modal-save-btn:hover {
+  color: var(--btn-hover-color);
+  border-color: var(--btn-hover-border-color);
+  background: var(--btn-hover-background-color);
 }
 /* ---------------------------------------------------------- */

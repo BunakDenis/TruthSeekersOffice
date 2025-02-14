@@ -10,7 +10,9 @@
   --cabinet-page-menu-background-color: rgba(255, 255, 255, 0.6);
   --cabinet-sidebar-submenu-background-color: rgba(192, 188, 188, 0.8);
   --cabinet-page-menu-item-hover-background-color: rgba(255, 255, 255, 0.2);
+
   --modal-form-out-background-color: rgba(27, 26, 26, 0.7);
+  --btn-hover-background-color: rgba(255, 255, 255, 0.15);
 
   --backdrop-filter-blur: blur(8px);
   --sb-cnt-backdrop-filter-blur: blur(30px);
@@ -26,15 +28,9 @@
 
   --tab-display: grid;
   --tab-background-color: rgba(255, 255, 255, 0.1);
-  --tbl-row-border-color: rgba(255, 255, 255, 0.1);
 
   --sidebar-menu-border-top: 1px solid rgba(255, 255, 255, 0.1);
   --sidebar-menu-border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  --tbl-border: 1px solid var(--cabinet-page-nav-menu-font-color);
-
-  --tbl-lable-font-family: "Jost", sans-serif;
-  --tbl-lable-font-optical-sizing: auto;
-  --tbl-lable-font-weight: 500;
 
   --display-none: none;
   --box-sizing: border-box;
@@ -50,8 +46,41 @@
 
   --transition--all--0-ease: 0s;
   --transition--all--03-ease: all 0.3s ease;
+  --transition--all--03-ease-in-out: all 0.3s ease-in-out;
   --transition--all--04-ease: all 0.4s ease;
+  --transition--all--04-ease-in-out: all 0.4s ease-in-out;
   --transition--all--05-ease: all 0.5s ease;
+  --transition--all--05-ease-in-out: all 0.5s ease-in-out;
+
+  /* Cabinet page Table */
+  --cabinet-page-tbl-row-hover-background-color: rgb(172, 162, 162);
+  --tbl-unparied-row-background-color: #d6c8c8;
+
+  --tbl-row-border-color: rgba(255, 255, 255, 0.1);
+
+  --cabinet-page-tbl-header-border: 2px solid gray;
+  --cabinet-page-tbl-row-border: 1px solid rgb(148, 141, 141);
+  --tbl-border: 1px solid #4b4c4d;
+  --cabinet-page-tbl-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  --tbl-lable-font-family: "Jost", sans-serif;
+  --tbl-lable-font-optical-sizing: auto;
+  --tbl-lable-font-weight: 500;
+
+  --transition--color--04-ease-in-out: color 0.4s ease-in-out;
+  --transition--fill--04-ease-in-out: fill 0.4s ease-in-out;
+  --transition--background-color--04-ease-in-out: background-color 0.4s
+    ease-in-out;
+
+  /* Form Elements */
+  --form-element-focus-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
+  --form-element-focus-border: 2px solid gold;
+
+  --btn-color: #000;
+  --btn-background-color: #fff;
+  --btn-hover-color: #fff;
+  --btn-hover-background-color: rgba(255, 255, 255, 0.15);
+  --btn-hover-border-color: #fff;
 }
 
 *,
@@ -565,11 +594,15 @@ form .fields .input-field {
 select,
 textarea {
   outline: none;
+
   font-size: 14px;
   font-weight: 400;
+
   color: black;
+
   border-radius: 5px;
   border: 1px solid #aaa;
+
   padding: 0 10px;
   height: 42px;
   margin: 5px 0;
@@ -577,8 +610,8 @@ textarea {
 .input-field input:focus,
 .input-field select:focus,
 .input-field textarea:focus {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
-  border: 2px solid gold;
+  box-shadow: var(--form-element-focus-box-shadow);
+  border: var(--form-element-focus-border);
 }
 .input-field select,
 .input-field input[type="date"] {
