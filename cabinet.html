@@ -363,6 +363,18 @@
           <div class="sb-cnt-tbl-container">
             <table id="will-tbl">
               <caption>
+                <label class="tbl-gl-lb-checkbox">
+                  <input
+                    type="checkbox"
+                    id="tbl-will-gl-checkbox"
+                    class="tbl-gl-checkbox"
+                    checked
+                  />
+                  <span class="tbl-gl-checkmark"></span>
+                </label>
+                <button type="submit" class="tbl-btn-dlt-all tbl-btn">
+                  Удалить записи
+                </button>
                 <div class="tbl-search-field">
                   <input
                     id="tbl-will-search-field"
@@ -371,7 +383,13 @@
                   />
                   <i class="bx bx-search"></i>
                 </div>
-                <button type="submit" class="add-tbl-btn">
+                <select id="tbl-will-search-sl-col" class="tbl-search-sl-col">
+                  <option disabled selected>Искать по столбцу</option>
+                  <option>Дата принятия</option>
+                  <option>Краткое описание</option>
+                  <option>Коментарий</option>
+                </select>
+                <button type="submit" class="tbl-btn-add tbl-btn">
                   + Добавить запись
                 </button>
               </caption>
@@ -379,7 +397,7 @@
                 <tr>
                   <th data-sort-default>
                     <a class="tbl-title-link" href="#"
-                      >Дата получения
+                      >Дата принятия
                       <span class="fas fa-caret-down"></span>
                     </a>
                   </th>
@@ -400,6 +418,12 @@
               </thead>
               <tbody>
                 <tr class="tbl-body-row" obj-id="1">
+                  <td>
+                    <label class="tbl-lb-checkbox">
+                      <input type="checkbox" class="tbl-checkbox" />
+                      <span class="tbl-checkmark"></span>
+                    </label>
+                  </td>
                   <td class="will-incoming-date">10.01.2025</td>
                   <td class="will-brief-description">
                     Сайт - Кабинет Искателя
@@ -414,7 +438,7 @@
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>open-external</title>
+                      <title>Открыть</title>
                       <g
                         stroke="none"
                         stroke-width="1"
@@ -440,6 +464,7 @@
                       viewBox="0 0 528.899 528.899"
                       xml:space="preserve"
                     >
+                      <title>Редактировать</title>
                       <g>
                         <path
                           d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
@@ -456,6 +481,7 @@
                       viewBox="0 0 290 290"
                       xml:space="preserve"
                     >
+                      <title>Удалить</title>
                       <g id="XMLID_24_">
                         <g id="XMLID_29_">
                           <path
@@ -473,6 +499,12 @@
                   </td>
                 </tr>
                 <tr class="tbl-body-row" obj-id="2">
+                  <td>
+                    <label class="tbl-lb-checkbox">
+                      <input type="checkbox" class="tbl-checkbox" />
+                      <span class="tbl-checkmark"></span>
+                    </label>
+                  </td>
                   <td class="will-incoming-date">10.02.2025</td>
                   <td class="will-brief-description">Сайт - fffff</td>
                   <td class="will-comment text-area">
@@ -485,7 +517,7 @@
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <title>open-external</title>
+                      <title>Открыть</title>
                       <g
                         stroke="none"
                         stroke-width="1"
@@ -511,6 +543,7 @@
                       viewBox="0 0 528.899 528.899"
                       xml:space="preserve"
                     >
+                      <title>Редактировать</title>
                       <g>
                         <path
                           d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
@@ -527,6 +560,7 @@
                       viewBox="0 0 290 290"
                       xml:space="preserve"
                     >
+                      <title>Удалить</title>
                       <g id="XMLID_24_">
                         <g id="XMLID_29_">
                           <path

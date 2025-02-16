@@ -67,14 +67,18 @@
   --tbl-lable-font-optical-sizing: auto;
   --tbl-lable-font-weight: 500;
 
-  --transition--color--04-ease-in-out: color 0.4s ease-in-out;
-  --transition--fill--04-ease-in-out: fill 0.4s ease-in-out;
-  --transition--background-color--04-ease-in-out: background-color 0.4s
+  --transition-fill-02-ease-in-out: fill 0.2s ease-in-out;
+  --transition-color-04-ease-in-out: color 0.4s ease-in-out;
+  --transition-fill-04-ease-in-out: fill 0.4s ease-in-out;
+  --transition-background-color-04-ease-in-out: background-color 0.4s
     ease-in-out;
+  --transition-border-color-04-ease-in-out: border-color 0.4s ease-in-out;
 
   /* Form Elements */
   --form-element-focus-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
   --form-element-focus-border: 2px solid gold;
+
+  --checkbox-not-active-background-color: rgba(255, 255, 255, 0.15);
 
   --btn-color: #000;
   --btn-background-color: #fff;
@@ -694,7 +698,7 @@ form .buttons button,
   justify-content: center;
   align-items: center;
 
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--page-content-background-color);
 
   height: 70vh;
   width: 90vw;

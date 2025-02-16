@@ -128,6 +128,31 @@
   height: 100%;
 }
 
+.cabinet-content div .sb-cnt-tbl-container table .tbl-btn {
+  height: 4vh;
+  width: 10vw;
+
+  margin-left: 0vw;
+
+  background-color: var(--btn-background-color);
+  color: var(--btn-color);
+
+  cursor: pointer;
+
+  border-radius: 3px;
+  border: 2px solid transparent;
+
+  transition: var(--transition-background-color-04-ease-in-out),
+    var(--transition-color-04-ease-in-out),
+    var(--transition-border-color-04-ease-in-out);
+}
+
+.cabinet-content div .sb-cnt-tbl-container table .tbl-btn:hover {
+  color: var(--btn-hover-color);
+  border-color: var(--btn-hover-color);
+  background-color: var(--btn-hover-background-color);
+}
+
 .cabinet-content div .sb-cnt-tbl-container table caption {
   display: flex;
   position: relative;
@@ -137,30 +162,151 @@
   height: 5vh;
 
   margin-bottom: 2vh;
-  padding: 0 2vw 0 2vw;
+  padding: 0 1vw 0 1vw;
 
   font-size: 1.2em;
 
-  background-color: var(--page-text-color);
+  overflow: hidden;
+
+  background-color: var(--page-content-background-color);
   box-shadow: var(--cabinet-page-tbl-box-shadow);
+}
+.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-lb-checkbox {
+  position: relative;
+  width: 20px;
+  height: 20px;
+
+  margin: 0 0 0 1vw;
+  padding: 0;
+}
+.cabinet-content div .sb-cnt-tbl-container table .tbl-lb-checkbox {
+  display: none;
+  position: relative;
+  width: 20px;
+  height: 20px;
+
+  margin: 0;
+  padding: 0;
+}
+
+/* Скрываем нативный чекбокс */
+.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkbox,
+.cabinet-content div .sb-cnt-tbl-container table .tbl-checkbox {
+  position: absolute;
+
+  height: 20px;
+  width: 20px;
+
+  top: 0;
+  left: 0;
+
+  opacity: 0;
+  cursor: pointer;
+
+  z-index: var(--z-index-for-modal-form);
+}
+
+/* Создаем чекбокс */
+.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkmark,
+.cabinet-content div .sb-cnt-tbl-container table .tbl-checkmark {
+  position: absolute;
+
+  height: 20px;
+  width: 20px;
+
+  top: 0;
+  left: 0;
+
+  background-color: var(--checkbox-not-active-background-color);
+  border: 2px solid #dbd6d6;
+  border-radius: 4px;
+}
+
+.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkmark.active,
+.cabinet-content div .sb-cnt-tbl-container table .tbl-checkmark {
+  background-color: var(--btn-background-color);
+  border: 2px solid #ccc;
+}
+
+/* Изменяем цвет фона при отмеченном состоянии */
+.cabinet-content
+  div
+  .sb-cnt-tbl-container
+  table
+  .tbl-gl-checkbox:checked
+  ~ .tbl-gl-checkmark.active,
+.cabinet-content
+  div
+  .sb-cnt-tbl-container
+  table
+  .tbl-checkbox:checked
+  ~ .tbl-checkmark {
+  background-color: var(--btn-background-color);
+}
+
+/* Создаем галочку */
+.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkmark.active:after,
+.cabinet-content div .sb-cnt-tbl-container table .tbl-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Показываем галочку при отмеченном состоянии */
+.cabinet-content
+  div
+  .sb-cnt-tbl-container
+  table
+  .tbl-gl-checkbox:checked
+  ~ .tbl-gl-checkmark.active:after,
+.cabinet-content
+  div
+  .sb-cnt-tbl-container
+  table
+  .tbl-checkbox:checked
+  ~ .tbl-checkmark:after {
+  display: block;
+}
+
+/* Стили для галочки */
+.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkmark.active:after,
+.cabinet-content div .sb-cnt-tbl-container table .tbl-checkmark:after {
+  top: 2px;
+  left: 5px;
+  width: 5px;
+  height: 10px;
+  border: 2px solid rgb(209, 179, 7);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.cabinet-content div .sb-cnt-tbl-container table .tbl-btn-dlt-all {
+  visibility: hidden;
+
+  cursor: none;
+
+  margin-left: 2vw;
 }
 
 .cabinet-content div .sb-cnt-tbl-container table caption .tbl-search-field {
   display: flex;
+
+  flex-flow: row nowrap;
+  gap: 0.5vw;
+
   position: relative;
   align-items: center;
 
   height: 4vh;
   width: 12vw;
 
-  margin: 0 1vw 0 1vw;
+  margin: 0 1vw 0 40vw;
 
-  background-color: var(--tbl-unparied-row-background-color);
+  background-color: var(--btn-background-color);
 
-  color: var(--cabinet-page-sidebar-content-font-color);
+  color: var(--btn-color);
 
   border-radius: 10px;
-  border: 1px solid var(--tbl-unparied-row-background-color);
+  border: 1px solid var(--btn-background-color);
 
   font-family: var(--fornt-family-for-content);
   font-optical-sizing: auto;
@@ -175,7 +321,7 @@
   .tbl-search-field
   input {
   height: 95%;
-  width: 80%;
+  width: 82%;
 
   padding-left: 1vw;
 
@@ -191,45 +337,30 @@
 }
 
 .cabinet-content div .sb-cnt-tbl-container table caption .tbl-search-field i {
-  margin-left: 0.5vw;
-
   font-size: 1.4em;
+
+  transition: var(--transition-color-04-ease-in-out);
 }
 
-.cabinet-content div .sb-cnt-tbl-container table caption .add-tbl-btn {
+.cabinet-content div .sb-cnt-tbl-container table caption select {
   height: 4vh;
-  width: 10vw;
-
-  background-color: var(--tbl-unparied-row-background-color);
-  color: var(--cabinet-page-sidebar-content-font-color);
-
-  cursor: pointer;
-
-  border-radius: 3px;
-  border: 2px solid transparent;
-
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out;
-}
-
-.cabinet-content div .sb-cnt-tbl-container table caption .add-tbl-btn:hover {
-  color: var(--tbl-unparied-row-background-color);
-  border-color: var(--tbl-unparied-row-background-color);
-  background-color: var(--page-text-color);
 }
 
 .cabinet-content div .sb-cnt-tbl-container table thead {
   display: block;
-
-  background-color: var(--page-text-color);
-
-  box-shadow: var(--cabinet-page-tbl-box-shadow);
+  position: relative;
 
   text-transform: uppercase;
+
+  background-color: var(--page-content-background-color);
+
+  box-shadow: var(--cabinet-page-tbl-box-shadow);
 }
 .cabinet-content div .sb-cnt-tbl-container table tr {
   display: grid;
   position: relative;
+
+  width: 100%;
 
   grid-template-columns: repeat(auto-fit, minmax(5vw, 1fr));
   grid-template-rows: repeat(auto-fit, minmax(5vh, 1fr));
@@ -277,9 +408,9 @@
   max-height: 100%;
 
   font-size: 1.2em;
-  font-weight: 300;
+  font-weight: 400;
 
-  background-color: var(--page-text-color);
+  background-color: var(--page-content-background-color);
 
   box-shadow: var(--cabinet-page-tbl-box-shadow);
 
@@ -288,10 +419,27 @@
 }
 
 .cabinet-content div table tbody tr {
-  cursor: pointer;
+  position: relative;
+
+  width: 100%;
+
   border-bottom: var(--cabinet-page-tbl-row-border);
 
-  transition: var(--transition--background-color--04-ease-in-out);
+  transition: var(--transition-background-color--04-ease-in-out);
+}
+
+.cabinet-content div table tbody tr td:first-child {
+  grid-column: 1;
+  position: absolute;
+
+  height: 100%;
+  width: auto;
+
+  align-content: center;
+
+  top: 0;
+  left: 2.2%;
+  z-index: var(--z-index-for-content);
 }
 
 tbody tr:nth-child(even) {
@@ -325,7 +473,7 @@ tbody tr:nth-child(even) {
   width: 100%;
   min-height: 5vh;
 
-  transition: var(--transition--color--04-ease-in-out);
+  transition: var(--transition-color-04-ease-in-out);
 }
 .cabinet-content div table .text-area {
   text-align: left;
@@ -340,7 +488,9 @@ tbody tr:nth-child(even) {
 
   fill: var(--cabinet-page-nav-menu-font-color);
 
-  transition: var(--transition--fill--04-ease-in-out);
+  cursor: pointer;
+
+  transition: var(--transition-fill-02-ease-in-out);
 }
 
 .cabinet-content div table td .tbl-open-rec-icon {
@@ -350,6 +500,8 @@ tbody tr:nth-child(even) {
 
 .cabinet-content div table td .tbl-open-rec-icon-element {
   fill: var(--cabinet-page-nav-menu-font-color);
+
+  transition: var(--transition-fill-02-ease-in-out);
 }
 
 .cabinet-content div svg:hover,

@@ -473,6 +473,69 @@ for (let i = 0; i < tblHeaderCell.length; i++) {
   });
 }
 
+//Чекбокс в заголовке таблицы
+const tblGlLbCheckboxes = document.querySelectorAll(".tbl-gl-lb-checkbox");
+
+//Убираем с чекбокса свойство disabled при клике и отображаем чекбоксы в таблице
+tblGlLbCheckboxes.forEach((checkbox) => {
+  const glCheckbox = checkbox.querySelector(".tbl-gl-checkbox");
+  const tbl = checkbox.closest("table");
+  const tblLbCheckBoxes = tbl.querySelectorAll(".tbl-lb-checkbox");
+  const glCheckboxSpan = checkbox.querySelector(".tbl-gl-checkmark");
+
+  //Прослушка клика на lable чекбокса
+  checkbox.addEventListener("click", () => {
+    //Если чекбоксы не активированы, то активируем. И включаем отображение кнопки "Удалить записи"
+    if (!glCheckboxSpan.classList.contains("active")) {
+      glCheckboxSpan.classList.add("active");
+
+      //Включаем отображение кнопки "Удалить записи"
+      tbl.querySelector(".tbl-btn-dlt-all").style.visibility = "visible";
+      tbl.querySelector(".tbl-btn-dlt-all").style.cursor = "pointer";
+
+      //Включаем видимость чекбоксов в таблице
+      for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+        tblLbCheckBoxes[i].style.display = "block";
+      }
+    } else if (glCheckbox.checked) {
+      //Делаем все чекбоксы в таблице checked
+      for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+        const tblCheckBox = tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
+        tblCheckBox.checked = true;
+      }
+    } else if (!glCheckbox.checked) {
+      //Убираем checked со всех чекбоксов в таблице
+      for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+        const tblCheckBox = tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
+        tblCheckBox.checked = false;
+      }
+    }
+  });
+});
+
+//Кнопкаы удалить все записи
+const tblBtnDltAll = document.querySelectorAll(".tbl-btn-dlt-all");
+
+tblBtnDltAll.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const tbl = btn.closest("table");
+    const tblGlCheckbox = tbl.querySelector(".tbl-gl-checkbox");
+    const tblData = tbl.querySelectorAll(".tbl-body-row");
+
+    //Удаляем только те записи где чекбокс checked
+    tblData.forEach((row) => {
+      if (row.querySelector(".tbl-checkbox").checked) {
+        row.remove();
+      }
+    });
+
+    //Если чекбокс в заголовке checked убрать флажёк
+    if (tblGlCheckbox.checked) {
+      tblGlCheckbox.checked = false;
+    }
+  });
+});
+
 //Иконка редактирования записи таблицы
 const editIcon = document.querySelectorAll(".tbl-edit-icon");
 
