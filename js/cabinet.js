@@ -440,14 +440,25 @@ function changeVisibilityOfSubMenuItems(item) {
 Секция для работы с таблицами контента сайдбара
 */
 const cntContainer = document.querySelector(".cabinet-content");
+const ctnTables = Array.from(document.getElementsByTagName("table"));
 const tblRows = document.querySelectorAll(".tbl-body-row");
 
-//Подключение функции сортировки к таблице
-var tbl = document.getElementById("will-tbl");
-var sort = new Tablesort(tbl);
+//Подключение сервисов и функций для работы с таблицами контента сайдбара
+ctnTables.forEach((tbl) => {
+  initTableSort(tbl.id);
+  tblMultiSlctCaptionService(tbl.id);
+  tblMultiSlctTblService(tbl.id);
+  addNewRow(tbl.id);
+});
 
-//Включение функции сортировки данных после добавление новой записи в таблицу
-sort.refresh();
+//Подключение функции сортировки к таблице из библиотеки tablesort
+function initTableSort(tblId) {
+  var tbl = document.getElementById(tblId);
+  var sort = new Tablesort(tbl);
+
+  //Включение функции сортировки данных после добавление новой записи в таблицу
+  sort.refresh();
+}
 
 //Переключение иконки сортировки
 const tblHeaderCell = cntContainer.getElementsByTagName("th");
@@ -473,45 +484,112 @@ for (let i = 0; i < tblHeaderCell.length; i++) {
   });
 }
 
-//Чекбокс в заголовке таблицы
-const tblGlLbCheckboxes = document.querySelectorAll(".tbl-gl-lb-checkbox");
+/*
+  Функция работы с чекбокса в заголовке таблице
+    - При клике на чекбокс в заголовке таблицы включаем видимость чекбоксов в таблице
+    - При клике на чекбокс в заголовке таблицы делаем все чекбоксы в таблице checked и наоборот
+*/
+function tblMultiSlctCaptionService(tblId) {
+  //Чекбокс в заголовке таблицы
+  const tbl = document.getElementById(tblId);
+  const tblGlLbCheckboxes = tbl.querySelectorAll(".tbl-gl-lb-checkbox");
 
-//Убираем с чекбокса свойство disabled при клике и отображаем чекбоксы в таблице
-tblGlLbCheckboxes.forEach((checkbox) => {
-  const glCheckbox = checkbox.querySelector(".tbl-gl-checkbox");
-  const tbl = checkbox.closest("table");
-  const tblLbCheckBoxes = tbl.querySelectorAll(".tbl-lb-checkbox");
-  const glCheckboxSpan = checkbox.querySelector(".tbl-gl-checkmark");
+  //Убираем с чекбокса свойство disabled при клике и отображаем чекбоксы в таблице
+  tblGlLbCheckboxes.forEach((checkbox) => {
+    const glCheckbox = checkbox.querySelector(".tbl-gl-checkbox");
+    const tbl = checkbox.closest("table");
+    const tblLbCheckBoxes = tbl.querySelectorAll(".tbl-lb-checkbox");
+    const glCheckboxSpan = checkbox.querySelector(".tbl-gl-checkmark");
 
-  //Прослушка клика на lable чекбокса
-  checkbox.addEventListener("click", () => {
-    //Если чекбоксы не активированы, то активируем. И включаем отображение кнопки "Удалить записи"
-    if (!glCheckboxSpan.classList.contains("active")) {
-      glCheckboxSpan.classList.add("active");
+    /*
+    Прослушка клика на lable чекбокса
+    - Если чекбокс в заголовке таблицы не активирован, то активируем.
+    - Включаем отображение всех чекбоксов в данной таблице
+    - Если чекбокс в заголовке отмечен (checked), то делаем все чекбоксы в таблице checked и наоборот
+    */
+    checkbox.addEventListener("click", () => {
+      //Если чекбоксы не активированы, то активируем. И включаем отображение кнопки "Удалить записи"
+      if (!glCheckboxSpan.classList.contains("active")) {
+        glCheckboxSpan.classList.add("active");
 
-      //Включаем отображение кнопки "Удалить записи"
-      tbl.querySelector(".tbl-btn-dlt-all").style.visibility = "visible";
-      tbl.querySelector(".tbl-btn-dlt-all").style.cursor = "pointer";
-
-      //Включаем видимость чекбоксов в таблице
-      for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-        tblLbCheckBoxes[i].style.display = "block";
+        //Включаем видимость чекбоксов в таблице
+        for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+          tblLbCheckBoxes[i].style.display = "block";
+        }
+      } else if (glCheckbox.checked) {
+        //Делаем все чекбоксы в таблице checked
+        for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+          const tblCheckBox = tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
+          tblCheckBox.checked = true;
+        }
+        showOrHideTblDeleteAllBtn(tbl.id, true);
+      } else if (!glCheckbox.checked) {
+        //Убираем checked со всех чекбоксов в таблице
+        for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+          const tblCheckBox = tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
+          tblCheckBox.checked = false;
+        }
+        showOrHideTblDeleteAllBtn(tbl.id, false);
       }
-    } else if (glCheckbox.checked) {
-      //Делаем все чекбоксы в таблице checked
-      for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-        const tblCheckBox = tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
-        tblCheckBox.checked = true;
-      }
-    } else if (!glCheckbox.checked) {
-      //Убираем checked со всех чекбоксов в таблице
-      for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-        const tblCheckBox = tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
-        tblCheckBox.checked = false;
-      }
-    }
+    });
   });
-});
+}
+
+/*
+  Функция работы с чекбоксами в таблице
+    - Отслеживание количества отмеченных чекбоксов, если больше одного, то отображаем кнопку "Удалить записи", 
+      если нет, то скрываем
+*/
+function tblMultiSlctTblService(tblId) {
+  const tbl = document.getElementById(tblId);
+  const tblCheckboxes = tbl.querySelectorAll(".tbl-checkbox");
+  const countCheckedboxes = {};
+  countCheckedboxes[tblId] = 0;
+
+  //Посчёт количества отмеченых чекбоксов
+  tblCheckboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      countCheckedboxes[tblId]++;
+    }
+
+    //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        countCheckedboxes[tblId]++;
+      } else {
+        countCheckedboxes[tblId]--;
+      }
+
+      //Если больше одного чекбокса отмечен, то отображаем кнопку "Удалить записи", иначе скрываем
+      if (countCheckedboxes[tblId] > 1) {
+        showOrHideTblDeleteAllBtn(tbl.id, true);
+      } else {
+        showOrHideTblDeleteAllBtn(tbl.id, false);
+      }
+    });
+  });
+}
+
+/*
+  Переключаем отображение кнопки "Удалить записи".
+  Аргументы:
+    tblId - идентификатор таблицы
+    isShow - true - отображать, false - скрыть
+*/
+function showOrHideTblDeleteAllBtn(tblId, isShow) {
+  const tbl = document.getElementById(tblId);
+  const btn = tbl.querySelector(".tbl-btn-dlt-all");
+
+  if (isShow) {
+    btn.style.visibility = "visible";
+    btn.style.opacity = 1;
+    btn.style.cursor = "pointer";
+  } else {
+    btn.style.visibility = "hidden";
+    btn.style.opacity = 0;
+    btn.style.cursor = "none";
+  }
+}
 
 //Кнопкаы удалить все записи
 const tblBtnDltAll = document.querySelectorAll(".tbl-btn-dlt-all");
@@ -536,38 +614,113 @@ tblBtnDltAll.forEach((btn) => {
   });
 });
 
+//Получение названия меню сайдбара с table.id
+function getTblNameById(tableId) {
+  return tableId.substring(0, tableId.indexOf("-"));
+}
+
+function addNewRow(tblId) {
+  const tbl = document.getElementById(tblId);
+  //Кнопка добавления новой записи
+  const btn = tbl.querySelector(".tbl-btn-add");
+
+  btn.addEventListener("click", () => {
+    const modal = getModalWillEditInformationByTblId(tblId);
+
+    modal.querySelector("form").removeAttribute("obj-id");
+
+    const inputFields = modal.querySelectorAll(".edit-modal-input-flield");
+
+    inputFields.forEach((field) => {
+      console.log(field);
+      field.value = "";
+    });
+
+    modal.style.display = "block";
+  });
+}
+
+//Создание элемента tr переданного id таблицы c новым id
+function getRowFromTable(tblId) {
+  const tbl = document.getElementById(tblId);
+  const tblRows = tbl.querySelectorAll(".tbl-body-row");
+  const tblBtnAdd = document.querySelector(".tbl-btn-add");
+  const maxId = {};
+  maxId[tblId] = 0;
+
+  tblRows.forEach((row) => {
+    if (row.getAttribute("data-id") > maxId[tblId]) {
+      maxId[tblId] = row.getAttribute("data-id");
+    }
+  });
+  maxId[tblId]++;
+  const newRow = tbl.querySelector(".tbl-body-row").cloneNode(true);
+  const rowcells = newRow.getElementsByTagName("td");
+  newRow.setAttribute("data-id", maxId[tblId]);
+
+  //Убираем текст в элементе tr
+  for (let i = 1; i < rowcells.length; i++) {
+    if (rowcells[i].classList.contains("tbl-row-data")) {
+      rowcells[i].textContent = "";
+    }
+  }
+  return newRow;
+}
+
 //Иконка редактирования записи таблицы
 const editIcon = document.querySelectorAll(".tbl-edit-icon");
 
 //Функция отображения модальных окон при клике на иконку редактирования
 editIcon.forEach((icon) => {
   icon.addEventListener("click", () => {
-    const iconId = icon.id;
-    const modalId = iconId.substring(0, iconId.indexOf("-icon"));
-    const modal = document.querySelector("." + modalId + "-information");
-
-    modal.style.display = "block";
-
-    // Установка значений полей в модальном окне из текущей записи
-    const willIncomingDate = icon
-      .closest("tr")
-      .querySelector(".will-incoming-date")
-      .textContent.trim();
-    const willDescription = icon
-      .closest("tr")
-      .querySelector(".will-brief-description")
-      .textContent.trim();
-    const willComment = icon
-      .closest("tr")
-      .querySelector(".will-comment")
-      .textContent.trim();
-
-    document.getElementById("edit-will-incoming-date").value = willIncomingDate;
-    document.getElementById("edit-will-brief-description").value =
-      willDescription;
-    document.getElementById("edit-will-comment").value = willComment;
+    showModalWillEditInformation(icon.closest(".tbl-body-row"));
   });
 });
+
+//Функция вкл/выкл модального окна редактирования информации записей таблиц контента сидбара
+function showModalWillEditInformation(tblRow) {
+  const tblId = tblRow.closest("table").id;
+  const modal = getModalWillEditInformationByTblId(tblId);
+  const form = modal.querySelector("form");
+
+  form.setAttribute("obj-id", tblRow.getAttribute("obj-id"));
+  form.setAttribute("tbl-name", getTblNameById(tblId));
+
+  modal.style.display = "block";
+
+  // Установка значений полей в модальном окне из текущей записи
+  const willIncomingDate = convertDateForEditForm(
+    tblRow.querySelector(".will-incoming-date").textContent.trim()
+  );
+
+  const willDescription = tblRow
+    .querySelector(".will-brief-description")
+    .textContent.trim();
+  const willComment = tblRow.querySelector(".will-comment").textContent.trim();
+
+  document.getElementById("edit-will-incoming-date").value = willIncomingDate;
+  document.getElementById("edit-will-brief-description").value =
+    willDescription;
+  document.getElementById("edit-will-comment").value = willComment;
+}
+
+//Функция получения элемента модального окна создания/редактирования записи таблицы "Воля"
+function getModalWillEditInformationByTblId(tblId) {
+  const modalId = tblId.substring(0, tblId.indexOf("-")) + "-edit-information";
+  return document.getElementById(modalId);
+}
+
+//Функция конвертации даты с формата дд.мм.гггг в формат гггг-мм-дд
+function convertDateForEditForm(date) {
+  const [day, month, year] = date.split(".");
+  return `${year}-${month}-${day}`;
+}
+
+//Функция конвертации даты с формата гггг-мм-дд в формат дд.мм.гггг
+function convertDateForTbl(date) {
+  const [year, month, day] = date.split("-");
+  return `${day}.${month}.${year}`;
+}
 
 //Функция отслеживания высоты модального окна редактирования информации записей таблиц контента сайдбара
 function changeModalEditInformationHeight() {
@@ -596,32 +749,45 @@ const editModalSaveBtn = document.querySelectorAll(".edit-modal-save-btn");
 editModalSaveBtn.forEach((btn) => {
   btn.addEventListener("click", () => {
     const form = btn.closest("form");
+    const objectId = form.getAttribute("obj-id");
     const inputFields = form.querySelectorAll(".edit-modal-input-flield");
-    const tblId = "#" + form.getAttribute("tbl-name") + "-tbl";
-    const table = Tabulator.findTable(tblId)[0];
-    const columns = table.getColumns();
+    const tblId = form.getAttribute("tbl-name") + "-tbl";
+    const tbl = document.getElementById(tblId);
+    const rows = tbl.querySelectorAll(".tbl-body-row");
+    let row;
+    let isNewRow = true;
 
-    //Объект для обновления данных в таблице
-    const cell = new Object();
+    rows.forEach((tblRow) => {
+      if (tblRow.getAttribute("obj-id") == objectId) {
+        isNewRow = false;
+        row = tblRow;
+      }
+    });
 
-    //Записываем id объекта, который храниться в атрибуте формы "obj-id"
-    cell.id = form.getAttribute("obj-id");
-
-    for (let i = 0; i < inputFields.length; i++) {
-      const columnName = columns[i + 1].getField(); // получаем название колонки
-      const inputValue = inputFields[i].value; // получаем значение колонки
-
-      cell[columnName] = inputValue;
+    if (isNewRow) {
+      const row = getRowFromTable(tblId);
+      row.setAttribute("obj-id", objectId);
+      setTblRowValuesFromInputFields(row, inputFields);
+      tbl.querySelector("tbody").appendChild(row);
+    } else {
+      setTblRowValuesFromInputFields(row, inputFields);
     }
-
-    table.updateData("[" + JSON.stringify(cell) + "]");
-
     btn.closest(".edit-modal-container").style.display = "none";
   });
 });
 
-//Функция удаления записи с таблицы
+//Функция записи введённых данных в строку таблицы
+function setTblRowValuesFromInputFields(row, inputFields) {
+  for (let i = 0; i < inputFields.length; i++) {
+    if (inputFields[i].type == "date") {
+      row.children[i + 1].textContent = convertDateForTbl(inputFields[i].value);
+    } else {
+      row.children[i + 1].textContent = inputFields[i].value;
+    }
+  }
+}
 
+//Функция удаления записи с таблицы
 const deleteTblIcon = document.querySelectorAll(".tbl-dlt-icon");
 
 deleteTblIcon.forEach((icon) => {

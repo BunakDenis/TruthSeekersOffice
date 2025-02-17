@@ -375,6 +375,19 @@
                 <button type="submit" class="tbl-btn-dlt-all tbl-btn">
                   Удалить записи
                 </button>
+                <svg
+                  id="tbl-fltr-svg"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 24 24"
+                  xml:space="preserve"
+                >
+                  <g id="filter">
+                    <path
+                      d="M9,24V12.9l-8-10V1h23v1.9l-8,10v8.3L9,24z M3.7,3l7.3,9.1V21l3-1.2v-7.7L21.3,3H3.7z"
+                    />
+                  </g>
+                </svg>
                 <div class="tbl-search-field">
                   <input
                     id="tbl-will-search-field"
@@ -424,11 +437,11 @@
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
-                  <td class="will-incoming-date">10.01.2025</td>
-                  <td class="will-brief-description">
+                  <td class="will-incoming-date tbl-row-data">10.01.2025</td>
+                  <td class="will-brief-description tbl-row-data">
                     Сайт - Кабинет Искателя
                   </td>
-                  <td class="will-comment text-area">
+                  <td class="will-comment text-area tbl-row-data">
                     По ощущениям нужно сделать до конца весны 2025 года
                   </td>
                   <td>
@@ -505,9 +518,11 @@
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
-                  <td class="will-incoming-date">10.02.2025</td>
-                  <td class="will-brief-description">Сайт - fffff</td>
-                  <td class="will-comment text-area">
+                  <td class="will-incoming-date tbl-row-data">10.02.2025</td>
+                  <td class="will-brief-description tbl-row-data">
+                    Сайт - fffff
+                  </td>
+                  <td class="will-comment text-area tbl-row-data">
                     По ощущениям нужно сделать до конца весны 2025 года
                   </td>
                   <td>
@@ -536,7 +551,7 @@
                       </g>
                     </svg>
                     <svg
-                      class="cnt-edit-icon"
+                      class="tbl-edit-icon"
                       id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -648,7 +663,8 @@
 
     <!-- Modal Edit Seeker Infomation -->
     <section
-      class="will-edit-information edit-modal-container"
+      class="edit-modal-container"
+      id="will-edit-information"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -690,7 +706,6 @@
                   id="edit-will-incoming-date"
                   class="edit-modal-input-flield"
                   type="date"
-                  value="2020-12-28"
                   required
                 />
               </div>

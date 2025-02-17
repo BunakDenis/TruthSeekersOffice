@@ -281,10 +281,24 @@
 }
 .cabinet-content div .sb-cnt-tbl-container table .tbl-btn-dlt-all {
   visibility: hidden;
+  opacity: 0;
 
   cursor: none;
 
   margin-left: 2vw;
+
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+}
+
+.cabinet-content div .sb-cnt-tbl-container table #tbl-fltr-svg {
+  height: 3vh;
+  width: auto;
+
+  fill: var(--cabinet-page-sidebar-content-font-color);
+}
+
+.cabinet-content div .sb-cnt-tbl-container table #tbl-fltr-svg:hover {
+  fill: var(--page-text-color-hover);
 }
 
 .cabinet-content div .sb-cnt-tbl-container table caption .tbl-search-field {
