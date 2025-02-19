@@ -18,15 +18,19 @@
 }
 
 .body-cabinet-page .site-navbar-wrap {
-  background: var(--cabinet-page-menu-background-color);
+  background: var(--page-content-background-colors);
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
 }
 
 .body-cabinet-page header .site-navbar-wrap .site-navigation ul li a {
-  color: var(--cabinet-page-nav-menu-font-color);
+  color: var(--page-text-color);
 }
 
 .body-cabinet-page footer {
-  background: var(--cabinet-page-menu-background-color);
+  background: var(--page-content-background-colors);
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
 }
 
 .cabinet-content {
@@ -131,8 +135,6 @@
 .cabinet-content div .sb-cnt-tbl-container table .tbl-btn {
   height: 4vh;
   width: 10vw;
-
-  margin-left: 0vw;
 
   background-color: var(--btn-background-color);
   color: var(--btn-color);
@@ -290,15 +292,49 @@
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
 }
 
-.cabinet-content div .sb-cnt-tbl-container table #tbl-fltr-svg {
-  height: 3vh;
+.cabinet-content div .sb-cnt-tbl-container table .tbl-fltr-container {
+  display: flex;
+
+  flex-flow: row nowrap;
+
+  align-items: center;
+
+  height: 4vh;
   width: auto;
 
-  fill: var(--cabinet-page-sidebar-content-font-color);
+  margin-left: 2vw;
+
+  cursor: pointer;
 }
 
-.cabinet-content div .sb-cnt-tbl-container table #tbl-fltr-svg:hover {
+.cabinet-content div .sb-cnt-tbl-container table #tbl-fltr-svg {
+  height: 3vh;
+  width: 3vw;
+
+  margin: 0;
+  padding: 0;
+
+  fill: var(--cabinet-page-sidebar-content-font-color);
+  transition: var(--transition-fill-04-ease-in-out);
+}
+
+.cabinet-content
+  div
+  .sb-cnt-tbl-container
+  table
+  .tbl-fltr-container:hover
+  #tbl-fltr-svg,
+.cabinet-content div .sb-cnt-tbl-container table .tbl-fltr-container:hover p {
   fill: var(--page-text-color-hover);
+  color: var(--page-text-color-hover);
+}
+
+.cabinet-content div .sb-cnt-tbl-container table .tbl-fltr-container p {
+  padding: 0;
+  margin: 0;
+
+  color: var(--cabinet-page-sidebar-content-font-color);
+  transition: var(--transition-color-04-ease-in-out);
 }
 
 .cabinet-content div .sb-cnt-tbl-container table caption .tbl-search-field {
@@ -311,9 +347,9 @@
   align-items: center;
 
   height: 4vh;
-  width: 12vw;
+  width: 15vw;
 
-  margin: 0 1vw 0 40vw;
+  margin: 0 1vw 0 10vw;
 
   background-color: var(--btn-background-color);
 
@@ -351,13 +387,31 @@
 }
 
 .cabinet-content div .sb-cnt-tbl-container table caption .tbl-search-field i {
+  padding-left: 0.5vw;
   font-size: 1.4em;
 
   transition: var(--transition-color-04-ease-in-out);
 }
 
+.cabinet-content div .sb-cnt-tbl-container table .highlight {
+  background-color: #ffeb3b;
+}
+.cabinet-content div .sb-cnt-tbl-container table .active-highlight {
+  border: 2px solid #ff5722;
+}
+
+.cabinet-content div .sb-cnt-tbl-container table caption .tbl-btn-add {
+  margin-left: 15vw;
+}
+
 .cabinet-content div .sb-cnt-tbl-container table caption select {
   height: 4vh;
+}
+
+.cabinet-content div .sb-cnt-tbl-container table .tbl-btn-search {
+  width: 5vw;
+
+  margin-left: 1vw;
 }
 
 .cabinet-content div .sb-cnt-tbl-container table thead {
@@ -419,7 +473,7 @@
 .cabinet-content div table tbody {
   width: 100%;
   min-height: 5vh;
-  max-height: 100%;
+  max-height: 35vh;
 
   font-size: 1.2em;
   font-weight: 400;

@@ -449,6 +449,7 @@ ctnTables.forEach((tbl) => {
   tblMultiSlctCaptionService(tbl.id);
   tblMultiSlctTblService(tbl.id);
   addNewRow(tbl.id);
+  searchTable(tbl.id);
 });
 
 //Подключение функции сортировки к таблице из библиотеки tablesort
@@ -619,6 +620,7 @@ function getTblNameById(tableId) {
   return tableId.substring(0, tableId.indexOf("-"));
 }
 
+//Функция создания новой строки в таблице
 function addNewRow(tblId) {
   const tbl = document.getElementById(tblId);
   //Кнопка добавления новой записи
@@ -665,6 +667,42 @@ function getRowFromTable(tblId) {
     }
   }
   return newRow;
+}
+
+//Функция поиска по таблице
+function searchTable(tblId) {
+  const tbl = document.getElementById(tblId);
+  const searchTblBtn = tbl.querySelector(".tbl-btn-search");
+
+  searchTblBtn.addEventListener("click", () => {
+    const query = tbl.querySelector(".tbl-search-input").value;
+    console.log(`query: ${query}`);
+    searchQueryInTbl(query, tblId);
+  });
+}
+
+let matches = [];
+function searchQueryInTbl(query, tblId) {
+  const tbl = document.getElementById(tblId);
+  const row = tbl.querySelector("tbody");
+  matches = [];
+
+  const cells = row.querySelectorAll("td");
+  let isMatch = false;
+  cells.forEach((cell) => {
+    const regex = new RegExp(query, "gi");
+    console.log(`cell: ${cell}`);
+    console.log(`regex: ${regex}`);
+    if (regex.test(cell.textContent)) {
+      cell.innerHTML = cell.textContent.replace(
+        regex,
+        '<span class="highlight">$&</span>'
+      );
+      matches.push(cell);
+      isMatch = true;
+    }
+  });
+  row.style.display = isMatch ? "" : "none";
 }
 
 //Иконка редактирования записи таблицы

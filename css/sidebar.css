@@ -74,7 +74,7 @@ body main > .btn .fa-circle-arrow-left {
 
   list-style: none;
 
-  background: var(--page-content-background-colors);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: var(--backdrop-filter-blur);
   -webkit-backdrop-filter: var(--backdrop-filter-blur);
 }
