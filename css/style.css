@@ -75,8 +75,12 @@
   --transition-border-color-04-ease-in-out: border-color 0.4s ease-in-out;
 
   /* Form Elements */
+  --form-element-background-color: #fff;
   --form-element-focus-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
   --form-element-focus-border: 2px solid gold;
+
+  --form-element-active-color: #000;
+  --form-element-deactive-color: gray;
 
   --checkbox-not-active-background-color: rgba(255, 255, 255, 0.15);
 
@@ -85,6 +89,13 @@
   --btn-hover-color: #fff;
   --btn-hover-background-color: rgba(255, 255, 255, 0.15);
   --btn-hover-border-color: #fff;
+
+  /* Multimedia */
+  --al-vadud-text-color: red;
+  --pictures-cabinet-page-color: #fff;
+  --default-icon-color: #000;
+  --edit-icon-color: gray;
+  --dlt-icon-color: red;
 }
 
 *,
@@ -162,8 +173,7 @@ a {
   margin: 0;
   padding: 0;
 
-  background: url(./../images/11062b_40811fcc9cac4a5bbfb0d93aaa94d70df000.webp)
-    fixed 50%;
+  background: url(./../images/fly_on_clouds.jpg) fixed 50%;
   background-size: cover;
 }
 

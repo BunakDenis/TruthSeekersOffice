@@ -1,14 +1,5 @@
-// Получаем значение CSS глобальных перменных
-const rootStyles = getComputedStyle(document.documentElement);
-const pageTextColorHover = rootStyles
-  .getPropertyValue("--page-text-color-hover")
-  .trim();
-const sidebarMenuBackgroundColorHover = rootStyles
-  .getPropertyValue("--cabinet-page-menu-item-hover-background-color")
-  .trim();
-const sidebarBackdropFilterBlur = rootStyles
-  .getPropertyValue("--sidebar-content-backdrop-filter-blur")
-  .trim();
+import { pageTextColorHover } from "./cssVariables.js";
+import { sidebarMenuBackgroundColorHover } from "./cssVariables.js";
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -446,8 +437,7 @@ const tblRows = document.querySelectorAll(".tbl-body-row");
 //Подключение сервисов и функций для работы с таблицами контента сайдбара
 ctnTables.forEach((tbl) => {
   initTableSort(tbl.id);
-  tblMultiSlctCaptionService(tbl.id);
-  tblMultiSlctTblService(tbl.id);
+  tblMultiSlctService(tbl.id);
   addNewRow(tbl.id);
   searchTable(tbl.id);
 });
@@ -490,7 +480,7 @@ for (let i = 0; i < tblHeaderCell.length; i++) {
     - При клике на чекбокс в заголовке таблицы включаем видимость чекбоксов в таблице
     - При клике на чекбокс в заголовке таблицы делаем все чекбоксы в таблице checked и наоборот
 */
-function tblMultiSlctCaptionService(tblId) {
+function tblMultiSlctService(tblId) {
   //Чекбокс в заголовке таблицы
   const tbl = document.getElementById(tblId);
   const tblGlLbCheckboxes = tbl.querySelectorAll(".tbl-gl-lb-checkbox");
@@ -501,6 +491,10 @@ function tblMultiSlctCaptionService(tblId) {
     const tbl = checkbox.closest("table");
     const tblLbCheckBoxes = tbl.querySelectorAll(".tbl-lb-checkbox");
     const glCheckboxSpan = checkbox.querySelector(".tbl-gl-checkmark");
+    const tblGlCheckbox = tbl.querySelector(".tbl-gl-checkbox");
+    const tblCheckboxes = tbl.querySelectorAll(".tbl-checkbox");
+    const countCheckedboxes = {};
+    countCheckedboxes[tblId] = 0;
 
     /*
     Прослушка клика на lable чекбокса
@@ -530,43 +524,41 @@ function tblMultiSlctCaptionService(tblId) {
           const tblCheckBox = tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
           tblCheckBox.checked = false;
         }
+        countCheckedboxes[tblId] = 0;
         showOrHideTblDeleteAllBtn(tbl.id, false);
       }
     });
-  });
-}
 
-/*
+    /*
   Функция работы с чекбоксами в таблице
     - Отслеживание количества отмеченных чекбоксов, если больше одного, то отображаем кнопку "Удалить записи", 
       если нет, то скрываем
 */
-function tblMultiSlctTblService(tblId) {
-  const tbl = document.getElementById(tblId);
-  const tblCheckboxes = tbl.querySelectorAll(".tbl-checkbox");
-  const countCheckedboxes = {};
-  countCheckedboxes[tblId] = 0;
-
-  //Посчёт количества отмеченых чекбоксов
-  tblCheckboxes.forEach((checkbox) => {
-    if (checkbox.checked) {
-      countCheckedboxes[tblId]++;
-    }
-
-    //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
-    checkbox.addEventListener("change", () => {
+    //Посчёт количества отмеченых чекбоксов
+    tblCheckboxes.forEach((checkbox) => {
       if (checkbox.checked) {
         countCheckedboxes[tblId]++;
-      } else {
-        countCheckedboxes[tblId]--;
       }
 
-      //Если больше одного чекбокса отмечен, то отображаем кнопку "Удалить записи", иначе скрываем
-      if (countCheckedboxes[tblId] > 1) {
-        showOrHideTblDeleteAllBtn(tbl.id, true);
-      } else {
-        showOrHideTblDeleteAllBtn(tbl.id, false);
-      }
+      //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
+      checkbox.addEventListener("change", () => {
+        if (tblGlCheckbox.checked) {
+          countCheckedboxes[tblId] = tblCheckboxes.length;
+        }
+        if (checkbox.checked) {
+          countCheckedboxes[tblId]++;
+        } else {
+          if (countCheckedboxes[tblId] > 0) countCheckedboxes[tblId]--;
+          tblGlCheckbox.checked = false;
+        }
+
+        //Если больше одного чекбокса отмечен, то отображаем кнопку "Удалить записи", иначе скрываем
+        if (countCheckedboxes[tblId] > 0) {
+          showOrHideTblDeleteAllBtn(tbl.id, true);
+        } else {
+          showOrHideTblDeleteAllBtn(tbl.id, false);
+        }
+      });
     });
   });
 }
@@ -672,37 +664,304 @@ function getRowFromTable(tblId) {
 //Функция поиска по таблице
 function searchTable(tblId) {
   const tbl = document.getElementById(tblId);
-  const searchTblBtn = tbl.querySelector(".tbl-btn-search");
+  const tblSearchColumnSelectList = tbl.querySelector(".tbl-search-sl-col");
+  const tblSearchColumnsNames = tbl
+    .querySelector("thead")
+    .querySelectorAll(".tbl-title-link");
+  const inputField = tbl.querySelector(".tbl-search-input");
+  let searchResultContainer = tbl.querySelector(".tbl-search-result");
+  //const searchTblBtn = tbl.querySelector(".tbl-btn-search");
+  const searchIcon = tbl.querySelector(".bx-search");
+  const prevBtn = tbl.querySelector(".bx-chevron-up");
+  const nextBtn = tbl.querySelector(".bx-chevron-down");
+  const closeBtn = tbl.querySelector(".bx-x");
+  let query;
+  let matches = [];
+  let currentIdex = 0;
+  let prevIndex = 0;
 
+  //Инициализация элемента select для строки поиска
+  tblSearchColumnsNames.forEach((clmn) => {
+    const option = document.createElement("option");
+    option.text = clmn.textContent.trim();
+
+    tblSearchColumnSelectList.appendChild(option);
+  });
+  /*
+  //Поиск при нажатии на кнопку поиска
   searchTblBtn.addEventListener("click", () => {
-    const query = tbl.querySelector(".tbl-search-input").value;
-    console.log(`query: ${query}`);
-    searchQueryInTbl(query, tblId);
+    const selectedOption = getSelectedOption(tblSearchColumnSelectList);
+
+    //Обнуление переменных при повторном поиске
+    addOrRemoveHighlightInTbl(query, tblId, selectedOption, false);
+    matches.length = 0;
+    currentIdex = 0;
+
+    query = getQueryFromInputField(tblId);
+    matches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true);
+    searchQueryInTbl(tbl, matches, searchResultContainer);
+  });
+*/
+  //Поиск при нажатии на иконку поиска
+  searchIcon.addEventListener("click", () => {
+    const selectedOption = getSelectedOption(tblSearchColumnSelectList);
+
+    //Обнуление переменных при повторном поиске
+    addOrRemoveHighlightInTbl(query, tblId, selectedOption, false);
+    matches.length = 0;
+    currentIdex = 0;
+
+    query = getQueryFromInputField(tblId);
+    matches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true);
+
+    searchQueryInTbl(tbl, matches, searchResultContainer);
+  });
+
+  //Поиск по нажатию на кнопку Enter
+  inputField.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      const selectedOption = getSelectedOption(tblSearchColumnSelectList);
+
+      //Обнуление переменных при повторном поиске
+      addOrRemoveHighlightInTbl(query, tblId, selectedOption, false);
+      matches.length = 0;
+      currentIdex = 0;
+
+      query = getQueryFromInputField(tblId);
+      matches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true);
+
+      if (matches.length > 0) {
+        searchQueryInTbl(tbl, matches, searchResultContainer);
+      }
+    }
+  });
+
+  //Очистка поля ввода и результатов поиска при нажатии на кнопку Escape
+  inputField.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      showOrHideSearchResultContainer(tblId, false);
+      inputField.value = "";
+      addOrRemoveHighlightInTbl(query, tblId, false);
+      matches.length = 0;
+      currentIdex = 0;
+    }
+  });
+
+  //Переход на предидущий резльутат поиска при нажатии на chevron-up
+  prevBtn.addEventListener("click", () => {
+    prevIndex = currentIdex;
+    currentIdex--;
+    console.log(`currentIdex: ${currentIdex}`);
+    console.log(`matches.length: ${matches.length}`);
+    if (currentIdex < 0) {
+      currentIdex = matches.length - 1;
+    }
+    searchResultContainer.querySelector(".tbl-srch-rslt-number").textContent =
+      addSearchResultNumber(currentIdex, matches);
+    const prevElement = matches[prevIndex];
+    const currentElement = matches[currentIdex];
+
+    if (prevElement || currentElement) {
+      prevElement.classList.remove("active");
+      currentElement.classList.add("active");
+      currentElement.scrollIntoView();
+    }
+  });
+
+  //Переход на следующий резльутат поиска при нажатии на chevron-down
+  nextBtn.addEventListener("click", () => {
+    prevIndex = currentIdex;
+    currentIdex++;
+
+    if (currentIdex > matches.length - 1) {
+      currentIdex = 0;
+    }
+    searchResultContainer.querySelector(".tbl-srch-rslt-number").textContent =
+      addSearchResultNumber(currentIdex, matches);
+    const prevElement = matches[prevIndex];
+    const currentElement = matches[currentIdex];
+    prevElement.classList.remove("active");
+    currentElement.classList.add("active");
+    currentElement.scrollIntoView();
+  });
+
+  //Очистка поля ввода и результатов поиска при нажатии на иконку - крестик
+  closeBtn.addEventListener("click", () => {
+    showOrHideSearchResultContainer(tblId, false);
+    inputField.value = "";
+    addOrRemoveHighlightInTbl(query, tblId, false);
+    matches.length = 0;
+    currentIdex = 0;
   });
 }
 
-let matches = [];
-function searchQueryInTbl(query, tblId) {
-  const tbl = document.getElementById(tblId);
-  const row = tbl.querySelector("tbody");
-  matches = [];
+//Функция поиска текста в таблице
+function searchQueryInTbl(tbl, matches, searchResultContainer) {
+  const tblSearchColumnSelectList = tbl.querySelector(".tbl-search-sl-col");
 
-  const cells = row.querySelectorAll("td");
-  let isMatch = false;
-  cells.forEach((cell) => {
-    const regex = new RegExp(query, "gi");
-    console.log(`cell: ${cell}`);
-    console.log(`regex: ${regex}`);
-    if (regex.test(cell.textContent)) {
-      cell.innerHTML = cell.textContent.replace(
-        regex,
-        '<span class="highlight">$&</span>'
-      );
-      matches.push(cell);
-      isMatch = true;
+  if (matches.length > 0) {
+    //Если нашли совпадения в таблице меняем иконки и отображаем окно с количеством результатов поиска
+    showOrHideSearchResultContainer(tbl.id, true);
+
+    //Отображаем количество найденных результатов
+    if (matches.length > 1) {
+      searchResultContainer.querySelector(".tbl-srch-rslt-count").textContent =
+        "Найдено " + matches.length + " результатов";
+    } else {
+      searchResultContainer.querySelector(".tbl-srch-rslt-count").textContent =
+        "Найдено " + matches.length + " результат";
     }
-  });
-  row.style.display = isMatch ? "" : "none";
+
+    //Добавляем в строку текущий результат поиска
+    searchResultContainer.querySelector(".tbl-srch-rslt-number").textContent =
+      addSearchResultNumber(0, matches);
+
+    const currentElement = matches[0];
+    currentElement.classList.add("active");
+    currentElement.scrollIntoView();
+  } else if (
+    matches.length == 0 &&
+    tblSearchColumnSelectList.selectedIndex != 0
+  ) {
+    showOrHideSearchResultContainer(tbl.id, true);
+    searchResultContainer.querySelector(".tbl-srch-rslt-count").textContent =
+      "Поиск не дал результатов";
+  }
+}
+
+//Получения индекса выбранной колонки, названия колонки и ёё текста
+function getSelectedOption(selectElement) {
+  const selectedIndex = selectElement.selectedIndex;
+  const selectedOption = selectElement.options[selectedIndex];
+  return {
+    index: selectedIndex,
+    text: selectedOption.text,
+
+    //Убираем самую первую опцию - "Искать по столбцу"
+    length: selectElement.length - 1,
+  };
+}
+
+//Получение строки запроса со строки поиска
+function getQueryFromInputField(tblId) {
+  const tbl = document.getElementById(tblId);
+
+  return tbl.querySelector(".tbl-search-input").value;
+}
+
+//Добавляем количество найденных результатов в строку
+function addSearchResultNumber(currentIdex, matches) {
+  let resultNumberQuery = "{result-number} из {matches.length}";
+
+  let result = resultNumberQuery.replace("{matches.length}", matches.length);
+
+  if (matches.length > 0) {
+    result = result.replace("{result-number}", currentIdex + 1);
+  } else {
+    result = result.replace("{result-number}", 0);
+  }
+
+  return result;
+}
+
+//Функция поиска слова в таблице. Выделяет все найденные слова и возвращает их массив или убирает выделение
+const matches = [];
+const matchesCells = [];
+function addOrRemoveHighlightInTbl(query, tblId, selectedOption, isHighlight) {
+  const tbl = document.getElementById(tblId);
+  const tblBody = tbl.querySelector("tbody");
+  const slctWarLable = tbl.querySelector(".tbl-search-wrn");
+
+  //счётчик для количества пройденных ячеек в ряде таблицы
+  let count = 1;
+  if (isHighlight) {
+    //Если не выбран столбец для поиска, отображаем окно с уведомлением о необходимости выбора
+    if (selectedOption.index != 0) {
+      //Выбираем все ячейки из таблицы
+      const cells = tblBody.querySelectorAll(".tbl-row-data");
+      cells.forEach((cell) => {
+        if (count == selectedOption.index) {
+          const regex = new RegExp(query, "gi");
+          const originalContent = cell.textContent;
+          let newContent = originalContent;
+          const tempSpans = [];
+          let match;
+
+          // Собираем все совпадения
+          while ((match = regex.exec(originalContent)) !== null) {
+            tempSpans.push({
+              start: match.index,
+              end: match.index + match[0].length,
+              text: match[0],
+            });
+          }
+
+          // Заменяем совпадения в обратном порядке
+          tempSpans.reverse().forEach(({ start, end, text }) => {
+            newContent =
+              newContent.slice(0, start) +
+              `<span class="highlight">${text}</span>` +
+              newContent.slice(end);
+          });
+
+          // Обновляем содержимое ячейки
+          cell.innerHTML = newContent;
+          matchesCells.push(cell);
+        }
+        //Обнуляем счётчик при проходке каждого ряда таблицы или увеличиваем его
+        if (count == selectedOption.length) {
+          count = 1;
+        } else {
+          count++;
+        }
+      });
+      // Добавляем все span элементы в массив
+      const spans = tblBody.querySelectorAll(".highlight");
+      spans.forEach((span) => {
+        matches.push(span);
+      });
+    } else {
+      slctWarLable.style.visibility = "visible";
+      slctWarLable.style.opacity = "1";
+
+      setTimeout(() => {
+        slctWarLable.style.visibility = "hidden";
+        slctWarLable.style.opacity = "0";
+      }, 2000);
+    }
+  } else {
+    //Заменяем все элементы span на текст запроса
+    matchesCells.forEach((cell) => {
+      cell.innerHTML = cell.textContent.replace(
+        /<span class="highlight">|<\/span>/g,
+        query
+      );
+    });
+    matches.length = 0;
+  }
+  return matches;
+}
+
+/*
+    Функция отображения/скрытия окна с результатов поиска
+      - tblId - id таблицы
+      - isShow - true - отображать, false - скрыть
+*/
+function showOrHideSearchResultContainer(tblId, isShow) {
+  const tbl = document.getElementById(tblId);
+  const searchIcon = tbl.querySelector(".bx-search");
+  const clearSearchFieldIcon = tbl.querySelector(".bx-x");
+  const searchResultContainer = tbl.querySelector(".tbl-search-result");
+
+  if (isShow) {
+    searchIcon.style.display = "none";
+    clearSearchFieldIcon.style.display = "block";
+    searchResultContainer.classList.add("active");
+  } else {
+    searchIcon.style.display = "block";
+    clearSearchFieldIcon.style.display = "none";
+    searchResultContainer.classList.remove("active");
+  }
 }
 
 //Иконка редактирования записи таблицы
@@ -838,4 +1097,15 @@ deleteTblIcon.forEach((icon) => {
       console.log("Cell not found");
     }
   });
+});
+
+//Функция для вёрстки контента сайдбара
+document.addEventListener("DOMContentLoaded", function () {
+  const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey);
+  const activeSubMenuId = localStorage.getItem(sidebarActiveSubmenuIdKey);
+
+  document.getElementById(activeMenuId).closest("li").classList.add("active");
+  document.getElementById(activeSubMenuId).classList.add("active");
+
+  showOrHideSidebarContent(activeSubMenuId);
 });

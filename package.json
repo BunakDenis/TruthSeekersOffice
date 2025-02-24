@@ -1,0 +1,30 @@
+{
+  "name": "seeker-cabinet",
+  "version": "1.0.0",
+  "main": "index.html",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BunakDenis/TruthSeekersOffice.git"
+  },
+  "author": "DenisBunak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BunakDenis/TruthSeekersOffice/issues"
+  },
+  "homepage": "https://github.com/BunakDenis/TruthSeekersOffice#readme",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "globals": "^15.15.0",
+    "typescript-eslint": "^8.24.1"
+  }
+}

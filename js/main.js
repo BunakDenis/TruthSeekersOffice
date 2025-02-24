@@ -1,3 +1,6 @@
+import { pageTextColorHover } from "./cssVariables.js";
+import { alVadudTextColor } from "./cssVariables.js";
+
 //Функция иморта хедера
 fetch("/fragments/header.txt")
   .then((response) => response.text())
@@ -20,43 +23,27 @@ fetch("/fragments/footer.txt")
 function initHeaderJS() {
   // Изменение цвета логотипа Єгрегора и названия Школы при наведении или на логотип или на текст
   document.querySelector(".al-vadud").onmouseover = function () {
-    document.querySelector(".school-name").style.color = "gold";
-    document.querySelector(".al-vadud").style.fill = "gold";
-    document.querySelector(".al-vadud").style.stroke = "gold";
+    document.querySelector(".school-name").style.color = pageTextColorHover;
+    document.querySelector(".al-vadud").style.fill = pageTextColorHover;
+    document.querySelector(".al-vadud").style.stroke = pageTextColorHover;
   };
   document.querySelector(".al-vadud").onmouseout = function () {
-    document.querySelector(".school-name").style.color = "rgb(230, 98, 98)";
-    document.querySelector(".al-vadud").style.fill = "red";
+    document.querySelector(".school-name").style.color = alVadudTextColor;
+    document.querySelector(".al-vadud").style.fill = alVadudTextColor;
     document.querySelector(".al-vadud").style.border = "none";
   };
 
   document.querySelector(".school-name").onmouseover = function () {
-    document.querySelector(".school-name").style.color = "gold";
-    document.querySelector(".al-vadud").style.fill = "gold";
+    document.querySelector(".school-name").style.color = pageTextColorHover;
+    document.querySelector(".al-vadud").style.fill = pageTextColorHover;
   };
   document.querySelector(".school-name").onmouseout = function () {
-    document.querySelector(".school-name").style.color = "rgb(230, 98, 98)";
-    document.querySelector(".al-vadud").style.fill = "red";
-  };
-
-  // Изменение цвета логотипа незарегистрированого юзера
-  document.querySelector("#user").onmouseover = function () {
-    document.querySelector("#user").style.fill = "gold";
-  };
-  document.querySelector("#user").onmouseout = function () {
-    document.querySelector("#user").style.fill = "#4b4c4d";
-  };
-
-  // Изменение цвета логотипа уведомлений
-  document.querySelector(".notification-svg").onmouseover = function () {
-    document.querySelector(".notification-svg").style.fill = "gold";
-  };
-  document.querySelector(".notification-svg").onmouseout = function () {
-    document.querySelector(".notification-svg").style.fill = "#4b4c4d";
+    document.querySelector(".school-name").style.color = alVadudTextColor;
+    document.querySelector(".al-vadud").style.fill = alVadudTextColor;
   };
 
   //Контейнер поиска по сайту
-  const searchBox = (searchToggle = document.querySelector(".searchToggle"));
+  const searchToggle = document.querySelector(".searchToggle");
 
   searchToggle.addEventListener("click", () => {
     searchToggle.classList.toggle("active");

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
@@ -12,6 +12,10 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
     <!-- ===== Boxicons CSS ===== -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -30,21 +34,13 @@
       <aside class="sidebar">
         <ul class="sidebar-menu">
           <li>
-            <a
-              href="#"
-              class="sidebar-menu-item"
-              id="link-general-results"
-              href="#"
+            <a href="#" class="sidebar-menu-item" id="link-general-results"
               ><i class="fa fa-regular fa-clipboard sidebar-menu-icon"></i>
               <p class="sidebar-menu-item-text">Общие результаты</p></a
             >
             <ul class="serv-show blank">
               <li class="sidebar-submenu-title">
-                <a
-                  class="sidebar-submenu-item title"
-                  id="link-general-results"
-                  href="#"
-                >
+                <a class="sidebar-submenu-item title" id="link-general-results">
                   Общие результаты</a
                 >
               </li>
@@ -363,18 +359,6 @@
           <div class="sb-cnt-tbl-container">
             <table id="will-tbl">
               <caption>
-                <label class="tbl-gl-lb-checkbox">
-                  <input
-                    type="checkbox"
-                    id="tbl-will-gl-checkbox"
-                    class="tbl-gl-checkbox"
-                    checked
-                  />
-                  <span class="tbl-gl-checkmark"></span>
-                </label>
-                <button type="submit" class="tbl-btn-dlt-all tbl-btn">
-                  Удалить записи
-                </button>
                 <div class="tbl-fltr-container">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -396,19 +380,40 @@
                     placeholder="Поиск..."
                   />
                   <i class="bx bx-search"></i>
+                  <i class="bx bx-x"></i>
+                  <div class="tbl-search-result">
+                    <p class="tbl-srch-rslt-item tbl-srch-rslt-count">
+                      Нечего не найдено
+                    </p>
+                    <p class="tbl-srch-rslt-item tbl-srch-rslt-number"></p>
+                    <div class="tbl-srch-rslt-item tbl-search-rslt-cevrons">
+                      <i class="bx bx-chevron-up"></i>
+                      <i class="bx bx-chevron-down"></i>
+                    </div>
+                  </div>
+                  <div class="tbl-search-wrn">
+                    <i class="fas fa-info-circle"></i>Выберите название колонки
+                    для поиска
+                  </div>
                 </div>
                 <select id="tbl-will-search-sl-col" class="tbl-search-sl-col">
                   <option disabled selected>Искать по столбцу</option>
-                  <option>Дата принятия</option>
-                  <option>Краткое описание</option>
-                  <option>Коментарий</option>
                 </select>
-                <button type="submit" class="tbl-btn-search tbl-btn">
-                  Найти
-                </button>
                 <button type="submit" class="tbl-btn-add tbl-btn">
                   + Добавить запись
                 </button>
+                <button type="submit" class="tbl-btn-dlt-all tbl-btn">
+                  Удалить записи
+                </button>
+                <label class="tbl-gl-lb-checkbox">
+                  <input
+                    type="checkbox"
+                    id="tbl-will-gl-checkbox"
+                    class="tbl-gl-checkbox"
+                    checked
+                  />
+                  <span class="tbl-gl-checkmark"></span>
+                </label>
               </caption>
               <thead>
                 <tr>
@@ -435,12 +440,6 @@
               </thead>
               <tbody>
                 <tr class="tbl-body-row" obj-id="1">
-                  <td>
-                    <label class="tbl-lb-checkbox">
-                      <input type="checkbox" class="tbl-checkbox" />
-                      <span class="tbl-checkmark"></span>
-                    </label>
-                  </td>
                   <td class="will-incoming-date tbl-row-data">10.01.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Сайт - Кабинет Искателя
@@ -468,14 +467,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -499,14 +496,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -514,14 +511,14 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-                <tr class="tbl-body-row" obj-id="2">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="2">
                   <td class="will-incoming-date tbl-row-data">15.03.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Молитва за ближних
@@ -549,14 +546,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -580,14 +575,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -595,14 +590,14 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-                <tr class="tbl-body-row" obj-id="3">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="3">
                   <td class="will-incoming-date tbl-row-data">22.04.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Изучение Писания
@@ -630,14 +625,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -661,14 +654,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -676,14 +669,14 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-                <tr class="tbl-body-row" obj-id="4">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="4">
                   <td class="will-incoming-date tbl-row-data">05.05.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Помощь нуждающимся
@@ -711,14 +704,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -742,14 +733,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -757,14 +748,14 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-                <tr class="tbl-body-row" obj-id="5">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="5">
                   <td class="will-incoming-date tbl-row-data">12.06.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Посещение больных
@@ -792,14 +783,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -823,14 +812,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -838,15 +827,15 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-
-                <tr class="tbl-body-row" obj-id="6">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+
+                <tr class="tbl-body-row" obj-id="6">
                   <td class="will-incoming-date tbl-row-data">20.07.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Участие в благотворительности
@@ -874,14 +863,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -905,14 +892,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -920,14 +907,14 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-                <tr class="tbl-body-row" obj-id="7">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="7">
                   <td class="will-incoming-date tbl-row-data">08.08.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Проповедь Евангелия
@@ -955,14 +942,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -986,14 +971,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -1001,14 +986,14 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-                <tr class="tbl-body-row" obj-id="8">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="8">
                   <td class="will-incoming-date tbl-row-data">17.09.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Пост и молитва
@@ -1036,14 +1021,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -1067,14 +1050,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -1082,14 +1065,14 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-                <tr class="tbl-body-row" obj-id="9">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="9">
                   <td class="will-incoming-date tbl-row-data">25.10.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Участие в церковной службе
@@ -1117,14 +1100,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -1148,14 +1129,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -1163,14 +1144,14 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-                <tr class="tbl-body-row" obj-id="10">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="10">
                   <td class="will-incoming-date tbl-row-data">03.11.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Исповедь и покаяние
@@ -1198,14 +1179,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -1229,14 +1208,14 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
@@ -1244,14 +1223,14 @@
                       </g>
                     </svg>
                   </td>
-                </tr>
-                <tr class="tbl-body-row" obj-id="11">
                   <td>
                     <label class="tbl-lb-checkbox">
                       <input type="checkbox" class="tbl-checkbox" />
                       <span class="tbl-checkmark"></span>
                     </label>
                   </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="11">
                   <td class="will-incoming-date tbl-row-data">14.12.2025</td>
                   <td class="will-brief-description tbl-row-data">
                     Благодарность Богу
@@ -1279,14 +1258,12 @@
                         >
                           <path
                             d="M128,63.999444 L128,106.666444 L42.6666667,106.666667 L42.6666667,320 L256,320 L256,234.666444 L298.666,234.666444 L298.666667,362.666667 L4.26325641e-14,362.666667 L4.26325641e-14,64 L128,63.999444 Z M362.666667,1.42108547e-14 L362.666667,170.666667 L320,170.666667 L320,72.835 L143.084945,249.751611 L112.915055,219.581722 L289.83,42.666 L192,42.6666667 L192,1.42108547e-14 L362.666667,1.42108547e-14 Z"
-                            id="Combined-Shape"
                           ></path>
                         </g>
                       </g>
                     </svg>
                     <svg
                       class="tbl-edit-icon"
-                      id="will-edit-icon"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       viewBox="0 0 528.899 528.899"
@@ -1310,20 +1287,26 @@
                       xml:space="preserve"
                     >
                       <title>Удалить</title>
-                      <g id="XMLID_24_">
-                        <g id="XMLID_29_">
+                      <g>
+                        <g>
                           <path
                             d="M265,60h-30h-15V15c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v45H55H25c-8.284,0-15,6.716-15,15s6.716,15,15,15
 			h5.215H40h210h9.166H265c8.284,0,15-6.716,15-15S273.284,60,265,60z M190,60h-15h-60h-15V30h90V60z"
                           />
                         </g>
-                        <g id="XMLID_86_">
+                        <g>
                           <path
                             d="M40,275c0,8.284,6.716,15,15,15h180c8.284,0,15-6.716,15-15V120H40V275z"
                           />
                         </g>
                       </g>
                     </svg>
+                  </td>
+                  <td>
+                    <label class="tbl-lb-checkbox">
+                      <input type="checkbox" class="tbl-checkbox" />
+                      <span class="tbl-checkmark"></span>
+                    </label>
                   </td>
                 </tr>
               </tbody>
@@ -1344,6 +1327,7 @@
         </div>
 
         <!-- Контейнеры для элементов меню "Работа" -->
+
         <div id="link-work-sb-cnt">
           <h1>Меню Работа</h1>
         </div>
@@ -1477,6 +1461,7 @@
     </section>
 
     <!-- Footer -->
+
     <footer id="page-footer"></footer>
   </body>
   <!-- Navbar Script-->
@@ -1496,6 +1481,7 @@
   <script src="js/luxon.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <script src="js/cabinet.js" type="text/javascript"></script>
-  <script src="js/main.js"></script>
+  <script src="js/cssVariables.js" type="module"></script>
+  <script src="js/cabinet.js" type="module"></script>
+  <script src="js/main.js" type="module"></script>
 </html>

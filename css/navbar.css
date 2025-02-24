@@ -11,11 +11,11 @@ header .site-navbar-wrap a:hover {
   text-decoration: none !important;
 }
 
-.al-vadud {
+header .site-navbar-wrap .al-vadud {
   width: 60%;
   height: 60%;
 
-  fill: red;
+  fill: var(--al-vadud-text-color);
 
   -webkit-transition: var(--transition--all--04-ease);
   -o-transition: var(--transition--all--04-ease);
@@ -44,7 +44,11 @@ header .site-navbar-wrap {
 }
 
 header .site-navbar-wrap a {
-  color: #fff;
+  color: var(--page-text-color);
+}
+
+header .site-navbar-wrap svg {
+  cursor: pointer;
 }
 
 header .site-navbar {
@@ -54,11 +58,15 @@ header .site-navbar {
 }
 
 .school-name {
-  color: rgb(230, 98, 98);
+  color: var(--al-vadud-text-color);
   font-family: var(--fornt-family-for-school-name);
   font-weight: 100;
   font-size: 20px;
   transition: color 100ms ease-in-out;
+}
+
+.body-cabinet-page header svg {
+  fill: var(--pictures-cabinet-page-color);
 }
 
 /* Search box */
@@ -198,11 +206,10 @@ header .site-navbar {
 #user {
   width: 40px;
   height: 40px;
-  fill: #4b4c4d;
   transition: fill 100ms ease-in-out;
 }
 
-.link:hover #user {
+#user:hover {
   fill: var(--page-text-color-hover);
 }
 
@@ -533,6 +540,10 @@ body #user-information-container {
   -webkit-transition: var(--transition--all--03-ease);
   -o-transition: var(--transition--all--03-ease);
   transition: var(--transition--all--03-ease);
+}
+
+.notification-svg:hover {
+  fill: var(--page-text-color-hover);
 }
 
 /*-----------------------------------------------------------------------------------------------------------------------*/
