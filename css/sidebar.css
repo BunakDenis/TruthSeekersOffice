@@ -2,15 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lobster&family=Orelega+One&display=swap");
 
 body main .sidebar {
-  position: fixed;
-
-  width: 4vw;
-  height: var(--main-heigth);
-
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  left: 0;
+  display: block;
+  width: 12%;
+  height: 100%;
 
   font-family: var(--fornt-family-for-content);
   font-size: 1.4em;
@@ -22,66 +16,17 @@ body main .sidebar {
   z-index: var(--z-index-for-forms);
 }
 
-body main .sidebar.expand {
-  left: 0;
-  width: 18vw;
-}
-
-body main > .btn {
-  position: absolute;
-
-  top: 1vh;
-  left: 5.5vh;
-  height: 2vh;
-  width: 2vw;
-
-  text-align: center;
-
-  cursor: pointer;
-  transition: var(--transition--all--05-ease);
-  z-index: var(--z-index-for-icons-in-form);
-}
-body main > .btn.click {
-  left: 17.2vw;
-}
-
-body main > .btn span {
-  color: var(--cabinet-page-menu-background-color);
-  font-size: 1.5em;
-}
-
-body main > .btn:hover span {
-  color: white;
-}
-
-body main > .btn .fa-circle-arrow-right {
-  display: block;
-}
-body main > .btn .fa-circle-arrow-right.rotate {
-  transform: rotate(-180deg);
-}
-
-body main > .btn .fa-circle-arrow-left {
-  display: none;
-}
-
 .sidebar .sidebar-menu {
   height: 100%;
   width: 100%;
 
-  margin: 0;
-  padding: 7vh 0 0 0;
+  padding: 29vh 0 0 0;
 
   list-style: none;
-
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: var(--backdrop-filter-blur);
-  -webkit-backdrop-filter: var(--backdrop-filter-blur);
 }
 .sidebar ul > li {
   position: relative;
   line-height: 7vh;
-  border-top: var(--sidebar-menu-border-top);
   padding-left: 0;
 }
 
@@ -119,7 +64,6 @@ body main > .btn .fa-circle-arrow-left {
 }
 .sidebar ul li a {
   display: block;
-  position: relative;
 
   justify-content: center;
 
@@ -130,8 +74,6 @@ body main > .btn .fa-circle-arrow-left {
   color: var(--page-text-color);
 
   text-decoration: none;
-
-  border-left: 3px solid transparent;
 }
 .sidebar ul li a p {
   display: none;
@@ -149,7 +91,7 @@ body main > .btn .fa-circle-arrow-left {
 }
 .sidebar ul > li.active > a {
   color: var(--page-text-color-hover);
-  background: var(--cabinet-page-menu-background-color);
+  background: var(--cabinet-page-menu-item-hover-background-color);
 }
 .sidebar ul > li.active > a svg {
   fill: var(--page-text-color-hover);
@@ -203,6 +145,8 @@ body main > .btn .fa-circle-arrow-left {
   opacity: 0;
   transform: translateX(-50%);
 
+  cursor: pointer;
+
   transition: transform 0.8s ease-in-out;
 }
 
@@ -212,11 +156,6 @@ body main > .btn .fa-circle-arrow-left {
 
   opacity: 1;
   visibility: visible;
-}
-.sidebar.expand ul li .serv-show.show {
-  position: static;
-
-  background-color: none;
 }
 
 .sidebar ul li .serv-show.show-menu {
@@ -231,7 +170,7 @@ body main > .btn .fa-circle-arrow-left {
   padding: 0;
   margin: 0;
 
-  background-color: var(--cabinet-sidebar-submenu-background-color);
+  background: var(--cabinet-page-menu-item-hover-background-color);
 
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -299,33 +238,5 @@ body main > .btn .fa-circle-arrow-left {
 }
 .sidebar ul ul li a:hover {
   color: var(--page-text-color-hover) !important;
-  background-color: none;
-}
-.sidebar ul li .fas {
-  display: none;
-  position: absolute;
-  top: 1vh;
-  right: 1vw;
-
-  height: 6vh;
-  width: 2vw;
-
-  text-align: center;
-  align-content: center;
-
-  color: var(--page-text-color);
-
-  font-size: 0.8em;
-
-  cursor: pointer;
-
-  transition: var(--transition--all--05-ease);
-}
-.sidebar ul li .fas.rotate {
-  transform: translateY(-10%) rotate(-180deg);
-}
-
-.sidebar ul li a .fa {
-  padding-right: 1vw;
-  font-size: 1.3em;
+  background-color: transparent;
 }
