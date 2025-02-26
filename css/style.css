@@ -3,7 +3,7 @@
 :root {
   --header-heigth: 12%;
   --main-heigth: 78%;
-  --footer-heigth: 10%;
+  --#page-footer-heigth: 10%;
 
   --page-content-background-color: rgba(255, 255, 255, 0.1);
   --cabinet-page-content-background-color: rgba(255, 255, 255, 0.6);
@@ -154,14 +154,17 @@ main {
   margin: 0;
   padding: 0;
 }
-footer {
-  display: block;
-  position: relative;
+body #page-#page-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
 
   width: 100%;
   height: 9%;
 
-  background-color: var(--page-background-color);
+  padding-top: 1vh;
+
+  background-color: var(--page-content-background-color);
 }
 
 a {
@@ -246,65 +249,22 @@ a {
   text-align: center;
 }
 
-/* Footer */
-.footer-basic {
-  position: absolute;
+/* #page-footer */
+#page-footer .social {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
 
-  left: 0;
-  bottom: 0;
-
-  height: 100%;
-  width: 100%;
-
-  align-items: center;
   justify-content: center;
-
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #4b4c4d;
-
-  font-family: "Jost", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-size: 15px;
-  font-style: italic;
-  color: black;
   text-align: center;
 }
 
-.footer-basic ul {
-  padding: 0;
-  list-style: none;
-  text-align: center;
-  font-size: 18px;
-  margin-bottom: 0;
-}
-
-.footer-basic li {
-  padding: 0 10px;
-}
-
-.footer-basic ul a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.footer-basic .social {
-  margin-top: 10px;
-  text-align: center;
-}
-
-.footer-basic .social > a {
-  display: inline-block;
-  text-align: center;
-
-  margin: 0 8px;
-
-  color: inherit;
+#page-footer .social > a {
   cursor: pointer;
 }
 
-.footer-basic .social > a > svg {
-  fill: #4b4c4d;
+#page-footer .social > a > svg {
+  fill: var(--pictures-cabinet-page-color);
   width: 30px;
   height: 30px;
 
@@ -313,16 +273,22 @@ a {
   transition: var(--transition-fill-04-ease-in-out);
 }
 
-.footer-basic .social > a:hover,
-.footer-basic .social > a:hover > svg {
+#page-footer .social > a:hover,
+#page-footer .social > a:hover > svg {
   fill: var(--page-text-color-hover);
 }
 
-.footer-basic .copyright {
-  margin-top: 15px;
+#page-#page-footer p {
+  margin: 0;
+  padding: 0;
+
+  font: var(--fornt-family-for-title) !important;
+  font-style: italic !important;
+  font-weight: 300 !important;
+  font-size: 1em !important;
+
   text-align: center;
-  color: black;
-  margin-bottom: 0;
+  color: #000;
 }
 
 /* Page - User Sign Up */
@@ -1050,7 +1016,7 @@ input#tabToggle03:checked ~ tab-content:not(:nth-of-type(3)) {
   text-align: left;
 }
 
-.profile-edit-seeker-modal-footer {
+.profile-edit-seeker-modal-#page-footer {
   text-align: center;
 }
 /* ---------------------------------------------------------- */
