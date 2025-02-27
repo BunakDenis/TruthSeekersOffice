@@ -771,6 +771,8 @@ tab-content svg {
 
   position: relative;
 
+  cursor: pointer;
+
   width: 2vw;
   height: 2vh;
 

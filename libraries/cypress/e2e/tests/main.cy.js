@@ -1,15 +1,44 @@
-import { editPersonalInfomation } from "../../../../js/main.js";
-
-describe("editPersonalInfomation method", () => {
-  it("should toggle the disabled state of the input field", () => {
+describe("Тесты страницы Профиля юзера", () => {
+  it("Проверка на изменения доступности поля ввода информации о юзере", () => {
     cy.visit("/userProfile.html");
-    // Create a test input field
+
     cy.get("#profile-user-login").should("be.disabled");
+    cy.get("#profile-user-login").next().as("pencilIcon");
+    cy.get("@pencilIcon").click();
+    cy.get("#profile-user-login").should("be.not.disabled");
+  });
 
-    // Call the editPersonalInfomation method
-    //editPersonalInfomation("#test-input");
+  it("Проверка работы кнопки очищения поля ввода информации о юзере", () => {
+    cy.visit("/userProfile.html");
 
-    // Verify that the input field is now enabled
-    //cy.get("#test-input").should("not.be.disabled");
+    cy.get("#profile-user-login").next().next().as("cancelIcon");
+    cy.get("@cancelIcon").click();
+    cy.get("#profile-user-login").should("have.not.text");
+  });
+
+  it('Проверка отображения модального окна при нажатии на кнопку редайтирования в вкладке "Администрирование"', () => {
+    cy.visit("/userProfile.html");
+
+    cy.get("#tabToggle03").next().click();
+    cy.get("#profile-user-login").next().as("pencilIcon");
+    cy.get("tbody > tr").find(".profile-adm-edit-icon").click();
+    cy.get(".profile-seeker-detail-information").then(($el) => {
+      Cypress.dom.isVisible($el);
+    });
+  });
+
+  it("Проверка отображения модального окна при нажатии на кнопку закрытия этого окна", () => {
+    cy.visit("/userProfile.html");
+
+    cy.get("#tabToggle03").next().click();
+    cy.get("#profile-user-login").next().as("pencilIcon");
+    cy.get("tbody > tr").find(".profile-adm-edit-icon").click();
+    cy.get(".profile-seeker-detail-information")
+      .find("#profile-seeker-modal-cross-svg")
+      .as("closeIcon");
+    cy.get("@closeIcon").click();
+    cy.get(".profile-seeker-detail-information").then(($el) => {
+      Cypress.dom.isHidden($el);
+    });
   });
 });

@@ -1,20 +1,75 @@
 //------------------------------------------
 //Страница - профайл юзера
-export function editPersonalInfomation(inputId) {
-  const inputField = document.querySelector(inputId);
-  console.log(inputField);
+const editIcons = document.querySelectorAll(".user-profile-pncl-icon");
+
+if (editIcons) {
+  editIcons.forEach((icon) => {
+    if (icon) {
+      const inputField = icon
+        .closest("div")
+        .querySelector(".profile-user-form-el");
+      icon.addEventListener("click", () => {
+        editPersonalInfomation(inputField.id);
+      });
+    }
+  });
+}
+function editPersonalInfomation(inputId) {
+  const inputField = document.querySelector(`#${inputId}`);
   inputField.disabled = !inputField.disabled;
 }
 
+const cancelIcons = document.querySelectorAll(".user-profile-cancel-icon");
+
+if (cancelIcons) {
+  cancelIcons.forEach((icon) => {
+    if (icon) {
+      const inputField = icon
+        .closest("div")
+        .querySelector(".profile-user-form-el");
+      icon.addEventListener("click", () => {
+        cancelEditedProfileInfo(inputField.id);
+      });
+    }
+  });
+}
 function cancelEditedProfileInfo(inputId) {
-  const inputField = document.querySelector(inputId);
+  const inputField = document.querySelector(`#${inputId}`);
   inputField.value = "";
 }
+
+const profileSeekerAdmEditIcons = document.querySelectorAll(
+  ".profile-adm-edit-icon"
+);
+const profileSeekerModalCancelIcons = document.querySelectorAll(
+  "#profile-seeker-modal-cross-svg"
+);
+
+if (profileSeekerAdmEditIcons) {
+  profileSeekerAdmEditIcons.forEach((icon) => {
+    icon.addEventListener("click", () => {
+      showSeekerDetailInformation();
+    });
+  });
+}
+
+if (profileSeekerModalCancelIcons) {
+  profileSeekerModalCancelIcons.forEach((icon) => {
+    icon.addEventListener("click", () => {
+      hideSeekerDetailInformation();
+    });
+  });
+}
+
 function showSeekerDetailInformation() {
-  $(".profile-seeker-detail-information").css("display", "flex");
+  const modal = document.querySelector(".profile-seeker-detail-information");
+
+  modal.style.display = "flex";
 }
 function hideSeekerDetailInformation() {
-  $(".profile-seeker-detail-information").css("display", "none");
+  const modal = document.querySelector(".profile-seeker-detail-information");
+
+  modal.style.display = "none";
 }
 
 //Изменения видимости пароля в профайле юзера

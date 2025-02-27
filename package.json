@@ -1,1 +1,8 @@
-{}
+{
+  "devDependencies": {
+    "serve": "^14.2.4"
+  },
+    "scripts": {
+    "start": "serve -p 3000 ../../"
+  }
+}
