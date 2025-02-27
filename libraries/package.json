@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "cypress": "^14.1.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "scripts": {
+    "test": "jest ./js/tests",
+    "test:watch": "jest --watch",
+    "testMatch": "*.test.js"
+  }
+}
