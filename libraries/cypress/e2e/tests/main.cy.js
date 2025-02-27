@@ -2,7 +2,7 @@ import { editPersonalInfomation } from "../../../../js/main.js";
 
 describe("editPersonalInfomation method", () => {
   it("should toggle the disabled state of the input field", () => {
-    cy.visit("../userProfile.html");
+    cy.visit("/userProfile.html");
     // Create a test input field
     cy.get("#profile-user-login").should("be.disabled");
 
