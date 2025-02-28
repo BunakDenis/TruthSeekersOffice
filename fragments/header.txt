@@ -232,6 +232,7 @@
           <a class="sign-out-link" href="#">Выйти</a>
     </div>
   </form>
+  
 </div>
 <!-- Форма уведомлений -->
 <div class="notification-container">
