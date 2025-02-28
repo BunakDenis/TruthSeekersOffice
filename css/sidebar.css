@@ -3,8 +3,12 @@
 
 body main .sidebar {
   display: block;
+  position: fixed;
   width: 12%;
   height: 100%;
+
+  top: 0;
+  left: 0;
 
   font-family: var(--fornt-family-for-content);
   font-size: 1.4em;

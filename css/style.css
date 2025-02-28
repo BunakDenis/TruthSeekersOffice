@@ -1,10 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lobster&family=Orelega+One&display=swap");
 
 :root {
-  --header-heigth: 12%;
-  --main-heigth: 78%;
-  --page-footer-heigth: 10%;
-
   --page-content-background-color: rgba(255, 255, 255, 0.1);
   --cabinet-page-content-background-color: rgba(255, 255, 255, 0.6);
   --cabinet-page-menu-background-color: rgba(255, 255, 255, 0.6);
@@ -143,16 +139,17 @@ header {
 }
 
 main {
-  display: flex;
-  flex-direction: row;
+  display: block;
+  flex-grow: 1;
 
   position: relative;
 
   width: 100%;
-  height: 82%;
+  min-height: 91%;
+
+  overflow: auto;
 
   margin: 0;
-  padding: 0;
 }
 body #page-footer {
   display: flex;
@@ -160,9 +157,10 @@ body #page-footer {
   gap: 1vh;
 
   width: 100%;
-  height: 9%;
+  height: 8vh;
 
-  padding-top: 1vh;
+  position: relative;
+  margin-top: auto;
 
   background-color: var(--page-content-background-color);
 }

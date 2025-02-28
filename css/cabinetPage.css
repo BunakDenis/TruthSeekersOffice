@@ -32,20 +32,23 @@
 }
 
 .cabinet-content {
-  display: none;
-  position: absolute;
+  position: relative;
+  flex-grow: 1;
 
   width: 86%;
-  height: 96%;
+  min-height: 81vh;
 
-  top: 2%;
-  left: 13%;
+  visibility: hidden;
+  opacity: 0;
+
+  margin: 1vh 1vh 1vh 13%;
 
   background-color: var(--cabinet-page-content-background-color);
   backdrop-filter: var(--sb-cnt-backdrop-filter-blur);
   -webkit-backdrop-filter: var(--sb-cnt-backdrop-filter-blur);
 
-  transition: var(--transition--all--05-ease);
+  transition: visibility 0.4s ease-in-out, opacity 0.4s ease-in-out,
+    height 0.4s ease-in-out;
 
   z-index: 1;
 }
@@ -57,7 +60,6 @@
   flex-direction: column;
 
   width: 100%;
-  height: 100%;
 
   font-family: var(--tbl-lable-font-family);
   font-optical-sizing: var(--tbl-lable-font-optical-sizing);
@@ -118,8 +120,6 @@
   flex-direction: column;
 
   table-layout: fixed;
-
-  height: 100%;
 }
 
 .cabinet-content div .sb-cnt-tbl-container table .tbl-btn {
@@ -134,8 +134,7 @@
   border-radius: 3px;
   border: 2px solid transparent;
 
-  transition:
-    var(--transition-background-color-04-ease-in-out),
+  transition: var(--transition-background-color-04-ease-in-out),
     var(--transition-color-04-ease-in-out),
     var(--transition-border-color-04-ease-in-out);
 }
@@ -260,9 +259,7 @@ table .tbl-checkbox:checked + .tbl-checkmark {
 
   margin-left: 2vw;
 
-  transition:
-    opacity 0.4s ease-in-out,
-    visibility 0.4s ease-in-out;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
 }
 
 .cabinet-content div .sb-cnt-tbl-container table .tbl-fltr-container {
@@ -388,9 +385,7 @@ table caption .tbl-search-wrn {
   backdrop-filter: var(--backdrop-filter-blur);
   --webkit-backdrop-filter: var(--backdrop-filter-blur);
 
-  transition:
-    opacity 0.4s ease-in-out,
-    visibility 0.4s ease-in-out;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
 
   z-index: var(--z-index-for-icons-in-form);
 }
@@ -563,8 +558,7 @@ table
   width: 100%;
   height: 100%;
 
-  transition:
-    var(--transition--color--04-ease-in-out),
+  transition: var(--transition--color--04-ease-in-out),
     var(--transition--fill--04-ease-in-out);
 }
 
@@ -589,7 +583,7 @@ table
 .cabinet-content div table tbody {
   width: 100%;
   min-height: 5vh;
-  max-height: 50vh;
+  max-height: auto;
 
   font-size: 1.2em;
   font-weight: 400;

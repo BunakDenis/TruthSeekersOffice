@@ -34,7 +34,8 @@ function showOrHideSidebarContent(itemId) {
 
     //Включаем отображение контента
     itemContent.style.display = "flex";
-    document.querySelector(".cabinet-content").style.display = "block";
+    document.querySelector(".cabinet-content").style.visibility = "visible";
+    document.querySelector(".cabinet-content").style.opacity = "1";
     //Записываем в localStorage текущий активный блок с контентом
     localStorage.setItem(sidebarMenuActiveContentIdKey, itemContent.id);
   }
