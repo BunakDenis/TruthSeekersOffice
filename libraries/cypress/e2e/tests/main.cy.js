@@ -16,6 +16,22 @@ describe("Тесты страницы Профиля юзера", () => {
     cy.get("#profile-user-login").should("have.not.text");
   });
 
+  it('Проверка изменения типа поля пароля при нажатии на иконки "показать/скрыть пароль"', () => {
+    cy.visit("/userProfile.html");
+
+    cy.get("#profile-user-password").as("passwordField");
+    cy.get("#profile-show-password").as("showPasswordIcon");
+    cy.get("#profile-hide-password").as("hidePasswordIcon");
+    cy.get("@hidePasswordIcon").click();
+    cy.get("@showPasswordIcon").should("be.visible");
+    cy.get("@hidePasswordIcon").should("be.hidden");
+    cy.get("@passwordField").should("have.attr", "type", "text");
+    cy.get("@showPasswordIcon").click();
+    cy.get("@showPasswordIcon").should("be.hidden");
+    cy.get("@hidePasswordIcon").should("be.visible");
+    cy.get("@passwordField").should("have.attr", "type", "password");
+  });
+
   it('Проверка отображения модального окна при нажатии на кнопку редайтирования в вкладке "Администрирование"', () => {
     cy.visit("/userProfile.html");
 
