@@ -5,9 +5,6 @@ on:
   pull_request:
     branches: [main]
 
-    # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
@@ -37,6 +34,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install serve
+        run: npm install -g serve
+
       - name: Start server
         run: serve -p 3000 &
         working-directory: .
@@ -48,6 +48,7 @@ jobs:
           start: npx cypress run
           wait-on: "http://localhost:3000"
           config: baseUrl=http://localhost:3000
+          wait-on-timeout: 120
   deploy:
     needs: test
     environment:
