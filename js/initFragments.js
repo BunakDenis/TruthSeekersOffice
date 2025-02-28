@@ -2,7 +2,7 @@ import { pageTextColorHover } from "./cssVariables.js";
 import { alVadudTextColor } from "./cssVariables.js";
 
 //Функция иморта хедера
-fetch("/fragments/header.txt")
+fetch("./fragments/header.txt")
   .then((response) => response.text())
   .then((data) => {
     document.getElementById("page-header").innerHTML = data;
@@ -11,7 +11,7 @@ fetch("/fragments/header.txt")
   .catch((error) => console.error("Ошибка загрузки header:", error));
 
 //Функция иморта футера
-fetch("/fragments/footer.txt")
+fetch("./fragments/footer.txt")
   .then((response) => response.text())
   .then((data) => {
     document.getElementById("page-footer").innerHTML = data;
