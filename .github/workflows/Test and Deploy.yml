@@ -19,9 +19,6 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18, 20]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -29,7 +26,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
 
       - name: Install dependencies
         run: npm ci
@@ -39,16 +36,22 @@ jobs:
 
       - name: Start server
         run: serve -p 3000 &
-        working-directory: .
+        working-directory: ./dist
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v5
         with:
-          working-directory: libraries
           start: npx cypress run
           wait-on: "http://localhost:3000"
           config: baseUrl=http://localhost:3000
           wait-on-timeout: 120
+      - name: Generate coverage report
+        run: npx nyc report --reporter=lcov --reporter=text-summary
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}
   deploy:
     needs: test
     environment:
@@ -63,7 +66,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "."
+          path: "./dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

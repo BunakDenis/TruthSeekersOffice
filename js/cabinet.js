@@ -1,11 +1,19 @@
 import { pageTextColorHover } from "./cssVariables.js";
 import { sidebarMenuBackgroundColorHover } from "./cssVariables.js";
+import TableSort from "table-sort-js";
 
 //Динамическое изменение размера модального окна при растягивании элементов textarea
-document.addEventListener(
-  "DOMContentLoaded",
-  changeModalEditInformationHeight()
-);
+document.addEventListener("DOMContentLoaded", () => {
+  changeModalEditInformationHeight();
+  const tbls = document.querySelectorAll("table.sortable");
+
+  if (tbls) {
+    tbls.forEach((table) => {
+      var sort = new TableSort(table);
+      sort.refresh();
+    });
+  }
+});
 
 //Переменная-ключ для добавления контента активного меню сайдбара
 const sidebarMenuActiveContentIdKey = "sidebar-content-id";
@@ -48,153 +56,164 @@ const expandSidebarActiveMenuIdKey = "sidebar-expand-menu-id";
 const sidebarActiveSubmenuIdKey = "sidebar-submenu-id";
 
 //Прослушка главного меню сайдбара на клик
-sidebarMenuItems.forEach((item) => {
-  //Елемент Li выбранного главного меню сайдбара
-  const liItem = item.closest("li");
-  const liItems = liItem.children;
+if (sidebarMenuItems.length > 0) {
+  sidebarMenuItems.forEach((item) => {
+    //Елемент Li выбранного главного меню сайдбара
+    const liItem = item.closest("li");
+    const liItems = liItem.children;
 
-  //Показываем/скрываем контент при нажатии на меню или подменю
-  item.addEventListener("click", (event) => {
-    event.preventDefault();
-    const activeMenuId = localStorage.getItem(sidebarActiveMenuIdKey);
-    const activeSubMenu = document.getElementById(
-      localStorage.getItem(sidebarActiveSubmenuIdKey)
-    );
+    //Показываем/скрываем контент при нажатии на меню или подменю
+    item.addEventListener("click", (event) => {
+      event.preventDefault();
+      const activeMenuId = localStorage.getItem(sidebarActiveMenuIdKey);
+      const activeSubMenu = document.getElementById(
+        localStorage.getItem(sidebarActiveSubmenuIdKey)
+      );
 
-    //Снимаем класс active с активного подменю
-    if (activeSubMenu) {
-      activeSubMenu.classList.remove("active");
-      localStorage.removeItem(sidebarActiveSubmenuIdKey);
+      //Снимаем класс active с активного подменю
+      if (activeSubMenu) {
+        activeSubMenu.classList.remove("active");
+        localStorage.removeItem(sidebarActiveSubmenuIdKey);
+      }
+
+      //Если выбрано уже активное меню просто добавляем класс active, если выбрано другое меню снимаем класс active с активного и активируем текущее
+      if (!activeMenuId.includes(item.id)) {
+        localStorage.setItem(sidebarActiveMenuIdKey, item.id);
+
+        //Снимаем класс active с активного меню
+        document
+          .getElementById(activeMenuId)
+          .closest("li")
+          .classList.remove("active");
+
+        //Добавляем класс active к выбранному меню
+        item.closest("li").classList.add("active");
+
+        //Если сайдбар свёрнут, делаем ту же операцию для названия меню в выпадающем списке
+        const activeSidebarMenuTitle =
+          findActiveSidebarMenuTitleById(activeMenuId);
+
+        if (activeSidebarMenuTitle)
+          activeSidebarMenuTitle.classList.remove("active");
+
+        const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
+
+        if (selectedSidebarMenu) selectedSidebarMenu.classList.add("active");
+      } else {
+        localStorage.setItem(sidebarActiveMenuIdKey, item.id);
+        item.closest("li").classList.add("active");
+
+        const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
+        if (selectedSidebarMenu) selectedSidebarMenu.classList.add("active");
+      }
+
+      showOrHideSidebarContent(item.id);
+    });
+
+    let ulSubMenuItem;
+
+    //Инициализация подменю
+    for (let i = 0; i < liItems.length; i++) {
+      if (liItems[i].tagName === "UL") {
+        // Проверяем, является ли элемент <ul>
+        ulSubMenuItem = liItems[i]; // Присваиваем значение
+        break; // Выходим из цикла, так как нашли нужный элемент
+      }
     }
 
-    //Если выбрано уже активное меню просто добавляем класс active, если выбрано другое меню снимаем класс active с активного и активируем текущее
-    if (!activeMenuId.includes(item.id)) {
-      localStorage.setItem(sidebarActiveMenuIdKey, item.id);
+    if (ulSubMenuItem) {
+      //Показываем название меню и подбемню при фокусе на елементе меню
+      item.addEventListener("mouseenter", () => {
+        //Сравнение текущего меню с активным
+        const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey);
 
-      //Снимаем класс active с активного меню
-      document
-        .getElementById(activeMenuId)
-        .closest("li")
-        .classList.remove("active");
-
-      //Добавляем класс active к выбранному меню
-      item.closest("li").classList.add("active");
-
-      //Если сайдбар свёрнут, делаем ту же операцию для названия меню в выпадающем списке
-      const activeSidebarMenuTitle =
-        findActiveSidebarMenuTitleById(activeMenuId);
-
-      if (activeSidebarMenuTitle)
-        activeSidebarMenuTitle.classList.remove("active");
-
-      const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
-
-      if (selectedSidebarMenu) selectedSidebarMenu.classList.add("active");
-    } else {
-      localStorage.setItem(sidebarActiveMenuIdKey, item.id);
-      item.closest("li").classList.add("active");
-
-      const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
-      if (selectedSidebarMenu) selectedSidebarMenu.classList.add("active");
-    }
-
-    showOrHideSidebarContent(item.id);
-  });
-
-  let ulSubMenuItem;
-
-  //Инициализация подменю
-  for (let i = 0; i < liItems.length; i++) {
-    if (liItems[i].tagName === "UL") {
-      // Проверяем, является ли элемент <ul>
-      ulSubMenuItem = liItems[i]; // Присваиваем значение
-      break; // Выходим из цикла, так как нашли нужный элемент
-    }
-  }
-
-  if (ulSubMenuItem) {
-    //Показываем название меню и подбемню при фокусе на елементе меню
-    item.addEventListener("mouseenter", () => {
-      //Сравнение текущего меню с активным
-      const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey);
-
-      if (activeMenuId) {
-        if (!item.id.includes(activeMenuId)) {
-          const activeMenu = document
-            .getElementById(activeMenuId)
-            .closest("li");
-          const activeSubMenu = activeMenu.querySelector(".serv-show");
-          if (activeMenu && activeSubMenu) {
-            activeSubMenu.classList.remove("show-menu");
+        if (activeMenuId) {
+          if (!item.id.includes(activeMenuId)) {
+            const activeMenu = document
+              .getElementById(activeMenuId)
+              .closest("li");
+            const activeSubMenu = activeMenu.querySelector(".serv-show");
+            if (activeMenu && activeSubMenu) {
+              activeSubMenu.classList.remove("show-menu");
+            }
           }
         }
-      }
 
-      ulSubMenuItem.classList.add("show-menu");
-      localStorage.setItem(expandSidebarActiveMenuIdKey, item.id);
-      changeVisibilityOfSubMenuItems(ulSubMenuItem);
-    });
-    //Скрываем название меню и подбемню при отсутсвии фокуса на елементе меню
-    item.addEventListener("mouseleave", () => {
-      // Проверяем, находится ли курсор мыши на блоке item
-      if (!item.matches(":hover") && !ulSubMenuItem.matches(":hover")) {
+        ulSubMenuItem.classList.add("show-menu");
+        localStorage.setItem(expandSidebarActiveMenuIdKey, item.id);
+        changeVisibilityOfSubMenuItems(ulSubMenuItem);
+      });
+      //Скрываем название меню и подбемню при отсутсвии фокуса на елементе меню
+      item.addEventListener("mouseleave", () => {
+        // Проверяем, находится ли курсор мыши на блоке item
+        if (!item.matches(":hover") && !ulSubMenuItem.matches(":hover")) {
+          ulSubMenuItem.classList.remove("show-menu");
+          changeVisibilityOfSubMenuItems(ulSubMenuItem);
+        }
+      });
+      //Скрываем название меню и подбемню при отсутсвии фокуса на елементе подменю
+      ulSubMenuItem.addEventListener("mouseleave", () => {
         ulSubMenuItem.classList.remove("show-menu");
         changeVisibilityOfSubMenuItems(ulSubMenuItem);
-      }
-    });
-    //Скрываем название меню и подбемню при отсутсвии фокуса на елементе подменю
-    ulSubMenuItem.addEventListener("mouseleave", () => {
-      ulSubMenuItem.classList.remove("show-menu");
-      changeVisibilityOfSubMenuItems(ulSubMenuItem);
-    });
-  }
-});
+      });
+    }
+  });
+}
 
 //Функция активации элемента подменю
 const subMenuItems = document.querySelectorAll(".sidebar-submenu-item");
-subMenuItems.forEach((subMenuItem) => {
-  subMenuItem.addEventListener("click", () => {
-    //Переменная названия подменю
-    const selectedMenuOfSubMenu = subMenuItem
-      .closest("ul")
-      .closest("li")
-      .querySelector(".sidebar-menu-item");
-    const activeMenuId = localStorage.getItem(sidebarActiveMenuIdKey);
-    const activeSubMenuId = localStorage.getItem(sidebarActiveSubmenuIdKey);
+if (subMenuItems.length > 0) {
+  subMenuItems.forEach((subMenuItem) => {
+    subMenuItem.addEventListener("click", () => {
+      //Переменная названия подменю
+      const selectedMenuOfSubMenu = subMenuItem
+        .closest("ul")
+        .closest("li")
+        .querySelector(".sidebar-menu-item");
+      const activeMenuId = localStorage.getItem(sidebarActiveMenuIdKey);
+      const activeSubMenuId = localStorage.getItem(sidebarActiveSubmenuIdKey);
 
-    //Проверка на совпадение активного меню и выбраного подменю. Если выбранное подменю относится к другому меню, деактивировать предидущее активное меню
-    if (activeMenuId) {
-      if (!selectedMenuOfSubMenu.id.includes(activeMenuId)) {
-        findActiveSidebarMenuByTitleId(activeMenuId).classList.remove("active");
-        findActiveSidebarMenuTitleById(activeMenuId).classList.remove("active");
+      //Проверка на совпадение активного меню и выбраного подменю. Если выбранное подменю относится к другому меню, деактивировать предидущее активное меню
+      if (activeMenuId) {
+        if (!selectedMenuOfSubMenu.id.includes(activeMenuId)) {
+          findActiveSidebarMenuByTitleId(activeMenuId).classList.remove(
+            "active"
+          );
+          findActiveSidebarMenuTitleById(activeMenuId).classList.remove(
+            "active"
+          );
+          localStorage.setItem(
+            sidebarActiveMenuIdKey,
+            selectedMenuOfSubMenu.id
+          );
+        }
+      }
+
+      //Проверка на совпадение активного подменю. Если выбрано другое подменю деактивировать предидущее
+      if (activeSubMenuId) {
+        if (!subMenuItem.id.includes(activeSubMenuId)) {
+          document.getElementById(activeSubMenuId).classList.remove("active");
+        }
+      }
+      if (!subMenuItem.classList.contains("active")) {
+        subMenuItem.classList.add("active");
+
+        if (!subMenuItem.classList.contains("title")) {
+          findActiveSidebarMenuTitleById(
+            selectedMenuOfSubMenu.id
+          ).classList.add("active");
+        }
+
+        selectedMenuOfSubMenu.closest("li").classList.add("active");
+
         localStorage.setItem(sidebarActiveMenuIdKey, selectedMenuOfSubMenu.id);
-      }
-    }
-
-    //Проверка на совпадение активного подменю. Если выбрано другое подменю деактивировать предидущее
-    if (activeSubMenuId) {
-      if (!subMenuItem.id.includes(activeSubMenuId)) {
-        document.getElementById(activeSubMenuId).classList.remove("active");
-      }
-    }
-    if (!subMenuItem.classList.contains("active")) {
-      subMenuItem.classList.add("active");
-
-      if (!subMenuItem.classList.contains("title")) {
-        findActiveSidebarMenuTitleById(selectedMenuOfSubMenu.id).classList.add(
-          "active"
-        );
+        localStorage.setItem(sidebarActiveSubmenuIdKey, subMenuItem.id);
       }
 
-      selectedMenuOfSubMenu.closest("li").classList.add("active");
-
-      localStorage.setItem(sidebarActiveMenuIdKey, selectedMenuOfSubMenu.id);
-      localStorage.setItem(sidebarActiveSubmenuIdKey, subMenuItem.id);
-    }
-
-    showOrHideSidebarContent(subMenuItem.id);
+      showOrHideSidebarContent(subMenuItem.id);
+    });
   });
-});
+}
 
 //Функция возвращает при свёрнутом сайдбаре елемент <a> с названием меню
 function findActiveSidebarMenuTitleById(activeMenuId) {
@@ -270,50 +289,144 @@ function changeVisibilityOfSubMenuItems(item) {
 Секция для работы с таблицами контента сайдбара
 */
 const cntContainer = document.querySelector(".cabinet-content");
-const ctnTables = Array.from(document.getElementsByTagName("table"));
-const tblRows = document.querySelectorAll(".tbl-body-row");
 
-//Подключение сервисов и функций для работы с таблицами контента сайдбара
-ctnTables.forEach((tbl) => {
-  initTableSort(tbl.id);
-  tblMultiSlctService(tbl.id);
-  addNewRow(tbl.id);
-  searchTable(tbl.id);
-});
+if (cntContainer) {
+  const cntTables = Array.from(document.getElementsByTagName("table"));
 
-//Подключение функции сортировки к таблице из библиотеки tablesort
-function initTableSort(tblId) {
-  var tbl = document.getElementById(tblId);
-  var sort = new Tablesort(tbl);
+  //Подключение сервисов и функций для работы с таблицами контента сайдбара
+  if (cntTables.length > 0) {
+    cntTables.forEach((tbl) => {
+      tblMultiSlctService(tbl.id);
+      addNewRow(tbl.id);
+      searchTable(tbl.id);
+    });
+  }
+  //Переключение иконки сортировки
+  const tblHeaderCell = cntContainer.getElementsByTagName("th");
 
-  //Включение функции сортировки данных после добавление новой записи в таблицу
-  sort.refresh();
+  for (let i = 0; i < tblHeaderCell.length; i++) {
+    tblHeaderCell[i].addEventListener("click", (event) => {
+      event.preventDefault(); // Prevent the default action of the link
+
+      //Поиск элемента <span> класса "fas fa-caret-down first"
+      const caretSpan = tblHeaderCell[i].querySelector(".fas");
+
+      if (
+        caretSpan &&
+        tblHeaderCell[i].getAttribute("aria-sort").includes("ascending")
+      ) {
+        //Переключение класса у элемента <span> на "rotate"
+        caretSpan.classList.add("rotate");
+      } else if (
+        caretSpan &&
+        tblHeaderCell[i].getAttribute("aria-sort").includes("descending")
+      ) {
+        caretSpan.classList.remove("rotate");
+      }
+    });
+  }
+
+  //Кнопкаы удалить все записи
+  const tblBtnDltAll = document.querySelectorAll(".tbl-btn-dlt-all");
+
+  if (tblBtnDltAll.length > 0) {
+    tblBtnDltAll.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tbl = btn.closest("table");
+        const tblGlCheckbox = tbl.querySelector(".tbl-gl-checkbox");
+        const tblData = tbl.querySelectorAll(".tbl-body-row");
+
+        //Удаляем только те записи где чекбокс checked
+        tblData.forEach((row) => {
+          if (row.querySelector(".tbl-checkbox").checked) {
+            row.remove();
+          }
+        });
+
+        //Если чекбокс в заголовке checked убрать флажёк
+        if (tblGlCheckbox.checked) {
+          tblGlCheckbox.checked = false;
+        }
+      });
+    });
+  }
+  //Иконка редактирования записи таблицы
+  const editIcon = document.querySelectorAll(".tbl-edit-icon");
+
+  if (editIcon.length > 0) {
+    //Функция отображения модальных окон при клике на иконку редактирования
+    editIcon.forEach((icon) => {
+      icon.addEventListener("click", () => {
+        showModalWillEditInformation(icon.closest(".tbl-body-row"));
+      });
+    });
+  }
+
+  //Закрытие модального окна
+  const closeIcon = document.querySelectorAll(".edit-modal-close-icon");
+
+  if (closeIcon.length > 0) {
+    closeIcon.forEach((icon) => {
+      icon.addEventListener("click", () => {
+        const modal = icon.closest("section");
+
+        modal.style.display = "none";
+      });
+    });
+  }
+
+  //Функция сохранения отредактированных данных таблицы
+  const editModalSaveBtn = document.querySelectorAll(".edit-modal-save-btn");
+
+  if (editModalSaveBtn.length > 0) {
+    editModalSaveBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const form = btn.closest("form");
+        const objectId = form.getAttribute("obj-id");
+        const inputFields = form.querySelectorAll(".edit-modal-input-flield");
+        const tblId = form.getAttribute("tbl-name") + "-tbl";
+        const tbl = document.getElementById(tblId);
+        const rows = tbl.querySelectorAll(".tbl-body-row");
+        let row;
+        let isNewRow = true;
+
+        rows.forEach((tblRow) => {
+          if (tblRow.getAttribute("obj-id") == objectId) {
+            isNewRow = false;
+            row = tblRow;
+          }
+        });
+
+        if (isNewRow) {
+          const row = getRowFromTable(tblId);
+          row.setAttribute("obj-id", objectId);
+          setTblRowValuesFromInputFields(row, inputFields);
+          tbl.querySelector("tbody").appendChild(row);
+        } else {
+          setTblRowValuesFromInputFields(row, inputFields);
+        }
+        btn.closest(".edit-modal-container").style.display = "none";
+      });
+    });
+  }
+
+  //Функция удаления записи с таблицы
+  const deleteTblIcon = document.querySelectorAll(".tbl-dlt-icon");
+
+  if (deleteTblIcon.length > 0) {
+    deleteTblIcon.forEach((icon) => {
+      icon.addEventListener("click", () => {
+        const cell = icon.closest("tr");
+        if (cell) {
+          cell.remove();
+          console.log("Cell removed");
+        } else {
+          console.log("Cell not found");
+        }
+      });
+    });
+  }
 }
-
-//Переключение иконки сортировки
-const tblHeaderCell = cntContainer.getElementsByTagName("th");
-for (let i = 0; i < tblHeaderCell.length; i++) {
-  tblHeaderCell[i].addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent the default action of the link
-
-    //Поиск элемента <span> класса "fas fa-caret-down first"
-    const caretSpan = tblHeaderCell[i].querySelector(".fas");
-
-    if (
-      caretSpan &&
-      tblHeaderCell[i].getAttribute("aria-sort").includes("ascending")
-    ) {
-      //Переключение класса у элемента <span> на "rotate"
-      caretSpan.classList.add("rotate");
-    } else if (
-      caretSpan &&
-      tblHeaderCell[i].getAttribute("aria-sort").includes("descending")
-    ) {
-      caretSpan.classList.remove("rotate");
-    }
-  });
-}
-
 /*
   Функция работы с чекбокса в заголовке таблице
     - При клике на чекбокс в заголовке таблицы включаем видимость чекбоксов в таблице
@@ -325,81 +438,85 @@ function tblMultiSlctService(tblId) {
   const tblGlLbCheckboxes = tbl.querySelectorAll(".tbl-gl-lb-checkbox");
 
   //Убираем с чекбокса свойство disabled при клике и отображаем чекбоксы в таблице
-  tblGlLbCheckboxes.forEach((checkbox) => {
-    const glCheckbox = checkbox.querySelector(".tbl-gl-checkbox");
-    const tbl = checkbox.closest("table");
-    const tblLbCheckBoxes = tbl.querySelectorAll(".tbl-lb-checkbox");
-    const glCheckboxSpan = checkbox.querySelector(".tbl-gl-checkmark");
-    const tblGlCheckbox = tbl.querySelector(".tbl-gl-checkbox");
-    const tblCheckboxes = tbl.querySelectorAll(".tbl-checkbox");
-    const countCheckedboxes = {};
-    countCheckedboxes[tblId] = 0;
+  if (tblGlLbCheckboxes.length > 0) {
+    tblGlLbCheckboxes.forEach((checkbox) => {
+      const glCheckbox = checkbox.querySelector(".tbl-gl-checkbox");
+      const tbl = checkbox.closest("table");
+      const tblLbCheckBoxes = tbl.querySelectorAll(".tbl-lb-checkbox");
+      const glCheckboxSpan = checkbox.querySelector(".tbl-gl-checkmark");
+      const tblGlCheckbox = tbl.querySelector(".tbl-gl-checkbox");
+      const tblCheckboxes = tbl.querySelectorAll(".tbl-checkbox");
+      const countCheckedboxes = {};
+      countCheckedboxes[tblId] = 0;
 
-    /*
-    Прослушка клика на lable чекбокса
-    - Если чекбокс в заголовке таблицы не активирован, то активируем.
-    - Включаем отображение всех чекбоксов в данной таблице
-    - Если чекбокс в заголовке отмечен (checked), то делаем все чекбоксы в таблице checked и наоборот
-    */
-    checkbox.addEventListener("click", () => {
-      //Если чекбоксы не активированы, то активируем. И включаем отображение кнопки "Удалить записи"
-      if (!glCheckboxSpan.classList.contains("active")) {
-        glCheckboxSpan.classList.add("active");
+      /*
+      Прослушка клика на lable чекбокса
+      - Если чекбокс в заголовке таблицы не активирован, то активируем.
+      - Включаем отображение всех чекбоксов в данной таблице
+      - Если чекбокс в заголовке отмечен (checked), то делаем все чекбоксы в таблице checked и наоборот
+      */
+      checkbox.addEventListener("click", () => {
+        //Если чекбоксы не активированы, то активируем. И включаем отображение кнопки "Удалить записи"
+        if (!glCheckboxSpan.classList.contains("active")) {
+          glCheckboxSpan.classList.add("active");
 
-        //Включаем видимость чекбоксов в таблице
-        for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-          tblLbCheckBoxes[i].style.display = "block";
-        }
-      } else if (glCheckbox.checked) {
-        //Делаем все чекбоксы в таблице checked
-        for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-          const tblCheckBox = tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
-          tblCheckBox.checked = true;
-        }
-        showOrHideTblDeleteAllBtn(tbl.id, true);
-      } else if (!glCheckbox.checked) {
-        //Убираем checked со всех чекбоксов в таблице
-        for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-          const tblCheckBox = tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
-          tblCheckBox.checked = false;
-        }
-        countCheckedboxes[tblId] = 0;
-        showOrHideTblDeleteAllBtn(tbl.id, false);
-      }
-    });
-
-    /*
-  Функция работы с чекбоксами в таблице
-    - Отслеживание количества отмеченных чекбоксов, если больше одного, то отображаем кнопку "Удалить записи", 
-      если нет, то скрываем
-*/
-    //Посчёт количества отмеченых чекбоксов
-    tblCheckboxes.forEach((checkbox) => {
-      if (checkbox.checked) {
-        countCheckedboxes[tblId]++;
-      }
-
-      //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
-      checkbox.addEventListener("change", () => {
-        if (tblGlCheckbox.checked) {
-          countCheckedboxes[tblId] = tblCheckboxes.length;
-        }
-        if (checkbox.checked) {
-          countCheckedboxes[tblId]++;
-        } else {
-          if (countCheckedboxes[tblId] > 0) countCheckedboxes[tblId]--;
-          tblGlCheckbox.checked = false;
-        }
-
-        //Если больше одного чекбокса отмечен, то отображаем кнопку "Удалить записи", иначе скрываем
-        if (countCheckedboxes[tblId] > 0) {
+          //Включаем видимость чекбоксов в таблице
+          for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+            tblLbCheckBoxes[i].style.display = "block";
+          }
+        } else if (glCheckbox.checked) {
+          //Делаем все чекбоксы в таблице checked
+          for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+            const tblCheckBox =
+              tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
+            tblCheckBox.checked = true;
+          }
           showOrHideTblDeleteAllBtn(tbl.id, true);
-        } else {
+        } else if (!glCheckbox.checked) {
+          //Убираем checked со всех чекбоксов в таблице
+          for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+            const tblCheckBox =
+              tblLbCheckBoxes[i].querySelector(".tbl-checkbox");
+            tblCheckBox.checked = false;
+          }
+          countCheckedboxes[tblId] = 0;
           showOrHideTblDeleteAllBtn(tbl.id, false);
         }
       });
+
+      /*
+    Функция работы с чекбоксами в таблице
+      - Отслеживание количества отмеченных чекбоксов, если больше одного, то отображаем кнопку "Удалить записи", 
+        если нет, то скрываем
+  */
+      //Посчёт количества отмеченых чекбоксов
+      tblCheckboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          countCheckedboxes[tblId]++;
+        }
+
+        //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
+        checkbox.addEventListener("change", () => {
+          if (tblGlCheckbox.checked) {
+            countCheckedboxes[tblId] = tblCheckboxes.length;
+          }
+          if (checkbox.checked) {
+            countCheckedboxes[tblId]++;
+          } else {
+            if (countCheckedboxes[tblId] > 0) countCheckedboxes[tblId]--;
+            tblGlCheckbox.checked = false;
+          }
+
+          //Если больше одного чекбокса отмечен, то отображаем кнопку "Удалить записи", иначе скрываем
+          if (countCheckedboxes[tblId] > 0) {
+            showOrHideTblDeleteAllBtn(tbl.id, true);
+          } else {
+            showOrHideTblDeleteAllBtn(tbl.id, false);
+          }
+        });
+      });
     });
-  });
+  }
 }
 
 /*
@@ -422,29 +539,6 @@ function showOrHideTblDeleteAllBtn(tblId, isShow) {
     btn.style.cursor = "none";
   }
 }
-
-//Кнопкаы удалить все записи
-const tblBtnDltAll = document.querySelectorAll(".tbl-btn-dlt-all");
-
-tblBtnDltAll.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const tbl = btn.closest("table");
-    const tblGlCheckbox = tbl.querySelector(".tbl-gl-checkbox");
-    const tblData = tbl.querySelectorAll(".tbl-body-row");
-
-    //Удаляем только те записи где чекбокс checked
-    tblData.forEach((row) => {
-      if (row.querySelector(".tbl-checkbox").checked) {
-        row.remove();
-      }
-    });
-
-    //Если чекбокс в заголовке checked убрать флажёк
-    if (tblGlCheckbox.checked) {
-      tblGlCheckbox.checked = false;
-    }
-  });
-});
 
 //Получение названия меню сайдбара с table.id
 function getTblNameById(tableId) {
@@ -817,16 +911,6 @@ function showOrHideWarningSelectWindow(tblId, isShow) {
   }
 }
 
-//Иконка редактирования записи таблицы
-const editIcon = document.querySelectorAll(".tbl-edit-icon");
-
-//Функция отображения модальных окон при клике на иконку редактирования
-editIcon.forEach((icon) => {
-  icon.addEventListener("click", () => {
-    showModalWillEditInformation(icon.closest(".tbl-body-row"));
-  });
-});
-
 //Функция вкл/выкл модального окна редактирования информации записей таблиц контента сидбара
 function showModalWillEditInformation(tblRow) {
   const tblId = tblRow.closest("table").id;
@@ -875,6 +959,9 @@ function convertDateForTbl(date) {
 //Функция отслеживания высоты модального окна редактирования информации записей таблиц контента сайдбара
 function changeModalEditInformationHeight() {
   const modalDialog = document.querySelector(".edit-modal-dialog");
+
+  if (!modalDialog) return;
+
   const observer = new ResizeObserver(() => {
     let modalBody = document.querySelector(".edit-modal-body");
     modalDialog.style.height = modalBody.scrollHeight + 200 + "px";
@@ -882,49 +969,6 @@ function changeModalEditInformationHeight() {
 
   observer.observe(document.querySelector(".edit-modal-body"));
 }
-
-//Закрытие модального окна
-const closeIcon = document.querySelectorAll(".edit-modal-close-icon");
-closeIcon.forEach((icon) => {
-  icon.addEventListener("click", () => {
-    const modal = icon.closest("section");
-
-    modal.style.display = "none";
-  });
-});
-
-//Функция сохранения отредактированных данных таблицы
-const editModalSaveBtn = document.querySelectorAll(".edit-modal-save-btn");
-
-editModalSaveBtn.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const form = btn.closest("form");
-    const objectId = form.getAttribute("obj-id");
-    const inputFields = form.querySelectorAll(".edit-modal-input-flield");
-    const tblId = form.getAttribute("tbl-name") + "-tbl";
-    const tbl = document.getElementById(tblId);
-    const rows = tbl.querySelectorAll(".tbl-body-row");
-    let row;
-    let isNewRow = true;
-
-    rows.forEach((tblRow) => {
-      if (tblRow.getAttribute("obj-id") == objectId) {
-        isNewRow = false;
-        row = tblRow;
-      }
-    });
-
-    if (isNewRow) {
-      const row = getRowFromTable(tblId);
-      row.setAttribute("obj-id", objectId);
-      setTblRowValuesFromInputFields(row, inputFields);
-      tbl.querySelector("tbody").appendChild(row);
-    } else {
-      setTblRowValuesFromInputFields(row, inputFields);
-    }
-    btn.closest(".edit-modal-container").style.display = "none";
-  });
-});
 
 //Функция записи введённых данных в строку таблицы
 function setTblRowValuesFromInputFields(row, inputFields) {
@@ -936,21 +980,6 @@ function setTblRowValuesFromInputFields(row, inputFields) {
     }
   }
 }
-
-//Функция удаления записи с таблицы
-const deleteTblIcon = document.querySelectorAll(".tbl-dlt-icon");
-
-deleteTblIcon.forEach((icon) => {
-  icon.addEventListener("click", () => {
-    const cell = icon.closest("tr");
-    if (cell) {
-      cell.remove();
-      console.log("Cell removed");
-    } else {
-      console.log("Cell not found");
-    }
-  });
-});
 /*
 //Функция для вёрстки контента сайдбара
 document.addEventListener("DOMContentLoaded", function () {

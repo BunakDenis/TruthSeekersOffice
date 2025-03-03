@@ -1,3 +1,12 @@
+import "../css/style.css";
+import "../css/cabinetPage.css";
+import "../css/navbar.css";
+import "../css/sidebar.css";
+import "./cabinet.js";
+import "./cssVariables.js";
+import "./initFragments.js";
+import "./luxon.js";
+
 //------------------------------------------
 //Страница - профайл юзера
 const editIcons = document.querySelectorAll(".user-profile-pncl-icon");
