@@ -105,14 +105,14 @@ describe("Тесты страницы Регистрацию юзера", () => 
     cy.get(".suggestions").as("suggestions");
 
     cy.get("@cityField").type("Чернігів");
-    cy.wait(3000); // wait for 2 seconds
+    cy.wait(3000);
     cy.get("@suggestions").should("be.visible");
 
     cy.get(".suggestions div:first").should("have.text", "Чернігів, Україна");
 
     cy.get("@cityField").clear();
     cy.get("@cityField").type("fffffffffff");
-    cy.wait(3000); // wait for 2 seconds
+    cy.wait(3000);
 
     cy.get(".suggestions div:first").should("have.text", "Город не найден");
   });
