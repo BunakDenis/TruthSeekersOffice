@@ -42,58 +42,32 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(), // Очистка папки dist перед сборкой
-    new HtmlWebpackPlugin({
-      template: "./index.html",
-      filename: "index.html",
-      inject: "body",
-    }),
-    new HtmlWebpackPlugin({
-      template: "./cabinet.html",
-      filename: "cabinet.html",
-      inject: "body",
-    }),
-    new HtmlWebpackPlugin({
-      template: "./contacts.html",
-      filename: "contacts.html",
-      inject: "body",
-    }),
-    new HtmlWebpackPlugin({
-      template: "./searchingResult.html",
-      filename: "searchingResult.html",
-      inject: "body",
-    }),
-    new HtmlWebpackPlugin({
-      template: "./userProfile.html",
-      filename: "userProfile.html",
-      inject: "body",
-    }),
-    new HtmlWebpackPlugin({
-      template: "./userSignUp.html",
-      filename: "userSignUp.html",
-      inject: "body",
-    }),
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: "css/style.css",
-    }),
-    new MiniCssExtractPlugin({
-      filename: "css/navbar.css",
-    }),
-    new MiniCssExtractPlugin({
-      filename: "css/sidebar.css",
-    }),
-    new MiniCssExtractPlugin({
-      filename: "css/cabinetPage.css",
+      filename: "css/[name].[contenthash].css",
     }),
     new CopyWebpackPlugin({
-      patterns: [{ from: "./fragments", to: "fragments" }],
+      patterns: [
+        { from: "./fragments", to: "fragments" },
+        { from: "./images", to: "images" },
+        { from: "./video", to: "video" },
+      ],
     }),
-    new CopyWebpackPlugin({
-      patterns: [{ from: "./images", to: "images" }],
-    }),
-    new CopyWebpackPlugin({
-      patterns: [{ from: "./video", to: "video" }],
-    }),
+    ...[
+      "index",
+      "cabinet",
+      "contacts",
+      "searchingResult",
+      "userProfile",
+      "userSignUp",
+    ].map(
+      (page) =>
+        new HtmlWebpackPlugin({
+          template: `./${page}.html`,
+          filename: `${page}.html`,
+          inject: "body",
+        })
+    ),
   ],
   devServer: {
     static: path.resolve(__dirname, "dist"),

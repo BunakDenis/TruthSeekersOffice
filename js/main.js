@@ -6,7 +6,6 @@ import "./cabinet.js";
 import "./cssVariables.js";
 import "./initFragments.js";
 import "./luxon.js";
-
 //------------------------------------------
 //Страница - профайл юзера
 const editIcons = document.querySelectorAll(".user-profile-pncl-icon");
@@ -28,7 +27,7 @@ function editPersonalInfomation(inputId) {
   inputField.disabled = !inputField.disabled;
 }
 
-const cancelIcons = document.querySelectorAll(".user-profile-cancel-icon");
+const cancelIcons = document.querySelectorAll(".user-profile-erase-icon");
 
 if (cancelIcons) {
   cancelIcons.forEach((icon) => {

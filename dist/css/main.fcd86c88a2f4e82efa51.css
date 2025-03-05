@@ -587,6 +587,9 @@ form .fields .input-field {
 
   z-index: var(--z-index-for-icons-in-form);
 }
+.suggestions div {
+  cursor: pointer;
+}
 .input-field label {
   font-size: 15px;
   font-weight: 500;
@@ -803,10 +806,23 @@ tab-content svg {
   width: 2vw;
   height: 2vh;
 
-  fill: black;
+  fill: var(--pictures-pages-color);
+}
+
+tab-content .user-profile-erase-icon {
+  width: 2.5vw;
+  height: auto;
+}
+
+tab-content svg path {
+  fill: var(--pictures-pages-color);
 }
 
 tab-content svg:hover {
+  fill: var(--page-text-color-hover);
+}
+
+tab-content svg:hover path {
   fill: var(--page-text-color-hover);
 }
 
@@ -816,7 +832,7 @@ tab-content svg:hover {
   position: absolute;
 
   top: 11.5vh;
-  right: 37.5vw;
+  right: 38vw;
 
   font-size: 1em;
 
@@ -830,7 +846,10 @@ tab-content svg:hover {
 #profile-hide-password {
   display: block;
 }
-
+#profile-show-password:hover,
+#profile-hide-password:hover {
+  color: var(--page-text-color-hover);
+}
 .profile-btn-container {
   text-align: center;
 }
