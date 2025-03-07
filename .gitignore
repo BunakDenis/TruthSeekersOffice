@@ -8,3 +8,4 @@ fragments/archive
 storage/
 
 TODO.txt
+node_modules/
