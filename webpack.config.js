@@ -7,9 +7,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   entry: {
     cabinet: "./js/cabinet.js",
-    cssVariables: "./js/cssVariables.js",
     initFragments: "./js/initFragments.js",
-    luxon: "./js/luxon.js",
     main: "./js/main.js",
   },
   output: {
@@ -51,6 +49,8 @@ module.exports = {
         { from: "./fragments", to: "fragments" },
         { from: "./images", to: "images" },
         { from: "./video", to: "video" },
+        { from: "./js/luxon.js", to: "js" },
+        { from: "./js/cssVariables.js", to: "js" },
       ],
     }),
     ...[

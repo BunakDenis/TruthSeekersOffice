@@ -28,9 +28,9 @@
     "table-sort-js": "^1.22.2"
   },
   "scripts": {
-    "clean": "rm -rf .nyc_output coverage dist",
+    "clean": "del /f /q /s .nyc_output & del /f /q /s coverage & del /f /q /s dist",
     "build": "webpack --mode production",
-    "pretest": "npm run build",
+    "pretest": "npm run clean && npm run build",
     "start": "serve -p 3000 ./dist",
     "cy:run": "cypress run",
     "cy:open": "cypress open --browser chrome",

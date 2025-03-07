@@ -104,16 +104,37 @@ describe("Тесты страницы Регистрацию юзера", () => 
     cy.get("#resident-city").as("cityField");
     cy.get(".suggestions").as("suggestions");
 
+    //Проверка ввода города
     cy.get("@cityField").type("Чернігів");
     cy.wait(3000);
     cy.get("@suggestions").should("be.visible");
 
     cy.get(".suggestions div:first").should("have.text", "Чернігів, Україна");
+    cy.get(".suggestions div:first").click();
+    cy.get(".suggestions").should("have.text", "");
+    cy.get("@cityField").should(
+      "have.value",
+      "Чернігів, Чернігівська міська громада, Чернігівський район, Чернігівська область, 14000-14499, Україна"
+    );
 
+    //Проверка ввода города и получения данных из кеша
+    cy.get("@cityField").clear();
+    cy.get("@cityField").type("Чернігів");
+    cy.wait(3000);
+
+    cy.get(".suggestions div:first").should("have.text", "Чернігів, Україна");
+
+    //Проверка ввода несуществующего города
     cy.get("@cityField").clear();
     cy.get("@cityField").type("fffffffffff");
     cy.wait(3000);
 
     cy.get(".suggestions div:first").should("have.text", "Город не найден");
+
+    cy.get("@cityField").clear();
+    cy.get("@cityField").type("аа");
+    cy.wait(3000);
+
+    cy.get(".suggestions").should("have.text", "");
   });
 });
