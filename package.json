@@ -29,6 +29,7 @@
   },
   "scripts": {
     "clean": "del /f /q /s .nyc_output & del /f /q /s coverage & del /f /q /s dist",
+    "clean-git": "rm -rf .nyc_output coverage dist",
     "build": "webpack --mode production",
     "pretest": "npm run clean && npm run build",
     "start": "serve -p 3000 ./dist",
