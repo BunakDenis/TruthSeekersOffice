@@ -1,0 +1,1072 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lobster&family=Orelega+One&display=swap");
+
+:root {
+  --page-content-background-color: rgba(255, 255, 255, 0.1);
+  --cabinet-page-content-background-color: rgba(255, 255, 255, 0.6);
+  --cabinet-page-menu-background-color: rgba(255, 255, 255, 0.6);
+  --cabinet-sidebar-submenu-background-color: rgba(192, 188, 188, 0.8);
+  --cabinet-page-menu-item-hover-background-color: rgba(255, 255, 255, 0.2);
+
+  --modal-form-out-background-color: rgba(27, 26, 26, 0.7);
+  --btn-hover-background-color: rgba(255, 255, 255, 0.15);
+
+  --backdrop-filter-blur: blur(8px);
+  --sb-cnt-backdrop-filter-blur: blur(30px);
+
+  --fornt-family-for-school-name: "Lobster", sans-serif;
+  --fornt-family-for-title: "Orelega One", serif;
+  --fornt-family-for-content: "Jost", serif;
+
+  --cabinet-page-nav-menu-font-color: #4b4c4d;
+  --cabinet-page-sidebar-content-font-color: black;
+  --page-text-color: white;
+  --page-text-color-hover: gold;
+
+  --tab-display: grid;
+  --tab-background-color: rgba(255, 255, 255, 0.1);
+
+  --sidebar-menu-border-top: 1px solid rgba(255, 255, 255, 0.1);
+  --sidebar-menu-border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  --display-none: none;
+  --box-sizing: border-box;
+
+  --z-index-for-background-media: -1;
+  --z-index-for-site-elements: 0;
+  --z-index-for-content: 1;
+  --z-index-for-forms: 10;
+  --z-index-for-icons-in-form: 20;
+  --z-index-for-modal-form: 100501;
+
+  --transition--all--0-ease: 0s;
+  --transition--all--03-ease: all 0.3s ease;
+  --transition--all--03-ease-in-out: all 0.3s ease-in-out;
+  --transition--all--04-ease: all 0.4s ease;
+  --transition--all--04-ease-in-out: all 0.4s ease-in-out;
+  --transition--all--05-ease: all 0.5s ease;
+  --transition--all--05-ease-in-out: all 0.5s ease-in-out;
+
+  /* Navbar */
+  --marging-top-nav-bar-forms: 10vh;
+
+  /* Cabinet page Table */
+  --cabinet-page-tbl-row-hover-background-color: rgb(172, 162, 162);
+  --tbl-unparied-row-background-color: #d6c8c8;
+
+  --tbl-row-border-color: rgba(255, 255, 255, 0.1);
+
+  --cabinet-page-tbl-header-border: 2px solid gray;
+  --cabinet-page-tbl-row-border: 1px solid rgb(148, 141, 141);
+  --tbl-border: 1px solid #4b4c4d;
+  --cabinet-page-tbl-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  --tbl-lable-font-family: "Jost", sans-serif;
+  --tbl-lable-font-optical-sizing: auto;
+  --tbl-lable-font-weight: 500;
+
+  --transition-fill-02-ease-in-out: fill 0.2s ease-in-out;
+  --transition-color-04-ease-in-out: color 0.4s ease-in-out;
+  --transition-fill-04-ease-in-out: fill 0.4s ease-in-out;
+  --transition-background-color-04-ease-in-out: background-color 0.4s
+    ease-in-out;
+  --transition-border-color-04-ease-in-out: border-color 0.4s ease-in-out;
+
+  /* Form Elements */
+  --form-element-background-color: #fff;
+  --form-element-focus-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
+  --form-element-focus-border: 2px solid gold;
+
+  --form-element-active-color: #000;
+  --form-element-deactive-color: gray;
+
+  --checkbox-not-active-background-color: rgba(255, 255, 255, 0.15);
+
+  --btn-color: #000;
+  --btn-background-color: #fff;
+  --btn-hover-color: #fff;
+  --btn-hover-background-color: rgba(255, 255, 255, 0.15);
+  --btn-hover-border-color: #fff;
+
+  /* Multimedia */
+  --al-vadud-text-color: red;
+  --pictures-pages-color: #000;
+  --pictures-cabinet-page-color: #fff;
+  --default-icon-color: #000;
+  --edit-icon-color: gray;
+  --dlt-icon-color: red;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: var(--box-sizing);
+}
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px var(--cabinet-page-menu-background-color);
+}
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px var(--cabinet-page-menu-background-color);
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  position: relative;
+
+  flex-direction: column;
+
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: block;
+  position: relative;
+
+  width: 100%;
+  height: 9%;
+}
+
+body main {
+  display: block;
+  flex-grow: 1;
+
+  position: relative;
+
+  width: 100%;
+  min-height: 82%;
+
+  overflow: auto;
+
+  margin: 0;
+}
+
+.body-cabinet-page main {
+  display: block;
+  flex-grow: 1;
+
+  position: relative;
+
+  width: 100%;
+  min-height: 91%;
+
+  overflow: auto;
+
+  margin: 0;
+}
+
+body #page-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+
+  width: 100%;
+  height: 9%;
+
+  padding-top: 1vh;
+
+  background-color: var(--page-content-background-color);
+}
+
+.body-cabinet-page #page-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+
+  width: 100%;
+  height: 8vh;
+
+  position: relative;
+  margin-top: auto;
+
+  background-color: var(--page-content-background-color);
+}
+
+a {
+  text-decoration: none;
+}
+
+.main-page {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  background: url(./../images/fly_on_clouds.jpg) fixed 50%;
+  background-size: cover;
+}
+
+.page-video {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: var(--z-index-for-background-media);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.page-video:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: var(--z-index-for-background-media);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+}
+
+.page-video .video {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+}
+
+/* Greeding */
+.greeding {
+  width: 100%;
+  justify-content: center;
+
+  padding-top: 30vh;
+}
+
+.greeding h1 {
+  font-family: "Orelega One", serif;
+  font-weight: 500;
+  font-size: 50px;
+  font-style: normal;
+
+  color: black;
+
+  text-align: center;
+  text-indent: 20px;
+}
+
+.greeding p {
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-size: 25px;
+  font-style: italic;
+
+  color: black;
+
+  text-align: center;
+}
+
+/* #page-footer */
+#page-footer .social {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+
+  justify-content: center;
+  text-align: center;
+}
+
+#page-footer .social > a {
+  cursor: pointer;
+}
+
+#page-footer .social > a > svg {
+  fill: var(--pictures-cabinet-page-color);
+  width: 30px;
+  height: 30px;
+
+  -webkit-transition: var(--transition-fill-04-ease-in-out);
+  -o-transition: var(--transition-fill-04-ease-in-out);
+  transition: var(--transition-fill-04-ease-in-out);
+}
+
+#page-footer .social > a:hover,
+#page-footer .social > a:hover > svg {
+  fill: var(--page-text-color-hover);
+}
+
+#page-footer p {
+  margin: 0;
+  padding: 0;
+
+  font: var(--fornt-family-for-title) !important;
+  font-style: italic !important;
+  font-weight: 300 !important;
+  font-size: 1em !important;
+
+  text-align: center;
+  color: #000;
+}
+
+/* Page - User Sign Up */
+
+.user-signin-signout-container {
+  position: absolute;
+  margin-top: 50px;
+  margin-left: 30%;
+  height: 450px;
+  width: 700px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 20px;
+
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-signin-signout {
+  position: relative;
+  width: 550px;
+  height: 300px;
+}
+
+/*--------------------------------------------------*/
+/* Page - Contacts */
+
+.contacts-information-container {
+  position: absolute;
+
+  background-color: var(--page-content-background-color);
+
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
+
+  width: 50vw;
+  height: 45%;
+
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  top: 15%;
+  left: 25vw;
+
+  padding: 5vh 3vw 0 3vw;
+}
+
+.contacts-information-container h3 {
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 25px;
+}
+
+.contacts-information-container p {
+  font-family: "Jost", sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+}
+
+.secondary-information {
+  font-family: "Jost", sans-serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.contacts-information-container a {
+  color: var(--page-text-color);
+}
+
+.contacts-information-container a:hover {
+  color: var(--page-text-color-hover);
+}
+
+.contacts-container .contacts-information-container .school-email:hover {
+  color: var(--page-text-color-hover);
+  text-decoration: underline var(--page-text-color-hover) !important;
+}
+
+.shcool-site {
+  padding-top: 3vw;
+}
+
+/*--------------------------------------------------*/
+
+/* Page - Searching Result */
+
+.searching-result-container {
+  position: relative;
+}
+
+.searching-result-content {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.1);
+
+  width: 80vw;
+  height: 70vh;
+  overflow-y: auto;
+
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
+
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  top: 2vh;
+  left: 10vw;
+
+  padding: 2vh 3vw 0 3vh;
+}
+
+.searching-result-content ol {
+  padding-top: 1vw;
+  padding-left: 0;
+
+  list-style-type: none; /* Убираем исходные маркеры */
+  counter-reset: num; /* Задаём имя счетчика */
+}
+
+.searching-result-content li::before {
+  content: counter(num) ". "; /* Выводим число */
+  counter-increment: num; /* Увеличиваем значение счётчика */
+
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.searching-result-content li {
+  display: grid;
+
+  grid-template-columns: 1vw 50vw;
+
+  text-align: left;
+
+  padding-left: 1vw;
+
+  padding-bottom: 1vw;
+}
+
+.searching-result-content h3 {
+  font-family: var(--fornt-family-for-title);
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 25px;
+}
+
+.searching-result-content h4 {
+  font-family: var(--fornt-family-for-content);
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 20px;
+
+  padding-top: 0;
+}
+
+.searching-result-content p {
+  font-family: var(--fornt-family-for-content);
+  font-weight: 300;
+  font-size: 18px;
+
+  text-align: justify;
+}
+
+.searching-result-text {
+  display: grid;
+  grid-template-columns: 15vw 55vw;
+
+  text-align: left;
+
+  padding-left: 2vw;
+}
+
+.searching-result-content li::after {
+  content: "";
+  display: block;
+
+  background-color: #c4bdbd;
+  width: 75vw;
+  height: 0.01vh;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------*/
+/* User registration form*/
+
+.registration-container {
+  position: fixed;
+  max-width: 80%;
+  width: 100%;
+  border-radius: 6px;
+  padding: 10px 15px;
+  margin: 30px 10% 0 10%;
+
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+
+  z-index: var(--z-index-for-content);
+}
+.registration-container header {
+  position: relative;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+.registration-container header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 3px;
+  width: 27px;
+  border-radius: 8px;
+  background-color: #4070f4;
+}
+.registration-container .title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 3px;
+  width: 100px;
+  border-radius: 8px;
+  background-color: gold;
+}
+.registration-container form {
+  position: relative;
+  margin-top: 16px;
+  min-height: 490px;
+  overflow: visible;
+}
+.registration-container form .title {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 6px 0;
+  color: #333;
+}
+.registration-container form .fields {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+form .fields .input-field {
+  display: flex;
+  width: calc(100% / 3 - 15px);
+  flex-direction: column;
+  margin: 2px 5px;
+}
+.suggestions {
+  position: absolute;
+  background-color: white;
+  border-radius: 5px;
+
+  width: calc(100% / 3 - 15px);
+
+  margin-top: 80px;
+
+  z-index: var(--z-index-for-icons-in-form);
+}
+.suggestions div {
+  cursor: pointer;
+}
+.input-field label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #2e2e2e;
+  margin: 0;
+}
+.input-field input,
+select,
+textarea {
+  outline: none;
+
+  font-size: 14px;
+  font-weight: 400;
+
+  color: black;
+
+  border-radius: 5px;
+  border: 1px solid #aaa;
+
+  padding: 0 10px;
+  height: 42px;
+  margin: 5px 0;
+}
+.input-field input:focus,
+.input-field select:focus,
+.input-field textarea:focus {
+  box-shadow: var(--form-element-focus-box-shadow);
+  border: var(--form-element-focus-border);
+}
+.input-field select,
+.input-field input[type="date"] {
+  color: #9b8e8e;
+}
+.input-field input[type="date"]:valid,
+.input-field select:valid {
+  color: #0a0a0a;
+}
+
+/* Icons of show or hide password */
+#sign-up-show-password,
+#sign-up-hide-password {
+  top: 4.2vw;
+  right: 28vw;
+  position: absolute;
+  cursor: pointer;
+  z-index: var(--z-index-for-icons-in-form);
+}
+#sign-up-show-password {
+  display: none;
+}
+#sign-up-hide-password {
+  display: block;
+}
+
+.registration-container form button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  max-width: 200px;
+  width: 100%;
+  margin-top: 20px;
+
+  background: #fff;
+
+  color: #000;
+  font-weight: 600;
+  border: none;
+  padding: 12px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+}
+.registration-container form .btnText {
+  font-size: 14px;
+  font-weight: 400;
+}
+form button:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+form button i,
+form .backBtn i {
+  margin: 0 6px;
+}
+form .backBtn i {
+  transform: rotate(180deg);
+}
+form .buttons {
+  display: flex;
+  align-items: center;
+}
+form .buttons button,
+.backBtn {
+  margin-right: 14px;
+}
+/*-----------------------------------------------------------------------------------------------------------------------*/
+
+/*--------------------------------------------------*/
+
+/* Page - User Profile */
+.user-infromation-profile {
+  position: absolute;
+  display: block;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--page-content-background-color);
+
+  height: 70vh;
+  width: 90vw;
+
+  top: 2vh;
+  left: 5vw;
+}
+
+.user-infromation-profile-content {
+  position: relative;
+  display: flex;
+
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+tab-container {
+  position: absolute;
+  font-family: var(--tbl-lable-font-family);
+  font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+  font-weight: var(--tbl-lable-font-weight);
+
+  display: var(--tab-display);
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr;
+
+  width: 100%;
+  height: 100%;
+}
+/*
+TAB CONTROLS
+Hide radios */
+.page-user-profile .input-tab-toggle {
+  display: none;
+}
+.page-user-profile .input-tab-toggle:checked + .lable-tab-toggle {
+  color: var(--page-text-color-hover);
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 250ms;
+}
+.page-user-profile .lable-tab-toggle {
+  cursor: pointer;
+  transition: color 250ms;
+
+  padding: 1em;
+  margin: 0;
+
+  border-right: solid 2px var(--page-background-color);
+  background-color: var(--tab-background-color);
+  text-align: center;
+  transition: all 250ms;
+}
+.page-user-profile .lable-tab-toggle:last-of-type {
+  border: none;
+}
+.page-user-profile .lable-tab-toggle:hover {
+  color: var(--page-text-color-hover);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+tab-content {
+  display: var(--tab-display);
+  grid-column: 1 / -1;
+
+  position: relative;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.page-user-profile .input-field label {
+  width: 10vw;
+  padding-right: 1vw;
+}
+
+.page-user-profile .input-field input:disabled,
+.page-user-profile .input-field select:disabled {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #333;
+  border-radius: 0px;
+  border: 0px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-user-profile .input-field input,
+.page-user-profile .input-field select {
+  width: 10vw;
+}
+
+tab-content svg {
+  padding-left: 1vw;
+
+  position: relative;
+
+  cursor: pointer;
+
+  width: 2vw;
+  height: 2vh;
+
+  fill: var(--pictures-pages-color);
+}
+
+tab-content .user-profile-erase-icon {
+  width: 2.5vw;
+  height: auto;
+}
+
+tab-content svg path {
+  fill: var(--pictures-pages-color);
+}
+
+tab-content svg:hover {
+  fill: var(--page-text-color-hover);
+}
+
+tab-content svg:hover path {
+  fill: var(--page-text-color-hover);
+}
+
+/* Icons of show or hide password */
+#profile-show-password,
+#profile-hide-password {
+  position: absolute;
+
+  top: 11.5vh;
+  right: 38vw;
+
+  font-size: 1em;
+
+  cursor: pointer;
+
+  z-index: var(--z-index-for-icons-in-form);
+}
+#profile-show-password {
+  display: none;
+}
+#profile-hide-password {
+  display: block;
+}
+#profile-show-password:hover,
+#profile-hide-password:hover {
+  color: var(--page-text-color-hover);
+}
+.profile-btn-container {
+  text-align: center;
+}
+.page-user-profile .profile-save-button {
+  height: 45px;
+  width: 10vw;
+
+  margin-top: 2vw;
+  margin-bottom: 2vw;
+
+  background: #fff;
+  color: #000;
+
+  border: none;
+
+  cursor: pointer;
+  border-radius: 3px;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+}
+.profile-save-button:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+.profile-save-button-text {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 400;
+}
+.profile-seekers-tbl {
+  position: absolute;
+
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+}
+.profile-seekers-tbl-container {
+  position: relative;
+  height: 100%;
+}
+.profile-seekers-tbl-body {
+  width: 100%;
+  min-height: 10%;
+  max-height: 89.5%;
+
+  overflow-y: auto;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+.profile-seekers-tbl table {
+  table-layout: fixed;
+  width: 100%;
+
+  margin-top: 0;
+}
+.profile-seekers-tbl thead {
+  background-color: var(--tab-background-color);
+  height: 2vh;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-seekers-tbl tbody {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  height: 1vh;
+}
+
+.profile-seekers-tbl table thead th {
+  height: 2vw;
+  padding: 20px 15px;
+
+  text-align: center;
+
+  font-weight: 500;
+  font-size: 12px;
+
+  color: #fff;
+
+  text-transform: uppercase;
+}
+
+.profile-seekers-tbl td {
+  padding: 15px;
+
+  text-align: center;
+  vertical-align: middle;
+
+  font-weight: 300;
+  font-size: 12px;
+  word-wrap: break-word;
+
+  color: #fff;
+
+  border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+.profile-edit-btn {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 2vw;
+  height: 2vh;
+
+  background-color: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: none;
+}
+
+/*
+Why doesn't this work!? 
+input ~ tab-content {display: none;}
+input:checked ~ tab-content {display: var(--tab-display);}*/
+
+input#tabToggle01:checked ~ tab-content:not(:nth-of-type(1)),
+input#tabToggle02:checked ~ tab-content:not(:nth-of-type(2)),
+input#tabToggle03:checked ~ tab-content:not(:nth-of-type(3)) {
+  display: none;
+}
+
+/* Profile Modal form of seekers details information */
+.profile-seeker-detail-information {
+  display: none;
+  position: fixed;
+  flex-wrap: nowrap;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-color: var(--modal-form-out-background-color);
+
+  z-index: var(--z-index-for-modal-form);
+}
+
+.profile-seeker-modal-dialog {
+  position: relative;
+
+  border-radius: 3px;
+
+  margin-top: 40%;
+  margin-left: 120%;
+
+  width: 30vw;
+  height: 20vw;
+
+  font-family: var(--tbl-lable-font-family);
+  font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+  font-weight: var(--tbl-lable-font-weight);
+
+  background-color: var(--page-content-background-color);
+
+  backdrop-filter: var(--backdrop-filter-blur);
+  -webkit-backdrop-filter: var(--backdrop-filter-blur);
+
+  z-index: var(--z-index-for-modal-form);
+}
+
+.profile-seeker-modal-content {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+.profile-seeker-modal-header {
+  width: 100%;
+  height: 20%;
+
+  text-align: center;
+
+  margin-bottom: 2vh;
+}
+
+.profile-seeker-detail-information h4 {
+  padding-top: 2vw;
+
+  color: #000;
+}
+
+#profile-seeker-modal-cross-svg {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+
+  width: 2vw;
+  height: 2vh;
+
+  fill: var(--page-text-color);
+}
+
+#profile-seeker-modal-cross-svg:hover {
+  fill: var(--page-text-color-hover);
+}
+
+.profile-edit-seeker-modal-body {
+  display: var(--tab-display);
+  grid-column: 1 / -1;
+
+  align-items: center;
+  justify-content: center;
+
+  padding-top: 2vw;
+}
+
+.profile-edit-seeker-modal-body input + label {
+  text-align: left;
+}
+
+.profile-edit-seeker-modal-#page-footer {
+  text-align: center;
+}
+/* ---------------------------------------------------------- */
