@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Профиль | Кабинет Искателя</title>
+    <link
+      rel="icon"
+      href="images/icon/al_vadud_vector_title.svg"
+      type="image/svg"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"
+    />
+    <link
+      rel="stylesheet prefetch"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/navbar/bootstrap.min.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <!-- ===== Boxicons CSS ===== -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/main.47302f9e2ba77093c83b.css" rel="stylesheet" />
+  </head>
+  <body class="page-user-profile">
+    <div class="page-video">
+      <video
+        class="video"
+        controls
+        loop="loop"
+        autoplay=""
+        muted=""
+        poster="images/fly_on_clouds.jpg"
+      >
+        <source src="video/fly_on_clouds.mp4" type="video/mp4" />
+        <source src="video/fly_on_clouds.webm" type="video/webm" />
+      </video>
+    </div>
+
+    <header id="page-header"></header>
+
+    <!-- Форма информации о юзере -->
+    <main>
+      <div class="user-infromation-profile">
+        <div class="user-infromation-profile-content">
+          <tab-container>
+            <!-- TAB CONTROLS -->
+            <input
+              class="input-tab-toggle"
+              type="radio"
+              id="tabToggle01"
+              name="tabs"
+              value="1"
+              checked
+            />
+            <label class="lable-tab-toggle" for="tabToggle01" checked="checked"
+              >Основная информация</label
+            >
+            <input
+              class="input-tab-toggle"
+              type="radio"
+              id="tabToggle02"
+              name="tabs"
+              value="2"
+            />
+            <label class="lable-tab-toggle" for="tabToggle02"
+              >Дополнительная информация</label
+            >
+            <input
+              class="input-tab-toggle"
+              type="radio"
+              id="tabToggle03"
+              name="tabs"
+              value="3"
+            />
+            <label class="lable-tab-toggle" for="tabToggle03"
+              >Администрирование</label
+            >
+            <!-- Форма основной информации -->
+            <tab-content id="profile-main-inf-cnt">
+              <div class="fields">
+                <form action="#">
+                  <div class="input-field">
+                    <label>Имя пользователя</label>
+                    <input
+                      class="profile-user-form-el"
+                      id="profile-user-login"
+                      type="text"
+                      placeholder="Введите имя пользователя"
+                      value="Денис"
+                      disabled
+                      required
+                    />
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Пароль</label>
+                    <input
+                      class="profile-user-form-el"
+                      id="profile-user-password"
+                      type="password"
+                      placeholder="Введите пароль"
+                      value="admin"
+                      disabled
+                      required
+                    />
+                    <i class="fa fa-eye fa-xs" id="profile-show-password"></i>
+                    <i
+                      class="fa fa-eye-slash fa-xs"
+                      id="profile-hide-password"
+                    ></i>
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Email</label>
+                    <input
+                      class="profile-user-form-el"
+                      id="profile-user-email"
+                      type="email"
+                      placeholder="Введите свой email"
+                      value="xisi926@ukr.net"
+                      disabled
+                      required
+                    />
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Имя</label>
+                    <input
+                      class="profile-user-form-el"
+                      id="profile-user-name"
+                      type="text"
+                      placeholder="Введите своё имя"
+                      value="Денис"
+                      disabled
+                      required
+                    />
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Фамилия</label>
+                    <input
+                      class="profile-user-form-el"
+                      id="profile-user-last-name"
+                      type="text"
+                      placeholder="Введите свою фамилию"
+                      value="Бунак"
+                      disabled
+                      required
+                    />
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Дата рождения</label>
+                    <input
+                      class="profile-user-form-el"
+                      id="profile-bithday"
+                      type="date"
+                      placeholder="Введите свой день рождения"
+                      value="1990-10-14"
+                      disabled
+                      required
+                    />
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Номер телефона</label>
+                    <span class="validity"></span>
+                    <input
+                      class="profile-user-form-el"
+                      id="profile-phone-number"
+                      type="tel"
+                      placeholder="38066-88-888-88"
+                      value="38066-88-888-88"
+                      disabled
+                      pattern="[0-9]{5}-[0-9]{2}-[0-9]{3}-[0-9]{2}"
+                    />
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Пол</label>
+                    <select
+                      class="profile-user-form-el"
+                      id="profile-gender"
+                      disabled
+                      required
+                    >
+                      <option disabled selected>Выберите пол</option>
+                      <option>Мужской</option>
+                      <option>Женский</option>
+                    </select>
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="profile-btn-container">
+                    <button class="profile-save-button" type="submit">
+                      <span class="profile-save-button-text"
+                        >Сохранить изменения</span
+                      >
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </tab-content>
+            <!-- Форма дополнительной информации -->
+            <tab-content id="profile-add-inf-cnt">
+              <div class="fields">
+                <form action="#">
+                  <div class="input-field">
+                    <label>Аватар</label>
+                    <input
+                      class="profile-user-form-el"
+                      id="profile-user-photo"
+                      type="file"
+                      placeholder="Загрузите фото на аватар"
+                      disabled
+                    />
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Место нахождения</label>
+                    <input
+                      class="profile-user-form-el"
+                      id="resident-city"
+                      type="text"
+                      placeholder="Начните вводить город..."
+                      value="г. Чернигов, Украина"
+                      disabled
+                    />
+                    <div id="suggestions" class="suggestions"></div>
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Дата начала учёбы в Школе</label>
+                    <input
+                      class="profile-user-form-el"
+                      id="profile-start-studying-date"
+                      type="date"
+                      value="2020-12-28"
+                      disabled
+                      required
+                    />
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="input-field">
+                    <label>Ваш куратор</label>
+                    <select
+                      class="profile-user-form-el"
+                      id="profile-mentor-full-name"
+                      disabled
+                      required
+                    >
+                      <option disabled selected>
+                        Выберите своего куратора
+                      </option>
+                      <option>Руслан Жуковец</option>
+                      <option>Алексей Киселёв</option>
+                      <option>Александр Циганков</option>
+                    </select>
+                    <svg
+                      class="user-profile-pncl-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 528.899 528.899"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <path
+                          d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                        />
+                      </g>
+                    </svg>
+                    <svg
+                      class="user-profile-erase-icon"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15.0722 3.9967L20.7508 9.83395L17.0544 13.5304L13.0758 17.5H21.0041V19H7.93503L4.00195 15.0669L15.0722 3.9967ZM10.952 17.5L15.4628 12.9994L11.8268 9.3634L6.12327 15.0669L8.55635 17.5H10.952Z"
+                      />
+                    </svg>
+                  </div>
+                  <div class="profile-btn-container">
+                    <button class="profile-save-button" type="submit">
+                      <span class="profile-save-button-text"
+                        >Сохранить изменения</span
+                      >
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </tab-content>
+            <!-- Форма администрирования -->
+            <tab-content id="profile-adm-inf-cnt">
+              <div class="profile-seekers-tbl">
+                <div class="profile-seekers-tbl-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Логин</th>
+                        <th>ФИО</th>
+                        <th>Куратор</th>
+                        <th>Искательский стаж</th>
+                        <th>Доступ</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <div class="profile-seekers-tbl-body">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Mistic</td>
+                          <td>Иванов Иван Иванович</td>
+                          <td>Руслан Жуковец</td>
+                          <td>1.5 года</td>
+                          <td>Бывалый</td>
+                          <td>
+                            <svg
+                              class="profile-adm-edit-icon"
+                              xmlns="http://www.w3.org/2000/svg"
+                              xmlns:xlink="http://www.w3.org/1999/xlink"
+                              viewBox="0 0 528.899 528.899"
+                              xml:space="preserve"
+                            >
+                              <g>
+                                <path
+                                  d="M328.883,89.125l107.59,107.589l-272.34,272.34L56.604,361.465L328.883,89.125z M518.113,63.177l-47.981-47.981
+		c-18.543-18.543-48.653-18.543-67.259,0l-45.961,45.961l107.59,107.59l53.611-53.611
+		C532.495,100.753,532.495,77.559,518.113,63.177z M0.3,512.69c-1.958,8.812,5.998,16.708,14.811,14.565l119.891-29.069
+		L27.473,390.597L0.3,512.69z"
+                                />
+                              </g>
+                            </svg>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </tab-content>
+          </tab-container>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal Edit Seeker Infomation -->
+    <div
+      class="profile-seeker-detail-information"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <form class="profile-edit-seeker-from" action="#">
+        <div class="profile-seeker-modal-dialog">
+          <div class="profile-seeker-modal-content">
+            <div class="profile-seeker-modal-header">
+              <h4 class="profile-seeker-modal-title">
+                Редактирование данных Искателя
+              </h4>
+              <svg
+                id="profile-seeker-modal-cross-svg"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 612.043 612.043"
+                style="enable-background: new 0 0 612.043 612.043"
+                xml:space="preserve"
+              >
+                <g>
+                  <g id="cross">
+                    <g>
+                      <path
+                        d="M397.503,306.011l195.577-195.577c25.27-25.269,25.27-66.213,0-91.482c-25.269-25.269-66.213-25.269-91.481,0
+				L306.022,214.551L110.445,18.974c-25.269-25.269-66.213-25.269-91.482,0s-25.269,66.213,0,91.482L214.54,306.033L18.963,501.61
+				c-25.269,25.269-25.269,66.213,0,91.481c25.269,25.27,66.213,25.27,91.482,0l195.577-195.576l195.577,195.576
+				c25.269,25.27,66.213,25.27,91.481,0c25.27-25.269,25.27-66.213,0-91.481L397.503,306.011z"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <div class="profile-edit-seeker-modal-body">
+              <div class="input-field">
+                <label>Ваш куратор</label>
+                <select id="profile-mentor-full-name" required>
+                  <option disabled selected>Выберите куратора</option>
+                  <option>Руслан Жуковец</option>
+                  <option>Алексей Киселёв</option>
+                  <option>Александр Циганков</option>
+                </select>
+              </div>
+
+              <div class="input-field">
+                <label>Дата начала учёбы в Школе</label>
+                <input
+                  id="profile-start-studying-date"
+                  type="date"
+                  value="2020-12-28"
+                  required
+                />
+              </div>
+
+              <div class="input-field">
+                <label>Доступ</label>
+                <select id="profile-access" required>
+                  <option disabled selected>Выберите уровень доступа</option>
+                  <option>Турист</option>
+                  <option>Начинающий</option>
+                  <option>Искатель</option>
+                  <option>Бывалый</option>
+                </select>
+              </div>
+            </div>
+            <div class="profile-edit-seeker-modal-footer">
+              <button type="submit" class="profile-save-button">
+                Сохранить
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <footer id="page-footer"></footer>
+
+    <script src="js/cssVariables.js" type="module"></script>
+    <script src="js/luxon.js" type="module"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/d6a7640edd.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
