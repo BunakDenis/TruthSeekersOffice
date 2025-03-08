@@ -7,9 +7,9 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry: {
-    cabinet: "./js/cabinet.js",
-    initFragments: "./js/initFragments.js",
-    main: "./js/main.js",
+    cabinet: "./src/js/cabinet.js",
+    initFragments: "./src/js/initFragments.js",
+    main: "./src/js/main.js",
   },
   output: {
     clean: true,
