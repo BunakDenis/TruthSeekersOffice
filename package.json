@@ -45,7 +45,6 @@
     "report": "nyc report --reporter=html && npx http-server coverage -p 3001",
     "test": "start-server-and-test start http://localhost:3000 cy:run && npm run report",
     "test-ui": "start-server-and-test start http://localhost:3000 cy:open && npm run report",
-    "wp-start": "webpack serve",
-    "wp-build": "webpack build --mode=production"
+    "wp-start": "webpack serve"
   }
 }
