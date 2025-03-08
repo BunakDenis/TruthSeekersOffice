@@ -97,10 +97,18 @@
 }
 
 *,
-*::before,
-*::after {
-  box-sizing: var(--box-sizing);
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
 }
+
+// *,
+// *::before,
+// *::after {
+//   box-sizing: var(--box-sizing);
+// }
 
 /* for custom scrollbar for webkit browser*/
 
@@ -116,18 +124,14 @@
 
 html {
   height: 100%;
+  scroll-behavior: smooth;
+  font-size: 62.5%;
 }
 
 body {
-  display: flex;
-  position: relative;
-
-  flex-direction: column;
-
   height: 100%;
-
-  margin: 0;
-  padding: 0;
+  box-sizing: var(--box-sizing);
+  padding: 3rem;
 }
 
 header {
@@ -293,9 +297,6 @@ a {
   fill: var(--pictures-cabinet-page-color);
   width: 30px;
   height: 30px;
-
-  -webkit-transition: var(--transition-fill-04-ease-in-out);
-  -o-transition: var(--transition-fill-04-ease-in-out);
   transition: var(--transition-fill-04-ease-in-out);
 }
 
@@ -398,6 +399,7 @@ a {
 
 .contacts-container .contacts-information-container .school-email:hover {
   color: var(--page-text-color-hover);
+  -webkit-text-decoration: underline var(--page-text-color-hover) !important;
   text-decoration: underline var(--page-text-color-hover) !important;
 }
 
