@@ -50,8 +50,8 @@ module.exports = {
         { from: "./fragments", to: "fragments" },
         { from: "./images", to: "images" },
         { from: "./video", to: "video" },
-        { from: "./js/luxon.js", to: "js" },
-        { from: "./js/cssVariables.js", to: "js" },
+        { from: "./src/js/luxon.js", to: "js" },
+        { from: "./src/js/cssVariables.js", to: "js" },
       ],
     }),
     ...[
