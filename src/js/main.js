@@ -1,7 +1,3 @@
-// import "../css/style.css";
-// import "../css/cabinetPage.css";
-// import "../css/navbar.css";
-// import "../css/sidebar.css";
 import "../scss/prod.css";
 //------------------------------------------
 //Страница - профайл юзера
