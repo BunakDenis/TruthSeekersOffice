@@ -244,15 +244,15 @@ a {
   min-height: 100%;
 }
 
-/* Greeding */
-.greeding {
+/* greeting */
+.greeting {
   width: 100%;
   justify-content: center;
 
   padding-top: 30vh;
 }
 
-.greeding h1 {
+.greeting h1 {
   font-family: "Orelega One", serif;
   font-weight: 500;
   font-size: 50px;
@@ -264,7 +264,7 @@ a {
   text-indent: 20px;
 }
 
-.greeding p {
+.greeting p {
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
   font-weight: 300;
@@ -2801,4 +2801,3 @@ body main .sidebar {
   color: var(--page-text-color-hover) !important;
   background-color: transparent;
 }
-

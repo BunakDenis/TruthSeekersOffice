@@ -1,4 +1,5 @@
 const path = require("path");
+const autoprefixer = require("autoprefixer");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -6,9 +7,9 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry: {
-    cabinet: "./js/cabinet.js",
-    initFragments: "./js/initFragments.js",
-    main: "./js/main.js",
+    cabinet: "./src/js/cabinet.js",
+    initFragments: "./src/js/initFragments.js",
+    main: "./src/js/main.js",
   },
   output: {
     clean: true,
@@ -49,8 +50,8 @@ module.exports = {
         { from: "./fragments", to: "fragments" },
         { from: "./images", to: "images" },
         { from: "./video", to: "video" },
-        { from: "./js/luxon.js", to: "js" },
-        { from: "./js/cssVariables.js", to: "js" },
+        { from: "./src/js/luxon.js", to: "js" },
+        { from: "./src/js/cssVariables.js", to: "js" },
       ],
     }),
     ...[

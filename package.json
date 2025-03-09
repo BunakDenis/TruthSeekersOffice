@@ -9,6 +9,7 @@
     "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
     "@cypress/code-coverage": "^3.13.12",
+    "autoprefixer": "^10.4.20",
     "babel-loader": "^9.2.1",
     "babel-plugin-istanbul": "^7.0.0",
     "clean-webpack-plugin": "^4.0.0",
@@ -18,13 +19,19 @@
     "html-webpack-plugin": "^5.6.3",
     "mini-css-extract-plugin": "^2.9.2",
     "nyc": "^17.1.0",
+    "postcss-loader": "^8.1.1",
+    "sass": "^1.85.1",
+    "sass-loader": "^16.0.5",
     "start-server-and-test": "^2.0.10",
+    "style-loader": "^4.0.0",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
-    "server": "^1.0.41",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
+    "server": "^0.0.3",
     "table-sort-js": "^1.22.2"
   },
   "scripts": {
@@ -37,6 +44,8 @@
     "cy:open": "cypress open --browser chrome",
     "report": "nyc report --reporter=html && npx http-server coverage -p 3001",
     "test": "start-server-and-test start http://localhost:3000 cy:run && npm run report",
-    "test-ui": "start-server-and-test start http://localhost:3000 cy:open && npm run report"
+    "test-ui": "start-server-and-test start http://localhost:3000 cy:open && npm run report",
+    "wp-start": "webpack serve",
+    "sass-prod": "sass --watch ./src/scss/styles.scss ./src/scss/prod.css"
   }
 }
