@@ -15,15 +15,21 @@
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "cypress": "^14.1.0",
+    "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.3",
     "mini-css-extract-plugin": "^2.9.2",
     "nyc": "^17.1.0",
+    "raw-loader": "^4.0.2",
+    "sass": "^1.85.1",
+    "sass-loader": "^16.0.5",
     "start-server-and-test": "^2.0.10",
+    "style-loader": "^4.0.0",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
+    "cypress-real-events": "^1.14.0",
     "server": "^1.0.41",
     "table-sort-js": "^1.22.2"
   },
@@ -32,11 +38,12 @@
     "clean-git": "rm -rf .nyc_output coverage dist",
     "build": "webpack --mode production",
     "pretest": "npm run clean && npm run build",
-    "start": "serve -p 3000 ./dist",
+    "start": "webpack serve --mode development",
     "cy:run": "cypress run",
     "cy:open": "cypress open --browser chrome",
     "report": "nyc report --reporter=html && npx http-server coverage -p 3001",
-    "test": "start-server-and-test start http://localhost:3000 cy:run && npm run report",
+    "report-txt": "nyc report --reporter=text",
+    "test": "start-server-and-test start http://localhost:3000 cy:run && npm run report-txt",
     "test-ui": "start-server-and-test start http://localhost:3000 cy:open && npm run report"
   }
 }
