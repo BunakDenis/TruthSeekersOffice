@@ -9,12 +9,6 @@ const htmlFiles = fs
   .readdirSync(pagesDir)
   .filter((file) => file.endsWith(".html"));
 
-// Записываем список файлов в JSON
-fs.writeFileSync(
-  path.resolve(__dirname, "dist/htmlFilesNames.json"), // Путь для записи JSON
-  JSON.stringify(htmlFiles, null, 2) // Преобразуем в JSON с отступами
-);
-
 module.exports = {
   entry: {
     cabinet: "./src/js/cabinet.js",

@@ -23,14 +23,17 @@ describe("Тесты функций хедера", () => {
       cy.get(".al-vadud").as("alvadud");
       cy.get(".school-name").as("schoolName");
 
+      //Проверка изменения цвета Альвадуда и названия Школы при наведении мыши на иконку Альвадуд
       cy.get("@alvadud").realHover("mouse");
       cy.get("@schoolName").should("have.css", "color", "rgb(255, 215, 0)");
       cy.get("@alvadud").should("have.css", "fill", "rgb(255, 215, 0)");
 
+      //Проверка изменения цвета Альвадуда и названия Школы при наведении мыши на название Школы
       cy.get("@schoolName").realHover("mouse");
       cy.get("@schoolName").should("have.css", "color", "rgb(255, 215, 0)");
       cy.get("@alvadud").should("have.css", "fill", "rgb(255, 215, 0)");
 
+      //Проверка изменения цвета Альвадуда и названия Школы при отвода мыши с этих элементов
       cy.get(".search").realHover("mouse");
       cy.get("@schoolName").should("have.css", "color", "rgb(255, 0, 0)");
       cy.get("@alvadud").should("have.css", "fill", "rgb(255, 0, 0)");
@@ -44,12 +47,15 @@ describe("Тесты функций хедера", () => {
       cy.get(".searchToggle").find(".search").as("searchIcon");
       cy.get(".searchToggle").find(".cancel").as("cancelIcon");
 
+      //Проверка видимости поля ввода поискового запроса при нажатии на иконку поиск
       cy.get("@searchIcon").click();
       cy.get(".search-field").should("be.visible");
 
+      //Проверка закрытия окна ввода поискового запроса при нажатии на иконку закрыть
       cy.get("@cancelIcon").click();
       cy.get(".search-field").should("be.not.visible");
 
+      //Проверка редиректа на страницу результатов поиска при нажатии на кнопку поиск в окне поиска
       cy.get("@searchIcon").click();
       cy.get(".search-field").find(".search").click();
       cy.url().should("match", /searchingResult/);
@@ -81,9 +87,19 @@ describe("Тесты функций хедера", () => {
       cy.get("@hidePasswordIcon").should("be.visible");
       cy.get("@passwordField").should("have.attr", "type", "password");
 
-      //Проверка закрытия окна
+      //Проверка закрытия окна при нажатии на иконку юзера
       cy.get("@userIcon").click();
       cy.get("@signInContainer").should("be.not.visible");
+
+      //Проверка закрытия окна при нажатии на кнопку закрыть окно
+      cy.get("@userIcon").click();
+      cy.get(".sign-in-form-cancel").click();
+      cy.get("@signInContainer").should("be.not.visible");
+
+      //Проверка редиректа на страницу регистрации юзера при нажатии на кнопку "Зарегистрироваться"
+      cy.get("@userIcon").click();
+      cy.get(".register").find(".sign-in-form-link").click();
+      cy.url().should("match", /userSignUp/);
     });
   });
 });
