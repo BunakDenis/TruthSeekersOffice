@@ -77,19 +77,19 @@ function initHeaderJS() {
     userIcon.addEventListener("click", () => {
       if (userAuthorization) {
         // Если пользователь авторизован, показать контейнер уведомлений
-        if (userInformationContainer.style.display == "none") {
+        if (userInformationContainer.style.display == "block") {
+          userInformationContainer.style.display = "none";
+        } else {
           signInContainer.style.display = "none";
           userInformationContainer.style.display = "block";
-        } else {
-          userInformationContainer.style.display = "none";
         }
       } else {
         // Если пользователь не авторизован, показать контейнер входа
-        if (signInContainer.style.display == "none") {
+        if (signInContainer.style.display == "block") {
+          signInContainer.style.display = "none";
+        } else {
           signInContainer.style.display = "block";
           userInformationContainer.style.display = "none";
-        } else {
-          signInContainer.style.display = "none";
         }
       }
     });
@@ -138,10 +138,10 @@ function initHeaderJS() {
 
   // Функция для обработки нажатия на SVG
   notificationIcon.addEventListener("click", () => {
-    if (notificationContainer.style.display == "none") {
-      notificationContainer.style.display = "block";
-    } else {
+    if (notificationContainer.style.display == "block") {
       notificationContainer.style.display = "none";
+    } else {
+      notificationContainer.style.display = "block";
     }
   });
 

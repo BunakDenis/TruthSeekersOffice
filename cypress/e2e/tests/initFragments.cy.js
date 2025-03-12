@@ -71,7 +71,6 @@ describe("Тесты функций хедера", () => {
 
       //Проверка отображения окна
       cy.get("@userIcon").click();
-      cy.get("@userIcon").click();
       cy.get("@signInContainer").should("be.visible");
 
       //Проверка работы иконки отображения/скрытия пароля
@@ -100,6 +99,72 @@ describe("Тесты функций хедера", () => {
       cy.get("@userIcon").click();
       cy.get(".register").find(".sign-in-form-link").click();
       cy.url().should("match", /userSignUp/);
+    });
+  });
+
+  it("Проверка функций окна информации юзера", () => {
+    htmlFilesNames.forEach((element) => {
+      cy.visit(element);
+
+      cy.get("#user").as("userIcon");
+      cy.get("#user-information-container").as("userInformationContainer");
+
+      //Проверка отображения окна
+      cy.get("@userIcon").click();
+      cy.get(".sign-in-container").as("signInContainer");
+      cy.get("@signInContainer").find(".sign-in-button").click();
+      cy.get("@userIcon").click();
+      cy.get("@userInformationContainer").should("be.visible");
+
+      //Проверка закрытия окна при нажатии на иконку юзера
+      cy.get("@userIcon").click();
+      cy.get("@userInformationContainer").should("be.not.visible");
+
+      //Проверка закрытия окна при нажатии на кнопку закрыть окно
+      cy.get("@userIcon").click();
+      cy.get(".user-information-form-cancel").click();
+      cy.get("@userInformationContainer").should("be.not.visible");
+
+      //Проверка редиректа на страницу регистрации юзера при нажатии на кнопку "Зарегистрироваться"
+      cy.get("@userIcon").click();
+      cy.get(".user-fw-profile-link").click();
+      cy.url().should("match", /userProfile/);
+    });
+  });
+
+  it("Проверка функций окна уведомлений", () => {
+    htmlFilesNames.forEach((element) => {
+      cy.visit(element);
+
+      cy.get("#notification-svg").as("notificationIcon");
+      cy.get(".notification-container").as("notificationContainer");
+
+      //Проверка отображения окна
+      cy.get("@notificationIcon").click();
+      cy.get("@notificationContainer").should("be.visible");
+
+      //Проверка закрытия окна при нажатии на иконку юзера
+      cy.get("@notificationIcon").click();
+      cy.get("@notificationContainer").should("be.not.visible");
+
+      //Проверка закрытия окна при нажатии на кнопку закрыть окно
+      cy.get("@notificationIcon").click();
+      cy.get(".notification-form-cancel").click();
+      cy.get("@notificationContainer").should("be.not.visible");
+    });
+  });
+});
+
+describe("Проверка функций футера", () => {
+  it("Проверка отображения текущего года в футере", () => {
+    htmlFilesNames.forEach((element) => {
+      cy.visit(element);
+
+      const currentYear = new Date().getFullYear();
+      cy.get(".copyright").should(
+        "have.text",
+        `\n«Восходящий Поток» © 2015 —\n ${currentYear}`
+      );
     });
   });
 });

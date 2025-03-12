@@ -228,7 +228,7 @@
     </svg>
     <div class="user-information-links-container">
           <p class="user-information-content">user@gmailcom</p>
-          <a href="./userProfile.html">Профиль</a>
+          <a class="user-fw-profile-link" href="./userProfile.html">Профиль</a>
           <a class="sign-out-link" href="#">Выйти</a>
     </div>
   </form>
