@@ -30,7 +30,7 @@ function showOrHideSidebarContent(itemId) {
 
     //Проверка на совпадение активного контента с выбранным
     //Если выбрано другое меню, отключаем текущий активный контент и отображаем выбранный
-    if (activeItemContentId) {
+    if (activeItemContentId !== null) {
       if (!activeItemContentId.includes(itemContent.id)) {
         const activeItemContent = document.getElementById(activeItemContentId);
 
@@ -77,35 +77,36 @@ if (sidebarMenuItems.length > 0) {
       }
 
       //Если выбрано уже активное меню просто добавляем класс active, если выбрано другое меню снимаем класс active с активного и активируем текущее
-      if (!activeMenuId.includes(item.id)) {
-        localStorage.setItem(sidebarActiveMenuIdKey, item.id);
+      if (activeMenuId !== null) {
+        if (!activeMenuId.includes(item.id)) {
+          localStorage.setItem(sidebarActiveMenuIdKey, item.id);
 
-        //Снимаем класс active с активного меню
-        document
-          .getElementById(activeMenuId)
-          .closest("li")
-          .classList.remove("active");
+          //Снимаем класс active с активного меню
+          document
+            .getElementById(activeMenuId)
+            .closest("li")
+            .classList.remove("active");
 
-        //Добавляем класс active к выбранному меню
-        item.closest("li").classList.add("active");
+          //Добавляем класс active к выбранному меню
+          item.closest("li").classList.add("active");
 
-        //Если сайдбар свёрнут, делаем ту же операцию для названия меню в выпадающем списке
-        const activeSidebarMenuTitle =
-          findActiveSidebarMenuTitleById(activeMenuId);
+          //Если сайдбар свёрнут, делаем ту же операцию для названия меню в выпадающем списке
+          const activeSidebarMenuTitle =
+            findActiveSidebarMenuTitleById(activeMenuId);
 
-        if (activeSidebarMenuTitle)
-          activeSidebarMenuTitle.classList.remove("active");
+          if (activeSidebarMenuTitle)
+            activeSidebarMenuTitle.classList.remove("active");
 
-        const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
+          const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
 
-        if (selectedSidebarMenu) selectedSidebarMenu.classList.add("active");
-      } else {
-        localStorage.setItem(sidebarActiveMenuIdKey, item.id);
-        item.closest("li").classList.add("active");
-
-        const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
-        if (selectedSidebarMenu) selectedSidebarMenu.classList.add("active");
+          if (selectedSidebarMenu) selectedSidebarMenu.classList.add("active");
+        }
       }
+      localStorage.setItem(sidebarActiveMenuIdKey, item.id);
+      item.closest("li").classList.add("active");
+
+      const selectedSidebarMenu = findActiveSidebarMenuTitleById(item.id);
+      if (selectedSidebarMenu) selectedSidebarMenu.classList.add("active");
 
       showOrHideSidebarContent(item.id);
     });
