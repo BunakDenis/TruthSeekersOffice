@@ -1,0 +1,27 @@
+@mixin flex-center($direction: row) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex($direction: row) {
+    display: flex;
+    flex-direction: $direction;
+}
+
+@mixin border-round($radius: 10px, $color: var(--btn-background-color)) {
+        border-radius: $radius;
+        border: 1px solid $color;
+}
+
+@mixin box-shadow-tbl-el{
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+@mixin font-for-content($font-size: 1.2em, $font-style: normal) {
+    font-family: var(--fornt-family-for-content) !important;
+    font-size: $font-size !important;
+    font-optical-sizing: auto !important;
+    font-style: $font-style !important;
+}

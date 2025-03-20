@@ -90,9 +90,24 @@ module.exports = {
     ),
   ],
   devServer: {
-    static: path.resolve(__dirname, "dist"),
+    static: {
+      directory: path.resolve(__dirname, "dist"),
+    },
+    hot: true,
     port: 3000,
     open: true,
-    hot: true,
+    watchFiles: ["*.html", "css/*.css", "js/*.js"],
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/cabinet$/, to: "/cabinet.html" },
+        { from: /^\/contacts$/, to: "/contacts.html" },
+        { from: /^\/searchingResult$/, to: "/searchingResult.html" },
+        { from: /^\/userProfile$/, to: "/userProfile.html" },
+        { from: /^\/userSignUp$/, to: "/userSignUp.html" },
+      ],
+    },
+    devMiddleware: {
+      writeToDisk: true, // Записывает файлы в `dist`, как при обычном билде
+    },
   },
 };

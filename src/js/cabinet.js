@@ -1,16 +1,29 @@
-import { pageTextColorHover } from "./cssVariables.js";
-import { sidebarMenuBackgroundColorHover } from "./cssVariables.js";
-import TableSort from "table-sort-js";
+const TableSort = require("sortable-tablesort").TableSort;
 
-//Динамическое изменение размера модального окна при растягивании элементов textarea
 document.addEventListener("DOMContentLoaded", () => {
   changeModalEditInformationHeight();
-  const tbls = document.querySelectorAll("table.sortable");
+  const tables = document.querySelectorAll("table.sortable");
 
-  if (tbls) {
-    tbls.forEach((table) => {
-      var sort = new TableSort(table);
-      sort.refresh();
+  if (tables.length > 0) {
+    tables.forEach((table) => {
+      table.querySelectorAll("tbody tr").forEach((row) => {
+        row.querySelectorAll("td").forEach((cell) => {
+          if (cell.textContent.match(/^\d{2}\.\d{2}\.\d{4}$/)) {
+            cell.setAttribute(
+              "data-sort",
+              convertDateForEditForm(cell.textContent)
+            );
+          }
+        });
+      });
+
+      // Проверяем, действительно ли TableSort доступен
+      if (typeof TableSort !== "undefined") {
+        const sort = new TableSort(table);
+        sort.refresh();
+      } else {
+        console.error("TableSort is not defined. Check the import statement.");
+      }
     });
   }
 });
@@ -292,42 +305,42 @@ function changeVisibilityOfSubMenuItems(item) {
 const cntContainer = document.querySelector(".cabinet-content");
 
 if (cntContainer) {
-  const cntTables = Array.from(document.getElementsByTagName("table"));
+  const cntTables = document.getElementsByTagName("table");
 
-  //Подключение сервисов и функций для работы с таблицами контента сайдбара
   if (cntTables.length > 0) {
-    cntTables.forEach((tbl) => {
-      tblMultiSlctService(tbl.id);
-      addNewRow(tbl.id);
-      searchTable(tbl.id);
-    });
+    //Подключение сервисов и функций для работы с таблицами контента сайдбара
+    for (let i = 0; i < cntTables.length; i++) {
+      tblMultiSlctService(cntTables[i].id);
+      addNewRow(cntTables[i].id);
+      searchTable(cntTables[i].id);
+    }
   }
+
   //Переключение иконки сортировки
-  const tblHeaderCell = cntContainer.getElementsByTagName("th");
+  for (let i = 0; i < cntTables.length; i++) {
+    const tblHeaderCell = cntTables[i].getElementsByTagName("th");
 
-  for (let i = 0; i < tblHeaderCell.length; i++) {
-    tblHeaderCell[i].addEventListener("click", (event) => {
-      event.preventDefault(); // Prevent the default action of the link
+    for (let i = 0; i < tblHeaderCell.length; i++) {
+      tblHeaderCell[i].addEventListener("click", (event) => {
+        event.preventDefault(); // Prevent the default action of the link
 
-      //Поиск элемента <span> класса "fas fa-caret-down first"
-      const caretSpan = tblHeaderCell[i].querySelector(".fas");
+        //Поиск элемента <span> класса "fas fa-caret-down first"
+        const caretSpan = tblHeaderCell[i].querySelector(".fas");
+        const tblCellSortAtr = tblHeaderCell[i].getAttribute("aria-sort");
 
-      if (
-        caretSpan &&
-        tblHeaderCell[i].getAttribute("aria-sort").includes("ascending")
-      ) {
-        //Переключение класса у элемента <span> на "rotate"
-        caretSpan.classList.add("rotate");
-      } else if (
-        caretSpan &&
-        tblHeaderCell[i].getAttribute("aria-sort").includes("descending")
-      ) {
-        caretSpan.classList.remove("rotate");
-      }
-    });
+        if (tblCellSortAtr != null) {
+          if (caretSpan && tblCellSortAtr.includes("descending")) {
+            //Переключение класса у элемента <span> на "rotate"
+            caretSpan.classList.add("rotate");
+          } else if (caretSpan && tblCellSortAtr.includes("ascending")) {
+            caretSpan.classList.remove("rotate");
+          }
+        }
+      });
+    }
   }
 
-  //Кнопкаы удалить все записи
+  //Кнопка удалить все записи
   const tblBtnDltAll = document.querySelectorAll(".tbl-btn-dlt-all");
 
   if (tblBtnDltAll.length > 0) {
@@ -981,7 +994,7 @@ function setTblRowValuesFromInputFields(row, inputFields) {
     }
   }
 }
-/*
+
 //Функция для вёрстки контента сайдбара
 document.addEventListener("DOMContentLoaded", function () {
   const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey);
@@ -992,4 +1005,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
   showOrHideSidebarContent(activeSubMenuId);
 });
-*/

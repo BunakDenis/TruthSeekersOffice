@@ -1,3 +1,4 @@
+@use "mixins" as mixins;
 .body-cabinet-page>#body-bg-image {
     position: absolute;
 
@@ -682,6 +683,147 @@ tbody tr:nth-child(even) {
 .cabinet-content div svg:hover,
 .cabinet-content div svg:hover .tbl-open-rec-icon-element {
     fill: var(--page-text-color-hover);
+}
+
+.cabinet-content{
+    .sb-cnt {
+
+        .sb-cnt-tbl-container {
+            
+            .tbl-pagination-container {
+                @include mixins.flex(row);
+                position: relative;
+
+                width: 100%;
+                height: 5vh;
+                
+                @include mixins.box-shadow-tbl-el();
+
+                margin: 2vh 0 0 0;
+                padding: 1vh 0 1vh 0;
+
+                @include mixins.font-for-content();
+                    
+                background-color: var(--page-content-background-color);
+            }
+
+        }
+
+    }
+}
+
+.tbl-pagination-container {
+    .tbl-offset {
+        @include mixins.flex(row);
+        position: relative;
+
+        height: 100%;
+        width: auto;
+
+        margin: 0 0 0 5vw;
+        padding: 0;
+
+        align-items: center;
+        justify-content: center;
+
+        @include mixins.font-for-content(0.8em);
+
+        color: var(--cabinet-page-sidebar-content-font-color);
+        background-color: transparent;
+        
+
+        label {
+            width: auto;
+            height: 90%;
+
+            padding: 0;
+            margin: 0;
+        }
+
+.custom-select {
+    position: relative;
+    width: auto;
+    height: 90%;
+
+    justify-content: center;
+
+    margin: 0 0 0 1vw;
+
+    .bx-chevron-down {
+        position: absolute;
+
+        color: var(--page-text-color);
+
+        font-size: 1.2em;
+
+        top: 15%;
+        left: 80%;
+    }
+
+    .selected {
+        width: 100%;
+        padding: 0 1vw 0 0.5vw;
+
+        color: var(--page-text-color);
+        background-color: var(--page-content-background-color);
+        border-radius: 10px;
+        cursor: pointer;
+
+        text-align: center;
+
+        @include mixins.border-round();
+    }
+
+    .options {
+        display: none;
+        position: absolute;
+
+        top: 2.8vh;
+
+        width: 100%;
+
+        color: var(--page-text-color);
+        background-color: rgba(206, 191, 191, 0.8);
+
+        @include mixins.border-round();
+
+        list-style: none;
+
+        padding: 0;
+        margin: 0;
+
+        border-radius: 10px;
+
+
+        li {
+            padding: 0;
+            cursor: pointer;
+            text-align: center;
+
+            &:hover {
+                color: var(--page-text-color-hover);
+                background-color: var(--cabinet-page-menu-item-hover-background-color);
+            }
+        }
+    }
+
+    &:hover .options {
+        display: block;
+    }
+}
+    }
+
+    .tbl-total-rows {
+
+    }
+
+    .tbl-current-row {
+
+    }
+    
+    .tbl-pagination {
+
+    }
 }
 
 /* Форма редактирования информации про Волю */

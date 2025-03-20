@@ -182,20 +182,20 @@
       </aside>
 
       <section class="cabinet-content">
-        <div id="link-general-results-sb-cnt">
+        <div class="sb-cnt" id="link-general-results-sb-cnt">
           <div class="sb-cnt-title">
             <h3>Общие результаты</h3>
           </div>
         </div>
-        <div id="link-God-sb-cnt">
+        <div class="sb-cnt" id="link-God-sb-cnt">
           <h1>Меню Господь</h1>
         </div>
-        <div id="link-will-sb-cnt">
+        <div class="sb-cnt" id="link-will-sb-cnt">
           <div class="sb-cnt-title">
             <h3>Воля</h3>
           </div>
           <div class="sb-cnt-tbl-container">
-            <table id="will-tbl sortable">
+            <table class="cnt-tbl sortable" id="will-tbl">
               <caption>
                 <div class="tbl-fltr-container">
                   <svg
@@ -258,7 +258,7 @@
               </caption>
               <thead>
                 <tr>
-                  <th data-sort-default>
+                  <th data-sort-default data-sort-method="date">
                     <a class="tbl-title-link" href="#"
                       >Дата принятия
                       <span class="fas fa-caret-down"></span>
@@ -1152,69 +1152,86 @@
                 </tr>
               </tbody>
             </table>
+            <div class="tbl-pagination-container">
+              <div class="tbl-offset">
+                <label class="tbl-offset-label">Количество записей</label>
+                <div class="custom-select">
+                  <div class="selected">Выберите</div>
+                  <i class="bx bx-chevron-down"></i>
+                  <ul class="options">
+                    <li data-value="5">5</li>
+                    <li data-value="10">10</li>
+                    <li data-value="15">15</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="tbl-total-rows"></div>
+              <div class="tbl-current-row"></div>
+              <ul class="tbl-pagination"></ul>
+            </div>
           </div>
         </div>
-        <div id="link-questioning-sb-cnt">
+        <div class="sb-cnt" id="link-questioning-sb-cnt">
           <h1>Меню Вопрошание</h1>
         </div>
-        <div id="link-vision-sb-cnt">
+        <div class="sb-cnt" id="link-vision-sb-cnt">
           <h1>Меню Ведение</h1>
         </div>
-        <div id="link-God-message-sb-cnt">
+        <div class="sb-cnt" id="link-God-message-sb-cnt">
           <h1>Меню Послания</h1>
         </div>
-        <div id="link-vow-sb-cnt">
+        <div class="sb-cnt" id="link-vow-sb-cnt">
           <h1>Меню Обеты</h1>
         </div>
 
         <!-- Контейнеры для элементов меню "Работа" -->
 
-        <div id="link-work-sb-cnt">
+        <div class="sb-cnt" id="link-work-sb-cnt">
           <h1>Меню Работа</h1>
         </div>
-        <div id="link-spiritual-work-sb-cnt">
+        <div class="sb-cnt" id="link-spiritual-work-sb-cnt">
           <h1>Меню Духовная Работа</h1>
         </div>
-        <div id="link-mystic-work-sb-cnt">
+        <div class="sb-cnt" id="link-mystic-work-sb-cnt">
           <h1>Меню Мистическая Работа</h1>
         </div>
 
         <!-- Контейнеры для элементов меню "Искателю" -->
-        <div id="link-seeker-sb-cnt">
+        <div class="sb-cnt" id="link-seeker-sb-cnt">
           <h1>Меню Искателю</h1>
         </div>
-        <div id="link-books-sb-cnt">
+        <div class="sb-cnt" id="link-books-sb-cnt">
           <h1>Меню Книги</h1>
         </div>
-        <div id="link-audio-books-sb-cnt">
+        <div class="sb-cnt" id="link-audio-books-sb-cnt">
           <h1>Меню Аудиокниги</h1>
         </div>
-        <div id="link-article-sb-cnt">
+        <div class="sb-cnt" id="link-article-sb-cnt">
           <h1>Меню Статьи</h1>
         </div>
-        <div id="link-media-lectures-sb-cnt">
+        <div class="sb-cnt" id="link-media-lectures-sb-cnt">
           <h1>Меню Аудио-видео лекции</h1>
         </div>
 
         <!-- Контейнеры для элементов меню "Администрирование" -->
-        <div id="link-adminisration-sb-cnt">
+        <div class="sb-cnt" id="link-adminisration-sb-cnt">
           <h1>Меню Администрирование</h1>
         </div>
-        <div id="link-adm-God-sb-cnt">
+        <div class="sb-cnt" id="link-adm-God-sb-cnt">
           <h1>Адниминистрирование меню Господь</h1>
         </div>
-        <div id="link-adm-spirit-work-sb-cnt">
+        <div class="sb-cnt" id="link-adm-spirit-work-sb-cnt">
           <h1>Адниминистрирование меню Духовная Работа</h1>
         </div>
-        <div id="link-adm-mystic-work-sb-cnt">
+        <div class="sb-cnt" id="link-adm-mystic-work-sb-cnt">
           <h1>Адниминистрирование меню Мистическая Работа</h1>
         </div>
-        <div id="link-adm-seeker-sb-cnt">
+        <div class="sb-cnt" id="link-adm-seeker-sb-cnt">
           <h1>Адниминистрирование меню Искателю</h1>
         </div>
 
         <!-- Контейнер для элемента меню "Настройки" -->
-        <div id="link-settings-sb-cnt">
+        <div class="sb-cnt" id="link-settings-sb-cnt">
           <h1>Меню Настройки</h1>
         </div>
       </section>
@@ -1302,8 +1319,6 @@
         </div>
       </form>
     </section>
-
-    <footer id="page-footer"></footer>
 
     <script
       src="https://kit.fontawesome.com/d6a7640edd.js"
