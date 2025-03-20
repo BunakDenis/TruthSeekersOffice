@@ -702,7 +702,7 @@ tbody tr:nth-child(even) {
                 margin: 2vh 0 0 0;
                 padding: 1vh 0 1vh 0;
 
-                @include mixins.font-for-content();
+                @include mixins.font-for-content(1em);
                     
                 background-color: var(--page-content-background-color);
             }
@@ -726,9 +726,6 @@ tbody tr:nth-child(even) {
         align-items: center;
         justify-content: center;
 
-        @include mixins.font-for-content(0.8em);
-
-        color: var(--cabinet-page-sidebar-content-font-color);
         background-color: transparent;
         
 
@@ -805,6 +802,11 @@ tbody tr:nth-child(even) {
                 background-color: var(--cabinet-page-menu-item-hover-background-color);
             }
         }
+
+        a {
+            color: inherit;
+        }
+
     }
 
     &:hover .options {
@@ -813,17 +815,75 @@ tbody tr:nth-child(even) {
 }
     }
 
-    .tbl-total-rows {
+    .tbl-pagination {
+        @include mixins.flex(row);
+        gap: 1vw;
 
+        list-style: none;
+
+        margin: 0 0 0 12vw;
+        padding: 0;
+
+        li {
+            margin: 0;
+            padding: 0;
+
+            justify-content: center;
+            align-content: center;
+
+                a {
+                    color: inherit;
+                    text-align: center;
+
+                    line-height: 1;
+
+                    margin: 0;
+                    padding: 0;
+                }
+
+                a:hover {
+                    color: var(--page-text-color-hover);
+                }
+        }
+
+        .tbl-pagination-chevrons {
+            @include mixins.flex(row);
+
+            margin: 0;
+            padding: 0;
+        }
+
+        i {
+            margin: 0;
+            padding: 0;
+
+            text-align: center;
+            align-content: center;
+
+            cursor: pointer;
+
+            font-size: 1.5em;
+        }
+
+        i:hover {
+            color: var(--page-text-color-hover);
+        }
     }
 
     .tbl-current-row {
+        margin: 0 0 0 6vw;
 
+        justify-content: center;
+        align-content: center;
+    }
+
+    .tbl-total-rows {
+        margin: 0 0 0 4vw;
+
+        justify-content: center;
+        align-content: center;
     }
     
-    .tbl-pagination {
-
-    }
 }
 
 /* Форма редактирования информации про Волю */
