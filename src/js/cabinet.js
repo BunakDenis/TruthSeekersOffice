@@ -1,19 +1,3 @@
-import('sortable-tablesort').then(module => {
-  console.log('Module:', module) // Посмотрим, что внутри
-  const TableSort = module.default || module // Попробуем взять `default`
-  if (!TableSort) {
-    console.error('TableSort не найден!')
-    return
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const tables = document.querySelectorAll('table.sortable')
-    tables.forEach(table => {
-      new TableSort(table)
-    })
-  })
-})
-
 //Переменная-ключ для добавления контента активного меню сайдбара
 const sidebarMenuActiveContentIdKey = 'sidebar-content-id'
 //Показ/скрытие контента соответсвующего меню или подменю сайдбара
@@ -308,17 +292,11 @@ if (cntContainer) {
       tblHeaderCell[i].addEventListener('click', event => {
         event.preventDefault() // Prevent the default action of the link
 
-        //Поиск элемента <span> класса "fas fa-caret-down first"
+        //Поиск элемента <span> класса "fas fa-caret-down"
         const caretSpan = tblHeaderCell[i].querySelector('.fas')
-        const tblCellSortAtr = tblHeaderCell[i].getAttribute('aria-sort')
 
-        if (tblCellSortAtr != null) {
-          if (caretSpan && tblCellSortAtr.includes('descending')) {
-            //Переключение класса у элемента <span> на "rotate"
-            caretSpan.classList.add('rotate')
-          } else if (caretSpan && tblCellSortAtr.includes('ascending')) {
-            caretSpan.classList.remove('rotate')
-          }
+        if (caretSpan) {
+          caretSpan.classList.toggle('rotate')
         }
       })
     }

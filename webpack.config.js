@@ -68,7 +68,12 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js']
+    alias: {
+      'sortable-tablesort': path.resolve(
+        __dirname,
+        'node_modules/sortable-tablesort/dist/sortable.min.js'
+      )
+    }
   },
   plugins: [
     new MiniCssExtractPlugin({
