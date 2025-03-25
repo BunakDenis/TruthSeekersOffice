@@ -135,9 +135,9 @@
   border-radius: 3px;
   border: 2px solid transparent;
 
-  transition: var(--transition-background-color-04-ease-in-out),
-    var(--transition-color-04-ease-in-out),
-    var(--transition-border-color-04-ease-in-out);
+  @include mixins.transition-all-04-in-out(
+    (color, background-color, visibility, opacity)
+  );
 }
 
 .cabinet-content div .sb-cnt-tbl-container table .tbl-btn:hover {
@@ -146,7 +146,7 @@
   background-color: var(--btn-hover-background-color);
 }
 
-.cabinet-content div .sb-cnt-tbl-container table caption {
+@at-root caption {
   display: flex;
   position: relative;
   align-items: center;
@@ -160,252 +160,342 @@
 
   background-color: var(--page-content-background-color);
   box-shadow: var(--cabinet-page-tbl-box-shadow);
-}
-
-.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-lb-checkbox {
-  position: relative;
-  width: 20px;
-  height: 20px;
-
-  margin: 0 0 0 1.2vw;
-  padding: 0;
-}
-
-.cabinet-content div .sb-cnt-tbl-container table .tbl-lb-checkbox {
-  display: none;
-  position: relative;
-  width: 20px;
-  height: 20px;
-
-  margin: 0;
-  padding: 0;
-}
-
-/* Скрываем нативный чекбокс */
-.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkbox,
-.cabinet-content div .sb-cnt-tbl-container table .tbl-checkbox {
-  position: absolute;
-
-  height: 20px;
-  width: 20px;
-
-  top: 0;
-  left: 0;
-
-  opacity: 0;
-  cursor: pointer;
-
-  z-index: var(--z-index-for-modal-form);
-}
-
-/* Создаем чекбокс */
-.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkmark,
-.cabinet-content div .sb-cnt-tbl-container table .tbl-checkmark {
-  position: absolute;
-
-  height: 20px;
-  width: 20px;
-
-  top: 0;
-  left: 0;
-
-  background-color: var(--checkbox-not-active-background-color);
-  border: 2px solid #dbd6d6;
-  border-radius: 4px;
-}
-
-.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkmark.active,
-.cabinet-content div .sb-cnt-tbl-container table .tbl-checkmark {
-  background-color: var(--btn-background-color);
-  border: 2px solid #ccc;
-}
-
-/* Изменяем цвет фона при отмеченном состоянии */
-table .tbl-gl-checkbox:checked + .tbl-gl-checkmark.active,
-table .tbl-checkbox:checked + .tbl-checkmark {
-  background-color: var(--btn-background-color);
-}
 
-/* Создаем галочку */
-.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkmark.active:after,
-.cabinet-content div .sb-cnt-tbl-container table .tbl-checkmark:after {
-  content: '';
-  position: absolute;
-  display: none;
-}
+  @at-root .tbl-fltr-container {
+    display: flex;
 
-/* Показываем галочку при отмеченном состоянии */
-.sb-cnt-tbl-container
-  table
-  .tbl-gl-checkbox:checked
-  + .tbl-gl-checkmark.active:after,
-.sb-cnt-tbl-container table .tbl-checkbox:checked + .tbl-checkmark:after {
-  display: block;
-}
+    flex-flow: row nowrap;
 
-/* Стили для галочки */
-.cabinet-content div .sb-cnt-tbl-container table .tbl-gl-checkmark.active:after,
-.cabinet-content div .sb-cnt-tbl-container table .tbl-checkmark:after {
-  top: 2px;
-  left: 5px;
-  width: 5px;
-  height: 10px;
-  border: 2px solid rgb(209, 179, 7);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
+    align-items: center;
 
-.cabinet-content div .sb-cnt-tbl-container table .tbl-btn-dlt-all {
-  visibility: hidden;
-  opacity: 0;
+    height: 4vh;
+    width: auto;
 
-  cursor: none;
+    margin-left: 2vw;
 
-  margin-left: 2vw;
+    cursor: pointer;
 
-  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
-}
+    #tbl-fltr-svg {
+      height: 3vh;
+      width: 3vw;
 
-.cabinet-content div .sb-cnt-tbl-container table .tbl-fltr-container {
-  display: flex;
+      margin: 0;
+      padding: 0;
 
-  flex-flow: row nowrap;
+      fill: var(--cabinet-page-sidebar-content-font-color);
+      @include mixins.transition-all-04-in-out(fill);
+    }
 
-  align-items: center;
+    p {
+      padding: 0;
+      margin: 0;
 
-  height: 4vh;
-  width: auto;
+      color: var(--cabinet-page-sidebar-content-font-color);
+      @include mixins.transition-all-04-in-out(color);
+    }
 
-  margin-left: 2vw;
+    &:hover #tbl-fltr-svg,
+    &:hover p {
+      @include mixins.fill-color-hover();
+    }
+  }
 
-  cursor: pointer;
-}
+  @at-root .tbl-search-field {
+    @include mixins.flex-center($direction: row, $gap: 0);
 
-.cabinet-content div .sb-cnt-tbl-container table #tbl-fltr-svg {
-  height: 3vh;
-  width: 3vw;
+    position: relative;
 
-  margin: 0;
-  padding: 0;
+    height: 4vh;
+    width: 20vw;
 
-  fill: var(--cabinet-page-sidebar-content-font-color);
-  transition: var(--transition-fill-04-ease-in-out);
-}
+    margin: 0 1vw 0 10vw;
 
-.sb-cnt-tbl-container table .tbl-fltr-container:hover #tbl-fltr-svg,
-.cabinet-content div .sb-cnt-tbl-container table .tbl-fltr-container:hover p {
-  fill: var(--page-text-color-hover);
-  color: var(--page-text-color-hover);
-}
+    background-color: var(--btn-background-color);
 
-.cabinet-content div .sb-cnt-tbl-container table .tbl-fltr-container p {
-  padding: 0;
-  margin: 0;
+    color: var(--btn-color);
 
-  color: var(--cabinet-page-sidebar-content-font-color);
-  transition: var(--transition-color-04-ease-in-out);
-}
+    @include mixins.border-round($color: var(--btn-background-color));
 
-.cabinet-content div .sb-cnt-tbl-container table caption .tbl-search-field {
-  display: flex;
+    @include mixins.font-for-content(transparent, italic);
 
-  flex-flow: row nowrap;
-  gap: 0.5vw;
+    &:focus-within {
+      box-shadow: var(--form-element-focus-box-shadow);
+      border: var(--form-element-focus-border) !important;
+    }
 
-  position: relative;
-  align-items: center;
+    input {
+      height: 95%;
+      width: 20vw;
 
-  height: 4vh;
-  width: 20vw;
+      margin-left: 1vw;
 
-  margin: 0 1vw 0 10vw;
+      outline: none;
+      border: none;
 
-  background-color: var(--btn-background-color);
+      background-color: transparent;
 
-  color: var(--btn-color);
+      @include mixins.font-for-content(transparent, $font-style: italic);
+    }
 
-  border-radius: 10px;
-  border: 1px solid var(--btn-background-color);
+    i {
+      padding-right: 0.5vw;
+      font-size: 1.4em;
+      cursor: pointer;
+      @include mixins.transition-all-04-in-out(color);
 
-  font-family: var(--fornt-family-for-content);
-  font-optical-sizing: auto;
-  font-style: italic;
-}
+      &:hover {
+        color: var(--page-text-color-hover);
+      }
+    }
 
-table caption .tbl-search-field input {
-  height: 95%;
-  width: 20vw;
+    .bx-x {
+      display: none;
+    }
 
-  margin-left: 1vw;
+    .tbl-search-wrn {
+      @include mixins.flex-center($direction: row, $gap: 0);
+      position: absolute;
 
-  outline: none;
-  border: none;
+      visibility: hidden;
+      opacity: 0;
 
-  background-color: transparent;
-}
+      top: 4.5vh;
+      left: 20.5vw;
 
-.sb-cnt-tbl-container table caption .tbl-search-field:focus-within {
-  box-shadow: var(--form-element-focus-box-shadow);
-  border: var(--form-element-focus-border) !important;
-}
+      width: 10vw;
 
-.cabinet-content div .sb-cnt-tbl-container table caption .tbl-search-field > i {
-  padding-right: 0.5vw;
-  font-size: 1.4em;
-  cursor: pointer;
-  transition: var(--transition-color-04-ease-in-out);
-}
+      font-size: 0.8em;
+      font-weight: 400;
 
-table caption .tbl-search-field .bx-x {
-  display: none;
-}
+      padding: 0.5vh 1vw 0.5vh 1vw;
 
-table caption .tbl-search-field i:hover {
-  color: var(--page-text-color-hover);
-}
+      background-color: var(--cabinet-page-content-background-color);
+      @include mixins.backdrop-filter();
 
-table caption .tbl-search-wrn {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
+      @include mixins.transition-all-04-in-out(visibility);
+      @include mixins.transition-all-04-in-out(opacity);
 
-  align-items: center;
-  align-content: center;
+      z-index: var(--z-index-for-icons-in-form);
 
-  visibility: hidden;
-  opacity: 0;
+      i {
+        color: rgb(223, 81, 15);
 
-  top: 4.5vh;
-  left: 20.5vw;
+        margin-right: 0.5vw;
+      }
 
-  width: 10vw;
+      p {
+        line-height: 1.2;
+        text-align: center;
 
-  font-size: 0.8em;
-  font-weight: 400;
+        margin: 0;
+        padding: 0;
+      }
+    }
 
-  padding: 0.5vh 1vw 0.5vh 1vw;
+    .tbl-search-result {
+      position: absolute;
+      @include mixins.flex-center($direction: row, $gap: 1wv);
 
-  background-color: var(--cabinet-page-content-background-color);
-  backdrop-filter: var(--backdrop-filter-blur);
-  --webkit-backdrop-filter: var(--backdrop-filter-blur);
+      top: 5vh;
+      left: 0;
 
-  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+      width: 20vw;
+      height: 4vh;
 
-  z-index: var(--z-index-for-icons-in-form);
-}
+      visibility: hidden;
+      opacity: 0;
 
-table caption .tbl-search-wrn i {
-  color: rgb(223, 81, 15);
+      font-size: 0.8em;
 
-  margin-right: 0.5vw;
-}
+      background-color: var(--cabinet-page-content-background-color);
+      @include mixins.backdrop-filter();
 
-table caption .tbl-search-wrn p {
-  line-height: 1.2;
-  text-align: center;
+      z-index: var(--z-index-for-icons-in-form);
+    }
 
-  margin: 0;
-  padding: 0;
+    .tbl-search-result.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .tbl-srch-rslt-item:nth-last-child(2) {
+      margin-left: auto;
+    }
+
+    p {
+      width: auto;
+      text-align: center;
+
+      font-style: normal;
+
+      margin: 0;
+      padding: 0 0 0 0.5vw;
+
+      line-height: 1em;
+    }
+
+    .tbl-srch-rslt-number {
+      padding: 0;
+      text-align: right;
+    }
+
+    .tbl-search-rslt-cevrons {
+      @include mixins.flex-center();
+
+      visibility: hidden;
+      opacity: 0;
+
+      margin: 0;
+      padding: 0;
+
+      .bx {
+        padding-top: 0.5vh;
+        font-size: 1.8em;
+        line-height: 1;
+
+        justify-self: center;
+
+        cursor: none;
+        color: var(--form-element-active-color);
+
+        &:hover {
+          color: var(--page-text-color-hover);
+        }
+      }
+
+      &.active .bx {
+        cursor: pointer;
+      }
+    }
+
+    .tbl-search-rslt-cevrons.active {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .tbl-btn-add {
+    margin-left: 4vw;
+
+    @include mixins.font-for-content(0.8em, 500);
+  }
+
+  select {
+    height: 4vh;
+
+    @include mixins.font-for-content(0.8em);
+  }
+
+  .tbl-btn-search {
+    width: 5vw;
+
+    margin-left: 1vw;
+
+    @include mixins.font-for-content(0.8em, 500);
+  }
+
+  @at-root .tbl-gl-lb-checkbox {
+    position: relative;
+    width: 20px;
+    height: 20px;
+
+    margin: 0 0 0 1.2vw;
+    padding: 0;
+  }
+
+  @at-root .tbl-gl-checkbox {
+    @include mixins.tblCheckboxesPosition();
+  }
+
+  @at-root .tbl-lb-checkbox {
+    display: none;
+    position: relative;
+    width: 20px;
+    height: 20px;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  @at-root .tbl-checkbox {
+    @include mixins.tblCheckboxesPosition();
+    border: 2px solid #dbd6d6;
+    border-radius: 4px;
+    background-color: var(--checkbox-not-active-background-color);
+  }
+
+  @at-root .tbl-gl-checkmark {
+    @include mixins.tblCheckmarkPosition();
+    border: 2px solid #dbd6d6;
+    border-radius: 4px;
+    background-color: var(--checkbox-not-active-background-color);
+  }
+
+  @at-root .tbl-gl-checkmark.active {
+    @include mixins.tblCheckmarkPosition();
+    border: 2px solid #ccc;
+    background-color: var(--btn-background-color);
+  }
+
+  @at-root .tbl-gl-checkmark.active::after {
+    content: '';
+    position: absolute;
+    display: none;
+
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 10px;
+    border: 2px solid rgb(209, 179, 7);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  @at-root .tbl-gl-checkbox:checked + .tbl-gl-checkmark.active::after {
+    display: block;
+  }
+
+  @at-root .tbl-checkmark {
+    @include mixins.tblCheckmarkPosition();
+    border: 2px solid #ccc;
+    background-color: var(--btn-background-color);
+  }
+
+  @at-root .tbl-checkmark::after {
+    content: '';
+    position: absolute;
+    display: none;
+
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 10px;
+    border: 2px solid rgb(209, 179, 7);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  @at-root .tbl-checkbox:checked + .tbl-checkmark::after {
+    display: block;
+  }
+
+  @at-root .tbl-btn-dlt-all {
+    visibility: hidden;
+    opacity: 0;
+
+    cursor: none;
+
+    margin-left: 2vw;
+
+    @include mixins.font-for-content(0.8em, 500);
+  }
+
+  @at-root .tbl-btn-dlt-all.active {
+    visibility: visible;
+    opacity: 1;
+
+    cursor: pointer;
+  }
 }
 
 .cabinet-content div .sb-cnt-tbl-container table .highlight {
@@ -416,113 +506,6 @@ table caption .tbl-search-wrn p {
 .cabinet-content div .sb-cnt-tbl-container table .highlight.active {
   background-color: #fc6908;
   border: 3px solid #fc6908;
-}
-
-table caption .tbl-search-field .tbl-search-result {
-  position: absolute;
-  display: flex;
-
-  flex-direction: row;
-  gap: 1vw;
-
-  align-items: center;
-
-  top: 5vh;
-  left: 0;
-
-  width: 20vw;
-  height: 4vh;
-
-  visibility: hidden;
-  opacity: 0;
-
-  font-size: 0.8em;
-
-  background-color: var(--cabinet-page-content-background-color);
-  backdrop-filter: var(--backdrop-filter-blur);
-  --webkit-backdrop-filter: var(--backdrop-filter-blur);
-
-  z-index: var(--z-index-for-icons-in-form);
-}
-
-table caption .tbl-search-field .tbl-search-result.active {
-  visibility: visible;
-  opacity: 1;
-}
-
-table
-  caption
-  .tbl-search-field
-  .tbl-search-result
-  .tbl-srch-rslt-item:nth-last-child(2) {
-  margin-left: auto;
-}
-
-table caption .tbl-search-field .tbl-search-result p {
-  width: auto;
-  text-align: center;
-
-  font-style: normal;
-
-  margin: 0;
-  padding: 0 0 0 0.5vw;
-
-  line-height: 1em;
-}
-
-table caption .tbl-search-field .tbl-search-result .tbl-srch-rslt-number {
-  padding: 0;
-  text-align: right;
-}
-
-table caption .tbl-search-field .tbl-search-result .tbl-search-rslt-cevrons {
-  display: flex;
-  flex-direction: row;
-  gap: 0;
-
-  margin: 0;
-  padding: 0;
-}
-
-table caption .tbl-search-field .bi-x {
-  display: none;
-}
-
-table
-  caption
-  .tbl-search-field
-  .tbl-search-result
-  .tbl-search-rslt-cevrons
-  .bx {
-  padding-top: 0.5vh;
-  font-size: 1.8em;
-  line-height: 1;
-
-  cursor: pointer;
-  color: var(--form-element-active-color);
-}
-
-table
-  caption
-  .tbl-search-field
-  .tbl-search-result
-  .tbl-search-rslt-cevrons
-  .bx:hover {
-  color: var(--page-text-color-hover);
-}
-
-.cabinet-content div .sb-cnt-tbl-container table caption .tbl-btn-add {
-  margin-left: 4vw;
-}
-
-.cabinet-content div .sb-cnt-tbl-container table caption select {
-  height: 4vh;
-}
-
-.cabinet-content div .sb-cnt-tbl-container table .tbl-btn-search {
-  width: 5vw;
-
-  margin-left: 1vw;
 }
 
 .cabinet-content div .sb-cnt-tbl-container table thead {
@@ -626,7 +609,7 @@ table
   align-content: center;
 
   top: 0;
-  right: 2.2%;
+  right: 1%;
   z-index: var(--z-index-for-content);
 }
 
@@ -724,8 +707,8 @@ tbody tr:nth-child(even) {
 
         background-color: var(--page-content-background-color);
 
-        @include mixins.transition(opacity);
-        @include mixins.transition(visibility);
+        @include mixins.transition-all-04-in-out(opacity);
+        @include mixins.transition-all-04-in-out(visibility);
       }
 
       .tbl-pagination-container.active {
@@ -934,8 +917,8 @@ html body .edit-modal-container .edit-modal-dialog {
   margin: 0 auto;
 
   width: 50vw;
-  min-height: 35vh;
-  max-height: 70vh;
+  min-height: 40vh;
+  max-height: 100vh;
 
   overflow-y: auto;
 
@@ -1006,6 +989,7 @@ html body .edit-modal-container .edit-modal-body {
   align-content: center;
   justify-content: left;
 
+  margin-top: 2vh;
   padding-top: 0;
 }
 
@@ -1027,6 +1011,8 @@ html body .edit-modal-container .edit-modal-body input + label {
 html body .edit-modal-container .edit-modal-body textarea {
   min-height: 4vh;
   max-height: 18vh;
+  min-width: 100%;
+  max-width: 100%;
 }
 
 html body .edit-modal-container .edit-modal-footer {

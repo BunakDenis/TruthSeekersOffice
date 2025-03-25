@@ -1,16 +1,18 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   video: false,
   env: {
-    coverage: true,
+    coverage: true
   },
   e2e: {
     setupNodeEvents(on, config) {
-      require("@cypress/code-coverage/task")(on, config); // Оставить только этот вызов
-      return config;
+      require('@cypress/code-coverage/task')(on, config) // Оставить только этот вызов
+      return config
     },
-    baseUrl: "http://localhost:3000",
-    supportFile: "cypress/support/index.js",
-  },
-});
+    baseUrl: 'http://localhost:3000',
+    supportFile: 'cypress/support/index.js',
+    viewportWidth: 1920,
+    viewportHeight: 1080
+  }
+})
