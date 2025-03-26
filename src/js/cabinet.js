@@ -648,9 +648,7 @@ function searchTable(tblId) {
       query = getQueryFromInputField(tblId)
       matches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true)
 
-      if (matches.length > 0) {
-        searchQueryInTbl(tbl, matches, searchResultContainer)
-      }
+      searchQueryInTbl(tbl, matches, searchResultContainer)
     }
   })
 
@@ -781,8 +779,6 @@ function addSearchResultNumber(currentIdex, matches) {
 
   if (matches.length > 0) {
     result = result.replace('{result-number}', currentIdex + 1)
-  } else {
-    result = result.replace('{result-number}', 0)
   }
 
   return result

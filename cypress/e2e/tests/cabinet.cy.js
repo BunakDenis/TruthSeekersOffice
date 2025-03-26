@@ -1,5 +1,11 @@
 const { DateTime } = require('luxon')
-
+/*
+  TODO
+  1. Пересмотреть не протестированные строки в тестах мультивыбора
+  2. В тестах добавления записи в таблицу добавить проверку id новой записи
+  3. В тестах поиска по таблице добавить тесты на проверку текста для одного результата поиска
+  4. Добавить проверку кастомного селекта офсета в футере таблицы
+*/
 describe('Тесты сайдбара страницы "Кабинет искателя" ', () => {
   it('Тестирование отображение контента при нажатии на меню сайдбара', () => {
     cy.visit('/cabinet.html')
@@ -463,7 +469,6 @@ describe('Тесты таблиц контента страницы Кабине
       .find('.tbl-body-row')
       .each(($el, $index, $list) => {
         let expectedId = $list.eq($index).attr('obj-id')
-        cy.log(expectedId)
 
         cy.wrap($el).find('.tbl-edit-icon').as('tblEditIcon')
         cy.wrap($el)
@@ -680,14 +685,682 @@ describe('Тесты таблиц контента страницы Кабине
 
     //Проверка скрытия окна предупреждения
     cy.get('@searchWrnCnt').should('be.not.visible')
+
+    //Повторная проверка для клавиши Enter
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Кликаем по кнопке поиска
+    cy.get('@searchInputField').type('{enter}')
+    cy.wait(1000)
+
+    //Проверяем видимость окна предупреждения
+    cy.get('@searchWrnCnt').should('be.visible')
+
+    //Выбираем столбец поиска
+    cy.get('@searchSelCol').select(1)
+
+    //Проверка скрытия окна предупреждения
+    cy.get('@searchWrnCnt').should('be.not.visible')
   })
-  /*
-      TODO
-      1. Проверка отображения контейнера с результатами поиска с текстов "Поиск не дал результатов" при пустой строке поиска 
-      2. Проверка отображения контейнера с результатами поиска с текстов "Поиск не дал результатов" при ложном запросе поиска
-      3. Проверка отображения контейнера с результатами поиска при правильном запросе поиска
-        3.1 Проверка соответсвия количества результатов поиска с количеством выделенных строк в таблице в элемент span класса highlight (для всех столбцов)
-        3.2 Проверка работы кнопок перемещения между результатами поиска
-        3.3 Проверка работы кнопки очистки поиска
-  */
+
+  it('Тестирование отображения контейнера с результатами поиска с текстов "Поиск не дал результатов" при пустой строке поиска', () => {
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Инициализация элементов поиска в alias
+    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
+    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
+    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
+    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
+    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(1)
+
+    //Кликаем по иконке поиска
+    cy.get('@searchIcon').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .contains('Поиск не дал результатов')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-number')
+      .should('have.text', '')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-search-rslt-cevrons')
+      .should('be.not.visible')
+
+    //Повторная проверка при нажатии кнопки поиска
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(1)
+
+    //Кликаем по кнопке поиска
+    cy.get('@searchBtn').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .contains('Поиск не дал результатов')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-number')
+      .should('have.text', '')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-search-rslt-cevrons')
+      .should('be.not.visible')
+
+    //Повторная проверка при нажатии на клавишу Enter
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(1)
+
+    //Кликаем по кнопке поиска
+    cy.get('@searchInputField').type('{enter}')
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .contains('Поиск не дал результатов')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-number')
+      .should('have.text', '')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-search-rslt-cevrons')
+      .should('be.not.visible')
+  })
+
+  it('Тестирование отображения контейнера с результатами поиска с текстов "Поиск не дал результатов" при ложном запросе поиска', () => {
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Инициализация элементов поиска в alias
+    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
+    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
+    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
+    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
+    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(1)
+
+    //Вводим запрос в поле поиска
+    cy.get('@searchInputField').type('test')
+
+    //Кликаем по иконке поиска
+    cy.get('@searchIcon').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .contains('Поиск не дал результатов')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-number')
+      .should('have.text', '')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-search-rslt-cevrons')
+      .should('be.not.visible')
+
+    //Повторная проверка при нажатии на кнопку поиска
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(1)
+
+    //Вводим запрос в поле поиска
+    cy.get('@searchInputField').type('test')
+
+    //Кликаем по кнопке поиска
+    cy.get('@searchBtn').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .contains('Поиск не дал результатов')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-number')
+      .should('have.text', '')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-search-rslt-cevrons')
+      .should('be.not.visible')
+
+    //Повторная проверка при нажатии на клавишу Enter
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(1)
+
+    //Вводим запрос в поле поиска
+    cy.get('@searchInputField').type('test')
+
+    //Кликаем по кнопке поиска
+    cy.get('@searchInputField').type('{enter}')
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .contains('Поиск не дал результатов')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-number')
+      .should('have.text', '')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-search-rslt-cevrons')
+      .should('be.not.visible')
+  })
+
+  it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Дата принятия"', () => {
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Инициализация элементов поиска в alias
+    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
+    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
+    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
+    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
+    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(1)
+
+    //Вводим запрос в поле поиска
+    cy.get('@searchInputField').type('2025')
+
+    //Кликаем по иконке поиска
+    cy.get('@searchIcon').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Инициализация количества результатов поиска
+    cy.get('#will-tbl').find('.highlight').as('highlights')
+    cy.get('@highlights').its('length').as('highlightsCount')
+    cy.get('@highlightsCount').should('be.gt', 1)
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .its('text')
+      .as('searchResultCntText')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .invoke('text')
+      .then(searchResultText => {
+        cy.get('@highlightsCount').then(highlightsCount => {
+          const expectedText = `Найдено ${highlightsCount} результатов`
+
+          // Приводим строки к стандартной форме
+          const normalizedSearchText = searchResultText.trim().normalize('NFC')
+          const normalizedExpectedText = expectedText.normalize('NFC')
+
+          expect(normalizedExpectedText).to.eq(normalizedSearchText)
+        })
+      })
+
+    //Проверка работы кнопок навигации по результатам поиска и изменения значения текущего результата
+    cy.get('@searchChevronsCnt').should('be.visible')
+
+    cy.get('@searchChevronsCnt').find('.bx-chevron-up').as('prevBtn')
+    cy.get('@searchChevronsCnt').find('.bx-chevron-down').as('nextBtn')
+
+    //Перебор от первого результата к последнему
+    cy.get('@highlights').each((highlight, i) => {
+      cy.get('@searchResultCnt')
+        .find('.tbl-srch-rslt-number')
+        .invoke('text')
+        .then(searchResultText => {
+          cy.get('@highlightsCount').then(highlightsCount => {
+            const currentResult = i + 1
+            const expectedText = `${currentResult} из ${highlightsCount}`
+
+            // Приводим строки к стандартной форме
+            const normalizedSearchText = searchResultText
+              .trim()
+              .normalize('NFC')
+            const normalizedExpectedText = expectedText.normalize('NFC')
+
+            expect(normalizedExpectedText).to.eq(normalizedSearchText)
+          })
+        })
+
+      cy.get('@nextBtn').click()
+    })
+
+    //Перебор в обратном порядке
+    cy.get('@highlights').each((highlight, i, $list) => {
+      cy.get('@prevBtn').click()
+
+      cy.get('@searchResultCnt')
+        .find('.tbl-srch-rslt-number')
+        .invoke('text')
+        .then(searchResultText => {
+          cy.get('@highlightsCount').then(highlightsCount => {
+            const currentResult = $list.length - i
+            const expectedText = `${currentResult} из ${highlightsCount}`
+
+            // Приводим строки к стандартной форме
+            const normalizedSearchText = searchResultText
+              .trim()
+              .normalize('NFC')
+            const normalizedExpectedText = expectedText.normalize('NFC')
+
+            expect(normalizedExpectedText).to.eq(normalizedSearchText)
+          })
+        })
+    })
+  })
+
+  it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Краткое описание"', () => {
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Инициализация элементов поиска в alias
+    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
+    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
+    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
+    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
+    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(2)
+
+    //Вводим запрос в поле поиска
+    cy.get('@searchInputField').type('а')
+
+    //Кликаем по иконке поиска
+    cy.get('@searchIcon').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Инициализация количества результатов поиска
+    cy.get('#will-tbl').find('.highlight').as('highlights')
+    cy.get('@highlights').its('length').as('highlightsCount')
+    cy.get('@highlightsCount').should('be.gt', 1)
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .its('text')
+      .as('searchResultCntText')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .invoke('text')
+      .then(searchResultText => {
+        cy.get('@highlightsCount').then(highlightsCount => {
+          const expectedText = `Найдено ${highlightsCount} результатов`
+
+          // Приводим строки к стандартной форме
+          const normalizedSearchText = searchResultText.trim().normalize('NFC')
+          const normalizedExpectedText = expectedText.normalize('NFC')
+
+          expect(normalizedExpectedText).to.eq(normalizedSearchText)
+        })
+      })
+
+    //Проверка работы кнопок навигации по результатам поиска и изменения значения текущего результата
+    cy.get('@searchChevronsCnt').should('be.visible')
+
+    cy.get('@searchChevronsCnt').find('.bx-chevron-up').as('prevBtn')
+    cy.get('@searchChevronsCnt').find('.bx-chevron-down').as('nextBtn')
+
+    //Перебор от первого результата к последнему
+    cy.get('@highlights').each((highlight, i) => {
+      cy.get('@searchResultCnt')
+        .find('.tbl-srch-rslt-number')
+        .invoke('text')
+        .then(searchResultText => {
+          cy.get('@highlightsCount').then(highlightsCount => {
+            const currentResult = i + 1
+            const expectedText = `${currentResult} из ${highlightsCount}`
+
+            // Приводим строки к стандартной форме
+            const normalizedSearchText = searchResultText
+              .trim()
+              .normalize('NFC')
+            const normalizedExpectedText = expectedText.normalize('NFC')
+
+            expect(normalizedExpectedText).to.eq(normalizedSearchText)
+          })
+        })
+
+      cy.get('@nextBtn').click()
+    })
+
+    //Перебор в обратном порядке
+    cy.get('@highlights').each((highlight, i, $list) => {
+      cy.get('@prevBtn').click()
+
+      cy.get('@searchResultCnt')
+        .find('.tbl-srch-rslt-number')
+        .invoke('text')
+        .then(searchResultText => {
+          cy.get('@highlightsCount').then(highlightsCount => {
+            const currentResult = $list.length - i
+            const expectedText = `${currentResult} из ${highlightsCount}`
+
+            // Приводим строки к стандартной форме
+            const normalizedSearchText = searchResultText
+              .trim()
+              .normalize('NFC')
+            const normalizedExpectedText = expectedText.normalize('NFC')
+
+            expect(normalizedExpectedText).to.eq(normalizedSearchText)
+          })
+        })
+    })
+  })
+
+  it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Описание"', () => {
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Инициализация элементов поиска в alias
+    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
+    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
+    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
+    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
+    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(3)
+
+    //Вводим запрос в поле поиска
+    cy.get('@searchInputField').type('а')
+
+    //Кликаем по иконке поиска
+    cy.get('@searchIcon').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Инициализация количества результатов поиска
+    cy.get('#will-tbl').find('.highlight').as('highlights')
+    cy.get('@highlights').its('length').as('highlightsCount')
+    cy.get('@highlightsCount').should('be.gt', 1)
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .its('text')
+      .as('searchResultCntText')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .invoke('text')
+      .then(searchResultText => {
+        cy.get('@highlightsCount').then(highlightsCount => {
+          const expectedText = `Найдено ${highlightsCount} результатов`
+
+          // Приводим строки к стандартной форме
+          const normalizedSearchText = searchResultText.trim().normalize('NFC')
+          const normalizedExpectedText = expectedText.normalize('NFC')
+
+          expect(normalizedExpectedText).to.eq(normalizedSearchText)
+        })
+      })
+
+    //Проверка работы кнопок навигации по результатам поиска и изменения значения текущего результата
+    cy.get('@searchChevronsCnt').should('be.visible')
+
+    cy.get('@searchChevronsCnt').find('.bx-chevron-up').as('prevBtn')
+    cy.get('@searchChevronsCnt').find('.bx-chevron-down').as('nextBtn')
+
+    //Перебор от первого результата к последнему
+    cy.get('@highlights').each((highlight, i) => {
+      cy.get('@searchResultCnt')
+        .find('.tbl-srch-rslt-number')
+        .invoke('text')
+        .then(searchResultText => {
+          cy.get('@highlightsCount').then(highlightsCount => {
+            const currentResult = i + 1
+            const expectedText = `${currentResult} из ${highlightsCount}`
+
+            // Приводим строки к стандартной форме
+            const normalizedSearchText = searchResultText
+              .trim()
+              .normalize('NFC')
+            const normalizedExpectedText = expectedText.normalize('NFC')
+
+            expect(normalizedExpectedText).to.eq(normalizedSearchText)
+          })
+        })
+
+      cy.get('@nextBtn').click()
+    })
+
+    //Перебор в обратном порядке
+    cy.get('@highlights').each((highlight, i, $list) => {
+      cy.get('@prevBtn').click()
+
+      cy.get('@searchResultCnt')
+        .find('.tbl-srch-rslt-number')
+        .invoke('text')
+        .then(searchResultText => {
+          cy.get('@highlightsCount').then(highlightsCount => {
+            const currentResult = $list.length - i
+            const expectedText = `${currentResult} из ${highlightsCount}`
+
+            // Приводим строки к стандартной форме
+            const normalizedSearchText = searchResultText
+              .trim()
+              .normalize('NFC')
+            const normalizedExpectedText = expectedText.normalize('NFC')
+
+            expect(normalizedExpectedText).to.eq(normalizedSearchText)
+          })
+        })
+    })
+  })
+
+  it('Тестирование работы кнопки очистки поиска (при нажатии на кнопку и клавишу Escape)', () => {
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Инициализация элементов поиска в alias
+    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
+    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
+    cy.get('#will-tbl').find('.bx-x').as('clearInputField')
+    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
+    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(3)
+
+    //Вводим запрос в поле поиска
+    cy.get('@searchInputField').type('а')
+
+    //Кликаем по иконке поиска
+    cy.get('@searchIcon').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Очищаем поле поиска при помощи кнопки очистки
+    cy.get('@clearInputField').click()
+
+    cy.get('@searchResultCnt').should('be.not.visible')
+
+    cy.get('@searchInputField').should('have.value', '')
+
+    //Повторная проверка очистки поля с помощью клавиши Escape
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(3)
+
+    //Вводим запрос в поле поиска
+    cy.get('@searchInputField').type('а')
+
+    //Кликаем по иконке поиска
+    cy.get('@searchIcon').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Очищаем поле поиска при помощи кнопки очистки
+    cy.get('@searchInputField').type('{esc}')
+
+    cy.get('@searchResultCnt').should('be.not.visible')
+
+    cy.get('@searchInputField').should('have.value', '')
+  })
 })

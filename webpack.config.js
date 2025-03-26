@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 const fs = require('fs')
 
 const pagesDir = path.resolve(__dirname, 'src/pages')
@@ -96,6 +97,14 @@ module.exports = {
           filename: file
         })
     )
+    /*
+    new ESLintPlugin({
+      context: path.resolve(__dirname, 'src'), // Проверять только файлы в 'src'
+      extensions: ['js'], // Файлы для проверки
+      formatter: 'stylish',
+      failOnError: false
+    })
+    */
   ],
   devServer: {
     static: {
