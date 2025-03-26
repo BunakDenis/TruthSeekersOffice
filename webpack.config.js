@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ESLintPlugin = require('eslint-webpack-plugin')
+//const ESLintPlugin = require('eslint-webpack-plugin')
 const fs = require('fs')
 
 const pagesDir = path.resolve(__dirname, 'src/pages')
