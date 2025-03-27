@@ -490,6 +490,11 @@ function tblMultiSlctService(tblId) {
             glCheckbox.checked = false
           }
 
+          //Если все чекбоксы в таблице отмечены, то делаем чекбокс в заголовке checked
+          if (countCheckedboxes[tblId] === tblCheckboxes.length) {
+            glCheckbox.checked = true
+          }
+
           //Если больше одного чекбокса отмечен, то отображаем кнопку "Удалить записи", иначе скрываем
           if (countCheckedboxes[tblId] > 1) {
             showOrHideTblDeleteAllBtn(tbl.id, true)

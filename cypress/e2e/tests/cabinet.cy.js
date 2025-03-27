@@ -1,11 +1,5 @@
 const { DateTime } = require('luxon')
-/*
-  TODO
-  1. Пересмотреть не протестированные строки в тестах мультивыбора
-  2. В тестах добавления записи в таблицу добавить проверку id новой записи
-  3. В тестах поиска по таблице добавить тесты на проверку текста для одного результата поиска
-  4. Добавить проверку кастомного селекта офсета в футере таблицы
-*/
+
 describe('Тесты сайдбара страницы "Кабинет искателя" ', () => {
   it('Тестирование отображение контента при нажатии на меню сайдбара', () => {
     cy.visit('/cabinet.html')
@@ -293,6 +287,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#will-tbl').find('.tbl-gl-checkbox').as('glCheckbox')
     cy.get('#will-tbl').find('.tbl-gl-checkmark').as('glChecmark')
     cy.get('#will-tbl').find('.tbl-checkmark').as('tblChecmarks')
+    cy.get('#will-tbl').find('.tbl-checkbox').as('tblCheckboxes')
 
     cy.get('@glLbCheckbox').click({ force: true })
     cy.wait(2000)
@@ -314,14 +309,41 @@ describe('Тесты таблиц контента страницы Кабине
       .then($el => {
         const after = window.getComputedStyle($el[0], '::after')
         expect(after).to.have.property('content', '""') // Проверяем, что content существует
-        expect(after).to.have.property('display', 'block') // Проверяем границы
+        expect(after).to.have.property('display', 'block') // Проверяем видимость элемента
       })
     //Проверка отображения галочки в дефолтных чекбоксах таблицы после повторного клика на главный чекбокс
     cy.get('@tblChecmarks').each($el => {
       const after = window.getComputedStyle($el[0], '::after')
       expect(after).to.have.property('content', '""') // Проверяем, что content существует
-      expect(after).to.have.property('display', 'block') // Проверяем границы
+      expect(after).to.have.property('display', 'block') // Проверяем элемента
     })
+
+    //Проверка состояния чекбоксов после повторного клика на главный чекбокс
+    cy.get('@glCheckbox').should('be.checked')
+    cy.get('@tblCheckboxes').each($el => {
+      cy.wrap($el).should('be.checked')
+    })
+
+    cy.get('@glChecmark').click({ force: true })
+    cy.wait(2000)
+
+    //Проверка состояния чекбоксов после клика на главный чекбокс
+    cy.get('@glCheckbox').should('be.not.checked')
+    cy.get('@tblCheckboxes').each($el => {
+      cy.wrap($el).should('be.not.checked')
+    })
+
+    //Проверка изменения состояния главного чекбокса при переводе всех чекбоксов таблицы в активное состояние
+    cy.get('@tblCheckboxes').each($el => {
+      cy.wrap($el).click({ force: true })
+    })
+
+    cy.get('@glCheckbox').should('be.checked')
+
+    //Проверка состояния главного чекбокса при снятия активного состояния у одного из чекбоксов таблицы
+    cy.get('@tblCheckboxes').eq(0).click({ force: true })
+
+    cy.get('@glCheckbox').should('be.not.checked')
   })
 
   it('Тестирование отображения кнопки "Удалить записи" и работы кнопки при всех отмеченных чекбоксах в таблице', () => {
@@ -712,7 +734,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@searchWrnCnt').should('be.not.visible')
   })
 
-  it('Тестирование отображения контейнера с результатами поиска с текстов "Поиск не дал результатов" при пустой строке поиска', () => {
+  it('Тестирование отображения контейнера с результатами поиска с текстом "Поиск не дал результатов" при пустой строке поиска', () => {
     cy.visit('/cabinet.html')
 
     //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
@@ -827,7 +849,7 @@ describe('Тесты таблиц контента страницы Кабине
       .should('be.not.visible')
   })
 
-  it('Тестирование отображения контейнера с результатами поиска с текстов "Поиск не дал результатов" при ложном запросе поиска', () => {
+  it('Тестирование отображения контейнера с результатами поиска с текстом "Поиск не дал результатов" при ложном запросе поиска', () => {
     cy.visit('/cabinet.html')
 
     //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
@@ -949,6 +971,53 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@searchResultCnt')
       .find('.tbl-search-rslt-cevrons')
       .should('be.not.visible')
+  })
+  it('Тестирование отображения контейнера с результатами поиска при правильном запросе', () => {
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Инициализация элементов поиска в alias
+    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
+    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
+    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
+    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
+    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+
+    //Выбираем столбец для поиска
+    cy.get('@searchSelCol').select(2)
+
+    //Вводим запрос в поле поиска
+    cy.get('@searchInputField').type('Благодарность')
+
+    //Кликаем по иконке поиска
+    cy.get('@searchIcon').click()
+    cy.wait(1000)
+
+    //Проверяем видимость контейнера с результатами поиска
+    cy.get('@searchResultCnt').should('be.visible')
+
+    //Проверка наличия текста в контейнере с результатами поиска
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-count')
+      .should('have.text', 'Найдено 1 результат')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-srch-rslt-number')
+      .should('have.text', '1 из 1')
+
+    cy.get('@searchResultCnt')
+      .find('.tbl-search-rslt-cevrons')
+      .should('be.visible')
   })
 
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Дата принятия"', () => {
@@ -1362,5 +1431,70 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@searchResultCnt').should('be.not.visible')
 
     cy.get('@searchInputField').should('have.value', '')
+  })
+
+  it('Тестирование работы кастомного select в подвале таблицы', () => {
+    cy.visit('/cabinet.html')
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(1000)
+    cy.get('#link-will').click()
+
+    //Элементы кастомного select
+    cy.get('.tbl-pagination-container')
+      .find('.custom-select')
+      .as('customSelect')
+    cy.get('.tbl-pagination-container').find('.selected').as('selectedOption')
+    cy.get('.tbl-pagination-container').find('.options').as('options')
+
+    //Проверка отображения текста в кастомном select
+    cy.get('@selectedOption').should('have.text', 'Выберите')
+
+    //Проверка отображения списка в кастомном select
+    cy.get('@selectedOption').scrollIntoView()
+    cy.get('@selectedOption').realHover({
+      position: 'center',
+      force: true
+    })
+
+    cy.wait(1000)
+
+    cy.get('@options').should('be.visible')
+    cy.get('@options').find('li').should('have.length', 3)
+
+    //Проверка работы кастомного select
+    cy.get('@options')
+      .find('li')
+      .each(($option, $index) => {
+        cy.log($option.text())
+        cy.get('@selectedOption').scrollIntoView()
+        cy.get('@selectedOption').realHover({
+          position: 'center',
+          force: true
+        })
+
+        cy.wait(1000)
+
+        cy.wrap($option).scrollIntoView()
+        cy.wrap($option).realHover({
+          position: 'center',
+          force: true
+        })
+
+        cy.wait(1000)
+
+        cy.wrap($option).click({ force: true })
+        cy.get('@selectedOption').should('have.text', $option.text())
+        cy.wrap($option)
+          .invoke('text')
+          .then(text => {
+            cy.wrap($option).should('have.attr', 'data-value', text)
+          })
+      })
   })
 })
