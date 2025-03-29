@@ -355,6 +355,56 @@ if (cntContainer) {
     })
   }
 
+  //Функция изменения иконки "избранное" при нажатии на нее
+  const favIcons = document.querySelectorAll('.bx-star')
+  const favSelectedIcons = document.querySelectorAll('.bxs-star')
+
+  if (favIcons.length > 0) {
+    favIcons.forEach(icon => {
+      icon.addEventListener('click', () => {
+        icon.classList.remove('bx-star')
+        icon.classList.add('bxs-star')
+        icon.classList.add('active')
+        icon.title = 'Удалить из избранного'
+      })
+    })
+  }
+
+  if (favSelectedIcons.length > 0) {
+    favSelectedIcons.forEach(icon => {
+      icon.addEventListener('click', () => {
+        icon.classList.remove('bxs-star')
+        icon.classList.add('bx-star')
+        icon.classList.remove('active')
+        icon.title = 'Добавить в избранное'
+      })
+    })
+  }
+
+  //Функция изменения иконки "показать/скрыть" запись куратору
+  const tblRowDataShowIcons = document.querySelectorAll('.bx-show')
+  const tblRowDataHideIcons = document.querySelectorAll('.bx-hide')
+
+  if (tblRowDataShowIcons.length > 0) {
+    tblRowDataShowIcons.forEach(icon => {
+      icon.addEventListener('click', () => {
+        icon.classList.remove('bx-show')
+        icon.classList.add('bx-hide')
+        icon.title = 'Сделать запись доступной куратору'
+      })
+    })
+  }
+
+  if (tblRowDataHideIcons.length > 0) {
+    tblRowDataHideIcons.forEach(icon => {
+      icon.addEventListener('click', () => {
+        icon.classList.add('bx-show')
+        icon.classList.remove('bx-hide')
+        icon.title = 'Сделать запись не доступной куратору'
+      })
+    })
+  }
+
   //Функция сохранения отредактированных данных таблицы
   const editModalSaveBtn = document.querySelectorAll('.edit-modal-save-btn')
 
@@ -966,13 +1016,7 @@ function setTblRowValuesFromInputFields(row, inputFields) {
   }
 }
 
-/*
-  TODO
-  1. Функция отображения количества контента относительно выбранного количества отображаемых записей
-  2. Функция переключения отображаемых записей
-  3. Функция переключения по кнопке следующая страница и предидущая
-  4. Функция переключения по кнопке первая и последняя страницы
-*/
+//Функции пагинации
 function tblPaggination(tblId) {
   const tbl = document.getElementById(tblId)
   const tblCells = tbl.querySelectorAll('.tbl-body-row')
@@ -1000,7 +1044,7 @@ function showOrHidePagginationContainer(tblId) {
     .closest('div')
     .querySelector('.tbl-pagination-container')
 
-  if (tblCells.length > 6) {
+  if (tblCells.length >= 5) {
     tblPaginationContainer.classList.add('active')
     return true
   } else {

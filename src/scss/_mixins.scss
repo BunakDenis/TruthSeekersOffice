@@ -2,15 +2,23 @@
 
 @mixin flex-center($direction: row, $wrap: nowrap, $gap: 0) {
   display: flex;
-  flex-flow: $direction $wrap;
+  flex-flow: $direction;
+  flex-wrap: $wrap;
   gap: $gap;
   justify-content: center;
   align-items: center;
 }
 
-@mixin flex($direction: row) {
+@mixin flex($direction: row, $wrap: nowrap, $gap: 0) {
   display: flex;
   flex-direction: $direction;
+  flex-wrap: $wrap;
+  gap: $gap;
+}
+
+@mixin sb-cnt-indention() {
+  margin-bottom: 3vh;
+  padding: 2vh 1vw 0 1vw;
 }
 
 @mixin fill-color-hover() {
@@ -23,7 +31,7 @@
   border: 1px solid $color;
 }
 
-@mixin box-shadow-tbl-el {
+@mixin box-shadow-tbl-el() {
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
