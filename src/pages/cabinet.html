@@ -194,68 +194,75 @@
           <div class="sb-cnt-title">
             <h3>Воля</h3>
           </div>
-          <div class="sb-cnt-tbl-ctn">
+          <div class="sb-cnt-tabs-cnt">
+            <h4>Формат отображения записей:</h4>
+            <div class="cnt-tabs">
+              <a href="#" class="cnt-tab active" tab-id="tbl">Таблица</a>
+              <a href="#" class="cnt-tab" tab-id="title">Плитка</a>
+            </div>
+          </div>
+          <div class="sb-cnt-tbl-ctn active">
+            <div class="cnt-caption">
+              <div class="cnt-fltr-container tbl-fltr-container">
+                <i class="bx bx-filter" id="tbl-fltr-svg"></i>
+                <p>Фильтр</p>
+              </div>
+              <div class="cnt-search-field tbl-search-field">
+                <input
+                  id="tbl-will-search-field"
+                  class="tbl-search-input"
+                  type="text"
+                  placeholder="Поиск..."
+                />
+                <i class="bx bx-search"></i>
+                <i class="bx bx-x"></i>
+                <div class="tbl-search-result">
+                  <p class="tbl-srch-rslt-item tbl-srch-rslt-count">
+                    Поиск не дал результатов
+                  </p>
+                  <p class="tbl-srch-rslt-item tbl-srch-rslt-number"></p>
+                  <div class="tbl-srch-rslt-item tbl-search-rslt-cevrons">
+                    <i class="bx bx-chevron-up"></i>
+                    <i class="bx bx-chevron-down"></i>
+                  </div>
+                </div>
+                <div class="tbl-search-wrn">
+                  <i class="fas fa-info-circle"></i>
+                  <p>Выберите название колонки для поиска</p>
+                </div>
+              </div>
+              <select
+                id="tbl-will-search-sl-col"
+                class="cnt-search-sl-col tbl-search-sl-col"
+              >
+                <option disabled selected>Искать по столбцу</option>
+              </select>
+              <button
+                type="submit"
+                class="cnt-btn cnt-btn-search tbl-btn-search"
+              >
+                Найти
+              </button>
+              <button type="submit" class="cnt-btn cnt-btn-add tbl-btn-add">
+                + Добавить запись
+              </button>
+              <button
+                type="submit"
+                class="cnt-btn cnt-btn-dlt-all tbl-btn-dlt-all"
+              >
+                Удалить записи
+              </button>
+              <label class="cnt-gl-lb-checkbox tbl-gl-lb-checkbox">
+                <input
+                  type="checkbox"
+                  id="tbl-will-gl-checkbox"
+                  class="cnt-gl-checkbox tbl-gl-checkbox"
+                  checked
+                />
+                <span class="cnt-gl-checkmark tbl-gl-checkmark"></span>
+              </label>
+            </div>
             <table class="cnt-tbl sortable" id="will-tbl">
-              <caption>
-                <div class="tbl-fltr-container">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    id="tbl-fltr-svg"
-                    class="bi bi-filter"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"
-                    />
-                  </svg>
-                  <p>Фильтр</p>
-                </div>
-                <div class="tbl-search-field">
-                  <input
-                    id="tbl-will-search-field"
-                    class="tbl-search-input"
-                    type="text"
-                    placeholder="Поиск..."
-                  />
-                  <i class="bx bx-search"></i>
-                  <i class="bx bx-x"></i>
-                  <div class="tbl-search-result">
-                    <p class="tbl-srch-rslt-item tbl-srch-rslt-count">
-                      Поиск не дал результатов
-                    </p>
-                    <p class="tbl-srch-rslt-item tbl-srch-rslt-number"></p>
-                    <div class="tbl-srch-rslt-item tbl-search-rslt-cevrons">
-                      <i class="bx bx-chevron-up"></i>
-                      <i class="bx bx-chevron-down"></i>
-                    </div>
-                  </div>
-                  <div class="tbl-search-wrn">
-                    <i class="fas fa-info-circle"></i>
-                    <p>Выберите название колонки для поиска</p>
-                  </div>
-                </div>
-                <select id="tbl-will-search-sl-col" class="tbl-search-sl-col">
-                  <option disabled selected>Искать по столбцу</option>
-                </select>
-                <button type="submit" class="tbl-btn-search tbl-btn">
-                  Найти
-                </button>
-                <button type="submit" class="tbl-btn-add tbl-btn">
-                  + Добавить запись
-                </button>
-                <button type="submit" class="tbl-btn-dlt-all tbl-btn">
-                  Удалить записи
-                </button>
-                <label class="tbl-gl-lb-checkbox">
-                  <input
-                    type="checkbox"
-                    id="tbl-will-gl-checkbox"
-                    class="tbl-gl-checkbox"
-                    checked
-                  />
-                  <span class="tbl-gl-checkmark"></span>
-                </label>
-              </caption>
               <thead>
                 <tr>
                   <th data-sort-default data-sort-method="date">
@@ -311,9 +318,12 @@
                     ></i>
                   </td>
                   <td>
-                    <label class="tbl-lb-checkbox">
-                      <input type="checkbox" class="tbl-checkbox" />
-                      <span class="tbl-checkmark"></span>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
                     </label>
                   </td>
                 </tr>
@@ -348,9 +358,12 @@
                     ></i>
                   </td>
                   <td>
-                    <label class="tbl-lb-checkbox">
-                      <input type="checkbox" class="tbl-checkbox" />
-                      <span class="tbl-checkmark"></span>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
                     </label>
                   </td>
                 </tr>
@@ -385,9 +398,12 @@
                     ></i>
                   </td>
                   <td>
-                    <label class="tbl-lb-checkbox">
-                      <input type="checkbox" class="tbl-checkbox" />
-                      <span class="tbl-checkmark"></span>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
                     </label>
                   </td>
                 </tr>
@@ -422,9 +438,12 @@
                     ></i>
                   </td>
                   <td>
-                    <label class="tbl-lb-checkbox">
-                      <input type="checkbox" class="tbl-checkbox" />
-                      <span class="tbl-checkmark"></span>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
                     </label>
                   </td>
                 </tr>
@@ -459,9 +478,12 @@
                     ></i>
                   </td>
                   <td>
-                    <label class="tbl-lb-checkbox">
-                      <input type="checkbox" class="tbl-checkbox" />
-                      <span class="tbl-checkmark"></span>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
                     </label>
                   </td>
                 </tr>
@@ -504,13 +526,99 @@
               </div>
             </div>
           </div>
-          <div class="sb-cnt-title-ctn active">
-            <div class="sb-cnt-title-ctn-items" obj-id="1">
-              <p>10.01.2025</p>
-              <p class="brief-description">Сайт - Кабинет Искателя</p>
-              <p>По ощущениям нужно сделать до конца весны 2025 года</p>
+          <div class="sb-cnt-title-ctn">
+            <div class="cnt-caption">
+              <div class="cnt-fltr-container tbl-fltr-container">
+                <i class="bx bx-filter" id="title-fltr-svg"></i>
+                <p>Фильтр</p>
+              </div>
+              <div class="tbl-search-field cnt-search-field">
+                <input
+                  id="title-will-search-field"
+                  class="tbl-search-input cnt-search-input"
+                  type="text"
+                  placeholder="Поиск..."
+                />
+                <i class="bx bx-search"></i>
+                <i class="bx bx-x"></i>
+                <div class="cnt-search-result tbl-search-result">
+                  <p
+                    class="cnt-srch-srch-count tbl-srch-rslt-item tbl-srch-rslt-count"
+                  >
+                    Поиск не дал результатов
+                  </p>
+                  <p
+                    class="cnt-srch-srch-number tbl-srch-rslt-item tbl-srch-rslt-number"
+                  ></p>
+                  <div
+                    class="cnt-srch-srch-chevrons tbl-srch-rslt-item tbl-search-rslt-cevrons"
+                  >
+                    <i class="bx bx-chevron-up"></i>
+                    <i class="bx bx-chevron-down"></i>
+                  </div>
+                </div>
+                <div class="cnt-search-wrn tbl-search-wrn">
+                  <i class="fas fa-info-circle"></i>
+                  <p>Выберите название колонки для поиска</p>
+                </div>
+              </div>
+              <select
+                id="title-will-search-sl-col"
+                class="cnt-search-sl-col tbl-search-sl-col"
+              >
+                <option disabled selected>Искать по столбцу</option>
+              </select>
+              <button
+                type="submit"
+                class="cnt-btn cnt-btn-search title-btn-search"
+              >
+                Найти
+              </button>
+              <button type="submit" class="cnt-btn cnt-btn-add title-btn-add">
+                + Добавить запись
+              </button>
+              <button
+                type="submit"
+                class="cnt-btn cnt-btn-dlt-all title-btn-dlt-all"
+              >
+                Удалить записи
+              </button>
+              <label class="cnt-gl-lb-checkbox title-gl-lb-checkbox">
+                <input
+                  type="checkbox"
+                  id="title-will-gl-checkbox"
+                  class="cnt-gl-checkbox tbl-gl-checkbox"
+                  checked
+                />
+                <span class="cnt-gl-checkmark tbl-gl-checkmark"></span>
+              </label>
+            </div>
+            <div class="sb-cnt-title-ctn-item" obj-id="1">
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <i class="bx bxs-star active" title="Удалить из избранного"></i>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Дата принятия</h4>
+                <p>10.01.2025</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Краткое описание</h4>
+                <p class="brief-description">Сайт - Кабинет Искателя</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Коментарии</h4>
+                <p>
+                  По ощущениям нужно сделать до конца весны 2025 года. По
+                  ощущениям нужно сделать до конца весны 2025 года. По ощущениям
+                  нужно сделать до конца весны 2025 года. По ощущениям нужно
+                  сделать до конца весны 2025 года. По ощущениям нужно сделать
+                  до конца весны 2025 года. По ощущениям нужно сделать до конца
+                  весны 2025 года
+                </p>
+              </div>
               <div class="actions">
-                <i class="bx bxs-star active" title="Удалить из избранного"></i>
                 <i
                   class="bx bx-link-external tbl-open-rec-icon"
                   title="Открыть запись"
@@ -529,12 +637,25 @@
                 ></i>
               </div>
             </div>
-            <div class="sb-cnt-title-ctn-items" obj-id="2">
-              <p>15.03.2025</p>
-              <p class="brief-description">Молитва за ближних</p>
-              <p>Необходимо ежедневно молиться за семью и друзей</p>
+            <div class="sb-cnt-title-ctn-item" obj-id="2">
+              <i class="bx bxs-star active" title="Удалить из избранного"></i>
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Дата принятия</h4>
+                <p>15.03.2025</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Краткое описание</h4>
+                <p class="brief-description">Молитва за ближних</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Коментарии</h4>
+                <p>Необходимо ежедневно молиться за семью и друзей</p>
+              </div>
               <div class="actions">
-                <i class="bx bxs-star active" title="Удалить из избранного"></i>
                 <i
                   class="bx bx-link-external tbl-open-rec-icon"
                   title="Открыть запись"
@@ -553,12 +674,25 @@
                 ></i>
               </div>
             </div>
-            <div class="sb-cnt-title-ctn-items" obj-id="3">
-              <p>22.04.2025</p>
-              <p class="brief-description">Изучение Писания</p>
-              <p>Прочитать книгу Иова до конца месяца</p>
+            <div class="sb-cnt-title-ctn-item" obj-id="3">
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <i class="bx bxs-star active" title="Удалить из избранного"></i>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Дата принятия</h4>
+                <p>22.04.2025</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Краткое описание</h4>
+                <p class="brief-description">Изучение Писания</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Коментарии</h4>
+                <p>Прочитать книгу Иова до конца месяца</p>
+              </div>
               <div class="actions">
-                <i class="bx bxs-star active" title="Удалить из избранного"></i>
                 <i
                   class="bx bx-link-external tbl-open-rec-icon"
                   title="Открыть запись"
@@ -577,12 +711,25 @@
                 ></i>
               </div>
             </div>
-            <div class="sb-cnt-title-ctn-items" obj-id="4">
-              <p>05.05.2025</p>
-              <p class="brief-description">Помощь нуждающимся</p>
-              <p>Организовать сбор вещей для бездомных</p>
+            <div class="sb-cnt-title-ctn-item" obj-id="4">
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <i class="bx bxs-star active" title="Удалить из избранного"></i>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Дата принятия</h4>
+                <p>05.05.2025</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Краткое описание</h4>
+                <p class="brief-description">Помощь нуждающимся</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Коментарии</h4>
+                <p>Организовать сбор вещей для бездомных</p>
+              </div>
               <div class="actions">
-                <i class="bx bxs-star active" title="Удалить из избранного"></i>
                 <i
                   class="bx bx-link-external tbl-open-rec-icon"
                   title="Открыть запись"
@@ -601,12 +748,25 @@
                 ></i>
               </div>
             </div>
-            <div class="sb-cnt-title-ctn-items" obj-id="5">
-              <p>12.06.2025</p>
-              <p class="brief-description">Посещение больных</p>
-              <p>Навестить друга в больнице и поддержать его</p>
+            <div class="sb-cnt-title-ctn-item" obj-id="5">
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <i class="bx bxs-star active" title="Удалить из избранного"></i>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Дата принятия</h4>
+                <p>12.06.2025</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Краткое описание</h4>
+                <p class="brief-description">Посещение больных</p>
+              </div>
+              <div class="sb-cnt-title-ctn-el">
+                <h4>Коментарии</h4>
+                <p>Навестить друга в больнице и поддержать его</p>
+              </div>
               <div class="actions">
-                <i class="bx bxs-star active" title="Удалить из избранного"></i>
                 <i
                   class="bx bx-link-external tbl-open-rec-icon"
                   title="Открыть запись"

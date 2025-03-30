@@ -52,7 +52,12 @@
   z-index: 1;
 }
 
-.cabinet-content > div {
+.cabinet-content.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.cabinet-content > .sb-cnt {
   display: none;
   position: relative;
 
@@ -65,6 +70,10 @@
   font-weight: var(--tbl-lable-font-weight);
 
   color: var(--cabinet-page-nav-menu-font-color);
+}
+
+.cabinet-content > .sb-cnt.active {
+  display: flex;
 }
 
 .cabinet-content svg {
@@ -106,6 +115,37 @@
   line-height: 1;
 }
 
+@at-root .sb-cnt-tabs-cnt {
+  @include mixins.flex(row, $gap: 0.5vw);
+  align-items: center;
+  justify-content: end;
+
+  height: 5vh;
+  @include mixins.sb-cnt-indention();
+
+  .cnt-tabs {
+    @include mixins.flex(row, $gap: 0.1vw);
+
+    a {
+      height: 100%;
+      width: 4vw;
+
+      text-align: center;
+
+      color: var(--page-text-color);
+
+      &:hover {
+        color: var(--page-text-color-hover);
+      }
+
+      &.active {
+        color: var(--page-text-color-hover);
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 .cabinet-content div .sb-cnt-tbl-ctn {
   display: none;
   position: relative;
@@ -121,6 +161,8 @@
 
 .cabinet-content div .sb-cnt-title-ctn {
   display: none;
+
+  @include mixins.sb-cnt-indention();
 }
 
 .cabinet-content div .sb-cnt-title-ctn.active {
@@ -134,7 +176,7 @@
   table-layout: fixed;
 }
 
-.cabinet-content div .sb-cnt-tbl-ctn table .tbl-btn {
+.cabinet-content .sb-cnt div .cnt-btn {
   height: 4vh;
   width: 10vw;
 
@@ -151,13 +193,13 @@
   );
 }
 
-.cabinet-content div .sb-cnt-tbl-ctn table .tbl-btn:hover {
+.cabinet-content .sb-cnt div .cnt-btn:hover {
   color: var(--btn-hover-color);
   border-color: var(--btn-hover-color);
   background-color: var(--btn-hover-background-color);
 }
 
-@at-root caption {
+@at-root .cabinet-content .sb-cnt div .cnt-caption {
   display: flex;
   position: relative;
   align-items: center;
@@ -171,8 +213,10 @@
 
   background-color: var(--page-content-background-color);
   box-shadow: var(--cabinet-page-tbl-box-shadow);
+}
 
-  @at-root .tbl-fltr-container {
+@at-root .cabinet-content .sb-cnt div {
+  .cnt-fltr-container {
     display: flex;
 
     flex-flow: row nowrap;
@@ -186,32 +230,29 @@
 
     cursor: pointer;
 
-    #tbl-fltr-svg {
-      height: 3vh;
-      width: 3vw;
+    .bx {
+      color: var(--cabinet-page-sidebar-content-font-color);
 
-      margin: 0;
-      padding: 0;
+      font-size: 1.2em;
 
-      fill: var(--cabinet-page-sidebar-content-font-color);
-      @include mixins.transition-all-04-in-out(fill);
+      @include mixins.transition-all-04-in-out(color);
     }
 
     p {
       padding: 0;
-      margin: 0;
+      margin: 0 0 0 0.5vw;
 
       color: var(--cabinet-page-sidebar-content-font-color);
       @include mixins.transition-all-04-in-out(color);
     }
 
-    &:hover #tbl-fltr-svg,
-    &:hover p {
+    &:hover p,
+    &:hover .bx {
       @include mixins.fill-color-hover();
     }
   }
 
-  @at-root .tbl-search-field {
+  .cnt-search-field {
     @include mixins.flex-center($direction: row, $gap: 0);
 
     position: relative;
@@ -385,7 +426,7 @@
     }
   }
 
-  .tbl-btn-add {
+  .cnt-btn-add {
     margin-left: 4vw;
 
     @include mixins.font-for-content(0.8em, 500);
@@ -397,7 +438,7 @@
     @include mixins.font-for-content(0.8em);
   }
 
-  .tbl-btn-search {
+  .cnt-btn-search {
     width: 5vw;
 
     margin-left: 1vw;
@@ -405,20 +446,20 @@
     @include mixins.font-for-content(0.8em, 500);
   }
 
-  @at-root .tbl-gl-lb-checkbox {
+  .cnt-gl-lb-checkbox {
     position: relative;
     width: 20px;
     height: 20px;
 
-    margin: 0 0 0 1.2vw;
+    margin: 0 0 0 2.5vw;
     padding: 0;
   }
 
-  @at-root .tbl-gl-checkbox {
+  .cnt-gl-checkbox {
     @include mixins.tblCheckboxesPosition();
   }
 
-  @at-root .tbl-lb-checkbox {
+  .cnt-lb-checkbox {
     display: none;
     position: relative;
     width: 20px;
@@ -428,27 +469,27 @@
     padding: 0;
   }
 
-  @at-root .tbl-checkbox {
+  .cnt-checkbox {
     @include mixins.tblCheckboxesPosition();
     border: 2px solid #dbd6d6;
     border-radius: 4px;
     background-color: var(--checkbox-not-active-background-color);
   }
 
-  @at-root .tbl-gl-checkmark {
+  .cnt-gl-checkmark {
     @include mixins.tblCheckmarkPosition();
     border: 2px solid #dbd6d6;
     border-radius: 4px;
     background-color: var(--checkbox-not-active-background-color);
   }
 
-  @at-root .tbl-gl-checkmark.active {
+  .cnt-gl-checkmark.active {
     @include mixins.tblCheckmarkPosition();
     border: 2px solid #ccc;
     background-color: var(--btn-background-color);
   }
 
-  @at-root .tbl-gl-checkmark.active::after {
+  .cnt-gl-checkmark.active::after {
     content: '';
     position: absolute;
     display: none;
@@ -462,17 +503,17 @@
     transform: rotate(45deg);
   }
 
-  @at-root .tbl-gl-checkbox:checked + .tbl-gl-checkmark.active::after {
+  .cnt-gl-checkbox:checked + .cnt-gl-checkmark.active::after {
     display: block;
   }
 
-  @at-root .tbl-checkmark {
+  .cnt-checkmark {
     @include mixins.tblCheckmarkPosition();
     border: 2px solid #ccc;
     background-color: var(--btn-background-color);
   }
 
-  @at-root .tbl-checkmark::after {
+  .cnt-checkmark::after {
     content: '';
     position: absolute;
     display: none;
@@ -486,11 +527,11 @@
     transform: rotate(45deg);
   }
 
-  @at-root .tbl-checkbox:checked + .tbl-checkmark::after {
+  .cnt-checkbox:checked + .cnt-checkmark::after {
     display: block;
   }
 
-  @at-root .tbl-btn-dlt-all {
+  .cnt-btn-dlt-all {
     visibility: hidden;
     opacity: 0;
 
@@ -501,7 +542,7 @@
     @include mixins.font-for-content(0.8em, 500);
   }
 
-  @at-root .tbl-btn-dlt-all.active {
+  .cnt-btn-dlt-all.active {
     visibility: visible;
     opacity: 1;
 
@@ -663,8 +704,8 @@ tbody tr:nth-child(even) {
   text-indent: 1vw;
 }
 
-.cabinet-content .sb-cnt .actions .bx {
-  font-size: 1em;
+.cabinet-content .sb-cnt .bx {
+  font-size: 1.2em;
   color: var(--default-icon-color);
 
   cursor: pointer;
@@ -672,28 +713,28 @@ tbody tr:nth-child(even) {
   @include mixins.transition-all-04-in-out(color);
 }
 
-.cabinet-content .sb-cnt .actions .bx.active {
+.cabinet-content .sb-cnt .bx.active {
   color: var(--page-text-color-hover);
 }
 
-.cabinet-content .sb-cnt .actions .bx.active:hover {
+.cabinet-content .sb-cnt .bx.active:hover {
   color: var(--default-icon-color);
 }
 
-.cabinet-content .sb-cnt .actions .bx:hover {
+.cabinet-content .sb-cnt .bx:hover {
   color: var(--page-text-color-hover);
 }
 
-.cabinet-content .sb-cnt .actions .tbl-open-rec-icon {
+.cabinet-content .sb-cnt .tbl-open-rec-icon {
   width: auto;
   height: 2.5vh;
 }
 
-.cabinet-content .sb-cnt .actions .tbl-edit-icon {
+.cabinet-content .sb-cnt .tbl-edit-icon {
   color: var(--edit-icon-color);
 }
 
-.cabinet-content .sb-cnt .actions .tbl-dlt-icon {
+.cabinet-content .sb-cnt .tbl-dlt-icon {
   color: var(--dlt-icon-color);
 }
 
@@ -900,20 +941,67 @@ tbody tr:nth-child(even) {
 
   @include mixins.sb-cnt-indention();
 
-  margin-left: 0.5vw;
+  .bxs-star,
+  .bx-star {
+    position: absolute;
 
-  .sb-cnt-title-ctn-items {
-    @include mixins.flex(column, $gap: 2vh);
+    top: 2vh;
+    right: 1vw;
+  }
+
+  .sb-cnt-title-ctn-item {
+    @include mixins.flex(column, $gap: 3vh);
     justify-content: flex-start;
 
-    width: 20vw;
-    height: 25vh;
+    flex: 1 1 auto;
+    min-width: 32.5%;
+    max-width: 32.5%;
 
-    background-color: var(--cabinet-page-content-background-color);
+    position: relative;
 
-    padding: 3vh 1vw 3vh 1vw;
+    height: 40vh;
+
+    background-color: var(--page-content-background-color);
+
+    margin: 0;
+    padding: 7vh 1vw 3vh 1vw;
 
     @include mixins.box-shadow-tbl-el();
+
+    .title-lb-checkbox {
+      position: absolute;
+
+      top: -5vh;
+      left: 0;
+    }
+
+    & > div:nth-last-child(2) {
+      max-height: 15vh;
+
+      overflow: hidden;
+    }
+
+    .actions {
+      @include mixins.flex(row, $gap: 0.3vw);
+      position: absolute;
+
+      bottom: 1vh;
+      left: 1vw;
+    }
+  }
+
+  .sb-cnt-title-ctn-el {
+    @include mixins.flex(row, $gap: 1vw);
+    justify-content: flex-start;
+    align-items: start;
+
+    width: 100%;
+
+    h4 {
+      min-width: 8vw;
+      padding: 0;
+      margin: 0;
+    }
 
     p {
       padding: 0;
@@ -923,7 +1011,6 @@ tbody tr:nth-child(even) {
     }
 
     .brief-description {
-      margin-top: 2vh;
       font-size: 1.2em;
     }
   }

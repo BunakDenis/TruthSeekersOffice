@@ -2,6 +2,18 @@ document.addEventListener('DOMContentLoaded', function () {
   changeModalEditInformationHeight()
 })
 
+//Функция для вёрстки контента сайдбара
+/*
+document.addEventListener('DOMContentLoaded', function () {
+  const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey)
+  const activeSubMenuId = localStorage.getItem(sidebarActiveSubmenuIdKey)
+
+  document.getElementById(activeMenuId).closest('li').classList.add('active')
+  document.getElementById(activeSubMenuId).classList.add('active')
+
+  showOrHideSidebarContent(activeSubMenuId)
+})
+*/
 //Переменная-ключ для добавления контента активного меню сайдбара
 const sidebarMenuActiveContentIdKey = 'sidebar-content-id'
 //Показ/скрытие контента соответсвующего меню или подменю сайдбара
@@ -22,15 +34,14 @@ function showOrHideSidebarContent(itemId) {
         const activeItemContent = document.getElementById(activeItemContentId)
 
         if (activeItemContent) {
-          activeItemContent.style.display = 'none'
+          activeItemContent.classList.remove('active')
         }
       }
     }
 
     //Включаем отображение контента
-    itemContent.style.display = 'flex'
-    document.querySelector('.cabinet-content').style.visibility = 'visible'
-    document.querySelector('.cabinet-content').style.opacity = '1'
+    itemContent.classList.add('active')
+    document.querySelector('.cabinet-content').classList.add('show')
     //Записываем в localStorage текущий активный блок с контентом
     localStorage.setItem(sidebarMenuActiveContentIdKey, itemContent.id)
   }
@@ -266,72 +277,15 @@ const cntContainer = document.querySelector('.cabinet-content')
 if (cntContainer) {
   const cntTables = document.getElementsByTagName('table')
 
+  tabsService(cntContainer)
+
   if (cntTables.length > 0) {
     //Подключение сервисов и функций для работы с таблицами контента сайдбара
     for (let i = 0; i < cntTables.length; i++) {
-      tblMultiSlctService(cntTables[i].id)
-      addNewRow(cntTables[i].id)
-      searchTable(cntTables[i].id)
-      tblPaggination(cntTables[i].id)
+      if (cntTables[i].closest('div').classList.contains('active')) {
+        initTableServices(cntTables[i].id)
+      }
     }
-  }
-
-  //Переключение иконки сортировки
-  for (let i = 0; i < cntTables.length; i++) {
-    const tblHeaderCell = cntTables[i].getElementsByTagName('th')
-
-    for (let i = 0; i < tblHeaderCell.length; i++) {
-      tblHeaderCell[i].addEventListener('click', event => {
-        event.preventDefault() // Prevent the default action of the link
-
-        //Поиск элемента <span> класса "fas fa-caret-down"
-        const caretSpan = tblHeaderCell[i].querySelector('.fas')
-
-        if (caretSpan) {
-          caretSpan.classList.toggle('rotate')
-        }
-      })
-    }
-  }
-
-  //Кнопка удалить все записи
-  const tblBtnDltAll = document.querySelectorAll('.tbl-btn-dlt-all')
-
-  if (tblBtnDltAll.length > 0) {
-    tblBtnDltAll.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const tbl = btn.closest('table')
-        const tblGlCheckbox = tbl.querySelector('.tbl-gl-checkbox')
-        const tblData = tbl.querySelectorAll('.tbl-body-row')
-
-        //Удаляем только те записи где чекбокс checked
-        tblData.forEach(row => {
-          if (row.querySelector('.tbl-checkbox').checked) {
-            row.remove()
-          }
-        })
-
-        //Если чекбокс в заголовке checked убрать флажёк
-        if (tblGlCheckbox.checked) {
-          tblGlCheckbox.checked = false
-        }
-        showOrHidePagginationContainer(tbl.id)
-
-        if (tbl.querySelectorAll('.tbl-body-row').length == 0)
-          showOrHideTblDeleteAllBtn(tbl.id, false)
-      })
-    })
-  }
-  //Иконка редактирования записи таблицы
-  const editIcon = document.querySelectorAll('.tbl-edit-icon')
-
-  if (editIcon.length > 0) {
-    //Функция отображения модальных окон при клике на иконку редактирования
-    editIcon.forEach(icon => {
-      icon.addEventListener('click', () => {
-        showModalWillEditInformation(icon.closest('.tbl-body-row'))
-      })
-    })
   }
 
   //Закрытие модального окна
@@ -404,39 +358,103 @@ if (cntContainer) {
       })
     })
   }
+}
+
+function initTableServices(tblId) {
+  const tbl = document.getElementById(tblId)
+  const tblContainer = tbl.closest('div')
+
+  tblMultiSlctService(tblId)
+  addNewRow(tblId)
+  searchTable(tblId)
+  tblPaggination(tblId)
+
+  //Переключение иконки сортировки
+  const tblHeaderCell = tbl.getElementsByTagName('th')
+
+  for (let i = 0; i < tblHeaderCell.length; i++) {
+    tblHeaderCell[i].addEventListener('click', event => {
+      event.preventDefault() // Prevent the default action of the link
+
+      //Поиск элемента <span> класса "fas fa-caret-down"
+      const caretSpan = tblHeaderCell[i].querySelector('.fas')
+
+      if (caretSpan) {
+        caretSpan.classList.toggle('rotate')
+      }
+    })
+  }
+
+  //Кнопка удалить все записи
+  const tblBtnDltAll = tblContainer.querySelector('.tbl-btn-dlt-all')
+  console.log(tblBtnDltAll)
+
+  if (tblBtnDltAll) {
+    tblBtnDltAll.addEventListener('click', () => {
+      const tbl = document.getElementById(tblId)
+      const tblContainer = tbl.closest('div')
+      const tblGlCheckbox = tblContainer.querySelector('.tbl-gl-checkbox')
+      const tblData = tbl.querySelectorAll('.tbl-body-row')
+
+      //Удаляем только те записи где чекбокс checked
+      tblData.forEach(row => {
+        if (row.querySelector('.tbl-checkbox').checked) {
+          row.remove()
+        }
+      })
+
+      //Если чекбокс в заголовке checked убрать флажёк
+      if (tblGlCheckbox.checked) {
+        tblGlCheckbox.checked = false
+      }
+      showOrHidePagginationContainer(tbl.id)
+
+      if (tbl.querySelectorAll('.tbl-body-row').length == 0)
+        showOrHideTblDeleteAllBtn(tbl.id, false)
+    })
+  }
+  //Иконка редактирования записи таблицы
+  const editIcon = tbl.querySelectorAll('.tbl-edit-icon')
+
+  if (editIcon.length > 0) {
+    //Функция отображения модальных окон при клике на иконку редактирования
+    editIcon.forEach(icon => {
+      icon.addEventListener('click', () => {
+        showModalWillEditInformation(icon.closest('.tbl-body-row'))
+      })
+    })
+  }
 
   //Функция сохранения отредактированных данных таблицы
-  const editModalSaveBtn = document.querySelectorAll('.edit-modal-save-btn')
+  const editModalSaveBtn = document.querySelector('.edit-modal-save-btn')
 
-  if (editModalSaveBtn.length > 0) {
-    editModalSaveBtn.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const form = btn.closest('form')
-        const objectId = form.getAttribute('obj-id')
-        const inputFields = form.querySelectorAll('.edit-modal-input-field')
-        const tblId = form.getAttribute('tbl-name') + '-tbl'
-        const tbl = document.getElementById(tblId)
-        const rows = tbl.querySelectorAll('.tbl-body-row')
-        let row
-        let isNewRow = true
+  if (editModalSaveBtn) {
+    editModalSaveBtn.addEventListener('click', () => {
+      const form = editModalSaveBtn.closest('form')
+      const objectId = form.getAttribute('obj-id')
+      const inputFields = form.querySelectorAll('.edit-modal-input-field')
+      const tblId = form.getAttribute('tbl-name') + '-tbl'
+      const tbl = document.getElementById(tblId)
+      const rows = tbl.querySelectorAll('.tbl-body-row')
+      let row
+      let isNewRow = true
 
-        rows.forEach(tblRow => {
-          if (tblRow.getAttribute('obj-id') == objectId) {
-            isNewRow = false
-            row = tblRow
-          }
-        })
-
-        if (isNewRow) {
-          const row = getRowFromTable(tblId)
-          row.setAttribute('obj-id', objectId)
-          setTblRowValuesFromInputFields(row, inputFields)
-          tbl.querySelector('tbody').appendChild(row)
-        } else {
-          setTblRowValuesFromInputFields(row, inputFields)
+      rows.forEach(tblRow => {
+        if (tblRow.getAttribute('obj-id') == objectId) {
+          isNewRow = false
+          row = tblRow
         }
-        btn.closest('.edit-modal-container').style.display = 'none'
       })
+
+      if (isNewRow) {
+        const row = getRowFromTable(tblId)
+        row.setAttribute('obj-id', objectId)
+        setTblRowValuesFromInputFields(row, inputFields)
+        tbl.querySelector('tbody').appendChild(row)
+      } else {
+        setTblRowValuesFromInputFields(row, inputFields)
+      }
+      editModalSaveBtn.closest('.edit-modal-container').style.display = 'none'
     })
   }
 
@@ -456,6 +474,47 @@ if (cntContainer) {
     })
   }
 }
+
+//Фуцнкция работы с переключателями формата контента
+function tabsService(cntContainer) {
+  const cntItems = cntContainer.querySelectorAll('.sb-cnt')
+
+  cntItems.forEach(cntItem => {
+    if (cntItem) {
+      const cntTabsContainer = cntItem.querySelector('.cnt-tabs')
+      const cntTabs = cntItem.querySelectorAll('.cnt-tab')
+
+      if (cntTabs) {
+        cntTabs.forEach(cntTab => {
+          cntTab.addEventListener('click', () => {
+            if (!cntTab.classList.contains('active')) {
+              for (const tab of cntTabsContainer.children) {
+                if (tab.classList.contains('active')) {
+                  tab.classList.remove('active')
+                }
+              }
+              cntTab.classList.add('active')
+            }
+            toggleContentFormat(cntItem, cntTab.getAttribute('tab-id'))
+          })
+        })
+      }
+    }
+  })
+}
+
+function toggleContentFormat(cntItem, tabId) {
+  const cntTbl = cntItem.querySelector('.sb-cnt-tbl-ctn')
+  const cntTitle = cntItem.querySelector('.sb-cnt-title-ctn')
+
+  if (tabId == 'title') {
+    cntTbl.classList.remove('active')
+    cntTitle.classList.add('active')
+  } else {
+    cntTbl.classList.add('active')
+    cntTitle.classList.remove('active')
+  }
+}
 /*
   Функция работы с чекбокса в заголовке таблице
     - При клике на чекбокс в заголовке таблицы включаем видимость чекбоксов в таблице
@@ -464,94 +523,93 @@ if (cntContainer) {
 function tblMultiSlctService(tblId) {
   //Чекбокс в заголовке таблицы
   const tbl = document.getElementById(tblId)
-  const tblGlLbCheckboxes = tbl.querySelectorAll('.tbl-gl-lb-checkbox')
+  const tblContainer = tbl.closest('div')
+  const tblGlLbCheckbox = tblContainer.querySelector('.tbl-gl-lb-checkbox')
 
   //Убираем с чекбокса свойство disabled при клике и отображаем чекбоксы в таблице
-  if (tblGlLbCheckboxes.length > 0) {
-    tblGlLbCheckboxes.forEach(checkbox => {
-      const glCheckbox = checkbox.querySelector('.tbl-gl-checkbox')
-      const tbl = checkbox.closest('table')
-      const glCheckboxSpan = checkbox.querySelector('.tbl-gl-checkmark')
+  if (tblGlLbCheckbox) {
+    const glCheckbox = tblGlLbCheckbox.querySelector('.tbl-gl-checkbox')
+    const tbl = tblGlLbCheckbox
+      .closest('.sb-cnt-tbl-ctn')
+      .querySelector('table')
+    const glCheckboxSpan = tblGlLbCheckbox.querySelector('.tbl-gl-checkmark')
 
-      const countCheckedboxes = {}
-      countCheckedboxes[tblId] = 0
+    const countCheckedboxes = {}
+    countCheckedboxes[tblId] = 0
 
-      /*
+    /*
       Прослушка клика на lable чекбокса
       - Если чекбокс в заголовке таблицы не активирован, то активируем.
       - Включаем отображение всех чекбоксов в данной таблице
       - Если чекбокс в заголовке отмечен (checked), то делаем все чекбоксы в таблице checked и наоборот
       */
-      checkbox.addEventListener('click', () => {
-        const tblLbCheckBoxes = tbl.querySelectorAll('.tbl-lb-checkbox')
-        const tblCheckboxes = tbl.querySelectorAll('.tbl-checkbox')
-        //Если чекбоксы не активированы, то активируем. И включаем отображение кнопки "Удалить записи"
-        if (!glCheckboxSpan.classList.contains('active')) {
-          glCheckboxSpan.classList.add('active')
+    tblGlLbCheckbox.addEventListener('click', () => {
+      const tblLbCheckBoxes = tbl.querySelectorAll('.tbl-lb-checkbox')
+      const tblCheckboxes = tbl.querySelectorAll('.tbl-checkbox')
+      //Если чекбоксы не активированы, то активируем. И включаем отображение кнопки "Удалить записи"
+      if (!glCheckboxSpan.classList.contains('active')) {
+        glCheckboxSpan.classList.add('active')
 
-          //Включаем видимость чекбоксов в таблице
-          for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-            tblLbCheckBoxes[i].style.display = 'block'
-          }
-        } else if (glCheckbox.checked) {
-          //Делаем все чекбоксы в таблице checked
-          for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-            const tblCheckBox =
-              tblLbCheckBoxes[i].querySelector('.tbl-checkbox')
-            tblCheckBox.checked = true
-          }
-
-          if (tblCheckboxes.length > 0) {
-            showOrHideTblDeleteAllBtn(tbl.id, true)
-          }
-        } else if (!glCheckbox.checked) {
-          //Убираем checked со всех чекбоксов в таблице
-          for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-            const tblCheckBox =
-              tblLbCheckBoxes[i].querySelector('.tbl-checkbox')
-            tblCheckBox.checked = false
-          }
-          countCheckedboxes[tblId] = 0
-          showOrHideTblDeleteAllBtn(tbl.id, false)
+        //Включаем видимость чекбоксов в таблице
+        for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+          tblLbCheckBoxes[i].style.display = 'block'
         }
-      })
+      } else if (glCheckbox.checked) {
+        //Делаем все чекбоксы в таблице checked
+        for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+          const tblCheckBox = tblLbCheckBoxes[i].querySelector('.tbl-checkbox')
+          tblCheckBox.checked = true
+        }
 
-      /*
+        if (tblCheckboxes.length > 0) {
+          showOrHideTblDeleteAllBtn(tbl.id, true)
+        }
+      } else if (!glCheckbox.checked) {
+        //Убираем checked со всех чекбоксов в таблице
+        for (let i = 0; i < tblLbCheckBoxes.length; i++) {
+          const tblCheckBox = tblLbCheckBoxes[i].querySelector('.tbl-checkbox')
+          tblCheckBox.checked = false
+        }
+        countCheckedboxes[tblId] = 0
+        showOrHideTblDeleteAllBtn(tbl.id, false)
+      }
+    })
+
+    /*
     Функция работы с чекбоксами в таблице
       - Отслеживание количества отмеченных чекбоксов, если больше одного, то отображаем кнопку "Удалить записи", 
         если нет, то скрываем
   */
-      //Посчёт количества отмеченых чекбоксов
-      const tblCheckboxes = tbl.querySelectorAll('.tbl-checkbox')
-      tblCheckboxes.forEach(checkbox => {
+    //Посчёт количества отмеченых чекбоксов
+    const tblCheckboxes = tbl.querySelectorAll('.tbl-checkbox')
+    tblCheckboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        countCheckedboxes[tblId]++
+      }
+
+      //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
+      checkbox.addEventListener('change', () => {
+        if (glCheckbox.checked) {
+          countCheckedboxes[tblId] = tblCheckboxes.length
+        }
         if (checkbox.checked) {
           countCheckedboxes[tblId]++
+        } else {
+          if (countCheckedboxes[tblId] > 0) countCheckedboxes[tblId]--
+          glCheckbox.checked = false
         }
 
-        //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
-        checkbox.addEventListener('change', () => {
-          if (glCheckbox.checked) {
-            countCheckedboxes[tblId] = tblCheckboxes.length
-          }
-          if (checkbox.checked) {
-            countCheckedboxes[tblId]++
-          } else {
-            if (countCheckedboxes[tblId] > 0) countCheckedboxes[tblId]--
-            glCheckbox.checked = false
-          }
+        //Если все чекбоксы в таблице отмечены, то делаем чекбокс в заголовке checked
+        if (countCheckedboxes[tblId] === tblCheckboxes.length) {
+          glCheckbox.checked = true
+        }
 
-          //Если все чекбоксы в таблице отмечены, то делаем чекбокс в заголовке checked
-          if (countCheckedboxes[tblId] === tblCheckboxes.length) {
-            glCheckbox.checked = true
-          }
-
-          //Если больше одного чекбокса отмечен, то отображаем кнопку "Удалить записи", иначе скрываем
-          if (countCheckedboxes[tblId] > 1) {
-            showOrHideTblDeleteAllBtn(tbl.id, true)
-          } else {
-            showOrHideTblDeleteAllBtn(tbl.id, false)
-          }
-        })
+        //Если больше одного чекбокса отмечен, то отображаем кнопку "Удалить записи", иначе скрываем
+        if (countCheckedboxes[tblId] > 1) {
+          showOrHideTblDeleteAllBtn(tbl.id, true)
+        } else {
+          showOrHideTblDeleteAllBtn(tbl.id, false)
+        }
       })
     })
   }
@@ -565,12 +623,15 @@ function tblMultiSlctService(tblId) {
 */
 function showOrHideTblDeleteAllBtn(tblId, isShow) {
   const tbl = document.getElementById(tblId)
-  const btn = tbl.querySelector('.tbl-btn-dlt-all')
+  const tblContainer = tbl.closest('div')
+  const btn = tblContainer.querySelector('.tbl-btn-dlt-all')
 
-  if (isShow) {
-    btn.classList.add('active')
-  } else {
-    btn.classList.remove('active')
+  if (btn) {
+    if (isShow) {
+      btn.classList.add('active')
+    } else {
+      btn.classList.remove('active')
+    }
   }
 }
 
@@ -582,23 +643,26 @@ function getTblNameById(tableId) {
 //Функция создания новой строки в таблице
 function addNewRow(tblId) {
   const tbl = document.getElementById(tblId)
+  const tblContainer = tbl.closest('div')
   //Кнопка добавления новой записи
-  const btn = tbl.querySelector('.tbl-btn-add')
+  const btn = tblContainer.querySelector('.tbl-btn-add')
   const objectId = tbl.querySelectorAll('.tbl-body-row').length + 1
 
-  btn.addEventListener('click', () => {
-    const modal = getModalWillEditInformationByTblId(tblId)
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const modal = getModalWillEditInformationByTblId(tblId)
 
-    modal.querySelector('form').setAttribute('obj-id', objectId)
+      modal.querySelector('form').setAttribute('obj-id', objectId)
 
-    const inputFields = modal.querySelectorAll('.edit-modal-input-field')
+      const inputFields = modal.querySelectorAll('.edit-modal-input-field')
 
-    inputFields.forEach(field => {
-      field.value = ''
+      inputFields.forEach(field => {
+        field.value = ''
+      })
+
+      modal.style.display = 'block'
     })
-
-    modal.style.display = 'block'
-  })
+  }
 }
 
 //Создание элемента tr переданного id таблицы c новым id
@@ -630,17 +694,19 @@ function getRowFromTable(tblId) {
 //Функция поиска по таблице
 function searchTable(tblId) {
   const tbl = document.getElementById(tblId)
-  const tblSearchColumnSelectList = tbl.querySelector('.tbl-search-sl-col')
+  const tblContainer = tbl.closest('div')
+  const tblSearchColumnSelectList =
+    tblContainer.querySelector('.tbl-search-sl-col')
   const tblSearchColumnsNames = tbl
     .querySelector('thead')
     .querySelectorAll('.tbl-title-link')
-  const inputField = tbl.querySelector('.tbl-search-input')
-  let searchResultContainer = tbl.querySelector('.tbl-search-result')
-  const searchTblBtn = tbl.querySelector('.tbl-btn-search')
-  const searchIcon = tbl.querySelector('.bx-search')
-  const prevBtn = tbl.querySelector('.bx-chevron-up')
-  const nextBtn = tbl.querySelector('.bx-chevron-down')
-  const closeBtn = tbl.querySelector('.bx-x')
+  const inputField = tblContainer.querySelector('.tbl-search-input')
+  let searchResultContainer = tblContainer.querySelector('.tbl-search-result')
+  const searchTblBtn = tblContainer.querySelector('.tbl-btn-search')
+  const searchIcon = tblContainer.querySelector('.bx-search')
+  const prevBtn = tblContainer.querySelector('.bx-chevron-up')
+  const nextBtn = tblContainer.querySelector('.bx-chevron-down')
+  const closeBtn = tblContainer.querySelector('.bx-x')
   let query = ''
   let matches = []
   let currentIdex = 0
@@ -660,20 +726,22 @@ function searchTable(tblId) {
     }
   })
 
-  //Поиск при нажатии на кнопку поиска
-  searchTblBtn.addEventListener('click', () => {
-    const selectedOption = getSelectedOption(tblSearchColumnSelectList)
+  if (searchTblBtn) {
+    //Поиск при нажатии на кнопку поиска
+    searchTblBtn.addEventListener('click', () => {
+      const selectedOption = getSelectedOption(tblSearchColumnSelectList)
 
-    //Обнуление переменных при повторном поиске
-    addOrRemoveHighlightInTbl(query, tblId, selectedOption, false)
-    matches.length = 0
-    currentIdex = 0
+      //Обнуление переменных при повторном поиске
+      addOrRemoveHighlightInTbl(query, tblId, selectedOption, false)
+      matches.length = 0
+      currentIdex = 0
 
-    query = getQueryFromInputField(tblId)
-    matches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true)
+      query = getQueryFromInputField(tblId)
+      matches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true)
 
-    searchQueryInTbl(tbl, matches, searchResultContainer)
-  })
+      searchQueryInTbl(tbl, matches, searchResultContainer)
+    })
+  }
 
   //Поиск при нажатии на иконку поиска
   searchIcon.addEventListener('click', () => {
@@ -766,8 +834,12 @@ function searchTable(tblId) {
 
 //Функция поиска текста в таблице
 function searchQueryInTbl(tbl, matches, searchResultContainer) {
-  const tblSearchColumnSelectList = tbl.querySelector('.tbl-search-sl-col')
-  const tblSearchCevrons = tbl.querySelector('.tbl-search-rslt-cevrons')
+  const tblContainer = tbl.closest('div')
+  const tblSearchColumnSelectList =
+    tblContainer.querySelector('.tbl-search-sl-col')
+  const tblSearchCevrons = tblContainer.querySelector(
+    '.tbl-search-rslt-cevrons'
+  )
 
   if (matches.length > 0) {
     //Включаем блок с иконками навигации по результатам поиска
@@ -820,8 +892,9 @@ function getSelectedOption(selectElement) {
 //Получение строки запроса со строки поиска
 function getQueryFromInputField(tblId) {
   const tbl = document.getElementById(tblId)
+  const tblContainer = tbl.closest('div')
 
-  return tbl.querySelector('.tbl-search-input').value
+  return tblContainer.querySelector('.tbl-search-input').value
 }
 
 //Добавляем количество найденных результатов в строку
@@ -918,9 +991,10 @@ function addOrRemoveHighlightInTbl(query, tblId, selectedOption, isHighlight) {
 */
 function showOrHideSearchResultContainer(tblId, isShow) {
   const tbl = document.getElementById(tblId)
-  const searchIcon = tbl.querySelector('.bx-search')
-  const clearSearchFieldIcon = tbl.querySelector('.bx-x')
-  const searchResultContainer = tbl.querySelector('.tbl-search-result')
+  const tblContainer = tbl.closest('div')
+  const searchIcon = tblContainer.querySelector('.bx-search')
+  const clearSearchFieldIcon = tblContainer.querySelector('.bx-x')
+  const searchResultContainer = tblContainer.querySelector('.tbl-search-result')
 
   if (isShow) {
     searchIcon.style.display = 'none'
@@ -935,7 +1009,8 @@ function showOrHideSearchResultContainer(tblId, isShow) {
 
 function showOrHideWarningSelectWindow(tblId, isShow) {
   const tbl = document.getElementById(tblId)
-  const slctWarLable = tbl.querySelector('.tbl-search-wrn')
+  const tblContainer = tbl.closest('div')
+  const slctWarLable = tblContainer.querySelector('.tbl-search-wrn')
   if (isShow) {
     slctWarLable.style.visibility = 'visible'
     slctWarLable.style.opacity = '1'
@@ -1069,16 +1144,3 @@ function tblOffsetService(tblId) {
     })
   }
 }
-
-/*
-//Функция для вёрстки контента сайдбара
-document.addEventListener('DOMContentLoaded', function () {
-  const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey)
-  const activeSubMenuId = localStorage.getItem(sidebarActiveSubmenuIdKey)
-
-  document.getElementById(activeMenuId).closest('li').classList.add('active')
-  document.getElementById(activeSubMenuId).classList.add('active')
-
-  showOrHideSidebarContent(activeSubMenuId)
-})
-*/

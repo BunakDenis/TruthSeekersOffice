@@ -178,7 +178,17 @@ describe('Тесты таблиц контента страницы Кабине
       force: true
     })
 
+    cy.wait(1000)
+
     cy.get('#link-will').click()
+
+    cy.get('#link-will-sb-cnt').find('.sb-cnt-title').scrollIntoView()
+    cy.get('#link-will-sb-cnt').find('.sb-cnt-title').realHover({
+      position: 'center',
+      force: true
+    })
+
+    cy.wait(1000)
 
     cy.get('#will-tbl')
       .find('th')
@@ -210,7 +220,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     //Находим и жмём на кнопку добавить запись
-    cy.get('#will-tbl')
+    cy.get('.sb-cnt-tbl-ctn')
       .find('.tbl-btn-add')
       .then($btn => {
         cy.wrap($btn).click()
@@ -283,11 +293,11 @@ describe('Тесты таблиц контента страницы Кабине
     cy.wait(2000)
     cy.get('#link-will').click()
 
-    cy.get('#will-tbl').find('.tbl-gl-lb-checkbox').as('glLbCheckbox')
-    cy.get('#will-tbl').find('.tbl-gl-checkbox').as('glCheckbox')
-    cy.get('#will-tbl').find('.tbl-gl-checkmark').as('glChecmark')
-    cy.get('#will-tbl').find('.tbl-checkmark').as('tblChecmarks')
-    cy.get('#will-tbl').find('.tbl-checkbox').as('tblCheckboxes')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-gl-lb-checkbox').as('glLbCheckbox')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-gl-checkbox').as('glCheckbox')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-gl-checkmark').as('glChecmark')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-checkmark').as('tblChecmarks')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-checkbox').as('tblCheckboxes')
 
     cy.get('@glLbCheckbox').click({ force: true })
     cy.wait(2000)
@@ -360,8 +370,8 @@ describe('Тесты таблиц контента страницы Кабине
     cy.wait(2000)
     cy.get('#link-will').click()
 
-    cy.get('#will-tbl').find('.tbl-gl-lb-checkbox').as('glLbCheckbox')
-    cy.get('#will-tbl').find('.tbl-btn-dlt-all').as('btnDltAll')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-gl-lb-checkbox').as('glLbCheckbox')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-dlt-all').as('btnDltAll')
 
     //Активируем главный чекбокс и отмечаем все чекбоксы в таблице
     cy.get('@glLbCheckbox').click({ force: true })
@@ -389,11 +399,11 @@ describe('Тесты таблиц контента страницы Кабине
       position: 'center',
       force: true
     })
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get('#link-will').click()
 
-    cy.get('#will-tbl').find('.tbl-gl-lb-checkbox').as('glLbCheckbox')
-    cy.get('#will-tbl').find('.tbl-btn-dlt-all').as('btnDltAll')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-gl-lb-checkbox').as('glLbCheckbox')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-dlt-all').as('btnDltAll')
 
     //Считываем количество строк до удаления записей
     cy.get('#will-tbl').find('tbody tr').its('length').as('rowCount')
@@ -456,9 +466,9 @@ describe('Тесты таблиц контента страницы Кабине
     cy.wait(2000)
     cy.get('#link-will').click()
 
-    cy.get('#will-tbl').find('.tbl-gl-lb-checkbox').as('glLbCheckbox')
-    cy.get('#will-tbl').find('.tbl-checkmark').as('tblChecmarks')
-    cy.get('#will-tbl').find('.tbl-btn-dlt-all').as('btnDltAll')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-gl-lb-checkbox').as('glLbCheckbox')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-checkmark').as('tblChecmarks')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-dlt-all').as('btnDltAll')
 
     cy.get('@glLbCheckbox').click({ force: true })
     cy.get('@glLbCheckbox').click({ force: true })
@@ -664,11 +674,11 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     //Инициализация элементов поиска в alias
-    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
-    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
-    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
-    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
-    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.bx-search').as('searchIcon')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-search').as('searchBtn')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-input').as('searchInputField')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-wrn').as('searchWrnCnt')
 
     //Кликаем по иконке поиска
     cy.get('@searchIcon').click()
@@ -747,13 +757,15 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     //Инициализация элементов поиска в alias
-    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
-    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
-    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
-    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
-    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
-    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
-    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.bx-search').as('searchIcon')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-search').as('searchBtn')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-input').as('searchInputField')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('.sb-cnt-tbl-ctn')
+      .find('.tbl-search-rslt-cevrons')
+      .as('searchChevronsCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-wrn').as('searchWrnCnt')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -862,13 +874,15 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     //Инициализация элементов поиска в alias
-    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
-    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
-    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
-    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
-    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
-    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
-    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.bx-search').as('searchIcon')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-search').as('searchBtn')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-input').as('searchInputField')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('.sb-cnt-tbl-ctn')
+      .find('.tbl-search-rslt-cevrons')
+      .as('searchChevronsCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-wrn').as('searchWrnCnt')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -972,6 +986,7 @@ describe('Тесты таблиц контента страницы Кабине
       .find('.tbl-search-rslt-cevrons')
       .should('be.not.visible')
   })
+
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе', () => {
     cy.visit('/cabinet.html')
 
@@ -985,19 +1000,21 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     //Инициализация элементов поиска в alias
-    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
-    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
-    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
-    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
-    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
-    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
-    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.bx-search').as('searchIcon')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-search').as('searchBtn')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-input').as('searchInputField')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('.sb-cnt-tbl-ctn')
+      .find('.tbl-search-rslt-cevrons')
+      .as('searchChevronsCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-wrn').as('searchWrnCnt')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(2)
 
     //Вводим запрос в поле поиска
-    cy.get('@searchInputField').type('Благодарность')
+    cy.get('@searchInputField').type('Сайт')
 
     //Кликаем по иконке поиска
     cy.get('@searchIcon').click()
@@ -1033,13 +1050,15 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     //Инициализация элементов поиска в alias
-    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
-    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
-    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
-    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
-    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
-    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
-    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.bx-search').as('searchIcon')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-search').as('searchBtn')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-input').as('searchInputField')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('.sb-cnt-tbl-ctn')
+      .find('.tbl-search-rslt-cevrons')
+      .as('searchChevronsCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-wrn').as('searchWrnCnt')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -1146,13 +1165,15 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     //Инициализация элементов поиска в alias
-    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
-    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
-    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
-    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
-    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
-    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
-    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.bx-search').as('searchIcon')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-search').as('searchBtn')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-input').as('searchInputField')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('.sb-cnt-tbl-ctn')
+      .find('.tbl-search-rslt-cevrons')
+      .as('searchChevronsCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-wrn').as('searchWrnCnt')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(2)
@@ -1259,13 +1280,15 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     //Инициализация элементов поиска в alias
-    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
-    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
-    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
-    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
-    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
-    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
-    cy.get('#will-tbl').find('.tbl-search-wrn').as('searchWrnCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.bx-search').as('searchIcon')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-search').as('searchBtn')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-input').as('searchInputField')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('.sb-cnt-tbl-ctn')
+      .find('.tbl-search-rslt-cevrons')
+      .as('searchChevronsCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-wrn').as('searchWrnCnt')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(3)
@@ -1372,13 +1395,16 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     //Инициализация элементов поиска в alias
-    cy.get('#will-tbl').find('.bx-search').as('searchIcon')
-    cy.get('#will-tbl').find('.tbl-btn-search').as('searchBtn')
-    cy.get('#will-tbl').find('.bx-x').as('clearInputField')
-    cy.get('#will-tbl').find('.tbl-search-input').as('searchInputField')
-    cy.get('#will-tbl').find('.tbl-search-result').as('searchResultCnt')
-    cy.get('#will-tbl').find('.tbl-search-sl-col').as('searchSelCol')
-    cy.get('#will-tbl').find('.tbl-search-rslt-cevrons').as('searchChevronsCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.bx-search').as('searchIcon')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-btn-search').as('searchBtn')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-input').as('searchInputField')
+    cy.get('.sb-cnt-tbl-ctn').find('.bx-x').as('clearInputField')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-result').as('searchResultCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-sl-col').as('searchSelCol')
+    cy.get('.sb-cnt-tbl-ctn')
+      .find('.tbl-search-rslt-cevrons')
+      .as('searchChevronsCnt')
+    cy.get('.sb-cnt-tbl-ctn').find('.tbl-search-wrn').as('searchWrnCnt')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(3)
