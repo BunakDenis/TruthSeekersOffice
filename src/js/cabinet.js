@@ -268,14 +268,13 @@ function changeVisibilityOfSubMenuItems(item) {
   }
 }
 
-/*
---------------------------------------------------------------------------------------------------------------------
-Секция для работы с таблицами контента сайдбара
-*/
+//-------------------------------------------------------------------------------------------------
+//Секция контента сайдбара
 const cntContainer = document.querySelector('.cabinet-content')
 
 if (cntContainer) {
   const cntTables = document.getElementsByTagName('table')
+  const cntTitles = document.querySelectorAll('.sb-cnt-title-ctn')
 
   tabsService(cntContainer)
 
@@ -285,6 +284,13 @@ if (cntContainer) {
       if (cntTables[i].closest('div').classList.contains('active')) {
         initTableServices(cntTables[i].id)
       }
+    }
+  }
+
+  if (cntTitles.length > 0) {
+    //Подключение сервисов и функций для работы с плитками контента сайдбара
+    for (let i = 0; i < cntTitles.length; i++) {
+      initTitleService(cntTitles[i].id)
     }
   }
 
@@ -360,6 +366,51 @@ if (cntContainer) {
   }
 }
 
+//Фуцнкция работы с переключателями формата контента
+function tabsService(cntContainer) {
+  const cntItems = cntContainer.querySelectorAll('.sb-cnt')
+
+  cntItems.forEach(cntItem => {
+    if (cntItem) {
+      const cntTabsContainer = cntItem.querySelector('.cnt-tabs')
+      const cntTabs = cntItem.querySelectorAll('.cnt-tab')
+
+      if (cntTabs) {
+        cntTabs.forEach(cntTab => {
+          cntTab.addEventListener('click', () => {
+            if (!cntTab.classList.contains('active')) {
+              for (const tab of cntTabsContainer.children) {
+                if (tab.classList.contains('active')) {
+                  tab.classList.remove('active')
+                }
+              }
+              cntTab.classList.add('active')
+            }
+            toggleContentFormat(cntItem, cntTab.getAttribute('tab-id'))
+          })
+        })
+      }
+    }
+  })
+}
+
+function toggleContentFormat(cntItem, tabId) {
+  const cntTbl = cntItem.querySelector('.sb-cnt-tbl-ctn')
+  const cntTitle = cntItem.querySelector('.sb-cnt-title-ctn')
+
+  if (tabId == 'title') {
+    cntTbl.classList.remove('active')
+    cntTitle.classList.add('active')
+  } else {
+    cntTbl.classList.add('active')
+    cntTitle.classList.remove('active')
+  }
+}
+
+/*
+--------------------------------------------------------------------------------------------------------------------
+Секция функций таблиц контента сайдбара
+*/
 function initTableServices(tblId) {
   const tbl = document.getElementById(tblId)
   const tblContainer = tbl.closest('div')
@@ -387,7 +438,6 @@ function initTableServices(tblId) {
 
   //Кнопка удалить все записи
   const tblBtnDltAll = tblContainer.querySelector('.tbl-btn-dlt-all')
-  console.log(tblBtnDltAll)
 
   if (tblBtnDltAll) {
     tblBtnDltAll.addEventListener('click', () => {
@@ -474,47 +524,6 @@ function initTableServices(tblId) {
     })
   }
 }
-
-//Фуцнкция работы с переключателями формата контента
-function tabsService(cntContainer) {
-  const cntItems = cntContainer.querySelectorAll('.sb-cnt')
-
-  cntItems.forEach(cntItem => {
-    if (cntItem) {
-      const cntTabsContainer = cntItem.querySelector('.cnt-tabs')
-      const cntTabs = cntItem.querySelectorAll('.cnt-tab')
-
-      if (cntTabs) {
-        cntTabs.forEach(cntTab => {
-          cntTab.addEventListener('click', () => {
-            if (!cntTab.classList.contains('active')) {
-              for (const tab of cntTabsContainer.children) {
-                if (tab.classList.contains('active')) {
-                  tab.classList.remove('active')
-                }
-              }
-              cntTab.classList.add('active')
-            }
-            toggleContentFormat(cntItem, cntTab.getAttribute('tab-id'))
-          })
-        })
-      }
-    }
-  })
-}
-
-function toggleContentFormat(cntItem, tabId) {
-  const cntTbl = cntItem.querySelector('.sb-cnt-tbl-ctn')
-  const cntTitle = cntItem.querySelector('.sb-cnt-title-ctn')
-
-  if (tabId == 'title') {
-    cntTbl.classList.remove('active')
-    cntTitle.classList.add('active')
-  } else {
-    cntTbl.classList.add('active')
-    cntTitle.classList.remove('active')
-  }
-}
 /*
   Функция работы с чекбокса в заголовке таблице
     - При клике на чекбокс в заголовке таблицы включаем видимость чекбоксов в таблице
@@ -552,7 +561,7 @@ function tblMultiSlctService(tblId) {
 
         //Включаем видимость чекбоксов в таблице
         for (let i = 0; i < tblLbCheckBoxes.length; i++) {
-          tblLbCheckBoxes[i].style.display = 'block'
+          tblLbCheckBoxes[i].classList.add('active')
         }
       } else if (glCheckbox.checked) {
         //Делаем все чекбоксы в таблице checked
@@ -1142,5 +1151,125 @@ function tblOffsetService(tblId) {
     offsetOptions[i].addEventListener('click', () => {
       offsetSelect.textContent = offsetOptions[i].textContent
     })
+  }
+}
+
+/*
+--------------------------------------------------------------------------------------------------------------------
+Секция функций плитки контента сайдбара
+*/
+function initTitleService(titleId) {
+  titleMultiSlctService(titleId)
+}
+/*
+  Функция работы с чекбокса в заголовке таблице
+    - При клике на чекбокс в заголовке таблицы включаем видимость чекбоксов в таблице
+    - При клике на чекбокс в заголовке таблицы делаем все чекбоксы в таблице checked и наоборот
+*/
+function titleMultiSlctService(titleId) {
+  //Чекбокс в заголовке таблицы
+  const title = document.getElementById(titleId)
+  const titleGlLbCheckbox = title.querySelector('.title-gl-lb-checkbox')
+
+  //Убираем с чекбокса свойство disabled при клике и отображаем чекбоксы в таблице
+  if (titleGlLbCheckbox) {
+    const glCheckbox = titleGlLbCheckbox.querySelector('.title-gl-checkbox')
+    const glCheckboxSpan = titleGlLbCheckbox.querySelector(
+      '.title-gl-checkmark'
+    )
+
+    const countCheckedboxes = {}
+    countCheckedboxes[titleId] = 0
+
+    /*
+      Прослушка клика на lable чекбокса
+      - Если чекбокс в заголовке таблицы не активирован, то активируем.
+      - Включаем отображение всех чекбоксов в данной таблице
+      - Если чекбокс в заголовке отмечен (checked), то делаем все чекбоксы в таблице checked и наоборот
+      */
+    titleGlLbCheckbox.addEventListener('click', () => {
+      const titleLbCheckBoxes = title.querySelectorAll('.title-lb-checkbox')
+      const titleCheckboxes = title.querySelectorAll('.title-checkbox')
+      //Если чекбоксы не активированы, то активируем. И включаем отображение кнопки "Удалить записи"
+      if (!glCheckboxSpan.classList.contains('active')) {
+        glCheckboxSpan.classList.add('active')
+
+        //Включаем видимость чекбоксов в таблице
+        for (let i = 0; i < titleLbCheckBoxes.length; i++) {
+          titleLbCheckBoxes[i].classList.add('active')
+        }
+      } else if (glCheckbox.checked) {
+        //Делаем все чекбоксы в таблице checked
+        for (let i = 0; i < titleLbCheckBoxes.length; i++) {
+          const titleCheckBox =
+            titleLbCheckBoxes[i].querySelector('.title-checkbox')
+          titleCheckBox.checked = true
+        }
+
+        if (titleCheckboxes.length > 0) {
+          showOrHideTitleDeleteAllBtn(title.id, true)
+        }
+      } else if (!glCheckbox.checked) {
+        //Убираем checked со всех чекбоксов в таблице
+        for (let i = 0; i < titleLbCheckBoxes.length; i++) {
+          const titleCheckBox =
+            titleLbCheckBoxes[i].querySelector('.title-checkbox')
+          titleCheckBox.checked = false
+        }
+        countCheckedboxes[titleId] = 0
+        showOrHideTitleDeleteAllBtn(title.id, false)
+      }
+    })
+
+    /*
+    Функция работы с чекбоксами в таблице
+      - Отслеживание количества отмеченных чекбоксов, если больше одного, то отображаем кнопку "Удалить записи", 
+        если нет, то скрываем
+  */
+    //Посчёт количества отмеченых чекбоксов
+    const titleCheckboxes = title.querySelectorAll('.title-checkbox')
+    titleCheckboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        countCheckedboxes[titleId]++
+      }
+
+      //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
+      checkbox.addEventListener('change', () => {
+        if (glCheckbox.checked) {
+          countCheckedboxes[titleId] = titleCheckboxes.length
+        }
+        if (checkbox.checked) {
+          countCheckedboxes[titleId]++
+        } else {
+          if (countCheckedboxes[titleId] > 0) countCheckedboxes[titleId]--
+          glCheckbox.checked = false
+        }
+
+        //Если все чекбоксы в таблице отмечены, то делаем чекбокс в заголовке checked
+        if (countCheckedboxes[titleId] === titleCheckboxes.length) {
+          glCheckbox.checked = true
+        }
+
+        //Если больше одного чекбокса отмечен, то отображаем кнопку "Удалить записи", иначе скрываем
+        if (countCheckedboxes[titleId] > 1) {
+          showOrHideTitleDeleteAllBtn(title.id, true)
+        } else {
+          showOrHideTitleDeleteAllBtn(title.id, false)
+        }
+      })
+    })
+  }
+}
+
+function showOrHideTitleDeleteAllBtn(titlelId, isShow) {
+  const title = document.getElementById(titlelId)
+  const btn = title.querySelector('.title-btn-dlt-all')
+
+  if (btn) {
+    if (isShow) {
+      btn.classList.add('active')
+    } else {
+      btn.classList.remove('active')
+    }
   }
 }
