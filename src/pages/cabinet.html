@@ -201,7 +201,7 @@
               <a href="#" class="cnt-tab" tab-id="title">Плитка</a>
             </div>
           </div>
-          <div class="sb-cnt-tbl-ctn active">
+          <div class="sb-cnt-tbl-container active">
             <div class="cnt-caption">
               <div class="cnt-fltr-container tbl-fltr-container">
                 <i class="bx bx-filter" id="tbl-fltr-svg"></i>
@@ -265,7 +265,7 @@
             <table class="cnt-tbl sortable" id="will-tbl">
               <thead>
                 <tr>
-                  <th data-sort-default data-sort-method="date">
+                  <th>
                     <a class="tbl-title-link" href="#"
                       >Дата принятия
                       <span class="fas fa-caret-down"></span>
@@ -283,7 +283,8 @@
                       <span class="fas fa-caret-down"></span>
                     </a>
                   </th>
-                  <th data-sort-method="none">Действия</th>
+                  <th>Действия</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -489,9 +490,11 @@
                 </tr>
               </tbody>
             </table>
-            <div class="tbl-pagination-container">
-              <div class="tbl-offset">
-                <label class="tbl-offset-label">Количество записей</label>
+            <div class="cnt-footer-container tbl-footer-container">
+              <div class="cnt-offset tbl-offset">
+                <label class="cnt-offset-label tbl-offset-label"
+                  >Количество записей</label
+                >
                 <div class="custom-select">
                   <div class="selected">Выберите</div>
                   <i class="bx bx-chevron-down"></i>
@@ -502,31 +505,45 @@
                   </ul>
                 </div>
               </div>
-              <ul class="tbl-pagination">
-                <div class="tbl-pagination-chevrons">
+              <ul class="cnt-pagination tbl-pagination">
+                <div class="cnt-pagination-chevrons tbl-pagination-chevrons">
                   <i class="bx bx-chevrons-left"></i>
                   <i class="bx bx-chevron-left"></i>
                 </div>
-                <li class="tbl-pagination-item"><a href="#">1</a></li>
-                <li class="tbl-pagination-item"><a href="#">2</a></li>
-                <li class="tbl-pagination-item"><a href="#">3</a></li>
-                <li class="tbl-pagination-item"><a href="#">4</a></li>
-                <li class="tbl-pagination-item"><a href="#">5</a></li>
-                <div class="tbl-pagination-chevrons">
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">1</a>
+                </li>
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">2</a>
+                </li>
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">3</a>
+                </li>
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">4</a>
+                </li>
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">5</a>
+                </li>
+                <div class="cnt-pagination-chevrons tbl-pagination-chevrons">
                   <i class="bx bx-chevron-right"></i>
                   <i class="bx bx-chevrons-right"></i>
                 </div>
               </ul>
-              <div class="tbl-current-row">
-                Страница - <span class="tbl-current-page">0</span> из
-                <span class="tbl-total-pages">0</span>
+              <div class="cnt-current-row tbl-current-row">
+                Страница -
+                <span class="cnt-current-page tbl-current-page">0</span> из
+                <span class="cnt-total-pages tbl-total-pages">0</span>
               </div>
-              <div class="tbl-total-rows">
-                Всего записей - <span class="tbl-total-records-count">0</span>
+              <div class="cnt-total-rows tbl-total-rows">
+                Всего записей -
+                <span class="cnt-total-records-count tbl-total-records-count"
+                  >0</span
+                >
               </div>
             </div>
           </div>
-          <div class="sb-cnt-title-ctn" id="will-title">
+          <div class="sb-cnt-title-container" id="will-title">
             <div class="cnt-caption">
               <div class="cnt-fltr-container tbl-fltr-container">
                 <i class="bx bx-filter" id="title-fltr-svg"></i>
@@ -593,30 +610,23 @@
                 <span class="cnt-gl-checkmark title-gl-checkmark"></span>
               </label>
             </div>
-            <div class="sb-cnt-title-ctn-item" obj-id="1">
+            <div class="sb-cnt-title-container-item" obj-id="1">
               <label class="cnt-lb-checkbox title-lb-checkbox">
                 <input type="checkbox" class="cnt-checkbox title-checkbox" />
                 <span class="cnt-checkmark title-checkmark"></span>
               </label>
               <i class="bx bxs-star active" title="Удалить из избранного"></i>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Дата принятия</h4>
                 <p>10.01.2025</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Краткое описание</h4>
                 <p class="brief-description">Сайт - Кабинет Искателя</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Коментарии</h4>
-                <p>
-                  По ощущениям нужно сделать до конца весны 2025 года. По
-                  ощущениям нужно сделать до конца весны 2025 года. По ощущениям
-                  нужно сделать до конца весны 2025 года. По ощущениям нужно
-                  сделать до конца весны 2025 года. По ощущениям нужно сделать
-                  до конца весны 2025 года. По ощущениям нужно сделать до конца
-                  весны 2025 года
-                </p>
+                <p>По ощущениям нужно сделать до конца весны 2025 года.</p>
               </div>
               <div class="actions">
                 <i
@@ -637,21 +647,21 @@
                 ></i>
               </div>
             </div>
-            <div class="sb-cnt-title-ctn-item" obj-id="2">
+            <div class="sb-cnt-title-container-item" obj-id="2">
               <i class="bx bxs-star active" title="Удалить из избранного"></i>
               <label class="cnt-lb-checkbox title-lb-checkbox">
                 <input type="checkbox" class="cnt-checkbox title-checkbox" />
                 <span class="cnt-checkmark title-checkmark"></span>
               </label>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Дата принятия</h4>
                 <p>15.03.2025</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Краткое описание</h4>
                 <p class="brief-description">Молитва за ближних</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Коментарии</h4>
                 <p>Необходимо ежедневно молиться за семью и друзей</p>
               </div>
@@ -674,21 +684,21 @@
                 ></i>
               </div>
             </div>
-            <div class="sb-cnt-title-ctn-item" obj-id="3">
+            <div class="sb-cnt-title-container-item" obj-id="3">
               <label class="cnt-lb-checkbox title-lb-checkbox">
                 <input type="checkbox" class="cnt-checkbox title-checkbox" />
                 <span class="cnt-checkmark title-checkmark"></span>
               </label>
               <i class="bx bxs-star active" title="Удалить из избранного"></i>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Дата принятия</h4>
                 <p>22.04.2025</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Краткое описание</h4>
                 <p class="brief-description">Изучение Писания</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Коментарии</h4>
                 <p>Прочитать книгу Иова до конца месяца</p>
               </div>
@@ -711,21 +721,21 @@
                 ></i>
               </div>
             </div>
-            <div class="sb-cnt-title-ctn-item" obj-id="4">
+            <div class="sb-cnt-title-container-item" obj-id="4">
               <label class="cnt-lb-checkbox title-lb-checkbox">
                 <input type="checkbox" class="cnt-checkbox title-checkbox" />
                 <span class="cnt-checkmark title-checkmark"></span>
               </label>
               <i class="bx bxs-star active" title="Удалить из избранного"></i>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Дата принятия</h4>
                 <p>05.05.2025</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Краткое описание</h4>
                 <p class="brief-description">Помощь нуждающимся</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Коментарии</h4>
                 <p>Организовать сбор вещей для бездомных</p>
               </div>
@@ -748,21 +758,21 @@
                 ></i>
               </div>
             </div>
-            <div class="sb-cnt-title-ctn-item" obj-id="5">
+            <div class="sb-cnt-title-container-item" obj-id="5">
               <label class="cnt-lb-checkbox title-lb-checkbox">
                 <input type="checkbox" class="cnt-checkbox title-checkbox" />
                 <span class="cnt-checkmark title-checkmark"></span>
               </label>
               <i class="bx bxs-star active" title="Удалить из избранного"></i>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Дата принятия</h4>
                 <p>12.06.2025</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Краткое описание</h4>
                 <p class="brief-description">Посещение больных</p>
               </div>
-              <div class="sb-cnt-title-ctn-el">
+              <div class="sb-cnt-title-container-el">
                 <h4>Коментарии</h4>
                 <p>Навестить друга в больнице и поддержать его</p>
               </div>
@@ -783,6 +793,58 @@
                   class="bx bx-show"
                   title="Сделать запись не доступной куратору"
                 ></i>
+              </div>
+            </div>
+            <div class="cnt-footer-container title-footer-container">
+              <div class="cnt-offset title-offset">
+                <label class="cnt-offset-label title-offset-label"
+                  >Количество записей</label
+                >
+                <div class="custom-select">
+                  <div class="selected">Выберите</div>
+                  <i class="bx bx-chevron-down"></i>
+                  <ul class="options">
+                    <li data-value="5"><a href="#">5</a></li>
+                    <li data-value="10"><a href="#">10</a></li>
+                    <li data-value="15"><a href="#">15</a></li>
+                  </ul>
+                </div>
+              </div>
+              <ul class="cnt-pagination title-pagination">
+                <div class="cnt-pagination-chevrons title-pagination-chevrons">
+                  <i class="bx bx-chevrons-left"></i>
+                  <i class="bx bx-chevron-left"></i>
+                </div>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">1</a>
+                </li>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">2</a>
+                </li>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">3</a>
+                </li>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">4</a>
+                </li>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">5</a>
+                </li>
+                <div class="cnt-pagination-chevrons title-pagination-chevrons">
+                  <i class="bx bx-chevron-right"></i>
+                  <i class="bx bx-chevrons-right"></i>
+                </div>
+              </ul>
+              <div class="cnt-current-row title-current-row">
+                Страница -
+                <span class="cnt-current-page title-current-page">0</span> из
+                <span class="cnt-total-pages titlel-total-pages">0</span>
+              </div>
+              <div class="cnt-total-rows title-total-rows">
+                Всего записей -
+                <span class="cnt-total-records-count title-total-records-count"
+                  >0</span
+                >
               </div>
             </div>
           </div>

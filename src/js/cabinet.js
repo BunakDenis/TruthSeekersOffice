@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 //Функция для вёрстки контента сайдбара
-/*
+
 document.addEventListener('DOMContentLoaded', function () {
   const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey)
   const activeSubMenuId = localStorage.getItem(sidebarActiveSubmenuIdKey)
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   showOrHideSidebarContent(activeSubMenuId)
 })
-*/
+
 //Переменная-ключ для добавления контента активного меню сайдбара
 const sidebarMenuActiveContentIdKey = 'sidebar-content-id'
 //Показ/скрытие контента соответсвующего меню или подменю сайдбара
@@ -274,7 +274,7 @@ const cntContainer = document.querySelector('.cabinet-content')
 
 if (cntContainer) {
   const cntTables = document.getElementsByTagName('table')
-  const cntTitles = document.querySelectorAll('.sb-cnt-title-ctn')
+  const cntTitles = document.querySelectorAll('.sb-cnt-title-container')
 
   tabsService(cntContainer)
 
@@ -395,8 +395,8 @@ function tabsService(cntContainer) {
 }
 
 function toggleContentFormat(cntItem, tabId) {
-  const cntTbl = cntItem.querySelector('.sb-cnt-tbl-ctn')
-  const cntTitle = cntItem.querySelector('.sb-cnt-title-ctn')
+  const cntTbl = cntItem.querySelector('.sb-cnt-tbl-container')
+  const cntTitle = cntItem.querySelector('.sb-cnt-title-container')
 
   if (tabId == 'title') {
     cntTbl.classList.remove('active')
@@ -538,9 +538,6 @@ function tblMultiSlctService(tblId) {
   //Убираем с чекбокса свойство disabled при клике и отображаем чекбоксы в таблице
   if (tblGlLbCheckbox) {
     const glCheckbox = tblGlLbCheckbox.querySelector('.tbl-gl-checkbox')
-    const tbl = tblGlLbCheckbox
-      .closest('.sb-cnt-tbl-ctn')
-      .querySelector('table')
     const glCheckboxSpan = tblGlLbCheckbox.querySelector('.tbl-gl-checkmark')
 
     const countCheckedboxes = {}
@@ -567,7 +564,9 @@ function tblMultiSlctService(tblId) {
         //Делаем все чекбоксы в таблице checked
         for (let i = 0; i < tblLbCheckBoxes.length; i++) {
           const tblCheckBox = tblLbCheckBoxes[i].querySelector('.tbl-checkbox')
+          const tblRow = tblLbCheckBoxes[i].closest('tr')
           tblCheckBox.checked = true
+          tblRow.classList.add('selected')
         }
 
         if (tblCheckboxes.length > 0) {
@@ -577,7 +576,9 @@ function tblMultiSlctService(tblId) {
         //Убираем checked со всех чекбоксов в таблице
         for (let i = 0; i < tblLbCheckBoxes.length; i++) {
           const tblCheckBox = tblLbCheckBoxes[i].querySelector('.tbl-checkbox')
+          const tblRow = tblLbCheckBoxes[i].closest('tr')
           tblCheckBox.checked = false
+          tblRow.classList.remove('selected')
         }
         countCheckedboxes[tblId] = 0
         showOrHideTblDeleteAllBtn(tbl.id, false)
@@ -592,19 +593,27 @@ function tblMultiSlctService(tblId) {
     //Посчёт количества отмеченых чекбоксов
     const tblCheckboxes = tbl.querySelectorAll('.tbl-checkbox')
     tblCheckboxes.forEach(checkbox => {
+      const tblRow = checkbox.closest('tr')
       if (checkbox.checked) {
         countCheckedboxes[tblId]++
+        tblRow.classList.add('selected')
       }
 
       //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
       checkbox.addEventListener('change', () => {
+        const tblRow = checkbox.closest('tr')
+
         if (glCheckbox.checked) {
           countCheckedboxes[tblId] = tblCheckboxes.length
         }
         if (checkbox.checked) {
           countCheckedboxes[tblId]++
+          tblRow.classList.add('selected')
         } else {
-          if (countCheckedboxes[tblId] > 0) countCheckedboxes[tblId]--
+          if (countCheckedboxes[tblId] > 0) {
+            countCheckedboxes[tblId]--
+            tblRow.classList.remove('selected')
+          }
           glCheckbox.checked = false
         }
 
@@ -1106,7 +1115,7 @@ function tblPaggination(tblId) {
   const tblCells = tbl.querySelectorAll('.tbl-body-row')
   const tblPaginationContainer = tbl
     .closest('div')
-    .querySelector('.tbl-pagination-container')
+    .querySelector('.tbl-footer-container')
   const tblPagCurrentPageSpan =
     tblPaginationContainer.querySelector('.tbl-current-page')
   const tblPagTotalPagesSpan =
@@ -1126,7 +1135,7 @@ function showOrHidePagginationContainer(tblId) {
   const tblCells = tbl.querySelectorAll('.tbl-body-row')
   const tblPaginationContainer = tbl
     .closest('div')
-    .querySelector('.tbl-pagination-container')
+    .querySelector('.tbl-footer-container')
 
   if (tblCells.length >= 5) {
     tblPaginationContainer.classList.add('active')
@@ -1141,7 +1150,7 @@ function tblOffsetService(tblId) {
   const tbl = document.getElementById(tblId)
   const tblPagginationContainer = tbl
     .closest('div')
-    .querySelector('.tbl-pagination-container')
+    .querySelector('.tbl-footer-container')
   const offsetSelect = tblPagginationContainer.querySelector('.selected')
   const offsetOptions = tblPagginationContainer
     .querySelector('.options')
@@ -1160,6 +1169,7 @@ function tblOffsetService(tblId) {
 */
 function initTitleService(titleId) {
   titleMultiSlctService(titleId)
+  titlePaggination(titleId)
 }
 /*
   Функция работы с чекбокса в заголовке таблице
@@ -1203,7 +1213,11 @@ function titleMultiSlctService(titleId) {
         for (let i = 0; i < titleLbCheckBoxes.length; i++) {
           const titleCheckBox =
             titleLbCheckBoxes[i].querySelector('.title-checkbox')
+          const titleItem = titleLbCheckBoxes[i].closest(
+            '.sb-cnt-title-container-item'
+          )
           titleCheckBox.checked = true
+          titleItem.classList.add('selected')
         }
 
         if (titleCheckboxes.length > 0) {
@@ -1214,7 +1228,11 @@ function titleMultiSlctService(titleId) {
         for (let i = 0; i < titleLbCheckBoxes.length; i++) {
           const titleCheckBox =
             titleLbCheckBoxes[i].querySelector('.title-checkbox')
+          const titleItem = titleLbCheckBoxes[i].closest(
+            '.sb-cnt-title-container-item'
+          )
           titleCheckBox.checked = false
+          titleItem.classList.remove('selected')
         }
         countCheckedboxes[titleId] = 0
         showOrHideTitleDeleteAllBtn(title.id, false)
@@ -1229,19 +1247,26 @@ function titleMultiSlctService(titleId) {
     //Посчёт количества отмеченых чекбоксов
     const titleCheckboxes = title.querySelectorAll('.title-checkbox')
     titleCheckboxes.forEach(checkbox => {
+      const titleItem = checkbox.closest('.sb-cnt-title-container-item')
       if (checkbox.checked) {
         countCheckedboxes[titleId]++
+        titleItem.classList.add('selected')
       }
 
       //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
       checkbox.addEventListener('change', () => {
+        const titleItem = checkbox.closest('.sb-cnt-title-container-item')
         if (glCheckbox.checked) {
           countCheckedboxes[titleId] = titleCheckboxes.length
         }
         if (checkbox.checked) {
           countCheckedboxes[titleId]++
+          titleItem.classList.add('selected')
         } else {
-          if (countCheckedboxes[titleId] > 0) countCheckedboxes[titleId]--
+          if (countCheckedboxes[titleId] > 0) {
+            countCheckedboxes[titleId]--
+            titleItem.classList.remove('selected')
+          }
           glCheckbox.checked = false
         }
 
@@ -1271,5 +1296,60 @@ function showOrHideTitleDeleteAllBtn(titlelId, isShow) {
     } else {
       btn.classList.remove('active')
     }
+  }
+}
+
+//Функции пагинации
+function titlePaggination(titlelId) {
+  const title = document.getElementById(titlelId)
+  const titleCells = title.querySelectorAll('.sb-cnt-title-container-item')
+  const titlePaginationContainer = title.querySelector(
+    '.title-footer-container'
+  )
+  const tblPagCurrentPageSpan = titlePaginationContainer.querySelector(
+    '.title-current-page'
+  )
+  const titlePagTotalPagesSpan =
+    titlePaginationContainer.querySelector('.title-total-pages')
+  const titlePagTotalRecordCountSpan = titlePaginationContainer.querySelector(
+    '.title-total-records-count'
+  )
+
+  if (showOrHideTitlePagginationContainer(titlelId)) {
+    titlePagTotalRecordCountSpan.textContent = titleCells.length
+    titleOffsetService(titlelId)
+  }
+}
+
+function showOrHideTitlePagginationContainer(titleId) {
+  const title = document.getElementById(titleId)
+  const titleCells = title.querySelectorAll('.sb-cnt-title-container-item')
+  const titlePaginationContainer = title.querySelector(
+    '.title-footer-container'
+  )
+
+  if (titleCells.length >= 5) {
+    titlePaginationContainer.classList.add('active')
+    return true
+  } else {
+    titlePaginationContainer.classList.remove('active')
+    return false
+  }
+}
+
+function titleOffsetService(titleId) {
+  const title = document.getElementById(titleId)
+  const titlePagginationContainer = title.querySelector(
+    '.title-footer-container'
+  )
+  const offsetSelect = titlePagginationContainer.querySelector('.selected')
+  const offsetOptions = titlePagginationContainer
+    .querySelector('.options')
+    .querySelectorAll('li')
+
+  for (let i = 0; i < offsetOptions.length; i++) {
+    offsetOptions[i].addEventListener('click', () => {
+      offsetSelect.textContent = offsetOptions[i].textContent
+    })
   }
 }
