@@ -731,16 +731,16 @@ tbody tr:nth-child(even) {
   color: var(--page-text-color-hover);
 }
 
-.cabinet-content .sb-cnt .tbl-open-rec-icon {
+.cabinet-content .sb-cnt .cnt-open-rec-icon {
   width: auto;
   height: 2.5vh;
 }
 
-.cabinet-content .sb-cnt .tbl-edit-icon {
+.cabinet-content .sb-cnt .cnt-edit-icon {
   color: var(--edit-icon-color);
 }
 
-.cabinet-content .sb-cnt .tbl-dlt-icon {
+.cabinet-content .sb-cnt .cnt-dlt-icon {
   color: var(--dlt-icon-color);
 }
 
@@ -1116,6 +1116,8 @@ html body .edit-modal-container .edit-modal-close-icon {
 
   width: 1.5vw;
   height: 1.5vh;
+
+  cursor: pointer;
 
   fill: var(--cabinet-page-sb-cnt-font-color);
 }

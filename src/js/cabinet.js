@@ -294,23 +294,54 @@ if (cntContainer) {
     }
   }
 
-  //Закрытие модального окна
-  const closeIcon = document.querySelectorAll('.edit-modal-close-icon')
+  //Глобальный слушатель иконок редактирования записи контента
+  const editIcon = document.querySelectorAll('.cnt-edit-icon')
 
-  if (closeIcon.length > 0) {
-    closeIcon.forEach(icon => {
+  if (editIcon.length > 0) {
+    editIcon.forEach(icon => {
       icon.addEventListener('click', () => {
-        const modal = icon.closest('section')
+        if (icon.classList.contains('title-edit-icon')) {
+          showModalWillEditInformation(
+            icon.closest('.sb-cnt-title-container-item')
+          )
+        } else {
+          showModalWillEditInformation(icon.closest('tr'))
+        }
+      })
+    })
+  }
 
-        const modalDialog = modal.querySelector('.edit-modal-dialog')
-        const textAreas = modal.querySelectorAll('.edit-text-aria')
-        modalDialog.style.height = '0px'
+  //Глобальный слушатель иконок закрытия модального окна
+  const closeIcon = document.querySelector('.edit-modal-close-icon')
 
-        for (let i = 0; i < textAreas.length; i++) {
-          textAreas[i].style.height = '0px'
+  if (closeIcon) {
+    closeIcon.addEventListener('click', () => {
+      closeModalWillEditInformation(closeIcon)
+    })
+  }
+
+  //Функция удаления записи контента
+  const deleteCntIcon = document.querySelectorAll('.cnt-dlt-icon')
+
+  if (deleteCntIcon.length > 0) {
+    deleteCntIcon.forEach(icon => {
+      icon.addEventListener('click', () => {
+        let cntContainer
+        let cell = icon.closest('tr')
+
+        if (icon.classList.contains('tbl-dlt-icon')) {
+          cntContainer = icon.closest('table')
+          cell = icon.closest('tr')
+        } else {
+          cntContainer = icon.closest('.sb-cnt-title-container')
+          cell = icon.closest('.sb-cnt-title-container-item')
         }
 
-        modal.style.display = 'none'
+        if (cell) {
+          cell.remove()
+        } else {
+          console.log('Cell not found')
+        }
       })
     })
   }
@@ -342,11 +373,11 @@ if (cntContainer) {
   }
 
   //Функция изменения иконки "показать/скрыть" запись куратору
-  const tblRowDataShowIcons = document.querySelectorAll('.bx-show')
-  const tblRowDataHideIcons = document.querySelectorAll('.bx-hide')
+  const cntRowDataShowIcons = document.querySelectorAll('.bx-show')
+  const cntRowDataHideIcons = document.querySelectorAll('.bx-hide')
 
-  if (tblRowDataShowIcons.length > 0) {
-    tblRowDataShowIcons.forEach(icon => {
+  if (cntRowDataShowIcons.length > 0) {
+    cntRowDataShowIcons.forEach(icon => {
       icon.addEventListener('click', () => {
         icon.classList.remove('bx-show')
         icon.classList.add('bx-hide')
@@ -355,8 +386,8 @@ if (cntContainer) {
     })
   }
 
-  if (tblRowDataHideIcons.length > 0) {
-    tblRowDataHideIcons.forEach(icon => {
+  if (cntRowDataHideIcons.length > 0) {
+    cntRowDataHideIcons.forEach(icon => {
       icon.addEventListener('click', () => {
         icon.classList.add('bx-show')
         icon.classList.remove('bx-hide')
@@ -407,6 +438,59 @@ function toggleContentFormat(cntItem, tabId) {
   }
 }
 
+function deleteAllDataFromCntContainer(cntContainerId) {
+  let btnDltAll
+  //Кнопка удалить все записи
+  if (isTable(cntContainerId)) {
+    btnDltAll = document
+      .getElementById(cntContainerId)
+      .closest('div')
+      .querySelector('.cnt-btn-dlt-all')
+  } else {
+    btnDltAll = document
+      .getElementById(cntContainerId)
+      .querySelector('.cnt-btn-dlt-all')
+  }
+
+  if (btnDltAll) {
+    btnDltAll.addEventListener('click', () => {
+      const cnt = document.getElementById(cntContainerId)
+      let cntGlCheckbox
+      let cntData
+
+      if (cnt.tagName == 'TABLE') {
+        const tblContainer = cnt.closest('div')
+        cntGlCheckbox = tblContainer.querySelector('.cnt-gl-checkbox')
+        cntData = cnt.querySelectorAll('.tbl-body-row')
+      } else {
+        cntGlCheckbox = cnt.querySelector('.cnt-gl-checkbox')
+        cntData = cnt.querySelectorAll('.sb-cnt-title-container-item')
+      }
+
+      //Удаляем только те записи где чекбокс checked
+      cntData.forEach(data => {
+        if (data.querySelector('.cnt-checkbox').checked) {
+          data.remove()
+        }
+      })
+
+      //Если чекбокс в заголовке checked убрать флажёк
+      if (cntGlCheckbox.checked) {
+        cntGlCheckbox.checked = false
+      }
+      showOrHidePagginationContainer(cnt.id)
+
+      if (cnt.tagName == 'TABLE') {
+        if (cnt.querySelectorAll('.tbl-body-row').length == 0)
+          showOrHideTblDeleteAllBtn(cnt.id, false)
+      } else {
+        if (cnt.querySelectorAll('.sb-cnt-title-container-item').length == 0)
+          showOrHideTitleDeleteAllBtn(cnt.id, false)
+      }
+    })
+  }
+}
+
 /*
 --------------------------------------------------------------------------------------------------------------------
 Секция функций таблиц контента сайдбара
@@ -416,8 +500,9 @@ function initTableServices(tblId) {
   const tblContainer = tbl.closest('div')
 
   tblMultiSlctService(tblId)
-  addNewRow(tblId)
+  addNewRowToTblService(tblId)
   searchTable(tblId)
+  deleteAllDataFromCntContainer(tblId)
   tblPaggination(tblId)
 
   //Переключение иконки сортировки
@@ -435,95 +520,12 @@ function initTableServices(tblId) {
       }
     })
   }
-
-  //Кнопка удалить все записи
-  const tblBtnDltAll = tblContainer.querySelector('.tbl-btn-dlt-all')
-
-  if (tblBtnDltAll) {
-    tblBtnDltAll.addEventListener('click', () => {
-      const tbl = document.getElementById(tblId)
-      const tblContainer = tbl.closest('div')
-      const tblGlCheckbox = tblContainer.querySelector('.tbl-gl-checkbox')
-      const tblData = tbl.querySelectorAll('.tbl-body-row')
-
-      //Удаляем только те записи где чекбокс checked
-      tblData.forEach(row => {
-        if (row.querySelector('.tbl-checkbox').checked) {
-          row.remove()
-        }
-      })
-
-      //Если чекбокс в заголовке checked убрать флажёк
-      if (tblGlCheckbox.checked) {
-        tblGlCheckbox.checked = false
-      }
-      showOrHidePagginationContainer(tbl.id)
-
-      if (tbl.querySelectorAll('.tbl-body-row').length == 0)
-        showOrHideTblDeleteAllBtn(tbl.id, false)
-    })
-  }
-  //Иконка редактирования записи таблицы
-  const editIcon = tbl.querySelectorAll('.tbl-edit-icon')
-
-  if (editIcon.length > 0) {
-    //Функция отображения модальных окон при клике на иконку редактирования
-    editIcon.forEach(icon => {
-      icon.addEventListener('click', () => {
-        showModalWillEditInformation(icon.closest('.tbl-body-row'))
-      })
-    })
-  }
-
-  //Функция сохранения отредактированных данных таблицы
-  const editModalSaveBtn = document.querySelector('.edit-modal-save-btn')
-
-  if (editModalSaveBtn) {
-    editModalSaveBtn.addEventListener('click', () => {
-      const form = editModalSaveBtn.closest('form')
-      const objectId = form.getAttribute('obj-id')
-      const inputFields = form.querySelectorAll('.edit-modal-input-field')
-      const tblId = form.getAttribute('tbl-name') + '-tbl'
-      const tbl = document.getElementById(tblId)
-      const rows = tbl.querySelectorAll('.tbl-body-row')
-      let row
-      let isNewRow = true
-
-      rows.forEach(tblRow => {
-        if (tblRow.getAttribute('obj-id') == objectId) {
-          isNewRow = false
-          row = tblRow
-        }
-      })
-
-      if (isNewRow) {
-        const row = getRowFromTable(tblId)
-        row.setAttribute('obj-id', objectId)
-        setTblRowValuesFromInputFields(row, inputFields)
-        tbl.querySelector('tbody').appendChild(row)
-      } else {
-        setTblRowValuesFromInputFields(row, inputFields)
-      }
-      editModalSaveBtn.closest('.edit-modal-container').style.display = 'none'
-    })
-  }
-
-  //Функция удаления записи с таблицы
-  const deleteTblIcon = document.querySelectorAll('.tbl-dlt-icon')
-
-  if (deleteTblIcon.length > 0) {
-    deleteTblIcon.forEach(icon => {
-      icon.addEventListener('click', () => {
-        const cell = icon.closest('tr')
-        if (cell) {
-          cell.remove()
-        } else {
-          console.log('Cell not found')
-        }
-      })
-    })
-  }
 }
+
+function isTable(cntId) {
+  if (cntId.includes('tbl')) return true
+}
+
 /*
   Функция работы с чекбокса в заголовке таблице
     - При клике на чекбокс в заголовке таблицы включаем видимость чекбоксов в таблице
@@ -653,13 +655,13 @@ function showOrHideTblDeleteAllBtn(tblId, isShow) {
   }
 }
 
-//Получение названия меню сайдбара с table.id
-function getTblNameById(tableId) {
-  return tableId.substring(0, tableId.indexOf('-'))
+//Получение названия меню сайдбара с id контейнера контента
+function getContentNameById(cntId) {
+  return cntId.substring(0, cntId.indexOf('-'))
 }
 
 //Функция создания новой строки в таблице
-function addNewRow(tblId) {
+function addNewRowToTblService(tblId) {
   const tbl = document.getElementById(tblId)
   const tblContainer = tbl.closest('div')
   //Кнопка добавления новой записи
@@ -668,9 +670,10 @@ function addNewRow(tblId) {
 
   if (btn) {
     btn.addEventListener('click', () => {
-      const modal = getModalWillEditInformationByTblId(tblId)
+      const modal = getModalWillEditElementByContentId(tblId)
 
       modal.querySelector('form').setAttribute('obj-id', objectId)
+      modal.querySelector('form').setAttribute('cnt-id', tblId)
 
       const inputFields = modal.querySelectorAll('.edit-modal-input-field')
 
@@ -1038,35 +1041,114 @@ function showOrHideWarningSelectWindow(tblId, isShow) {
   }
 }
 
-//Функция вкл/выкл модального окна редактирования информации записей таблиц контента сидбара
-function showModalWillEditInformation(tblRow) {
-  const tblId = tblRow.closest('table').id
-  const modal = getModalWillEditInformationByTblId(tblId)
+//Функция сохранения отредактированных данных таблицы
+const editModalSaveBtn = document.querySelector('.edit-modal-save-btn')
+
+if (editModalSaveBtn) {
+  editModalSaveBtn.addEventListener('click', () => {
+    const form = editModalSaveBtn.closest('form')
+    const objectId = form.getAttribute('obj-id')
+    const inputFields = form.querySelectorAll('.edit-modal-input-field')
+    const cntId = form.getAttribute('cnt-id')
+    const cntItemContainer = document.getElementById(cntId)
+    const cntTagName = cntItemContainer.tagName
+    let cntData
+
+    if (cntTagName == 'TABLE') {
+      cntData = cntItemContainer.querySelectorAll('.tbl-body-row')
+    } else {
+      cntData = cntItemContainer.querySelectorAll(
+        '.sb-cnt-title-container-item'
+      )
+    }
+
+    let row
+    let isNewRow = true
+
+    cntData.forEach(cntRow => {
+      if (cntRow.getAttribute('obj-id') == objectId) {
+        isNewRow = false
+        row = cntRow
+      }
+    })
+
+    if (isNewRow) {
+      if (cntTagName == 'TABLE') {
+        row = getRowFromTable(cntId)
+        row.setAttribute('obj-id', objectId)
+        setTableRowValuesFromInputFields(row, inputFields)
+        cntItemContainer.querySelector('tbody').appendChild(row)
+      } else {
+        const contentContainer = cntItemContainer.closest(
+          '.sb-cnt-title-container'
+        )
+        const lastChild = contentContainer.lastElementChild
+
+        row = getDataFromTitle(cntId)
+        row.setAttribute('obj-id', objectId)
+        setTitleItemValuesFromInputFields(row, inputFields)
+        contentContainer.insertBefore(row, lastChild)
+      }
+    } else {
+      if (cntTagName == 'TABLE') {
+        setTableRowValuesFromInputFields(row, inputFields)
+      } else {
+        setTitleItemValuesFromInputFields(row, inputFields)
+      }
+    }
+    editModalSaveBtn.closest('.edit-modal-container').style.display = 'none'
+  })
+}
+
+//Функция вкл/выкл модального окна редактирования информации записей таблиц контента сайдбара
+function showModalWillEditInformation(row) {
+  let cntId
+
+  if (row.tagName == 'TR') {
+    cntId = row.closest('table').id
+  } else {
+    cntId = row.closest('.sb-cnt-title-container').id
+  }
+  const modal = getModalWillEditElementByContentId(cntId)
   const form = modal.querySelector('form')
 
-  form.setAttribute('obj-id', tblRow.getAttribute('obj-id'))
-  form.setAttribute('tbl-name', getTblNameById(tblId))
+  form.setAttribute('obj-id', row.getAttribute('obj-id'))
+  form.setAttribute('cnt-id', cntId)
 
   modal.style.display = 'block'
 
   // Установка значений полей в модальном окне из текущей записи
   const willIncomingDate = convertDateForEditForm(
-    tblRow.querySelector('.will-incoming-date').textContent.trim()
+    row.querySelector('.will-incoming-date').textContent.trim()
   )
 
-  const willDescription = tblRow
+  const willDescription = row
     .querySelector('.will-brief-description')
     .textContent.trim()
-  const willComment = tblRow.querySelector('.will-comment').textContent.trim()
+  const willComment = row.querySelector('.will-comment').textContent.trim()
 
   document.getElementById('edit-will-incoming-date').value = willIncomingDate
   document.getElementById('edit-will-brief-description').value = willDescription
   document.getElementById('edit-will-comment').value = willComment
 }
 
+function closeModalWillEditInformation(icon) {
+  const modal = icon.closest('section')
+
+  const modalDialog = modal.querySelector('.edit-modal-dialog')
+  const textAreas = modal.querySelectorAll('.edit-text-aria')
+  modalDialog.style.height = '0px'
+
+  for (let i = 0; i < textAreas.length; i++) {
+    textAreas[i].style.height = '0px'
+  }
+
+  modal.style.display = 'none'
+}
+
 //Функция получения элемента модального окна создания/редактирования записи таблицы "Воля"
-function getModalWillEditInformationByTblId(tblId) {
-  const modalId = tblId.substring(0, tblId.indexOf('-')) + '-edit-information'
+function getModalWillEditElementByContentId(cntId) {
+  const modalId = cntId.substring(0, cntId.indexOf('-')) + '-edit-information'
   return document.getElementById(modalId)
 }
 
@@ -1099,7 +1181,7 @@ function changeModalEditInformationHeight() {
 }
 
 //Функция записи введённых данных в строку таблицы
-function setTblRowValuesFromInputFields(row, inputFields) {
+function setTableRowValuesFromInputFields(row, inputFields) {
   for (let i = 0; i < inputFields.length; i++) {
     if (inputFields[i].type == 'date') {
       row.children[i].textContent = convertDateForTbl(inputFields[i].value)
@@ -1130,14 +1212,24 @@ function tblPaggination(tblId) {
   }
 }
 
-function showOrHidePagginationContainer(tblId) {
-  const tbl = document.getElementById(tblId)
-  const tblCells = tbl.querySelectorAll('.tbl-body-row')
-  const tblPaginationContainer = tbl
+function showOrHidePagginationContainer(cntId) {
+  const cntContainer = document.getElementById(cntId)
+  let cntCells = cntContainer.querySelectorAll('.tbl-body-row')
+  let tblPaginationContainer = cntContainer
     .closest('div')
     .querySelector('.tbl-footer-container')
 
-  if (tblCells.length >= 5) {
+  if (cntContainer.tagName == 'TABLE') {
+    cntCells = cntContainer.querySelectorAll('.tbl-body-row')
+    tblPaginationContainer = cntContainer
+      .closest('div')
+      .querySelector('.cnt-footer-container')
+  } else {
+    cntCells = cntContainer.querySelectorAll('.sb-cnt-title-container-item')
+    tblPaginationContainer = cntContainer.querySelector('.cnt-footer-container')
+  }
+
+  if (cntCells.length >= 5) {
     tblPaginationContainer.classList.add('active')
     return true
   } else {
@@ -1168,7 +1260,11 @@ function tblOffsetService(tblId) {
 Секция функций плитки контента сайдбара
 */
 function initTitleService(titleId) {
+  const title = document.getElementById(titleId)
+
   titleMultiSlctService(titleId)
+  addNewDataToTitleService(titleId)
+  deleteAllDataFromCntContainer(titleId)
   titlePaggination(titleId)
 }
 /*
@@ -1315,25 +1411,9 @@ function titlePaggination(titlelId) {
     '.title-total-records-count'
   )
 
-  if (showOrHideTitlePagginationContainer(titlelId)) {
+  if (showOrHidePagginationContainer(titlelId)) {
     titlePagTotalRecordCountSpan.textContent = titleCells.length
     titleOffsetService(titlelId)
-  }
-}
-
-function showOrHideTitlePagginationContainer(titleId) {
-  const title = document.getElementById(titleId)
-  const titleCells = title.querySelectorAll('.sb-cnt-title-container-item')
-  const titlePaginationContainer = title.querySelector(
-    '.title-footer-container'
-  )
-
-  if (titleCells.length >= 5) {
-    titlePaginationContainer.classList.add('active')
-    return true
-  } else {
-    titlePaginationContainer.classList.remove('active')
-    return false
   }
 }
 
@@ -1351,5 +1431,71 @@ function titleOffsetService(titleId) {
     offsetOptions[i].addEventListener('click', () => {
       offsetSelect.textContent = offsetOptions[i].textContent
     })
+  }
+}
+
+//Функция создания новой строки в таблице
+function addNewDataToTitleService(titleId) {
+  const title = document.getElementById(titleId)
+  //Кнопка добавления новой записи
+  const btn = title.querySelector('.cnt-btn-add')
+  const objectId =
+    title.querySelectorAll('.sb-cnt-title-container-item').length + 1
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const modal = getModalWillEditElementByContentId(titleId)
+
+      modal.querySelector('form').setAttribute('obj-id', objectId)
+      modal.querySelector('form').setAttribute('cnt-id', titleId)
+
+      const inputFields = modal.querySelectorAll('.edit-modal-input-field')
+
+      inputFields.forEach(field => {
+        field.value = ''
+      })
+
+      modal.style.display = 'block'
+    })
+  }
+}
+
+//Создание новой записи в стиле плитки по titleId
+function getDataFromTitle(titleId) {
+  const titleContainer = document.getElementById(titleId)
+  const titleDataItem = titleContainer.querySelectorAll(
+    '.sb-cnt-title-container-item'
+  )
+  const maxId = {}
+  maxId[titleId] = 0
+
+  titleDataItem.forEach(row => {
+    if (row.getAttribute('obj-id') > maxId[titleId]) {
+      maxId[titleId] = row.getAttribute('obj-id')
+    }
+  })
+  maxId[titleId]++
+  const newDataItem = titleContainer
+    .querySelector('.sb-cnt-title-container-item')
+    .cloneNode(true)
+  const titles = newDataItem.querySelectorAll('.title-data')
+  newDataItem.setAttribute('obj-id', maxId[titleId])
+
+  //Убираем текст в элементе tr
+  for (let i = 1; i < titles.length; i++) {
+    titles[i].textContent = ''
+  }
+  return newDataItem
+}
+
+//Функция создания новой плитки
+function setTitleItemValuesFromInputFields(item, inputFields) {
+  const dataItem = item.querySelectorAll('.title-data')
+  for (let i = 0; i < inputFields.length; i++) {
+    if (inputFields[i].type == 'date') {
+      dataItem[i].textContent = convertDateForTbl(inputFields[i].value)
+    } else {
+      dataItem[i].textContent = inputFields[i].value
+    }
   }
 }
