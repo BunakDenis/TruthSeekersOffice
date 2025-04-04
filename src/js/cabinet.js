@@ -278,7 +278,7 @@ if (cntContainer) {
 
   tabsService(cntContainer)
 
-  if (cntTables.length > 0) {
+  if (cntTables) {
     //Подключение сервисов и функций для работы с таблицами контента сайдбара
     for (let i = 0; i < cntTables.length; i++) {
       if (cntTables[i].closest('div').classList.contains('active')) {
@@ -287,7 +287,7 @@ if (cntContainer) {
     }
   }
 
-  if (cntTitles.length > 0) {
+  if (cntTitles) {
     //Подключение сервисов и функций для работы с плитками контента сайдбара
     for (let i = 0; i < cntTitles.length; i++) {
       initTitleService(cntTitles[i].id)
@@ -495,6 +495,8 @@ function deleteAllDataFromCntContainer(cntContainerId) {
 --------------------------------------------------------------------------------------------------------------------
 Секция функций таблиц контента сайдбара
 */
+let matches = []
+let matchesCells = []
 function initTableServices(tblId) {
   const tbl = document.getElementById(tblId)
   const tblContainer = tbl.closest('div')
@@ -712,6 +714,7 @@ function getRowFromTable(tblId) {
   return newRow
 }
 
+//-----------------------------------------------------------------
 //Функция поиска по таблице
 function searchTable(tblId) {
   const tbl = document.getElementById(tblId)
@@ -722,14 +725,14 @@ function searchTable(tblId) {
     .querySelector('thead')
     .querySelectorAll('.tbl-title-link')
   const inputField = tblContainer.querySelector('.tbl-search-input')
-  let searchResultContainer = tblContainer.querySelector('.tbl-search-result')
+  let searchResultContainer = tblContainer.querySelector('.cnt-search-result')
   const searchTblBtn = tblContainer.querySelector('.tbl-btn-search')
   const searchIcon = tblContainer.querySelector('.bx-search')
   const prevBtn = tblContainer.querySelector('.bx-chevron-up')
   const nextBtn = tblContainer.querySelector('.bx-chevron-down')
   const closeBtn = tblContainer.querySelector('.bx-x')
   let query = ''
-  let matches = []
+  let tblMatches = []
   let currentIdex = 0
   let prevIndex = 0
 
@@ -747,22 +750,20 @@ function searchTable(tblId) {
     }
   })
 
-  if (searchTblBtn) {
-    //Поиск при нажатии на кнопку поиска
-    searchTblBtn.addEventListener('click', () => {
-      const selectedOption = getSelectedOption(tblSearchColumnSelectList)
+  //Поиск при нажатии на кнопку поиска
+  searchTblBtn.addEventListener('click', () => {
+    const selectedOption = getSelectedOption(tblSearchColumnSelectList)
 
-      //Обнуление переменных при повторном поиске
-      addOrRemoveHighlightInTbl(query, tblId, selectedOption, false)
-      matches.length = 0
-      currentIdex = 0
+    //Обнуление переменных при повторном поиске
+    addOrRemoveHighlightInTbl(query, tblId, selectedOption, false)
+    tblMatches.length = 0
+    currentIdex = 0
 
-      query = getQueryFromInputField(tblId)
-      matches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true)
+    query = getQueryFromInputField(tblId)
+    tblMatches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true)
 
-      searchQueryInTbl(tbl, matches, searchResultContainer)
-    })
-  }
+    searchQueryInTbl(tbl, tblMatches, searchResultContainer)
+  })
 
   //Поиск при нажатии на иконку поиска
   searchIcon.addEventListener('click', () => {
@@ -770,13 +771,13 @@ function searchTable(tblId) {
 
     //Обнуление переменных при повторном поиске
     addOrRemoveHighlightInTbl(query, tblId, selectedOption, false)
-    matches.length = 0
+    tblMatches.length = 0
     currentIdex = 0
 
     query = getQueryFromInputField(tblId)
-    matches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true)
+    tblMatches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true)
 
-    searchQueryInTbl(tbl, matches, searchResultContainer)
+    searchQueryInTbl(tbl, tblMatches, searchResultContainer)
   })
 
   //Поиск по нажатию на кнопку Enter
@@ -786,13 +787,18 @@ function searchTable(tblId) {
 
       //Обнуление переменных при повторном поиске
       addOrRemoveHighlightInTbl(query, tblId, selectedOption, false)
-      matches.length = 0
+      tblMatches.length = 0
       currentIdex = 0
 
       query = getQueryFromInputField(tblId)
-      matches = addOrRemoveHighlightInTbl(query, tbl.id, selectedOption, true)
+      tblMatches = addOrRemoveHighlightInTbl(
+        query,
+        tbl.id,
+        selectedOption,
+        true
+      )
 
-      searchQueryInTbl(tbl, matches, searchResultContainer)
+      searchQueryInTbl(tbl, tblMatches, searchResultContainer)
     }
   })
 
@@ -802,7 +808,7 @@ function searchTable(tblId) {
       showOrHideSearchResultContainer(tblId, false)
       inputField.value = ''
       addOrRemoveHighlightInTbl(query, tblId, false)
-      matches.length = 0
+      tblMatches.length = 0
       currentIdex = 0
     }
   })
@@ -812,12 +818,13 @@ function searchTable(tblId) {
     prevIndex = currentIdex
     currentIdex--
     if (currentIdex < 0) {
-      currentIdex = matches.length - 1
+      currentIdex = tblMatches.length - 1
     }
-    searchResultContainer.querySelector('.tbl-srch-rslt-number').textContent =
-      addSearchResultNumber(currentIdex, matches)
-    const prevElement = matches[prevIndex]
-    const currentElement = matches[currentIdex]
+    searchResultContainer.querySelector(
+      '.tbl-search-result-number'
+    ).textContent = addSearchResultNumber(currentIdex, tblMatches)
+    const prevElement = tblMatches[prevIndex]
+    const currentElement = tblMatches[currentIdex]
 
     if (prevElement || currentElement) {
       prevElement.classList.remove('active')
@@ -831,13 +838,14 @@ function searchTable(tblId) {
     prevIndex = currentIdex
     currentIdex++
 
-    if (currentIdex > matches.length - 1) {
+    if (currentIdex > tblMatches.length - 1) {
       currentIdex = 0
     }
-    searchResultContainer.querySelector('.tbl-srch-rslt-number').textContent =
-      addSearchResultNumber(currentIdex, matches)
-    const prevElement = matches[prevIndex]
-    const currentElement = matches[currentIdex]
+    searchResultContainer.querySelector(
+      '.tbl-search-result-number'
+    ).textContent = addSearchResultNumber(currentIdex, tblMatches)
+    const prevElement = tblMatches[prevIndex]
+    const currentElement = tblMatches[currentIdex]
     prevElement.classList.remove('active')
     currentElement.classList.add('active')
     currentElement.scrollIntoView()
@@ -848,7 +856,7 @@ function searchTable(tblId) {
     showOrHideSearchResultContainer(tblId, false)
     inputField.value = ''
     addOrRemoveHighlightInTbl(query, tblId, false)
-    matches.length = 0
+    tblMatches.length = 0
     currentIdex = 0
   })
 }
@@ -859,7 +867,7 @@ function searchQueryInTbl(tbl, matches, searchResultContainer) {
   const tblSearchColumnSelectList =
     tblContainer.querySelector('.tbl-search-sl-col')
   const tblSearchCevrons = tblContainer.querySelector(
-    '.tbl-search-rslt-cevrons'
+    '.tbl-search-result-cevrons'
   )
 
   if (matches.length > 0) {
@@ -870,16 +878,19 @@ function searchQueryInTbl(tbl, matches, searchResultContainer) {
 
     //Отображаем количество найденных результатов
     if (matches.length > 1) {
-      searchResultContainer.querySelector('.tbl-srch-rslt-count').textContent =
-        'Найдено ' + matches.length + ' результатов'
+      searchResultContainer.querySelector(
+        '.tbl-search-result-count'
+      ).textContent = 'Найдено ' + matches.length + ' результатов'
     } else {
-      searchResultContainer.querySelector('.tbl-srch-rslt-count').textContent =
-        'Найдено ' + matches.length + ' результат'
+      searchResultContainer.querySelector(
+        '.tbl-search-result-count'
+      ).textContent = 'Найдено ' + matches.length + ' результат'
     }
 
     //Добавляем в строку текущий результат поиска
-    searchResultContainer.querySelector('.tbl-srch-rslt-number').textContent =
-      addSearchResultNumber(0, matches)
+    searchResultContainer.querySelector(
+      '.tbl-search-result-number'
+    ).textContent = addSearchResultNumber(0, matches)
 
     const currentElement = matches[0]
     currentElement.classList.add('active')
@@ -890,52 +901,16 @@ function searchQueryInTbl(tbl, matches, searchResultContainer) {
   ) {
     tblSearchCevrons.classList.remove('active')
     showOrHideSearchResultContainer(tbl.id, true)
-    searchResultContainer.querySelector('.tbl-srch-rslt-count').textContent =
-      'Поиск не дал результатов'
-    searchResultContainer.querySelector('.tbl-srch-rslt-number').textContent =
-      ''
+    searchResultContainer.querySelector(
+      '.tbl-search-result-count'
+    ).textContent = 'Поиск не дал результатов'
+    searchResultContainer.querySelector(
+      '.tbl-search-result-number'
+    ).textContent = ''
   }
-}
-
-//Получения индекса выбранной колонки, названия колонки и ёё текста
-function getSelectedOption(selectElement) {
-  const selectedIndex = selectElement.selectedIndex
-  const selectedOption = selectElement.options[selectedIndex]
-  return {
-    index: selectedIndex,
-    text: selectedOption.text,
-
-    //Убираем самую первую опцию - "Искать по столбцу"
-    length: selectElement.length - 1
-  }
-}
-
-//Получение строки запроса со строки поиска
-function getQueryFromInputField(tblId) {
-  const tbl = document.getElementById(tblId)
-  const tblContainer = tbl.closest('div')
-
-  return tblContainer.querySelector('.tbl-search-input').value
-}
-
-//Добавляем количество найденных результатов в строку
-function addSearchResultNumber(currentIdex, matches) {
-  console.log(`current.index ${currentIdex}`)
-  console.log(`matches.length ${matches.length}`)
-  let resultNumberQuery = '{result-number} из {matches.length}'
-
-  let result = resultNumberQuery.replace('{matches.length}', matches.length)
-
-  if (matches.length > 0) {
-    result = result.replace('{result-number}', currentIdex + 1)
-  }
-
-  return result
 }
 
 //Функция поиска слова в таблице. Выделяет все найденные слова и возвращает их массив или убирает выделение
-const matches = []
-const matchesCells = []
 function addOrRemoveHighlightInTbl(query, tblId, selectedOption, isHighlight) {
   const tbl = document.getElementById(tblId)
   const tblBody = tbl.querySelector('tbody')
@@ -993,51 +968,72 @@ function addOrRemoveHighlightInTbl(query, tblId, selectedOption, isHighlight) {
       showOrHideWarningSelectWindow(tblId, true)
     }
   } else {
-    //Заменяем все элементы span на текст запроса
-    matchesCells.forEach(cell => {
-      cell.innerHTML = cell.textContent.replace(
-        /<span class="highlight">|<\/span>/g,
-        query
-      )
-    })
-    matches.length = 0
+    if (matchesCells) {
+      //Заменяем все элементы span на текст запроса
+      matchesCells.forEach(cell => {
+        cell.innerHTML = cell.textContent.replace(
+          /<span class="highlight">|<\/span>/g,
+          query
+        )
+      })
+      matches.length = 0
+    }
   }
   return matches
 }
 
 /*
     Функция отображения/скрытия окна с результатов поиска
-      - tblId - id таблицы
+      - cntId - id таблицы/плитки
       - isShow - true - отображать, false - скрыть
 */
-function showOrHideSearchResultContainer(tblId, isShow) {
-  const tbl = document.getElementById(tblId)
-  const tblContainer = tbl.closest('div')
-  const searchIcon = tblContainer.querySelector('.bx-search')
-  const clearSearchFieldIcon = tblContainer.querySelector('.bx-x')
-  const searchResultContainer = tblContainer.querySelector('.tbl-search-result')
+
+function showOrHideSearchResultContainer(cntId, isShow) {
+  let cnt = document.getElementById(cntId)
+  let cntContainer
+  let searchIcon
+  let clearSearchFieldIcon
+  let searchResultContainer
+
+  if (isTable(cntId)) {
+    cntContainer = cnt.closest('div')
+    searchIcon = cntContainer.querySelector('.bx-search')
+    clearSearchFieldIcon = cntContainer.querySelector('.bx-x')
+    searchResultContainer = cntContainer.querySelector('.cnt-search-result')
+  } else {
+    cntContainer = cnt
+    searchIcon = cntContainer.querySelector('.bx-search')
+    clearSearchFieldIcon = cntContainer.querySelector('.bx-x')
+    searchResultContainer = cntContainer.querySelector('.cnt-search-result')
+  }
 
   if (isShow) {
-    searchIcon.style.display = 'none'
-    clearSearchFieldIcon.style.display = 'block'
+    searchIcon.classList.add('hide')
+    clearSearchFieldIcon.classList.add('show')
     searchResultContainer.classList.add('active')
   } else {
-    searchIcon.style.display = 'block'
-    clearSearchFieldIcon.style.display = 'none'
+    searchIcon.classList.remove('hide')
+    clearSearchFieldIcon.classList.remove('show')
     searchResultContainer.classList.remove('active')
   }
 }
 
-function showOrHideWarningSelectWindow(tblId, isShow) {
-  const tbl = document.getElementById(tblId)
-  const tblContainer = tbl.closest('div')
-  const slctWarLable = tblContainer.querySelector('.tbl-search-wrn')
-  if (isShow) {
-    slctWarLable.style.visibility = 'visible'
-    slctWarLable.style.opacity = '1'
+function showOrHideWarningSelectWindow(cntId, isShow) {
+  let cnt = document.getElementById(cntId)
+  let cntContainer
+  let slctWarLable
+
+  if (isTable(cntId)) {
+    cntContainer = cnt.closest('div')
+    slctWarLable = cntContainer.querySelector('.cnt-search-wrn')
   } else {
-    slctWarLable.style.visibility = 'hidden'
-    slctWarLable.style.opacity = '0'
+    slctWarLable = cnt.querySelector('.cnt-search-wrn')
+  }
+
+  if (isShow) {
+    slctWarLable.classList.add('active')
+  } else {
+    slctWarLable.classList.remove('active')
   }
 }
 
@@ -1259,9 +1255,10 @@ function tblOffsetService(tblId) {
 --------------------------------------------------------------------------------------------------------------------
 Секция функций плитки контента сайдбара
 */
+let matchesTitle = []
+let matchesTitleItems = []
 function initTitleService(titleId) {
-  const title = document.getElementById(titleId)
-
+  searchTitle(titleId)
   titleMultiSlctService(titleId)
   addNewDataToTitleService(titleId)
   deleteAllDataFromCntContainer(titleId)
@@ -1498,4 +1495,320 @@ function setTitleItemValuesFromInputFields(item, inputFields) {
       dataItem[i].textContent = inputFields[i].value
     }
   }
+}
+
+//-----------------------------------------------------------------
+//Функция поиска по плитке
+
+function searchTitle(titleId) {
+  const title = document.getElementById(titleId)
+  const titleSearchColumnSelectList = title.querySelector('.cnt-search-sl-col')
+  const titleSearchColumnsNames = title
+    .querySelectorAll('.sb-cnt-title-container-item')[0]
+    .getElementsByTagName('h4')
+  const inputField = title.querySelector('.cnt-search-input')
+  let searchResultContainer = title.querySelector('.cnt-search-result')
+  console.log(searchResultContainer)
+  const searchTitleBtn = title.querySelector('.cnt-btn-search')
+  const searchIcon = title.querySelector('.bx-search')
+  const prevBtn = title.querySelector('.bx-chevron-up')
+  const nextBtn = title.querySelector('.bx-chevron-down')
+  const closeBtn = title.querySelector('.bx-x')
+  let query = ''
+  let titleMatches = []
+  let currentIdex = 0
+  let prevIndex = 0
+
+  //Инициализация элемента select для строки поиска
+  for (let i = 0; i < titleSearchColumnsNames.length; i++) {
+    const option = document.createElement('option')
+    option.text = titleSearchColumnsNames[i].textContent.trim()
+
+    titleSearchColumnSelectList.appendChild(option)
+  }
+
+  titleSearchColumnSelectList.addEventListener('change', () => {
+    if (titleSearchColumnSelectList.selectedIndex != 0) {
+      showOrHideWarningSelectWindow(titleId, false)
+    }
+  })
+
+  //Поиск при нажатии на кнопку поиска
+  searchTitleBtn.addEventListener('click', () => {
+    const selectedOption = getSelectedOption(titleSearchColumnSelectList)
+
+    //Обнуление переменных при повторном поиске
+    addOrRemoveHighlightInTitle(query, titleId, selectedOption, false)
+    titleMatches.length = 0
+    currentIdex = 0
+
+    query = getQueryFromInputField(titleId)
+    titleMatches = addOrRemoveHighlightInTitle(
+      query,
+      title.id,
+      selectedOption,
+      true
+    )
+
+    searchQueryInTitle(title, titleMatches, searchResultContainer)
+  })
+
+  //Поиск при нажатии на иконку поиска
+  searchIcon.addEventListener('click', () => {
+    const selectedOption = getSelectedOption(titleSearchColumnSelectList)
+
+    //Обнуление переменных при повторном поиске
+    addOrRemoveHighlightInTitle(query, titleId, selectedOption, false)
+    titleMatches.length = 0
+    currentIdex = 0
+
+    query = getQueryFromInputField(titleId)
+    titleMatches = addOrRemoveHighlightInTitle(
+      query,
+      title.id,
+      selectedOption,
+      true
+    )
+
+    searchQueryInTitle(title, titleMatches, searchResultContainer)
+  })
+
+  //Поиск по нажатию на кнопку Enter
+  inputField.addEventListener('keypress', e => {
+    if (e.key === 'Enter') {
+      const selectedOption = getSelectedOption(titleSearchColumnSelectList)
+
+      //Обнуление переменных при повторном поиске
+      addOrRemoveHighlightInTitle(query, titleId, selectedOption, false)
+      titleMatches.length = 0
+      currentIdex = 0
+
+      query = getQueryFromInputField(titleId)
+      titleMatches = addOrRemoveHighlightInTitle(
+        query,
+        title.id,
+        selectedOption,
+        true
+      )
+
+      searchQueryInTitle(title, titleMatches, searchResultContainer)
+    }
+  })
+
+  //Очистка поля ввода и результатов поиска при нажатии на кнопку Escape
+  inputField.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      showOrHideSearchResultContainer(titleId, false)
+      inputField.value = ''
+      addOrRemoveHighlightInTitle(query, titleId, false)
+      titleMatches.length = 0
+      currentIdex = 0
+    }
+  })
+
+  //Переход на предидущий резльутат поиска при нажатии на chevron-up
+  prevBtn.addEventListener('click', () => {
+    prevIndex = currentIdex
+    currentIdex--
+    if (currentIdex < 0) {
+      currentIdex = titleMatches.length - 1
+    }
+    searchResultContainer.querySelector(
+      '.cnt-search-result-number'
+    ).textContent = addSearchResultNumber(currentIdex, titleMatches)
+    const prevElement = titleMatches[prevIndex]
+    const currentElement = titleMatches[currentIdex]
+
+    if (prevElement || currentElement) {
+      prevElement.classList.remove('active')
+      currentElement.classList.add('active')
+      currentElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  })
+
+  //Переход на следующий резльутат поиска при нажатии на chevron-down
+  nextBtn.addEventListener('click', () => {
+    prevIndex = currentIdex
+    currentIdex++
+
+    if (currentIdex > titleMatches.length - 1) {
+      currentIdex = 0
+    }
+    searchResultContainer.querySelector(
+      '.cnt-search-result-number'
+    ).textContent = addSearchResultNumber(currentIdex, titleMatches)
+    const prevElement = titleMatches[prevIndex]
+    const currentElement = titleMatches[currentIdex]
+    prevElement.classList.remove('active')
+    currentElement.classList.add('active')
+    currentElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  })
+
+  //Очистка поля ввода и результатов поиска при нажатии на иконку - крестик
+  closeBtn.addEventListener('click', () => {
+    showOrHideSearchResultContainer(titleId, false)
+    inputField.value = ''
+    addOrRemoveHighlightInTitle(query, titleId, false)
+    titleMatches.length = 0
+    currentIdex = 0
+  })
+}
+
+//Функция поиска текста в таблице
+function searchQueryInTitle(title, matches, searchResultContainer) {
+  const titleSearchColumnSelectList = title.querySelector('.cnt-search-sl-col')
+  const cntSearchCevrons = title.querySelector('.cnt-search-result-cevrons')
+
+  if (matches.length > 0) {
+    //Включаем блок с иконками навигации по результатам поиска
+    cntSearchCevrons.classList.add('active')
+    //Если нашли совпадения в таблице меняем иконки и отображаем окно с количеством результатов поиска
+    showOrHideSearchResultContainer(title.id, true)
+
+    //Отображаем количество найденных результатов
+    if (matches.length > 1) {
+      searchResultContainer.querySelector(
+        '.cnt-search-result-count'
+      ).textContent = 'Найдено ' + matches.length + ' результатов'
+    } else {
+      searchResultContainer.querySelector(
+        '.cnt-search-result-count'
+      ).textContent = 'Найдено ' + matches.length + ' результат'
+    }
+
+    //Добавляем в строку текущий результат поиска
+    searchResultContainer.querySelector(
+      '.cnt-search-result-number'
+    ).textContent = addSearchResultNumber(0, matches)
+
+    const currentElement = matches[0]
+    currentElement.classList.add('active')
+    currentElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  } else if (
+    matches.length == 0 &&
+    titleSearchColumnSelectList.selectedIndex != 0
+  ) {
+    cntSearchCevrons.classList.remove('active')
+    showOrHideSearchResultContainer(title.id, true)
+    searchResultContainer.querySelector(
+      '.cnt-search-result-count'
+    ).textContent = 'Поиск не дал результатов'
+    searchResultContainer.querySelector(
+      '.cnt-search-result-number'
+    ).textContent = ''
+  }
+}
+
+//Функция поиска слова в таблице. Выделяет все найденные слова и возвращает их массив или убирает выделение
+function addOrRemoveHighlightInTitle(
+  query,
+  titleId,
+  selectedOption,
+  isHighlight
+) {
+  const title = document.getElementById(titleId)
+  //счётчик для количества пройденных плиток
+  let count = 1
+  if (isHighlight) {
+    //Если не выбран столбец для поиска, отображаем окно с уведомлением о необходимости выбора
+    if (selectedOption.index != 0) {
+      if (query.length > 0) {
+        //Выбираем все ячейки из таблицы
+        const items = title.querySelectorAll('.title-data')
+        items.forEach(item => {
+          if (count == selectedOption.index) {
+            const regex = new RegExp(query, 'gi')
+            const originalContent = item.textContent
+            let newContent = originalContent
+            const tempSpans = []
+            let match
+
+            // Собираем все совпадения
+            while ((match = regex.exec(originalContent)) !== null) {
+              tempSpans.push({
+                start: match.index,
+                end: match.index + match[0].length,
+                text: match[0]
+              })
+            }
+
+            // Заменяем совпадения в обратном порядке
+            tempSpans.reverse().forEach(({ start, end, text }) => {
+              newContent =
+                newContent.slice(0, start) +
+                `<span class="highlight">${text}</span>` +
+                newContent.slice(end)
+            })
+
+            // Обновляем содержимое ячейки
+            item.innerHTML = newContent
+            matchesTitleItems.push(item)
+          }
+          //Обнуляем счётчик при проходке каждого ряда таблицы или увеличиваем его
+          if (count == selectedOption.length) {
+            count = 1
+          } else {
+            count++
+          }
+        })
+        // Добавляем все span элементы в массив
+        const spans = title.querySelectorAll('.highlight')
+        spans.forEach(span => {
+          matchesTitle.push(span)
+        })
+      }
+    } else {
+      showOrHideWarningSelectWindow(titleId, true)
+    }
+  } else {
+    //Заменяем все элементы span на текст запроса
+    matchesTitleItems.forEach(item => {
+      item.innerHTML = item.textContent.replace(
+        /<span class="highlight">|<\/span>/g,
+        query
+      )
+    })
+    matchesTitle.length = 0
+  }
+  return matchesTitle
+}
+
+//Получения индекса выбранной колонки, названия колонки и ёё текста
+function getSelectedOption(selectElement) {
+  const selectedIndex = selectElement.selectedIndex
+  const selectedOption = selectElement.options[selectedIndex]
+  return {
+    index: selectedIndex,
+    text: selectedOption.text,
+
+    //Убираем самую первую опцию - "Искать по столбцу"
+    length: selectElement.length - 1
+  }
+}
+
+//Получение строки запроса со строки поиска
+function getQueryFromInputField(cntId) {
+  const cnt = document.getElementById(cntId)
+  let cntContainer
+
+  if (isTable(cntId)) {
+    cntContainer = cnt.closest('div')
+  } else {
+    cntContainer = cnt
+  }
+
+  return cntContainer.querySelector('.cnt-search-input').value
+}
+
+//Добавляем количество найденных результатов в строку
+function addSearchResultNumber(currentIdex, matches) {
+  let resultNumberQuery = '{result-number} из {matches.length}'
+
+  let result = resultNumberQuery.replace('{matches.length}', matches.length)
+
+  if (matches.length > 0) {
+    result = result.replace('{result-number}', currentIdex + 1)
+  }
+
+  return result
 }
