@@ -272,6 +272,63 @@ function changeVisibilityOfSubMenuItems(item) {
 //Секция контента сайдбара
 const cntContainer = document.querySelector('.cabinet-content')
 
+cntContainer.addEventListener('click', e => {
+  const target = e.target
+
+  //Функция изменения иконки "избранное"
+  if (target.classList.contains('bx-star')) {
+    target.classList.remove('bx-star')
+    target.classList.add('bxs-star', 'active')
+    target.title = 'Удалить из избранного'
+  } else if (target.classList.contains('bxs-star')) {
+    target.classList.remove('bxs-star', 'active')
+    target.classList.add('bx-star')
+    target.title = 'Добавить в избранное'
+  }
+
+  //Функция изменения иконки "показать/скрыть" запись куратору
+  if (target.classList.contains('bx-show')) {
+    target.classList.remove('bx-show')
+    target.classList.add('bx-hide')
+    target.title = 'Сделать запись доступной куратору'
+  } else if (target.classList.contains('bx-hide')) {
+    target.classList.add('bx-show')
+    target.classList.remove('bx-hide')
+    target.title = 'Сделать запись не доступной куратору'
+  }
+
+  //Вызов модального окна при нажатии на иконку редактирования записи контента
+  if (target.classList.contains('cnt-edit-icon')) {
+    if (target.classList.contains('title-edit-icon')) {
+      showModalWillEditInformation(
+        target.closest('.sb-cnt-title-container-item')
+      )
+    } else {
+      showModalWillEditInformation(target.closest('tr'))
+    }
+  }
+
+  //Функция удаления записи контента
+  if (target.classList.contains('cnt-dlt-icon')) {
+    let cntContainer
+    let cell = target.closest('tr')
+
+    if (target.classList.contains('tbl-dlt-icon')) {
+      cntContainer = target.closest('table')
+      cell = target.closest('tr')
+    } else {
+      cntContainer = target.closest('.sb-cnt-title-container')
+      cell = target.closest('.sb-cnt-title-container-item')
+    }
+
+    if (cell) {
+      cell.remove()
+    } else {
+      console.log('Cell not found')
+    }
+  }
+})
+
 if (cntContainer) {
   const cntTables = document.getElementsByTagName('table')
   const cntTitles = document.querySelectorAll('.sb-cnt-title-container')
@@ -294,23 +351,6 @@ if (cntContainer) {
     }
   }
 
-  //Глобальный слушатель иконок редактирования записи контента
-  const editIcon = document.querySelectorAll('.cnt-edit-icon')
-
-  if (editIcon.length > 0) {
-    editIcon.forEach(icon => {
-      icon.addEventListener('click', () => {
-        if (icon.classList.contains('title-edit-icon')) {
-          showModalWillEditInformation(
-            icon.closest('.sb-cnt-title-container-item')
-          )
-        } else {
-          showModalWillEditInformation(icon.closest('tr'))
-        }
-      })
-    })
-  }
-
   //Глобальный слушатель иконок закрытия модального окна
   const closeIcon = document.querySelector('.edit-modal-close-icon')
 
@@ -320,84 +360,67 @@ if (cntContainer) {
     })
   }
 
-  //Функция удаления записи контента
-  const deleteCntIcon = document.querySelectorAll('.cnt-dlt-icon')
+  //Функция сохранения отредактированных данных таблицы
+  const editModalSaveBtn = document.querySelector('.edit-modal-save-btn')
 
-  if (deleteCntIcon.length > 0) {
-    deleteCntIcon.forEach(icon => {
-      icon.addEventListener('click', () => {
-        let cntContainer
-        let cell = icon.closest('tr')
+  if (editModalSaveBtn) {
+    editModalSaveBtn.addEventListener('click', () => {
+      const form = editModalSaveBtn.closest('form')
+      const objectId = form.getAttribute('obj-id')
+      const inputFields = form.querySelectorAll('.edit-modal-input-field')
+      const cntId = form.getAttribute('cnt-id')
+      const cntItemContainer = document.getElementById(cntId)
+      const cntTagName = cntItemContainer.tagName
+      let cntData
 
-        if (icon.classList.contains('tbl-dlt-icon')) {
-          cntContainer = icon.closest('table')
-          cell = icon.closest('tr')
-        } else {
-          cntContainer = icon.closest('.sb-cnt-title-container')
-          cell = icon.closest('.sb-cnt-title-container-item')
+      if (cntTagName == 'TABLE') {
+        cntData = cntItemContainer.querySelectorAll('.tbl-body-row')
+      } else {
+        cntData = cntItemContainer.querySelectorAll(
+          '.sb-cnt-title-container-item'
+        )
+      }
+
+      let row
+      let isNewRow = true
+
+      cntData.forEach(cntRow => {
+        if (cntRow.getAttribute('obj-id') == objectId) {
+          isNewRow = false
+          row = cntRow
         }
+      })
 
-        if (cell) {
-          cell.remove()
+      if (isNewRow) {
+        if (cntTagName == 'TABLE') {
+          row = getRowFromTable(cntId)
+          row.setAttribute('obj-id', objectId)
+          setTableRowValuesFromInputFields(row, inputFields)
+          cntItemContainer.querySelector('tbody').appendChild(row)
         } else {
-          console.log('Cell not found')
+          const contentContainer = cntItemContainer.closest(
+            '.sb-cnt-title-container'
+          )
+          const lastChild = contentContainer.lastElementChild
+
+          row = getDataFromTitle(cntId)
+          row.setAttribute('obj-id', objectId)
+          setTitleItemValuesFromInputFields(row, inputFields)
+          contentContainer.insertBefore(row, lastChild)
         }
-      })
-    })
-  }
-
-  //Функция изменения иконки "избранное" при нажатии на нее
-  const favIcons = document.querySelectorAll('.bx-star')
-  const favSelectedIcons = document.querySelectorAll('.bxs-star')
-
-  if (favIcons.length > 0) {
-    favIcons.forEach(icon => {
-      icon.addEventListener('click', () => {
-        icon.classList.remove('bx-star')
-        icon.classList.add('bxs-star')
-        icon.classList.add('active')
-        icon.title = 'Удалить из избранного'
-      })
-    })
-  }
-
-  if (favSelectedIcons.length > 0) {
-    favSelectedIcons.forEach(icon => {
-      icon.addEventListener('click', () => {
-        icon.classList.remove('bxs-star')
-        icon.classList.add('bx-star')
-        icon.classList.remove('active')
-        icon.title = 'Добавить в избранное'
-      })
-    })
-  }
-
-  //Функция изменения иконки "показать/скрыть" запись куратору
-  const cntRowDataShowIcons = document.querySelectorAll('.bx-show')
-  const cntRowDataHideIcons = document.querySelectorAll('.bx-hide')
-
-  if (cntRowDataShowIcons.length > 0) {
-    cntRowDataShowIcons.forEach(icon => {
-      icon.addEventListener('click', () => {
-        icon.classList.remove('bx-show')
-        icon.classList.add('bx-hide')
-        icon.title = 'Сделать запись доступной куратору'
-      })
-    })
-  }
-
-  if (cntRowDataHideIcons.length > 0) {
-    cntRowDataHideIcons.forEach(icon => {
-      icon.addEventListener('click', () => {
-        icon.classList.add('bx-show')
-        icon.classList.remove('bx-hide')
-        icon.title = 'Сделать запись не доступной куратору'
-      })
+      } else {
+        if (cntTagName == 'TABLE') {
+          setTableRowValuesFromInputFields(row, inputFields)
+        } else {
+          setTitleItemValuesFromInputFields(row, inputFields)
+        }
+      }
+      editModalSaveBtn.closest('.edit-modal-container').style.display = 'none'
     })
   }
 }
 
-//Фуцнкция работы с переключателями формата контента
+//Функция работы с переключателями формата контента
 function tabsService(cntContainer) {
   const cntItems = cntContainer.querySelectorAll('.sb-cnt')
 
@@ -696,14 +719,14 @@ function getRowFromTable(tblId) {
   maxId[tblId] = 0
 
   tblRows.forEach(row => {
-    if (row.getAttribute('data-id') > maxId[tblId]) {
-      maxId[tblId] = row.getAttribute('data-id')
+    if (row.getAttribute('obj-id') > maxId[tblId]) {
+      maxId[tblId] = row.getAttribute('obj-id')
     }
   })
   maxId[tblId]++
   const newRow = tbl.querySelector('.tbl-body-row').cloneNode(true)
   const rowcells = newRow.getElementsByTagName('td')
-  newRow.setAttribute('data-id', maxId[tblId])
+  newRow.setAttribute('obj-id', maxId[tblId])
 
   //Убираем текст в элементе tr
   for (let i = 1; i < rowcells.length; i++) {
@@ -1035,65 +1058,6 @@ function showOrHideWarningSelectWindow(cntId, isShow) {
   } else {
     slctWarLable.classList.remove('active')
   }
-}
-
-//Функция сохранения отредактированных данных таблицы
-const editModalSaveBtn = document.querySelector('.edit-modal-save-btn')
-
-if (editModalSaveBtn) {
-  editModalSaveBtn.addEventListener('click', () => {
-    const form = editModalSaveBtn.closest('form')
-    const objectId = form.getAttribute('obj-id')
-    const inputFields = form.querySelectorAll('.edit-modal-input-field')
-    const cntId = form.getAttribute('cnt-id')
-    const cntItemContainer = document.getElementById(cntId)
-    const cntTagName = cntItemContainer.tagName
-    let cntData
-
-    if (cntTagName == 'TABLE') {
-      cntData = cntItemContainer.querySelectorAll('.tbl-body-row')
-    } else {
-      cntData = cntItemContainer.querySelectorAll(
-        '.sb-cnt-title-container-item'
-      )
-    }
-
-    let row
-    let isNewRow = true
-
-    cntData.forEach(cntRow => {
-      if (cntRow.getAttribute('obj-id') == objectId) {
-        isNewRow = false
-        row = cntRow
-      }
-    })
-
-    if (isNewRow) {
-      if (cntTagName == 'TABLE') {
-        row = getRowFromTable(cntId)
-        row.setAttribute('obj-id', objectId)
-        setTableRowValuesFromInputFields(row, inputFields)
-        cntItemContainer.querySelector('tbody').appendChild(row)
-      } else {
-        const contentContainer = cntItemContainer.closest(
-          '.sb-cnt-title-container'
-        )
-        const lastChild = contentContainer.lastElementChild
-
-        row = getDataFromTitle(cntId)
-        row.setAttribute('obj-id', objectId)
-        setTitleItemValuesFromInputFields(row, inputFields)
-        contentContainer.insertBefore(row, lastChild)
-      }
-    } else {
-      if (cntTagName == 'TABLE') {
-        setTableRowValuesFromInputFields(row, inputFields)
-      } else {
-        setTitleItemValuesFromInputFields(row, inputFields)
-      }
-    }
-    editModalSaveBtn.closest('.edit-modal-container').style.display = 'none'
-  })
 }
 
 //Функция вкл/выкл модального окна редактирования информации записей таблиц контента сайдбара
@@ -1508,7 +1472,6 @@ function searchTitle(titleId) {
     .getElementsByTagName('h4')
   const inputField = title.querySelector('.cnt-search-input')
   let searchResultContainer = title.querySelector('.cnt-search-result')
-  console.log(searchResultContainer)
   const searchTitleBtn = title.querySelector('.cnt-btn-search')
   const searchIcon = title.querySelector('.bx-search')
   const prevBtn = title.querySelector('.bx-chevron-up')

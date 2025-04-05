@@ -1,17 +1,13 @@
 const { DateTime } = require('luxon')
 /*TODO
-  - Добавить тесты переключателя между форматом отображения таблицы и плитки
-  - Добавить тесты стилей выбора ячейки таблицы и плитки
-  - Добавить тесты стилей плитки
-  - Добавить тесты изменения стилей иконки "избранное"
-  - Добавить тесты изменения стилей иконки "сделать запись доступной куратору"
-  - Добавить в тесты добавление записи проверку на наличие атрибута data-id
+
 */
+
 describe('Тесты сайдбара страницы "Кабинет искателя" ', () => {
   it('Тестирование отображение контента при нажатии на меню сайдбара', () => {
     cy.visit('/cabinet.html')
 
-    cy.wait(3000)
+    cy.wait(2000)
 
     cy.get('.cabinet-content').as('content')
 
@@ -60,7 +56,7 @@ describe('Тесты сайдбара страницы "Кабинет иска�
   it('Тестирование отображение подменю сайдбара при наведении мыши на меню сайдбара', () => {
     cy.visit('/cabinet.html')
 
-    cy.wait(3000)
+    cy.wait(2000)
 
     //Проверка всех остальных меню
     cy.get('.sidebar-menu-item.serv-btn').each($el => {
@@ -95,7 +91,7 @@ describe('Тесты сайдбара страницы "Кабинет иска�
   it('Тестирование стилей подменю сайдбара', () => {
     cy.visit('/cabinet.html')
 
-    cy.wait(3000)
+    cy.wait(2000)
 
     //Проверка всех остальных меню
     cy.get('.sidebar-menu-item.serv-btn').each(($el, $index, $list) => {
@@ -140,7 +136,7 @@ describe('Тесты сайдбара страницы "Кабинет иска�
   it('Тестирование отображение контента при нажатии на подменю сайдбара', () => {
     cy.visit('/cabinet.html')
 
-    cy.wait(3000)
+    cy.wait(2000)
 
     cy.get('.cabinet-content').as('content')
 
@@ -173,11 +169,60 @@ describe('Тесты сайдбара страницы "Кабинет иска�
   })
 })
 
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+describe('Тесты переключателя между форматом отображения контента таблицы и плитки', () => {
+  it('Тестирование переключателя между форматом отображения контента таблицы и плитки', () => {
+    cy.visit('/cabinet.html')
+
+    cy.wait(1000)
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(2000)
+    cy.get('#link-will').click()
+
+    //Инициализация alias
+    cy.get('.sb-cnt-tbl-container').as('tbl')
+    cy.get('.sb-cnt-title-container').as('title')
+    cy.get('.sb-cnt-tabs-cnt').as('tabsContainer')
+    cy.get('.cnt-tab').as('tabs')
+    cy.get('.cnt-tab').eq(0).as('tabTable')
+    cy.get('.cnt-tab').eq(1).as('tabTitle')
+
+    //Проверка отображения переключателя
+    cy.get('@tabsContainer').should('be.visible')
+
+    //Проверка активности переключателя таблицы
+    cy.get('@tbl').should('have.class', 'active')
+    cy.get('@title').should('have.not.class', 'active')
+    cy.get('@tabTable').should('have.class', 'active')
+    cy.get('@tabTitle').should('have.not.class', 'active')
+    cy.get('@tabTable').should('have.attr', 'tab-id', 'tbl')
+
+    //Включаем режим отображения контента - "Плитка"
+    cy.get('@tabTitle').click()
+
+    //Проверка активности переключателя плитки
+    cy.get('@tbl').should('have.not.class', 'active')
+    cy.get('@title').should('have.class', 'active')
+    cy.get('@tabTitle').should('have.class', 'active')
+    cy.get('@tabTable').should('have.not.class', 'active')
+    cy.get('@tabTitle').should('have.attr', 'tab-id', 'title')
+  })
+})
+
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
 describe('Тесты таблиц контента страницы Кабинета юзера', () => {
   it('Тестирование изменение положения каретки сортировки при нажатии на заголовок таблицы', () => {
     cy.visit('/cabinet.html')
 
-    cy.wait(3000)
+    cy.wait(2000)
 
     cy.get('#God').scrollIntoView()
     cy.get('#God').realHover({
@@ -301,7 +346,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     cy.get('.sb-cnt-tbl-container')
-      .find('.tbl-gl-lb-checkbox')
+      .find('.cnt-gl-lb-checkbox')
       .as('glLbCheckbox')
     cy.get('.sb-cnt-tbl-container').find('.cnt-gl-checkbox').as('glCheckbox')
     cy.get('.sb-cnt-tbl-container').find('.cnt-gl-checkmark').as('glChecmark')
@@ -365,6 +410,49 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@glCheckbox').should('be.not.checked')
   })
 
+  it('Тестирование стилей выбраной ячейки таблицы', () => {
+    cy.visit('/cabinet.html')
+
+    cy.wait(2000)
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(2000)
+    cy.get('#link-will').click()
+
+    //Инициализация alias
+    cy.get('.sb-cnt-tbl-container').find('.cnt-gl-checkbox').as('glCheckbox')
+    cy.get('.sb-cnt-tbl-container').find('.cnt-checkbox').as('tblCheckboxes')
+    cy.get('.sb-cnt-tbl-container').find('.tbl-body-row').as('tblRows')
+
+    cy.get('@glCheckbox').click({ force: true })
+    cy.get('@glCheckbox').click({ force: true })
+    cy.wait(2000)
+
+    //Проверка ячеек таблицы на наличие класса selected
+    cy.get('@tblRows').each($row => {
+      cy.wrap($row).should('have.class', 'selected')
+    })
+
+    //Последовательно убираем активность у всех чекбоксов таблицы и проверяем на отстутствие класса selected
+    cy.get('@tblCheckboxes').each(($checkbox, $index) => {
+      cy.wrap($checkbox).click({ force: true })
+
+      cy.get('@tblRows').eq($index).should('have.not.class', 'selected')
+    })
+
+    //Последовательно добавляем активность у всех чекбоксов таблицы и проверяем на наличие класса selected
+    cy.get('@tblCheckboxes').each(($checkbox, $index) => {
+      cy.wrap($checkbox).click({ force: true })
+
+      cy.get('@tblRows').eq($index).should('have.class', 'selected')
+    })
+  })
+
   it('Тестирование отображения кнопки "Удалить записи" и работы кнопки при всех отмеченных чекбоксах в таблице', () => {
     cy.visit('/cabinet.html')
 
@@ -380,7 +468,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     cy.get('.sb-cnt-tbl-container')
-      .find('.tbl-gl-lb-checkbox')
+      .find('.cnt-gl-lb-checkbox')
       .as('glLbCheckbox')
     cy.get('.sb-cnt-tbl-container').find('.cnt-btn-dlt-all').as('btnDltAll')
 
@@ -414,7 +502,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     cy.get('.sb-cnt-tbl-container')
-      .find('.tbl-gl-lb-checkbox')
+      .find('.cnt-gl-lb-checkbox')
       .as('glLbCheckbox')
     cy.get('.sb-cnt-tbl-container').find('.cnt-btn-dlt-all').as('btnDltAll')
 
@@ -480,7 +568,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('#link-will').click()
 
     cy.get('.sb-cnt-tbl-container')
-      .find('.tbl-gl-lb-checkbox')
+      .find('.cnt-gl-lb-checkbox')
       .as('glLbCheckbox')
     cy.get('.sb-cnt-tbl-container').find('.cnt-checkmark').as('tblChecmarks')
     cy.get('.sb-cnt-tbl-container').find('.cnt-btn-dlt-all').as('btnDltAll')
@@ -495,6 +583,49 @@ describe('Тесты таблиц контента страницы Кабине
 
     //Проверка скрытия видимости кнопки
     cy.get('@btnDltAll').should('be.not.visible')
+  })
+
+  it('Тестирование работы иконки "Добавить в избранное"', () => {
+    cy.visit('/cabinet.html')
+
+    cy.wait(2000)
+
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+
+    cy.wait(1000)
+
+    cy.get('#link-will').click()
+
+    cy.wait(1000)
+
+    //Инициализация alias и проверка видимости иконки "Добавить в избранное"
+    cy.get('#will-tbl').find('.favicon').as('favIcons')
+
+    //Проверка видимости иконки "Добавить в избранное"
+    cy.get('@favIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-star')
+      cy.wrap($el).should('have.attr', 'title', 'Добавить в избранное')
+      cy.wrap($el).click()
+    })
+
+    //Проверка видимости иконки "Удалить из избранного"
+    cy.get('@favIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bxs-star')
+      cy.wrap($el).should('have.attr', 'title', 'Удалить из избранного')
+      cy.wrap($el).should('have.class', 'active')
+      cy.wrap($el).click()
+    })
+
+    //Проверка видимости иконки "Добавить в избранное"
+    cy.get('@favIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-star')
+      cy.wrap($el).should('have.attr', 'title', 'Добавить в избранное')
+      cy.wrap($el).click()
+    })
   })
 
   it('Тестирование работы иконки "Редактировать" в таблице (сравнение значений таблицы с значениями в модальном окне)', () => {
@@ -674,6 +805,60 @@ describe('Тесты таблиц контента страницы Кабине
           cy.get('@rowCount').should('eq', executedRowCount)
         })
       })
+  })
+
+  it('Тестирование работы иконки "Сделать запись доступной куратору" в таблице', () => {
+    cy.visit('/cabinet.html')
+
+    cy.wait(2000)
+
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+
+    cy.wait(1000)
+
+    cy.get('#link-will').click()
+
+    cy.wait(1000)
+
+    //Инициализация alias и проверка видимости иконки "Сделать запись не доступной куратору"
+    cy.get('#will-tbl').find('.curator-access-icon').as('curatorAccessIcons')
+
+    //Проверка видимости иконки "Сделать запись не доступной куратору"
+    cy.get('@curatorAccessIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-show')
+      cy.wrap($el).should(
+        'have.attr',
+        'title',
+        'Сделать запись не доступной куратору'
+      )
+      cy.wrap($el).click()
+    })
+
+    //Проверка видимости иконки "Сделать запись доступной куратору"
+    cy.get('@curatorAccessIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-hide')
+      cy.wrap($el).should(
+        'have.attr',
+        'title',
+        'Сделать запись доступной куратору'
+      )
+      cy.wrap($el).click()
+    })
+
+    //Проверка видимости иконки "Сделать запись не доступной куратору"
+    cy.get('@curatorAccessIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-show')
+      cy.wrap($el).should(
+        'have.attr',
+        'title',
+        'Сделать запись не доступной куратору'
+      )
+      cy.wrap($el).click()
+    })
   })
 
   it('Тестирование отображения окна предупреждения при поиске без выбранного столбца поиска', () => {
@@ -1584,6 +1769,8 @@ describe('Тесты таблиц контента страницы Кабине
   })
 })
 
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
 describe('Тесты плитки контента страницы Кабинета юзера', () => {
   it('Тестирование кнопки "Добавить запись" в плитку', () => {
     cy.visit('/cabinet.html')
@@ -1757,6 +1944,56 @@ describe('Тесты плитки контента страницы Кабине
     cy.get('@glCheckbox').should('be.not.checked')
   })
 
+  it('Тестирование стилей выбраной ячейки таблицы', () => {
+    cy.visit('/cabinet.html')
+
+    cy.wait(2000)
+
+    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+    cy.wait(2000)
+    cy.get('#link-will').click()
+
+    //Включаем режим отображения контента - "Плитка"
+    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+
+    //Инициализация alias
+    cy.get('.sb-cnt-title-container').find('.cnt-gl-checkbox').as('glCheckbox')
+    cy.get('.sb-cnt-title-container')
+      .find('.cnt-checkbox')
+      .as('titleCheckboxes')
+    cy.get('.sb-cnt-title-container')
+      .find('.sb-cnt-title-container-item')
+      .as('titleItems')
+
+    cy.get('@glCheckbox').click({ force: true })
+    cy.get('@glCheckbox').click({ force: true })
+    cy.wait(2000)
+
+    //Проверка ячеек таблицы на наличие класса selected
+    cy.get('@titleItems').each($row => {
+      cy.wrap($row).should('have.class', 'selected')
+    })
+
+    //Последовательно убираем активность у всех чекбоксов таблицы и проверяем на отстутствие класса selected
+    cy.get('@titleCheckboxes').each(($checkbox, $index) => {
+      cy.wrap($checkbox).click({ force: true })
+
+      cy.get('@titleItems').eq($index).should('have.not.class', 'selected')
+
+      cy.wrap($checkbox).click({ force: true })
+    })
+
+    //Проверка ячеек таблицы на наличие класса selected
+    cy.get('@titleItems').each($row => {
+      cy.wrap($row).should('have.class', 'selected')
+    })
+  })
+
   it('Тестирование отображения кнопки "Удалить записи" и работы кнопки при всех отмеченных чекбоксах в плитке', () => {
     cy.visit('/cabinet.html')
 
@@ -1898,6 +2135,52 @@ describe('Тесты плитки контента страницы Кабине
 
     //Проверка скрытия видимости кнопки
     cy.get('@btnDltAll').should('be.not.visible')
+  })
+
+  it('Тестирование работы иконки "Добавить в избранное"', () => {
+    cy.visit('/cabinet.html')
+
+    cy.wait(2000)
+
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+
+    cy.wait(1000)
+
+    cy.get('#link-will').click()
+
+    cy.wait(1000)
+
+    //Включаем режим отображения контента - "Плитка"
+    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+
+    //Инициализация alias и проверка видимости иконки "Добавить в избранное"
+    cy.get('#will-title').find('.favicon').as('favIcons')
+
+    //Проверка видимости иконки "Добавить в избранное"
+    cy.get('@favIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-star')
+      cy.wrap($el).should('have.attr', 'title', 'Добавить в избранное')
+      cy.wrap($el).click()
+    })
+
+    //Проверка видимости иконки "Удалить из избранного"
+    cy.get('@favIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bxs-star')
+      cy.wrap($el).should('have.attr', 'title', 'Удалить из избранного')
+      cy.wrap($el).should('have.class', 'active')
+      cy.wrap($el).click()
+    })
+
+    //Проверка видимости иконки "Добавить в избранное"
+    cy.get('@favIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-star')
+      cy.wrap($el).should('have.attr', 'title', 'Добавить в избранное')
+      cy.wrap($el).click()
+    })
   })
 
   it('Тестирование работы иконки "Редактировать" в плитке (сравнение значений плитки с значениями в модальном окне)', () => {
@@ -2089,6 +2372,63 @@ describe('Тесты плитки контента страницы Кабине
           cy.get('@rowCount').should('eq', executedRowCount)
         })
       })
+  })
+
+  it('Тестирование работы иконки "Сделать запись доступной куратору" в таблице', () => {
+    cy.visit('/cabinet.html')
+
+    cy.wait(2000)
+
+    cy.get('#God').scrollIntoView()
+    cy.get('#God').realHover({
+      position: 'center',
+      force: true
+    })
+
+    cy.wait(1000)
+
+    cy.get('#link-will').click()
+
+    cy.wait(1000)
+
+    //Включаем режим отображения контента - "Плитка"
+    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+
+    //Инициализация alias и проверка видимости иконки "Сделать запись доступной/недоступной куратору"
+    cy.get('#will-title').find('.curator-access-icon').as('curatorAccessIcons')
+
+    //Проверка видимости иконки "Сделать запись не доступной куратору"
+    cy.get('@curatorAccessIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-show')
+      cy.wrap($el).should(
+        'have.attr',
+        'title',
+        'Сделать запись не доступной куратору'
+      )
+      cy.wrap($el).click()
+    })
+
+    //Проверка видимости иконки "Сделать запись доступной куратору"
+    cy.get('@curatorAccessIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-hide')
+      cy.wrap($el).should(
+        'have.attr',
+        'title',
+        'Сделать запись доступной куратору'
+      )
+      cy.wrap($el).click()
+    })
+
+    //Проверка видимости иконки "Сделать запись не доступной куратору"
+    cy.get('@curatorAccessIcons').each($el => {
+      cy.wrap($el).should('have.class', 'bx-show')
+      cy.wrap($el).should(
+        'have.attr',
+        'title',
+        'Сделать запись не доступной куратору'
+      )
+      cy.wrap($el).click()
+    })
   })
 
   it('Тестирование отображения окна предупреждения при поиске без выбранного столбца поиска', () => {

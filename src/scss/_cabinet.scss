@@ -960,12 +960,13 @@ tbody tr:nth-child(even) {
 
   @include mixins.sb-cnt-indention();
 
-  .bxs-star,
-  .bx-star {
+  .favicon {
     position: absolute;
 
     top: 2vh;
     right: 1vw;
+
+    z-index: var(--z-index-for-icons-in-form);
   }
 
   .sb-cnt-title-container-item {
