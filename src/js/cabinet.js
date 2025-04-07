@@ -1,3 +1,5 @@
+import { loadTextFileAsElement } from './initFragments.js'
+
 document.addEventListener('DOMContentLoaded', function () {
   changeModalEditInformationHeight()
 })
@@ -272,8 +274,26 @@ function changeVisibilityOfSubMenuItems(item) {
 //Секция контента сайдбара
 const cntContainer = document.querySelector('.cabinet-content')
 
+//Общий слушатель клика для контента страницы "Кабинет Искателя"
 cntContainer.addEventListener('click', e => {
   const target = e.target
+
+  //Переключения формата отображения контента
+  if (target.classList.contains('cnt-tab')) {
+    const cntItem = target.closest('.sb-cnt')
+    const cntTabsContainer = target.closest('.cnt-tabs')
+    const cntTab = target
+
+    if (!cntTab.classList.contains('active')) {
+      for (const tab of cntTabsContainer.children) {
+        if (tab.classList.contains('active')) {
+          tab.classList.remove('active')
+        }
+      }
+      cntTab.classList.add('active')
+    }
+    toggleContentFormat(cntItem, cntTab.getAttribute('tab-id'))
+  }
 
   //Функция изменения иконки "избранное"
   if (target.classList.contains('bx-star')) {
@@ -327,13 +347,185 @@ cntContainer.addEventListener('click', e => {
       console.log('Cell not found')
     }
   }
+
+  //--------------------------------------------------------------------------------
+  //ФИЛЬТР
+  //Отображения окна фильтрации контента
+  if (target.classList.contains('cnt-fltr-link')) {
+    const fltrLink = target
+    const captionSelectEl = fltrLink
+      .closest('.cnt-caption')
+      .querySelector('.cnt-search-sl-col')
+    const cntFilterContainer = document.querySelector(
+      '.cnt-fltr-form-container'
+    )
+    const filterSelectEl =
+      cntFilterContainer.querySelector('.cnt-search-sl-col')
+
+    if (filterSelectEl.length <= 1) {
+      const options = captionSelectEl.options
+      for (let i = 1; i < options.length; i++) {
+        filterSelectEl.add(new Option(options[i].text, options[i].value))
+      }
+    }
+
+    setFilterContainerPosition(fltrLink)
+
+    cntFilterContainer.classList.toggle('active')
+  }
+})
+
+const cntFiltrContainer = document.querySelector('.cnt-fltr-form-container')
+//Общий слушатель изменения значения элемента select для контента страницы "Кабинет Искателя"
+cntFiltrContainer.addEventListener('click', e => {
+  const target = e.target
+  const form = target.closest('form')
+  const pathToSelectedFilterContainer =
+    './partials/sidebarContent/filterContainer/selectedFilterContainer.txt'
+
+  if (target.classList.contains('cnt-fltr-btn-execute')) {
+    //Инициализация элементов формы
+    const selectedFilteres = form.querySelector(
+      '.cnt-fltr-form-selected-filteres'
+    )
+    const fltrFormColumnSelEl = form.querySelector('.cnt-fltr-sl-col')
+    const fltrFormQuerySelElForText = form.querySelector(
+      '.fltr-form-query-text-op'
+    )
+    const fltrFormQuerySelElForDate = form.querySelector(
+      '.fltr-form-query-date-op'
+    )
+    const fltrFormQueryInputField = form.querySelector('.fltr-form-query-field')
+    const fltrFormQuryInputAddField = form.querySelector(
+      '.fltr-form-query-additional-field'
+    )
+
+    //Инициализация параметров фильтрования
+    const selectedColForFiltering =
+      fltrFormColumnSelEl.options[fltrFormColumnSelEl.selectedIndex].text
+
+    if (fltrFormColumnSelEl.selectedIndex != 0) {
+      if (!selectedColForFiltering.includes('Дата')) {
+        const fltrQueryText =
+          selectedColForFiltering +
+          ' ' +
+          fltrFormQuerySelElForText.options[
+            fltrFormQuerySelElForText.selectedIndex
+          ].value +
+          ' ' +
+          fltrFormQueryInputField.value
+
+        loadTextFileAsElement(pathToSelectedFilterContainer).then(
+          selectedFltrElement => {
+            if (selectedFltrElement) {
+              selectedFltrElement.querySelector('p').textContent = fltrQueryText
+              selectedFilteres.classList.add('active')
+
+              toggleVisibilityZeroCountTextElementSelectedFilter(form, false)
+
+              selectedFilteres.appendChild(selectedFltrElement)
+            }
+          }
+        )
+      } else {
+        let fltrQueryText
+
+        if (fltrFormQuerySelElForDate.selectedIndex == 3) {
+          fltrQueryText =
+            selectedColForFiltering +
+            ' ' +
+            ' от ' +
+            convertDateForTbl(fltrFormQueryInputField.value) +
+            ' до ' +
+            convertDateForTbl(fltrFormQuryInputAddField.value)
+        } else {
+          fltrQueryText =
+            selectedColForFiltering +
+            ' ' +
+            fltrFormQuerySelElForDate.options[
+              fltrFormQuerySelElForDate.selectedIndex
+            ].value +
+            ' ' +
+            convertDateForTbl(fltrFormQueryInputField.value)
+        }
+
+        loadTextFileAsElement(pathToSelectedFilterContainer).then(
+          selectedFltrElement => {
+            if (selectedFltrElement) {
+              selectedFltrElement.querySelector('p').textContent = fltrQueryText
+              selectedFilteres.classList.add('active')
+
+              toggleVisibilityZeroCountTextElementSelectedFilter(form, false)
+
+              selectedFilteres.appendChild(selectedFltrElement)
+            }
+          }
+        )
+      }
+    }
+  }
+
+  if (target.classList.contains('cnt-fltr-form-close-icon')) {
+    const fltrFormCloseIcon = target.querySelector('.cnt-fltr-form-close-icon')
+
+    cntFiltrContainer.classList.remove('active')
+  }
+
+  if (target.classList.contains('fltr-form-selected-filter-close-icon')) {
+    const selectedFilterContainer = target.closest(
+      '.cnt-fltr-form-selected-filter'
+    )
+
+    selectedFilterContainer.remove()
+  }
+})
+
+//Общий слушатель изменения значения элемента select для контента страницы "Кабинет Искателя"
+cntFiltrContainer.addEventListener('change', e => {
+  const target = e.target
+
+  if (target.classList.contains('cnt-fltr-sl-col')) {
+    const slElement = target
+    const form = slElement.closest('form')
+    const inputField = form
+      ? form.querySelector('.fltr-form-query-field')
+      : null
+    const additionInputField = target
+      .closest('form')
+      .querySelector('.fltr-form-query-additional-field')
+    const selElementForText = form.querySelector('.fltr-form-query-text-op')
+    const selElementForDate = form.querySelector('.fltr-form-query-date-op')
+
+    if (!inputField) {
+      console.warn('inputField не найден!')
+      return
+    }
+
+    const selectedText = slElement.options[slElement.selectedIndex].text
+
+    inputField.classList.add('active')
+    if (selectedText.includes('Дата')) {
+      inputField.type = 'date'
+      selElementForDate.classList.add('active')
+      selElementForText.classList.remove('active')
+      toggleVisibilityFilterAddInputField()
+    } else {
+      inputField.type = 'text'
+      selElementForDate.classList.remove('active')
+      selElementForText.classList.add('active')
+      additionInputField.classList.remove('active')
+      toggleVisibilityFilterAddInputField()
+    }
+  }
+
+  if (target.classList.contains('fltr-form-query-date-op')) {
+    toggleVisibilityFilterAddInputField()
+  }
 })
 
 if (cntContainer) {
   const cntTables = document.getElementsByTagName('table')
   const cntTitles = document.querySelectorAll('.sb-cnt-title-container')
-
-  tabsService(cntContainer)
 
   if (cntTables) {
     //Подключение сервисов и функций для работы с таблицами контента сайдбара
@@ -420,34 +612,6 @@ if (cntContainer) {
   }
 }
 
-//Функция работы с переключателями формата контента
-function tabsService(cntContainer) {
-  const cntItems = cntContainer.querySelectorAll('.sb-cnt')
-
-  cntItems.forEach(cntItem => {
-    if (cntItem) {
-      const cntTabsContainer = cntItem.querySelector('.cnt-tabs')
-      const cntTabs = cntItem.querySelectorAll('.cnt-tab')
-
-      if (cntTabs) {
-        cntTabs.forEach(cntTab => {
-          cntTab.addEventListener('click', () => {
-            if (!cntTab.classList.contains('active')) {
-              for (const tab of cntTabsContainer.children) {
-                if (tab.classList.contains('active')) {
-                  tab.classList.remove('active')
-                }
-              }
-              cntTab.classList.add('active')
-            }
-            toggleContentFormat(cntItem, cntTab.getAttribute('tab-id'))
-          })
-        })
-      }
-    }
-  })
-}
-
 function toggleContentFormat(cntItem, tabId) {
   const cntTbl = cntItem.querySelector('.sb-cnt-tbl-container')
   const cntTitle = cntItem.querySelector('.sb-cnt-title-container')
@@ -455,9 +619,11 @@ function toggleContentFormat(cntItem, tabId) {
   if (tabId == 'title') {
     cntTbl.classList.remove('active')
     cntTitle.classList.add('active')
+    initTitleService(cntTitle.id)
   } else {
     cntTbl.classList.add('active')
     cntTitle.classList.remove('active')
+    initTableServices(cntTbl.id)
   }
 }
 
@@ -522,6 +688,7 @@ let matches = []
 let matchesCells = []
 function initTableServices(tblId) {
   const tbl = document.getElementById(tblId)
+  console.log(tbl)
   const tblContainer = tbl.closest('div')
 
   tblMultiSlctService(tblId)
@@ -549,6 +716,53 @@ function initTableServices(tblId) {
 
 function isTable(cntId) {
   if (cntId.includes('tbl')) return true
+}
+
+//Функция отображения/скрытия дополнительного инпута для фильтрации между датами
+function toggleVisibilityFilterAddInputField() {
+  const filterQueryItems = document.querySelectorAll('.fltr-form-query-item')
+  const additionInputField = document.querySelector(
+    '.fltr-form-query-additional-field'
+  )
+  const selEl = document.querySelector('.fltr-form-query-date-op')
+  const selectedValue = selEl.options[selEl.selectedIndex].value
+
+  if (selEl.classList.contains('active')) {
+    if (selectedValue.includes('<>')) {
+      additionInputField.classList.add('active')
+
+      filterQueryItems.forEach(item => {
+        item.style.width = '7.5vw'
+      })
+    } else {
+      additionInputField.classList.remove('active')
+
+      filterQueryItems.forEach(item => {
+        item.style.width = '11.5vw'
+      })
+    }
+  } else {
+    additionInputField.classList.remove('active')
+
+    filterQueryItems.forEach(item => {
+      item.style.width = '11.5vw'
+    })
+  }
+}
+
+//Функция отображения/скрытия текста "Список пуст" в списке выбранных фильтров
+function toggleVisibilityZeroCountTextElementSelectedFilter(form, isShow) {
+  const fltrFormSelectedFltrZeroCount = form.querySelector(
+    '.cnt-fltr-form-zero-count'
+  )
+
+  if (fltrFormSelectedFltrZeroCount) {
+    if (isShow) {
+      fltrFormSelectedFltrZeroCount.classList.add('active')
+    } else {
+      fltrFormSelectedFltrZeroCount.classList.remove('active')
+    }
+  }
 }
 
 /*
@@ -1060,6 +1274,24 @@ function showOrHideWarningSelectWindow(cntId, isShow) {
   }
 }
 
+function setFilterContainerPosition(fltrLink) {
+  const cntContainer = document.querySelector('.cabinet-content')
+  const cntCaption = fltrLink.closest('.cnt-caption')
+  const fltrContainer = fltrLink.closest('.cnt-fltr-container')
+  const fltrIcon = fltrContainer.querySelector('.bx-filter')
+
+  const filtrFormContainer = document.querySelector('.cnt-fltr-form-container')
+  const filtrContainerHeight =
+    fltrIcon.getBoundingClientRect().top +
+    fltrIcon.getBoundingClientRect().height +
+    cntContainer.getBoundingClientRect().top +
+    window.scrollY +
+    20 -
+    cntContainer.getBoundingClientRect().top
+  filtrFormContainer.style.top = `${filtrContainerHeight}px`
+  filtrFormContainer.style.left = `${cntCaption.getBoundingClientRect().left}px`
+}
+
 //Функция вкл/выкл модального окна редактирования информации записей таблиц контента сайдбара
 function showModalWillEditInformation(row) {
   let cntId
@@ -1128,7 +1360,7 @@ function convertDateForTbl(date) {
 function changeModalEditInformationHeight() {
   const modalDialog = document.querySelector('.edit-modal-dialog')
 
-  if (!modalDialog) return
+  if (modalDialog.style.display == 'none') return
 
   const observer = new ResizeObserver(() => {
     let modalBody = document.querySelector('.edit-modal-body')

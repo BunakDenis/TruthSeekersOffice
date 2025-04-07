@@ -176,7 +176,7 @@
   table-layout: fixed;
 }
 
-.cabinet-content .sb-cnt div .cnt-btn {
+@at-root .cnt-btn {
   height: 4vh;
   width: 10vw;
 
@@ -217,11 +217,7 @@
 
 @at-root .cabinet-content .sb-cnt div {
   .cnt-fltr-container {
-    display: flex;
-
-    flex-flow: row nowrap;
-
-    align-items: center;
+    @include mixins.flex-center();
 
     height: 4vh;
     width: auto;
@@ -238,7 +234,7 @@
       @include mixins.transition-all-04-in-out(color);
     }
 
-    p {
+    a {
       padding: 0;
       margin: 0 0 0 0.5vw;
 
@@ -246,9 +242,39 @@
       @include mixins.transition-all-04-in-out(color);
     }
 
-    &:hover p,
+    &:hover a,
     &:hover .bx {
       @include mixins.fill-color-hover();
+    }
+  }
+
+  .title-fltr-container {
+    margin-left: 1vw;
+  }
+
+  .cnt-sorting-container {
+    @include mixins.flex-center();
+    position: relative;
+
+    height: 4vh;
+    width: auto;
+
+    margin-left: 2vw;
+
+    color: var(--page-text-color) !important;
+
+    cursor: pointer;
+
+    a {
+      padding: 0;
+      margin: 0 0 0 0.5vw;
+
+      color: var(--cabinet-page-sidebar-content-font-color);
+      @include mixins.transition-all-04-in-out(color);
+
+      &:hover {
+        color: var(--page-text-color-hover);
+      }
     }
   }
 
@@ -439,6 +465,10 @@
     }
   }
 
+  .title-search-field {
+    margin: 0 1vw 0 2vw;
+  }
+
   .cnt-btn-add {
     margin-left: 4vw;
 
@@ -626,6 +656,17 @@
 }
 
 /* Последняя ячейка фиксированной ширины */
+.cabinet-content div .sb-cnt-tbl-container table tr td:nth-last-child(2),
+.cabinet-content div .sb-cnt-tbl-container table tr th:nth-last-child(2) {
+  flex: 0 0 10vw;
+  max-width: 10vw;
+  min-width: 10vw;
+
+  align-items: center;
+  justify-items: center;
+}
+
+/* Последняя ячейка фиксированной ширины */
 .cabinet-content div .sb-cnt-tbl-container table tr td:last-child,
 .cabinet-content div .sb-cnt-tbl-container table tr th:last-child {
   flex: 0 0 50px;
@@ -785,9 +826,9 @@ tbody tr:nth-child(even) {
       position: relative;
 
       height: 100%;
-      width: 15vw;
+      width: 25vw;
 
-      margin: 0 0 0 5vw;
+      margin: 0 0 0 3vw;
       padding: 0;
 
       align-items: center;
@@ -882,7 +923,7 @@ tbody tr:nth-child(even) {
 
       list-style: none;
 
-      margin: 0 0 0 18vw;
+      margin: 0 0 0 5vw;
       padding: 0;
 
       li {
@@ -932,7 +973,7 @@ tbody tr:nth-child(even) {
     }
 
     .cnt-current-row {
-      margin: 0 0 0 14vw;
+      margin: 0 0 0 20vw;
 
       justify-content: center;
       align-content: center;
@@ -1045,6 +1086,210 @@ tbody tr:nth-child(even) {
       font-size: 1.2em;
     }
   }
+}
+
+@at-root .cnt-fltr-form-container {
+  display: none;
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  margin: 0;
+  padding: 1vh;
+
+  width: 30vw;
+  height: 30vh;
+
+  cursor: default;
+
+  font-family: var(--tbl-lable-font-family);
+  font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+  font-weight: var(--tbl-lable-font-weight);
+
+  @include mixins.backdrop-filter(var(--sb-cnt-backdrop-filter-blur));
+  background-color: var(--page-content-background-color);
+
+  z-index: var(--z-index-for-forms);
+
+  .cnt-fltr-form-close-icon {
+    position: absolute;
+
+    top: 2vh;
+    right: 0.5vw;
+
+    font-size: 1.5em;
+
+    cursor: pointer;
+
+    &:hover {
+      color: var(--page-text-color-hover);
+    }
+  }
+
+  .cnt-fltr-form {
+    @include mixins.flex-center(column, $gap: 2vh);
+    position: relative;
+
+    margin: 5vh 1vw 1vh 1vw;
+
+    .cnt-fltr-form-selected-filteres-container {
+      @include mixins.flex-center(column, $gap: 2vh);
+
+      h4 {
+        margin: 0;
+        padding: 0;
+
+        line-height: 1.2;
+      }
+      .cnt-fltr-form-zero-count {
+        display: none;
+        margin: 0;
+        padding: 0;
+
+        line-height: 1.2;
+
+        text-align: center;
+
+        &.active {
+          display: block;
+        }
+      }
+      .cnt-fltr-form-selected-filteres {
+        display: none;
+        flex-flow: row;
+        flex-wrap: wrap;
+        gap: 0.5vh 0.3vw;
+        justify-content: center;
+        align-items: center;
+
+        width: 100%;
+        height: auto;
+
+        color: var(--form-selected-fltr-text-color);
+
+        &.active {
+          display: flex;
+        }
+
+        .cnt-fltr-form-selected-filter {
+          @include mixins.flex-center(row, nowrap);
+
+          margin: 0;
+          padding: 1vh;
+
+          width: auto;
+          height: 2vh;
+
+          @include mixins.border-round(
+            20px,
+            var(--form-selected-fltr-text-color)
+          );
+
+          @include mixins.box-shadow($offset-x: -4px, $offset-y: -4px);
+          background-color: transparent;
+
+          p {
+            margin: 0;
+            padding: 0;
+
+            line-height: 1.2;
+            text-align: center;
+          }
+
+          i {
+            cursor: pointer;
+
+            font-size: 1.2em;
+
+            &:hover {
+              color: var(--page-text-color-hover);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .cnt-btn {
+    font-family: var(--tbl-lable-font-family);
+    font-size: 1em;
+    font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+    font-weight: var(--tbl-lable-font-weight);
+  }
+
+  button,
+  select,
+  input {
+    height: 4vh;
+    width: 90%;
+
+    @include mixins.border-round();
+  }
+
+  .fltr-form-query-fields-container {
+    @include mixins.flex-center($gap: 1vw);
+
+    .fltr-form-query-item {
+      width: 11.5vw;
+    }
+
+    input[type='date'] {
+      color: var(--form-element-in-valid-value-text-color);
+    }
+
+    input[type='date']:valid {
+      color: var(--form-element-valid-value-text-color);
+    }
+
+    .fltr-form-query-field,
+    .fltr-form-query-additional-field {
+      display: none;
+
+      transform: translateX(-50%);
+
+      @include mixins.transition-all-04-in-out((transform));
+    }
+
+    .fltr-form-query-field.active,
+    .fltr-form-query-additional-field.active {
+      display: block;
+
+      transform: translateX(0);
+    }
+
+    .fltr-form-query-text-op {
+      display: none;
+
+      transform: translateX(-50%);
+
+      @include mixins.transition-all-04-in-out((transform));
+    }
+
+    .fltr-form-query-text-op.active {
+      display: block;
+
+      transform: translateX(0);
+    }
+
+    .fltr-form-query-date-op {
+      display: none;
+
+      transform: translateX(-50%);
+
+      @include mixins.transition-all-04-in-out((transform));
+    }
+
+    .fltr-form-query-date-op.active {
+      display: block;
+
+      transform: translateX(0);
+    }
+  }
+}
+
+@at-root .cnt-fltr-form-container.active {
+  display: block;
 }
 
 /* Форма редактирования информации про Волю */

@@ -1,0 +1,4 @@
+<div class="cnt-fltr-form-selected-filter">
+    <p></p>
+    <i class="bx bx-x fltr-form-selected-filter-close-icon"></i>
+</div>

@@ -1,4 +1,1082 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Кабинет Искателя</title><link rel="icon" href="images/icon/al_vadud_vector_title.svg" type="image/svg"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"/><link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet"/><script defer="defer" src="js/cabinet.js"></script><script defer="defer" src="js/initFragments.js"></script><script defer="defer" src="js/main.js"></script></head><body class="body-cabinet-page"><div class="bg-image" id="body-bg-image"></div><header id="page-header"></header><main><aside class="sidebar"><ul class="sidebar-menu"><li><a href="#" class="sidebar-menu-item" id="link-general-results">Общие результаты</a></li><li class="God" id="God"><a href="#" class="serv-btn sidebar-menu-item" id="link-God">Господь</a><ul class="serv-show"><li class="sidebar-submenu-title"><a href="#" class="sidebar-submenu-item title" id="link-God">Господь</a></li><li><a class="sidebar-submenu-item" id="link-will" href="#">Воля</a></li><li><a class="sidebar-submenu-item" id="link-questioning" href="#">Вопрошание</a></li><li><a class="sidebar-submenu-item" id="link-vision" href="#">Ведение</a></li><li><a class="sidebar-submenu-item" id="link-God-message" href="#">Послания</a></li><li><a class="sidebar-submenu-item" id="link-vow" href="#">Обеты</a></li></ul></li><li><a href="#" class="serv-btn sidebar-menu-item" id="link-work">Работа</a><ul class="serv-show"><li class="sidebar-submenu-title"><a href="#" class="sidebar-submenu-item title" id="link-work">Работа</a></li><li><a href="#" class="sidebar-submenu-item" id="link-spiritual-work">Духовная Работа</a></li><li><a href="#" class="sidebar-submenu-item" id="link-mystic-work">Мистическая Работа</a></li></ul></li><li><a href="#" class="serv-btn sidebar-menu-item" id="link-seeker">Искателю</a><ul class="serv-show"><li class="sidebar-submenu-title"><a href="#" class="sidebar-submenu-item title" id="link-seeker">Искателю</a></li><li><a href="#" class="sidebar-submenu-item" id="link-books">Книги</a></li><li><a href="#" class="sidebar-submenu-item" id="link-audio-books">Аудиокниги</a></li><li><a href="#" class="sidebar-submenu-item" id="link-article">Статьи</a></li><li><a href="#" class="sidebar-submenu-item" id="link-media-lectures">Аудио-видео лекции</a></li></ul></li><li><a href="#" class="serv-btn sidebar-menu-item" id="link-adminisration">Администрирование</a><ul class="serv-show"><li class="sidebar-submenu-title"><a href="#" class="sidebar-submenu-item title" id="link-adminisration">Администрирование</a></li><li><a href="#" class="sidebar-submenu-item" id="link-adm-God">Господь</a></li><li><a href="#" class="sidebar-submenu-item" id="link-adm-spirit-work">Духовная Работа</a></li><li><a href="#" class="sidebar-submenu-item" id="link-adm-mystic-work">Мистическая Работа</a></li><li><a href="#" class="sidebar-submenu-item" id="link-adm-seeker">Искателю</a></li></ul></li><li><a class="sidebar-menu-item" href="#" id="link-settings">Настройки</a></li></ul></aside><section class="cabinet-content"><div class="sb-cnt" id="link-general-results-sb-cnt"><div class="sb-cnt-title"><h3>Общие результаты</h3></div></div><div class="sb-cnt" id="link-God-sb-cnt"><h1>Меню Господь</h1></div><div class="sb-cnt" id="link-will-sb-cnt"><div class="sb-cnt-title"><h3>Воля</h3></div><div class="sb-cnt-tabs-cnt"><h4>Формат отображения записей:</h4><div class="cnt-tabs"><a href="#" class="cnt-tab active" tab-id="tbl">Таблица</a> <a href="#" class="cnt-tab" tab-id="title">Плитка</a></div></div><div class="sb-cnt-tbl-container active"><div class="cnt-caption"><div class="cnt-fltr-container tbl-fltr-container"><i class="bx bx-filter" id="tbl-fltr-svg"></i><p>Фильтр</p></div><div class="cnt-search-field tbl-search-field"><input id="tbl-will-search-field" class="cnt-search-input tbl-search-input" placeholder="Поиск..."/> <i class="bx bx-search"></i> <i class="bx bx-x"></i><div class="cnt-search-result tbl-search-result"><p class="cnt-search-result-item cnt-search-result-count tbl-search-result-count">Поиск не дал результатов</p><p class="cnt-search-result-item cnt-search-result-number tbl-search-result-number"></p><div class="cnt-search-result-item cnt-search-result-cevrons tbl-search-result-cevrons"><i class="bx bx-chevron-up"></i> <i class="bx bx-chevron-down"></i></div></div><div class="cnt-search-wrn tbl-search-wrn"><i class="fas fa-info-circle"></i><p>Выберите название колонки для поиска</p></div></div><select id="tbl-will-search-sl-col" class="cnt-search-sl-col tbl-search-sl-col"><option disabled="disabled" selected="selected">Искать по столбцу</option></select> <button type="submit" class="cnt-btn cnt-btn-search tbl-btn-search">Найти</button> <button type="submit" class="cnt-btn cnt-btn-add tbl-btn-add">+ Добавить запись</button> <button type="submit" class="cnt-btn cnt-btn-dlt-all tbl-btn-dlt-all">Удалить записи</button> <label class="cnt-gl-lb-checkbox tbl-gl-lb-checkbox"><input type="checkbox" id="tbl-will-gl-checkbox" class="cnt-gl-checkbox tbl-gl-checkbox" checked="checked"/> <span class="cnt-gl-checkmark tbl-gl-checkmark"></span></label></div><table class="cnt-tbl" id="will-tbl"><thead><tr><th><a class="tbl-title-link" href="#">Дата принятия <span class="fas fa-caret-down"></span></a></th><th><a class="tbl-title-link" href="#">Краткое описание <span class="fas fa-caret-down"></span></a></th><th><a class="tbl-title-link" href="#">Коментарии <span class="fas fa-caret-down"></span></a></th><th>Действия</th><th></th></tr></thead><tbody><tr class="tbl-body-row" obj-id="1"><td class="will-incoming-date tbl-row-data">10.01.2025</td><td class="will-brief-description tbl-row-data">Сайт - Кабинет Искателя</td><td class="will-comment text-area tbl-row-data">По ощущениям нужно сделать до конца весны 2025 года</td><td class="actions"><i class="bx bx-star favicon" title="Добавить в избранное"></i> <i class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon tbl-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></td><td><label class="cnt-lb-checkbox tbl-lb-checkbox"><input type="checkbox" class="cnt-checkbox tbl-checkbox"/> <span class="cnt-checkmark tbl-checkmark"></span></label></td></tr><tr class="tbl-body-row" obj-id="2"><td class="will-incoming-date tbl-row-data">15.03.2025</td><td class="will-brief-description tbl-row-data">Молитва за ближних</td><td class="will-comment text-area tbl-row-data">Необходимо ежедневно молиться за семью и друзей</td><td class="actions"><i class="bx bx-star favicon" title="Добавить в избранное"></i> <i class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon tbl-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></td><td><label class="cnt-lb-checkbox tbl-lb-checkbox"><input type="checkbox" class="cnt-checkbox tbl-checkbox"/> <span class="cnt-checkmark tbl-checkmark"></span></label></td></tr><tr class="tbl-body-row" obj-id="3"><td class="will-incoming-date tbl-row-data">22.04.2025</td><td class="will-brief-description tbl-row-data">Изучение Писания</td><td class="will-comment text-area tbl-row-data">Прочитать книгу Иова до конца месяца</td><td class="actions"><i class="bx bx-star favicon" title="Добавить в избранное"></i> <i class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon tbl-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></td><td><label class="cnt-lb-checkbox tbl-lb-checkbox"><input type="checkbox" class="cnt-checkbox tbl-checkbox"/> <span class="cnt-checkmark tbl-checkmark"></span></label></td></tr><tr class="tbl-body-row" obj-id="4"><td class="will-incoming-date tbl-row-data">05.05.2025</td><td class="will-brief-description tbl-row-data">Помощь нуждающимся</td><td class="will-comment text-area tbl-row-data">Организовать сбор вещей для бездомных</td><td class="actions"><i class="bx bx-star favicon" title="Добавить в избранное"></i> <i class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon tbl-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></td><td><label class="cnt-lb-checkbox tbl-lb-checkbox"><input type="checkbox" class="cnt-checkbox tbl-checkbox"/> <span class="cnt-checkmark tbl-checkmark"></span></label></td></tr><tr class="tbl-body-row" obj-id="5"><td class="will-incoming-date tbl-row-data">12.06.2025</td><td class="will-brief-description tbl-row-data">Посещение больных</td><td class="will-comment text-area tbl-row-data">Навестить друга в больнице и поддержать его</td><td class="actions"><i class="bx bx-star favicon" title="Добавить в избранное"></i> <i class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon tbl-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></td><td><label class="cnt-lb-checkbox tbl-lb-checkbox"><input type="checkbox" class="cnt-checkbox tbl-checkbox"/> <span class="cnt-checkmark tbl-checkmark"></span></label></td></tr></tbody></table><div class="cnt-footer-container tbl-footer-container"><div class="cnt-offset tbl-offset"><label class="cnt-offset-label tbl-offset-label">Количество записей</label><div class="custom-select"><div class="selected">Выберите</div><i class="bx bx-chevron-down"></i><ul class="options"><li data-value="5"><a href="#">5</a></li><li data-value="10"><a href="#">10</a></li><li data-value="15"><a href="#">15</a></li></ul></div></div><ul class="cnt-pagination tbl-pagination"><div class="cnt-pagination-chevrons tbl-pagination-chevrons"><i class="bx bx-chevrons-left"></i> <i class="bx bx-chevron-left"></i></div><li class="cnt-pagination-item tbl-pagination-item"><a href="#">1</a></li><li class="cnt-pagination-item tbl-pagination-item"><a href="#">2</a></li><li class="cnt-pagination-item tbl-pagination-item"><a href="#">3</a></li><li class="cnt-pagination-item tbl-pagination-item"><a href="#">4</a></li><li class="cnt-pagination-item tbl-pagination-item"><a href="#">5</a></li><div class="cnt-pagination-chevrons tbl-pagination-chevrons"><i class="bx bx-chevron-right"></i> <i class="bx bx-chevrons-right"></i></div></ul><div class="cnt-current-row tbl-current-row">Страница - <span class="cnt-current-page tbl-current-page">0</span> из <span class="cnt-total-pages tbl-total-pages">0</span></div><div class="cnt-total-rows tbl-total-rows">Всего записей - <span class="cnt-total-records-count tbl-total-records-count">0</span></div></div></div><div class="sb-cnt-title-container" id="will-title"><div class="cnt-caption"><div class="cnt-fltr-container title-fltr-container"><i class="bx bx-filter" id="title-fltr-svg"></i><p>Фильтр</p></div><div class="cnt-search-field title-search-field"><input id="title-will-search-field" class="cnt-search-input title-search-input" placeholder="Поиск..."/> <i class="bx bx-search"></i> <i class="bx bx-x"></i><div class="cnt-search-result title-search-result"><p class="cnt-search-result-item cnt-search-result-count title-search-result-count">Поиск не дал результатов</p><p class="cnt-search-result-item cnt-search-result-number title-search-result-number"></p><div class="cnt-search-result-item cnt-search-result-cevrons title-search-result-cevrons"><i class="bx bx-chevron-up"></i> <i class="bx bx-chevron-down"></i></div></div><div class="cnt-search-wrn title-search-wrn"><i class="fas fa-info-circle"></i><p>Выберите название колонки для поиска</p></div></div><select id="title-will-search-sl-col" class="cnt-search-sl-col title-search-sl-col"><option disabled="disabled" selected="selected">Искать по столбцу</option></select> <button type="submit" class="cnt-btn cnt-btn-search title-btn-search">Найти</button> <button type="submit" class="cnt-btn cnt-btn-add title-btn-add">+ Добавить запись</button> <button type="submit" class="cnt-btn cnt-btn-dlt-all title-btn-dlt-all">Удалить записи</button> <label class="cnt-gl-lb-checkbox title-gl-lb-checkbox"><input type="checkbox" id="title-will-gl-checkbox" class="cnt-gl-checkbox title-gl-checkbox" checked="checked"/> <span class="cnt-gl-checkmark title-gl-checkmark"></span></label></div><div class="sb-cnt-title-container-item" obj-id="1"><label class="cnt-lb-checkbox title-lb-checkbox"><input type="checkbox" class="cnt-checkbox title-checkbox"/> <span class="cnt-checkmark title-checkmark"></span></label> <i class="bx bx-star favicon" title="Добавить в избранное"></i><div class="sb-cnt-title-container-el"><h4>Дата принятия</h4><p class="title-data will-incoming-date">10.01.2025</p></div><div class="sb-cnt-title-container-el"><h4>Краткое описание</h4><p class="title-data will-brief-description">Сайт - Кабинет Искателя</p></div><div class="sb-cnt-title-container-el"><h4>Коментарии</h4><p class="title-data will-comment">По ощущениям нужно сделать до конца весны 2025 года.</p></div><div class="actions"><i class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon title-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></div></div><div class="sb-cnt-title-container-item" obj-id="2"><i class="bx bx-star favicon" title="Добавить в избранное"></i> <label class="cnt-lb-checkbox title-lb-checkbox"><input type="checkbox" class="cnt-checkbox title-checkbox"/> <span class="cnt-checkmark title-checkmark"></span></label><div class="sb-cnt-title-container-el"><h4>Дата принятия</h4><p class="title-data will-incoming-date">15.03.2025</p></div><div class="sb-cnt-title-container-el"><h4>Краткое описание</h4><p class="title-data will-brief-description">Молитва за ближних</p></div><div class="sb-cnt-title-container-el"><h4>Коментарии</h4><p class="title-data will-comment">Необходимо ежедневно молиться за семью и друзей</p></div><div class="actions"><i class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon title-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></div></div><div class="sb-cnt-title-container-item" obj-id="3"><label class="cnt-lb-checkbox title-lb-checkbox"><input type="checkbox" class="cnt-checkbox title-checkbox"/> <span class="cnt-checkmark title-checkmark"></span></label> <i class="bx bx-star favicon" title="Добавить в избранное"></i><div class="sb-cnt-title-container-el"><h4>Дата принятия</h4><p class="title-data will-incoming-date">22.04.2025</p></div><div class="sb-cnt-title-container-el"><h4>Краткое описание</h4><p class="title-data will-brief-description">Изучение Писания</p></div><div class="sb-cnt-title-container-el"><h4>Коментарии</h4><p class="title-data will-comment">Прочитать книгу Иова до конца месяца</p></div><div class="actions"><i class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon title-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></div></div><div class="sb-cnt-title-container-item" obj-id="4"><label class="cnt-lb-checkbox title-lb-checkbox"><input type="checkbox" class="cnt-checkbox title-checkbox"/> <span class="cnt-checkmark title-checkmark"></span></label> <i class="bx bx-star favicon" title="Добавить в избранное"></i><div class="sb-cnt-title-container-el"><h4>Дата принятия</h4><p class="title-data will-incoming-date">05.05.2025</p></div><div class="sb-cnt-title-container-el"><h4>Краткое описание</h4><p class="title-data will-brief-description">Помощь нуждающимся</p></div><div class="sb-cnt-title-container-el"><h4>Коментарии</h4><p class="title-data will-comment">Организовать сбор вещей для бездомных</p></div><div class="actions"><i class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon title-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></div></div><div class="sb-cnt-title-container-item" obj-id="5"><label class="cnt-lb-checkbox title-lb-checkbox"><input type="checkbox" class="cnt-checkbox title-checkbox"/> <span class="cnt-checkmark title-checkmark"></span></label> <i class="bx bx-star favicon" title="Добавить в избранное"></i><div class="sb-cnt-title-container-el"><h4>Дата принятия</h4><p class="title-data will-incoming-date">12.06.2025</p></div><div class="sb-cnt-title-container-el"><h4>Краткое описание</h4><p class="title-data will-brief-description">Посещение больных</p></div><div class="sb-cnt-title-container-el"><h4>Коментарии</h4><p class="title-data will-comment">Навестить друга в больнице и поддержать его</p></div><div class="actions"><i class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon" title="Открыть запись"></i> <i class="bx bxs-pencil cnt-edit-icon title-edit-icon" title="Отредактировать запись"></i> <i class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon" title="Удалить запись"></i> <i class="bx bx-show curator-access-icon" title="Сделать запись не доступной куратору"></i></div></div><div class="cnt-footer-container title-footer-container"><div class="cnt-offset title-offset"><label class="cnt-offset-label title-offset-label">Количество записей</label><div class="custom-select"><div class="selected">Выберите</div><i class="bx bx-chevron-down"></i><ul class="options"><li data-value="5"><a href="#">5</a></li><li data-value="10"><a href="#">10</a></li><li data-value="15"><a href="#">15</a></li></ul></div></div><ul class="cnt-pagination title-pagination"><div class="cnt-pagination-chevrons title-pagination-chevrons"><i class="bx bx-chevrons-left"></i> <i class="bx bx-chevron-left"></i></div><li class="cnt-pagination-item title-pagination-item"><a href="#">1</a></li><li class="cnt-pagination-item title-pagination-item"><a href="#">2</a></li><li class="cnt-pagination-item title-pagination-item"><a href="#">3</a></li><li class="cnt-pagination-item title-pagination-item"><a href="#">4</a></li><li class="cnt-pagination-item title-pagination-item"><a href="#">5</a></li><div class="cnt-pagination-chevrons title-pagination-chevrons"><i class="bx bx-chevron-right"></i> <i class="bx bx-chevrons-right"></i></div></ul><div class="cnt-current-row title-current-row">Страница - <span class="cnt-current-page title-current-page">0</span> из <span class="cnt-total-pages titlel-total-pages">0</span></div><div class="cnt-total-rows title-total-rows">Всего записей - <span class="cnt-total-records-count title-total-records-count">0</span></div></div></div></div><div class="sb-cnt" id="link-questioning-sb-cnt"><h1>Меню Вопрошание</h1></div><div class="sb-cnt" id="link-vision-sb-cnt"><h1>Меню Ведение</h1></div><div class="sb-cnt" id="link-God-message-sb-cnt"><h1>Меню Послания</h1></div><div class="sb-cnt" id="link-vow-sb-cnt"><h1>Меню Обеты</h1></div><div class="sb-cnt" id="link-work-sb-cnt"><h1>Меню Работа</h1></div><div class="sb-cnt" id="link-spiritual-work-sb-cnt"><h1>Меню Духовная Работа</h1></div><div class="sb-cnt" id="link-mystic-work-sb-cnt"><h1>Меню Мистическая Работа</h1></div><div class="sb-cnt" id="link-seeker-sb-cnt"><h1>Меню Искателю</h1></div><div class="sb-cnt" id="link-books-sb-cnt"><h1>Меню Книги</h1></div><div class="sb-cnt" id="link-audio-books-sb-cnt"><h1>Меню Аудиокниги</h1></div><div class="sb-cnt" id="link-article-sb-cnt"><h1>Меню Статьи</h1></div><div class="sb-cnt" id="link-media-lectures-sb-cnt"><h1>Меню Аудио-видео лекции</h1></div><div class="sb-cnt" id="link-adminisration-sb-cnt"><h1>Меню Администрирование</h1></div><div class="sb-cnt" id="link-adm-God-sb-cnt"><h1>Адниминистрирование меню Господь</h1></div><div class="sb-cnt" id="link-adm-spirit-work-sb-cnt"><h1>Адниминистрирование меню Духовная Работа</h1></div><div class="sb-cnt" id="link-adm-mystic-work-sb-cnt"><h1>Адниминистрирование меню Мистическая Работа</h1></div><div class="sb-cnt" id="link-adm-seeker-sb-cnt"><h1>Адниминистрирование меню Искателю</h1></div><div class="sb-cnt" id="link-settings-sb-cnt"><h1>Меню Настройки</h1></div></section><footer id="page-footer"></footer></main><section class="edit-modal-container" id="will-edit-information" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"><form class="edit-from edit-will-from" cnt-id="" action="#"><div class="edit-modal-dialog will-modal-dialog"><div class="edit-modal-content will-modal-content"><div class="edit-modal-header will-modal-header"><h4 class="edit-modal-title will-modal-title">Редактирование информации о Воле</h4><svg class="edit-modal-close-icon" id="will-modal-cross-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 612.043 612.043" style="enable-background:new 0 0 612.043 612.043" xml:space="preserve"><g><g id="cross"><g><path d="M397.503,306.011l195.577-195.577c25.27-25.269,25.27-66.213,0-91.482c-25.269-25.269-66.213-25.269-91.481,0
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Кабинет Искателя</title>
+    <link
+      rel="icon"
+      href="images/icon/al_vadud_vector_title.svg"
+      type="image/svg"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <!-- ===== Boxicons CSS ===== -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  <script defer src="js/cabinet.js"></script><script defer src="js/initFragments.js"></script><script defer src="js/main.js"></script></head>
+  <body class="body-cabinet-page">
+    <div class="bg-image" id="body-bg-image"></div>
+
+    <header id="page-header"></header>
+
+    <main>
+      <aside class="sidebar">
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#" class="sidebar-menu-item" id="link-general-results">
+              Общие результаты</a
+            >
+          </li>
+          <li class="God" id="God">
+            <a href="#" class="serv-btn sidebar-menu-item" id="link-God">
+              Господь
+            </a>
+            <ul class="serv-show">
+              <li class="sidebar-submenu-title">
+                <a href="#" class="sidebar-submenu-item title" id="link-God"
+                  >Господь</a
+                >
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-will" href="#">Воля</a>
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-questioning" href="#"
+                  >Вопрошание</a
+                >
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-vision" href="#"
+                  >Ведение</a
+                >
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-God-message" href="#"
+                  >Послания</a
+                >
+              </li>
+              <li>
+                <a class="sidebar-submenu-item" id="link-vow" href="#">Обеты</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="serv-btn sidebar-menu-item" id="link-work">
+              Работа
+            </a>
+            <ul class="serv-show">
+              <li class="sidebar-submenu-title">
+                <a href="#" class="sidebar-submenu-item title" id="link-work">
+                  Работа
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-submenu-item"
+                  id="link-spiritual-work"
+                  >Духовная Работа</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-mystic-work"
+                  >Мистическая Работа</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="serv-btn sidebar-menu-item" id="link-seeker">
+              Искателю
+            </a>
+            <ul class="serv-show">
+              <li class="sidebar-submenu-title">
+                <a href="#" class="sidebar-submenu-item title" id="link-seeker">
+                  Искателю
+                </a>
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-books"
+                  >Книги</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-audio-books"
+                  >Аудиокниги</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-article"
+                  >Статьи</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-submenu-item"
+                  id="link-media-lectures"
+                  >Аудио-видео лекции</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="serv-btn sidebar-menu-item"
+              id="link-adminisration"
+            >
+              Администрирование
+            </a>
+            <ul class="serv-show">
+              <li class="sidebar-submenu-title">
+                <a
+                  href="#"
+                  class="sidebar-submenu-item title"
+                  id="link-adminisration"
+                >
+                  Администрирование
+                </a>
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-adm-God"
+                  >Господь</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-submenu-item"
+                  id="link-adm-spirit-work"
+                  >Духовная Работа</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="sidebar-submenu-item"
+                  id="link-adm-mystic-work"
+                  >Мистическая Работа</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-submenu-item" id="link-adm-seeker"
+                  >Искателю</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="sidebar-menu-item" href="#" id="link-settings">
+              Настройки</a
+            >
+          </li>
+        </ul>
+      </aside>
+
+      <section class="cabinet-content">
+        <div class="sb-cnt" id="link-general-results-sb-cnt">
+          <div class="sb-cnt-title">
+            <h3>Общие результаты</h3>
+          </div>
+        </div>
+        <div class="sb-cnt" id="link-God-sb-cnt">
+          <h1>Меню Господь</h1>
+        </div>
+        <div class="sb-cnt" id="link-will-sb-cnt">
+          <div class="sb-cnt-title">
+            <h3>Воля</h3>
+          </div>
+          <div class="sb-cnt-tabs-cnt">
+            <h4>Формат отображения записей:</h4>
+            <div class="cnt-tabs">
+              <a href="#" class="cnt-tab" tab-id="tbl">Таблица</a>
+              <a href="#" class="cnt-tab active" tab-id="title">Плитка</a>
+            </div>
+          </div>
+          <div class="sb-cnt-tbl-container">
+            <div class="cnt-caption">
+              <div class="cnt-fltr-container tbl-fltr-container">
+                <i class="bx bx-filter" id="tbl-fltr-svg"></i>
+                <a class="cnt-fltr-link" href="#">Фильтр</a>
+              </div>
+              <div class="cnt-search-field tbl-search-field">
+                <input
+                  id="tbl-will-search-field"
+                  class="cnt-search-input tbl-search-input"
+                  type="text"
+                  placeholder="Поиск..."
+                />
+                <i class="bx bx-search"></i>
+                <i class="bx bx-x"></i>
+                <div class="cnt-search-result tbl-search-result">
+                  <p
+                    class="cnt-search-result-item cnt-search-result-count tbl-search-result-count"
+                  >
+                    Поиск не дал результатов
+                  </p>
+                  <p
+                    class="cnt-search-result-item cnt-search-result-number tbl-search-result-number"
+                  ></p>
+                  <div
+                    class="cnt-search-result-item cnt-search-result-cevrons tbl-search-result-cevrons"
+                  >
+                    <i class="bx bx-chevron-up"></i>
+                    <i class="bx bx-chevron-down"></i>
+                  </div>
+                </div>
+                <div class="cnt-search-wrn tbl-search-wrn">
+                  <i class="fas fa-info-circle"></i>
+                  <p>Выберите название колонки для поиска</p>
+                </div>
+              </div>
+              <select
+                id="tbl-will-search-sl-col"
+                class="cnt-search-sl-col tbl-search-sl-col"
+              >
+                <option disabled selected>Искать по столбцу</option>
+              </select>
+              <button
+                type="submit"
+                class="cnt-btn cnt-btn-search tbl-btn-search"
+              >
+                Найти
+              </button>
+              <button type="submit" class="cnt-btn cnt-btn-add tbl-btn-add">
+                + Добавить запись
+              </button>
+              <button
+                type="submit"
+                class="cnt-btn cnt-btn-dlt-all tbl-btn-dlt-all"
+              >
+                Удалить записи
+              </button>
+              <label class="cnt-gl-lb-checkbox tbl-gl-lb-checkbox">
+                <input
+                  type="checkbox"
+                  id="tbl-will-gl-checkbox"
+                  class="cnt-gl-checkbox tbl-gl-checkbox"
+                  checked
+                />
+                <span class="cnt-gl-checkmark tbl-gl-checkmark"></span>
+              </label>
+            </div>
+            <table class="cnt-tbl" id="will-tbl">
+              <thead>
+                <tr>
+                  <th>
+                    <a class="tbl-title-link" href="#"
+                      >Дата принятия
+                      <span class="fas fa-caret-down"></span>
+                    </a>
+                  </th>
+                  <th>
+                    <a class="tbl-title-link" href="#"
+                      >Краткое описание
+                      <span class="fas fa-caret-down"></span>
+                    </a>
+                  </th>
+                  <th>
+                    <a class="tbl-title-link" href="#"
+                      >Коментарии
+                      <span class="fas fa-caret-down"></span>
+                    </a>
+                  </th>
+                  <th>Действия</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="tbl-body-row" obj-id="1">
+                  <td class="will-incoming-date tbl-row-data">10.01.2025</td>
+                  <td class="will-brief-description tbl-row-data">
+                    Сайт - Кабинет Искателя
+                  </td>
+                  <td class="will-comment text-area tbl-row-data">
+                    По ощущениям нужно сделать до конца весны 2025 года
+                  </td>
+                  <td class="actions">
+                    <i
+                      class="bx bx-star favicon"
+                      title="Добавить в избранное"
+                    ></i>
+                    <i
+                      class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon"
+                      title="Открыть запись"
+                    ></i>
+                    <i
+                      class="bx bxs-pencil cnt-edit-icon tbl-edit-icon"
+                      title="Отредактировать запись"
+                    ></i>
+                    <i
+                      class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon"
+                      title="Удалить запись"
+                    ></i>
+                    <i
+                      class="bx bx-show curator-access-icon"
+                      title="Сделать запись не доступной куратору"
+                    ></i>
+                  </td>
+                  <td>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
+                    </label>
+                  </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="2">
+                  <td class="will-incoming-date tbl-row-data">15.03.2025</td>
+                  <td class="will-brief-description tbl-row-data">
+                    Молитва за ближних
+                  </td>
+                  <td class="will-comment text-area tbl-row-data">
+                    Необходимо ежедневно молиться за семью и друзей
+                  </td>
+                  <td class="actions">
+                    <i
+                      class="bx bx-star favicon"
+                      title="Добавить в избранное"
+                    ></i>
+                    <i
+                      class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon"
+                      title="Открыть запись"
+                    ></i>
+                    <i
+                      class="bx bxs-pencil cnt-edit-icon tbl-edit-icon"
+                      title="Отредактировать запись"
+                    ></i>
+                    <i
+                      class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon"
+                      title="Удалить запись"
+                    ></i>
+                    <i
+                      class="bx bx-show curator-access-icon"
+                      title="Сделать запись не доступной куратору"
+                    ></i>
+                  </td>
+                  <td>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
+                    </label>
+                  </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="3">
+                  <td class="will-incoming-date tbl-row-data">22.04.2025</td>
+                  <td class="will-brief-description tbl-row-data">
+                    Изучение Писания
+                  </td>
+                  <td class="will-comment text-area tbl-row-data">
+                    Прочитать книгу Иова до конца месяца
+                  </td>
+                  <td class="actions">
+                    <i
+                      class="bx bx-star favicon"
+                      title="Добавить в избранное"
+                    ></i>
+                    <i
+                      class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon"
+                      title="Открыть запись"
+                    ></i>
+                    <i
+                      class="bx bxs-pencil cnt-edit-icon tbl-edit-icon"
+                      title="Отредактировать запись"
+                    ></i>
+                    <i
+                      class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon"
+                      title="Удалить запись"
+                    ></i>
+                    <i
+                      class="bx bx-show curator-access-icon"
+                      title="Сделать запись не доступной куратору"
+                    ></i>
+                  </td>
+                  <td>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
+                    </label>
+                  </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="4">
+                  <td class="will-incoming-date tbl-row-data">05.05.2025</td>
+                  <td class="will-brief-description tbl-row-data">
+                    Помощь нуждающимся
+                  </td>
+                  <td class="will-comment text-area tbl-row-data">
+                    Организовать сбор вещей для бездомных
+                  </td>
+                  <td class="actions">
+                    <i
+                      class="bx bx-star favicon"
+                      title="Добавить в избранное"
+                    ></i>
+                    <i
+                      class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon"
+                      title="Открыть запись"
+                    ></i>
+                    <i
+                      class="bx bxs-pencil cnt-edit-icon tbl-edit-icon"
+                      title="Отредактировать запись"
+                    ></i>
+                    <i
+                      class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon"
+                      title="Удалить запись"
+                    ></i>
+                    <i
+                      class="bx bx-show curator-access-icon"
+                      title="Сделать запись не доступной куратору"
+                    ></i>
+                  </td>
+                  <td>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
+                    </label>
+                  </td>
+                </tr>
+                <tr class="tbl-body-row" obj-id="5">
+                  <td class="will-incoming-date tbl-row-data">12.06.2025</td>
+                  <td class="will-brief-description tbl-row-data">
+                    Посещение больных
+                  </td>
+                  <td class="will-comment text-area tbl-row-data">
+                    Навестить друга в больнице и поддержать его
+                  </td>
+                  <td class="actions">
+                    <i
+                      class="bx bx-star favicon"
+                      title="Добавить в избранное"
+                    ></i>
+                    <i
+                      class="bx bx-link-external cnt-open-rec-icon tbl-open-rec-icon"
+                      title="Открыть запись"
+                    ></i>
+                    <i
+                      class="bx bxs-pencil cnt-edit-icon tbl-edit-icon"
+                      title="Отредактировать запись"
+                    ></i>
+                    <i
+                      class="bx bxs-trash-alt cnt-dlt-icon tbl-dlt-icon"
+                      title="Удалить запись"
+                    ></i>
+                    <i
+                      class="bx bx-show curator-access-icon"
+                      title="Сделать запись не доступной куратору"
+                    ></i>
+                  </td>
+                  <td>
+                    <label class="cnt-lb-checkbox tbl-lb-checkbox">
+                      <input
+                        type="checkbox"
+                        class="cnt-checkbox tbl-checkbox"
+                      />
+                      <span class="cnt-checkmark tbl-checkmark"></span>
+                    </label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="cnt-footer-container tbl-footer-container">
+              <div class="cnt-offset tbl-offset">
+                <label class="cnt-offset-label tbl-offset-label"
+                  >Количество отоброжаемых записей</label
+                >
+                <div class="custom-select">
+                  <div class="selected">Выберите</div>
+                  <i class="bx bx-chevron-down"></i>
+                  <ul class="options">
+                    <li data-value="5"><a href="#">5</a></li>
+                    <li data-value="10"><a href="#">10</a></li>
+                    <li data-value="15"><a href="#">15</a></li>
+                  </ul>
+                </div>
+              </div>
+              <ul class="cnt-pagination tbl-pagination">
+                <div class="cnt-pagination-chevrons tbl-pagination-chevrons">
+                  <i class="bx bx-chevrons-left"></i>
+                  <i class="bx bx-chevron-left"></i>
+                </div>
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">1</a>
+                </li>
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">2</a>
+                </li>
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">3</a>
+                </li>
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">4</a>
+                </li>
+                <li class="cnt-pagination-item tbl-pagination-item">
+                  <a href="#">5</a>
+                </li>
+                <div class="cnt-pagination-chevrons tbl-pagination-chevrons">
+                  <i class="bx bx-chevron-right"></i>
+                  <i class="bx bx-chevrons-right"></i>
+                </div>
+              </ul>
+              <div class="cnt-current-row tbl-current-row">
+                Страница -
+                <span class="cnt-current-page tbl-current-page">0</span> из
+                <span class="cnt-total-pages tbl-total-pages">0</span>
+              </div>
+              <div class="cnt-total-rows tbl-total-rows">
+                Всего записей -
+                <span class="cnt-total-records-count tbl-total-records-count"
+                  >0</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="sb-cnt-title-container active" id="will-title">
+            <div class="cnt-caption">
+              <div class="cnt-fltr-container title-fltr-container">
+                <i class="bx bx-filter" id="title-fltr-svg"></i>
+                <a class="cnt-fltr-link" href="#">Фильтр</a>
+              </div>
+              <div class="cnt-sorting-container title-sorting-container">
+                <a href="#">Сортировка</a>
+              </div>
+              <div class="cnt-search-field title-search-field">
+                <input
+                  id="title-will-search-field"
+                  class="cnt-search-input title-search-input"
+                  type="text"
+                  placeholder="Поиск..."
+                />
+                <i class="bx bx-search"></i>
+                <i class="bx bx-x"></i>
+                <div class="cnt-search-result title-search-result">
+                  <p
+                    class="cnt-search-result-item cnt-search-result-count title-search-result-count"
+                  >
+                    Поиск не дал результатов
+                  </p>
+                  <p
+                    class="cnt-search-result-item cnt-search-result-number title-search-result-number"
+                  ></p>
+                  <div
+                    class="cnt-search-result-item cnt-search-result-cevrons title-search-result-cevrons"
+                  >
+                    <i class="bx bx-chevron-up"></i>
+                    <i class="bx bx-chevron-down"></i>
+                  </div>
+                </div>
+                <div class="cnt-search-wrn title-search-wrn">
+                  <i class="fas fa-info-circle"></i>
+                  <p>Выберите название колонки для поиска</p>
+                </div>
+              </div>
+              <select
+                id="title-will-search-sl-col"
+                class="cnt-search-sl-col title-search-sl-col"
+              >
+                <option disabled selected>Искать по столбцу</option>
+              </select>
+              <button
+                type="submit"
+                class="cnt-btn cnt-btn-search title-btn-search"
+              >
+                Найти
+              </button>
+              <button type="submit" class="cnt-btn cnt-btn-add title-btn-add">
+                + Добавить запись
+              </button>
+              <button
+                type="submit"
+                class="cnt-btn cnt-btn-dlt-all title-btn-dlt-all"
+              >
+                Удалить записи
+              </button>
+              <label class="cnt-gl-lb-checkbox title-gl-lb-checkbox">
+                <input
+                  type="checkbox"
+                  id="title-will-gl-checkbox"
+                  class="cnt-gl-checkbox title-gl-checkbox"
+                  checked
+                />
+                <span class="cnt-gl-checkmark title-gl-checkmark"></span>
+              </label>
+            </div>
+            <div class="sb-cnt-title-container-item" obj-id="1">
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <i class="bx bx-star favicon" title="Добавить в избранное"></i>
+              <div class="sb-cnt-title-container-el">
+                <h4>Дата принятия</h4>
+                <p class="title-data will-incoming-date">10.01.2025</p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Краткое описание</h4>
+                <p class="title-data will-brief-description">
+                  Сайт - Кабинет Искателя
+                </p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Коментарии</h4>
+                <p class="title-data will-comment">
+                  По ощущениям нужно сделать до конца весны 2025 года.
+                </p>
+              </div>
+              <div class="actions">
+                <i
+                  class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon"
+                  title="Открыть запись"
+                ></i>
+                <i
+                  class="bx bxs-pencil cnt-edit-icon title-edit-icon"
+                  title="Отредактировать запись"
+                ></i>
+                <i
+                  class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon"
+                  title="Удалить запись"
+                ></i>
+                <i
+                  class="bx bx-show curator-access-icon"
+                  title="Сделать запись не доступной куратору"
+                ></i>
+              </div>
+            </div>
+            <div class="sb-cnt-title-container-item" obj-id="2">
+              <i class="bx bx-star favicon" title="Добавить в избранное"></i>
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <div class="sb-cnt-title-container-el">
+                <h4>Дата принятия</h4>
+                <p class="title-data will-incoming-date">15.03.2025</p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Краткое описание</h4>
+                <p class="title-data will-brief-description">
+                  Молитва за ближних
+                </p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Коментарии</h4>
+                <p class="title-data will-comment">
+                  Необходимо ежедневно молиться за семью и друзей
+                </p>
+              </div>
+              <div class="actions">
+                <i
+                  class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon"
+                  title="Открыть запись"
+                ></i>
+                <i
+                  class="bx bxs-pencil cnt-edit-icon title-edit-icon"
+                  title="Отредактировать запись"
+                ></i>
+                <i
+                  class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon"
+                  title="Удалить запись"
+                ></i>
+                <i
+                  class="bx bx-show curator-access-icon"
+                  title="Сделать запись не доступной куратору"
+                ></i>
+              </div>
+            </div>
+            <div class="sb-cnt-title-container-item" obj-id="3">
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <i class="bx bx-star favicon" title="Добавить в избранное"></i>
+              <div class="sb-cnt-title-container-el">
+                <h4>Дата принятия</h4>
+                <p class="title-data will-incoming-date">22.04.2025</p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Краткое описание</h4>
+                <p class="title-data will-brief-description">
+                  Изучение Писания
+                </p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Коментарии</h4>
+                <p class="title-data will-comment">
+                  Прочитать книгу Иова до конца месяца
+                </p>
+              </div>
+              <div class="actions">
+                <i
+                  class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon"
+                  title="Открыть запись"
+                ></i>
+                <i
+                  class="bx bxs-pencil cnt-edit-icon title-edit-icon"
+                  title="Отредактировать запись"
+                ></i>
+                <i
+                  class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon"
+                  title="Удалить запись"
+                ></i>
+                <i
+                  class="bx bx-show curator-access-icon"
+                  title="Сделать запись не доступной куратору"
+                ></i>
+              </div>
+            </div>
+            <div class="sb-cnt-title-container-item" obj-id="4">
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <i class="bx bx-star favicon" title="Добавить в избранное"></i>
+              <div class="sb-cnt-title-container-el">
+                <h4>Дата принятия</h4>
+                <p class="title-data will-incoming-date">05.05.2025</p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Краткое описание</h4>
+                <p class="title-data will-brief-description">
+                  Помощь нуждающимся
+                </p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Коментарии</h4>
+                <p class="title-data will-comment">
+                  Организовать сбор вещей для бездомных
+                </p>
+              </div>
+              <div class="actions">
+                <i
+                  class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon"
+                  title="Открыть запись"
+                ></i>
+                <i
+                  class="bx bxs-pencil cnt-edit-icon title-edit-icon"
+                  title="Отредактировать запись"
+                ></i>
+                <i
+                  class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon"
+                  title="Удалить запись"
+                ></i>
+                <i
+                  class="bx bx-show curator-access-icon"
+                  title="Сделать запись не доступной куратору"
+                ></i>
+              </div>
+            </div>
+            <div class="sb-cnt-title-container-item" obj-id="5">
+              <label class="cnt-lb-checkbox title-lb-checkbox">
+                <input type="checkbox" class="cnt-checkbox title-checkbox" />
+                <span class="cnt-checkmark title-checkmark"></span>
+              </label>
+              <i class="bx bx-star favicon" title="Добавить в избранное"></i>
+              <div class="sb-cnt-title-container-el">
+                <h4>Дата принятия</h4>
+                <p class="title-data will-incoming-date">12.06.2025</p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Краткое описание</h4>
+                <p class="title-data will-brief-description">
+                  Посещение больных
+                </p>
+              </div>
+              <div class="sb-cnt-title-container-el">
+                <h4>Коментарии</h4>
+                <p class="title-data will-comment">
+                  Навестить друга в больнице и поддержать его
+                </p>
+              </div>
+              <div class="actions">
+                <i
+                  class="bx bx-link-external cnt-open-rec-icon title-open-rec-icon"
+                  title="Открыть запись"
+                ></i>
+                <i
+                  class="bx bxs-pencil cnt-edit-icon title-edit-icon"
+                  title="Отредактировать запись"
+                ></i>
+                <i
+                  class="bx bxs-trash-alt cnt-dlt-icon title-dlt-icon"
+                  title="Удалить запись"
+                ></i>
+                <i
+                  class="bx bx-show curator-access-icon"
+                  title="Сделать запись не доступной куратору"
+                ></i>
+              </div>
+            </div>
+            <div class="cnt-footer-container title-footer-container">
+              <div class="cnt-offset title-offset">
+                <label class="cnt-offset-label title-offset-label"
+                  >Количество отоброжаемых записей</label
+                >
+                <div class="custom-select">
+                  <div class="selected">Выберите</div>
+                  <i class="bx bx-chevron-down"></i>
+                  <ul class="options">
+                    <li data-value="5"><a href="#">5</a></li>
+                    <li data-value="10"><a href="#">10</a></li>
+                    <li data-value="15"><a href="#">15</a></li>
+                  </ul>
+                </div>
+              </div>
+              <ul class="cnt-pagination title-pagination">
+                <div class="cnt-pagination-chevrons title-pagination-chevrons">
+                  <i class="bx bx-chevrons-left"></i>
+                  <i class="bx bx-chevron-left"></i>
+                </div>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">1</a>
+                </li>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">2</a>
+                </li>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">3</a>
+                </li>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">4</a>
+                </li>
+                <li class="cnt-pagination-item title-pagination-item">
+                  <a href="#">5</a>
+                </li>
+                <div class="cnt-pagination-chevrons title-pagination-chevrons">
+                  <i class="bx bx-chevron-right"></i>
+                  <i class="bx bx-chevrons-right"></i>
+                </div>
+              </ul>
+              <div class="cnt-current-row title-current-row">
+                Страница -
+                <span class="cnt-current-page title-current-page">0</span> из
+                <span class="cnt-total-pages titlel-total-pages">0</span>
+              </div>
+              <div class="cnt-total-rows title-total-rows">
+                Всего записей -
+                <span class="cnt-total-records-count title-total-records-count"
+                  >0</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sb-cnt" id="link-questioning-sb-cnt">
+          <h1>Меню Вопрошание</h1>
+        </div>
+        <div class="sb-cnt" id="link-vision-sb-cnt">
+          <h1>Меню Ведение</h1>
+        </div>
+        <div class="sb-cnt" id="link-God-message-sb-cnt">
+          <h1>Меню Послания</h1>
+        </div>
+        <div class="sb-cnt" id="link-vow-sb-cnt">
+          <h1>Меню Обеты</h1>
+        </div>
+
+        <!-- Контейнеры для элементов меню "Работа" -->
+
+        <div class="sb-cnt" id="link-work-sb-cnt">
+          <h1>Меню Работа</h1>
+        </div>
+        <div class="sb-cnt" id="link-spiritual-work-sb-cnt">
+          <h1>Меню Духовная Работа</h1>
+        </div>
+        <div class="sb-cnt" id="link-mystic-work-sb-cnt">
+          <h1>Меню Мистическая Работа</h1>
+        </div>
+
+        <!-- Контейнеры для элементов меню "Искателю" -->
+        <div class="sb-cnt" id="link-seeker-sb-cnt">
+          <h1>Меню Искателю</h1>
+        </div>
+        <div class="sb-cnt" id="link-books-sb-cnt">
+          <h1>Меню Книги</h1>
+        </div>
+        <div class="sb-cnt" id="link-audio-books-sb-cnt">
+          <h1>Меню Аудиокниги</h1>
+        </div>
+        <div class="sb-cnt" id="link-article-sb-cnt">
+          <h1>Меню Статьи</h1>
+        </div>
+        <div class="sb-cnt" id="link-media-lectures-sb-cnt">
+          <h1>Меню Аудио-видео лекции</h1>
+        </div>
+
+        <!-- Контейнеры для элементов меню "Администрирование" -->
+        <div class="sb-cnt" id="link-adminisration-sb-cnt">
+          <h1>Меню Администрирование</h1>
+        </div>
+        <div class="sb-cnt" id="link-adm-God-sb-cnt">
+          <h1>Адниминистрирование меню Господь</h1>
+        </div>
+        <div class="sb-cnt" id="link-adm-spirit-work-sb-cnt">
+          <h1>Адниминистрирование меню Духовная Работа</h1>
+        </div>
+        <div class="sb-cnt" id="link-adm-mystic-work-sb-cnt">
+          <h1>Адниминистрирование меню Мистическая Работа</h1>
+        </div>
+        <div class="sb-cnt" id="link-adm-seeker-sb-cnt">
+          <h1>Адниминистрирование меню Искателю</h1>
+        </div>
+
+        <!-- Контейнер для элемента меню "Настройки" -->
+        <div class="sb-cnt" id="link-settings-sb-cnt">
+          <h1>Меню Настройки</h1>
+        </div>
+      </section>
+      <!-- Footer -->
+      <footer id="page-footer"></footer>
+    </main>
+
+    <!-- Окно фильтров записей в таблице/плитке -->
+    <div class="cnt-fltr-form-container">
+      <i class="bx bx-x cnt-fltr-form-close-icon"></i>
+      <form class="cnt-fltr-form">
+        <div class="cnt-fltr-form-selected-filteres-container">
+          <h4>Список выбранных фильтров</h4>
+          <p class="cnt-fltr-form-zero-count active">Список пуст</p>
+          <div class="cnt-fltr-form-selected-filteres"></div>
+        </div>
+        <select class="cnt-search-sl-col cnt-fltr-sl-col">
+          <option disabled selected>Фильтровать по столбцу</option>
+        </select>
+        <div class="fltr-form-query-fields-container">
+          <input
+            class="fltr-form-query-item fltr-form-query-field"
+            type="date"
+            placeholder="Введите текст запроса"
+            required
+          />
+          <select
+            class="fltr-form-query-item fltr-form-query-operators fltr-form-query-text-op"
+          >
+            <option value="=" selected>Равно</option>
+            <option value="~">Содержит</option>
+            <option value="!=">Не содержит</option>
+          </select>
+          <select
+            class="fltr-form-query-item fltr-form-query-operators fltr-form-query-date-op"
+          >
+            <option value="=" selected>Равно</option>
+            <option value=">">Позже</option>
+            <option value="<">Раньше</option>
+            <option value="<>">Между</option>
+          </select>
+          <input
+            class="fltr-form-query-item fltr-form-query-additional-field"
+            type="date"
+            required
+          />
+        </div>
+        <button class="cnt-btn cnt-fltr-btn-execute title-fltr-btn-search">
+          Применить фильтр
+        </button>
+      </form>
+    </div>
+
+    <!-- Модальное окно редактирования информации записи в таблице -->
+    <section
+      class="edit-modal-container"
+      id="will-edit-information"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <form class="edit-from edit-will-from" cnt-id="" action="#">
+        <div class="edit-modal-dialog will-modal-dialog">
+          <div class="edit-modal-content will-modal-content">
+            <div class="edit-modal-header will-modal-header">
+              <h4 class="edit-modal-title will-modal-title">
+                Редактирование информации о Воле
+              </h4>
+              <svg
+                class="edit-modal-close-icon"
+                id="will-modal-cross-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 612.043 612.043"
+                style="enable-background: new 0 0 612.043 612.043"
+                xml:space="preserve"
+              >
+                <g>
+                  <g id="cross">
+                    <g>
+                      <path
+                        d="M397.503,306.011l195.577-195.577c25.27-25.269,25.27-66.213,0-91.482c-25.269-25.269-66.213-25.269-91.481,0
 				L306.022,214.551L110.445,18.974c-25.269-25.269-66.213-25.269-91.482,0s-25.269,66.213,0,91.482L214.54,306.033L18.963,501.61
 				c-25.269,25.269-25.269,66.213,0,91.481c25.269,25.27,66.213,25.27,91.482,0l195.577-195.576l195.577,195.576
-				c25.269,25.27,66.213,25.27,91.481,0c25.27-25.269,25.27-66.213,0-91.481L397.503,306.011z"/></g></g></g></svg></div><div class="edit-modal-body"><div class="input-field"><label>Дата получения</label> <input id="edit-will-incoming-date" class="edit-modal-input-field" type="date" required/></div><div class="input-field"><label>Краткое описание</label> <textarea id="edit-will-brief-description" class="edit-text-aria edit-modal-input-field" type="text" value="Краткое описание" required></textarea></div><div class="input-field"><label>Коментарий</label> <textarea id="edit-will-comment" class="edit-text-aria edit-modal-input-field" type="text-aria" value="" required></textarea></div></div><div class="edit-modal-footer"><button type="submit" class="edit-modal-save-btn">Сохранить</button></div></div></div></form></section><script src="https://kit.fontawesome.com/d6a7640edd.js" crossorigin="anonymous"></script><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script></body></html>
+				c25.269,25.27,66.213,25.27,91.481,0c25.27-25.269,25.27-66.213,0-91.481L397.503,306.011z"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <div class="edit-modal-body">
+              <div class="input-field">
+                <label>Дата получения</label>
+                <input
+                  id="edit-will-incoming-date"
+                  class="edit-modal-input-field"
+                  type="date"
+                  required
+                />
+              </div>
+
+              <div class="input-field">
+                <label>Краткое описание</label>
+                <textarea
+                  id="edit-will-brief-description"
+                  class="edit-text-aria edit-modal-input-field"
+                  type="text"
+                  value="Краткое описание"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="input-field">
+                <label>Коментарий</label>
+                <textarea
+                  id="edit-will-comment"
+                  class="edit-text-aria edit-modal-input-field"
+                  type="text-aria"
+                  value=""
+                  required
+                ></textarea>
+              </div>
+            </div>
+            <div class="edit-modal-footer">
+              <button type="submit" class="edit-modal-save-btn">
+                Сохранить
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <script
+      src="https://kit.fontawesome.com/d6a7640edd.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </body>
+</html>
