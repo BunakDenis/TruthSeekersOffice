@@ -1081,12 +1081,16 @@ function searchTable(tblId) {
   let prevIndex = 0
 
   //Инициализация элемента select для строки поиска
-  tblSearchColumnsNames.forEach(clmn => {
-    const option = document.createElement('option')
-    option.text = clmn.textContent.trim()
+  if (
+    tblSearchColumnSelectList.options.length <= tblSearchColumnsNames.length
+  ) {
+    tblSearchColumnsNames.forEach(clmn => {
+      const option = document.createElement('option')
+      option.text = clmn.textContent.trim()
 
-    tblSearchColumnSelectList.appendChild(option)
-  })
+      tblSearchColumnSelectList.appendChild(option)
+    })
+  }
 
   tblSearchColumnSelectList.addEventListener('change', () => {
     if (tblSearchColumnSelectList.selectedIndex != 0) {
@@ -1863,11 +1867,15 @@ function searchTitle(titleId) {
   let prevIndex = 0
 
   //Инициализация элемента select для строки поиска
-  for (let i = 0; i < titleSearchColumnsNames.length; i++) {
-    const option = document.createElement('option')
-    option.text = titleSearchColumnsNames[i].textContent.trim()
+  if (
+    titleSearchColumnSelectList.options.length <= titleSearchColumnsNames.length
+  ) {
+    for (let i = 0; i < titleSearchColumnsNames.length; i++) {
+      const option = document.createElement('option')
+      option.text = titleSearchColumnsNames[i].textContent.trim()
 
-    titleSearchColumnSelectList.appendChild(option)
+      titleSearchColumnSelectList.appendChild(option)
+    }
   }
 
   titleSearchColumnSelectList.addEventListener('change', () => {
