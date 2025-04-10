@@ -1,3 +1,4 @@
+@use 'mixins' as mixins;
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lobster&family=Orelega+One&display=swap');
 
 :root {
@@ -6,7 +7,8 @@
   --cabinet-page-menu-background-color: rgba(255, 255, 255, 0.6);
   --cabinet-sidebar-submenu-background-color: rgba(192, 188, 188, 0.8);
   --cabinet-page-menu-item-hover-background-color: rgba(255, 255, 255, 0.2);
-  --page-popup-background-color: rgba(238, 226, 226, 0.2);
+  --page-popup-background-color: rgba(238, 226, 226, 0.5);
+  --page-popup-border-color: rgba(248, 240, 240, 0.6);
 
   --modal-form-out-background-color: rgba(27, 26, 26, 0.7);
   --btn-hover-background-color: rgba(255, 255, 255, 0.15);
@@ -83,7 +85,7 @@
   --form-element-valid-value-text-color: #0a0a0a;
   --form-element-in-valid-value-text-color: #9b8e8e;
 
-  --form-selected-fltr-text-color: #486BA5;
+  --form-selected-fltr-text-color: #486ba5;
 
   --checkbox-not-active-background-color: rgba(255, 255, 255, 0.15);
 

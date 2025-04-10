@@ -246,6 +246,11 @@
     &:hover .bx {
       @include mixins.fill-color-hover();
     }
+
+    &.selected a,
+    &.selected .bx {
+      color: var(--form-selected-fltr-text-color);
+    }
   }
 
   .title-fltr-container {
@@ -1099,16 +1104,21 @@ tbody tr:nth-child(even) {
   padding: 1vh;
 
   width: 30vw;
-  height: 30vh;
+  min-height: 30vh;
+  max-height: 50vh;
 
   cursor: default;
+
+  overflow: auto;
 
   font-family: var(--tbl-lable-font-family);
   font-optical-sizing: var(--tbl-lable-font-optical-sizing);
   font-weight: var(--tbl-lable-font-weight);
 
+  @include mixins.border-round(0, var(--page-popup-border-color));
+
   @include mixins.backdrop-filter(var(--sb-cnt-backdrop-filter-blur));
-  background-color: var(--page-content-background-color);
+  background-color: var(--page-popup-background-color);
 
   z-index: var(--z-index-for-forms);
 
@@ -1209,81 +1219,135 @@ tbody tr:nth-child(even) {
         }
       }
     }
-  }
 
-  .cnt-btn {
-    font-family: var(--tbl-lable-font-family);
-    font-size: 1em;
-    font-optical-sizing: var(--tbl-lable-font-optical-sizing);
-    font-weight: var(--tbl-lable-font-weight);
-  }
+    .cnt-fltr-sl-col-container {
+      @include mixins.flex-center();
+      position: relative;
 
-  button,
-  select,
-  input {
-    height: 4vh;
-    width: 90%;
+      width: 100%;
 
-    @include mixins.border-round();
-  }
+      margin: 0;
+      padding: 0;
 
-  .fltr-form-query-fields-container {
-    @include mixins.flex-center($gap: 1vw);
+      .fltr-sel-col-wrn {
+        @include mixins.flex-center($direction: row, $gap: 0);
+        position: absolute;
 
-    .fltr-form-query-item {
-      width: 11.5vw;
+        visibility: hidden;
+        opacity: 0;
+
+        top: -115%;
+        left: 5%;
+
+        width: 10vw;
+
+        font-size: 0.8em;
+        font-weight: 400;
+
+        padding: 0.5vh 1vw 0.5vh 1vw;
+
+        background-color: var(--form-element-background-color);
+
+        @include mixins.transition-all-04-in-out(visibility);
+        @include mixins.transition-all-04-in-out(opacity);
+
+        z-index: var(--z-index-for-icons-in-form);
+
+        i {
+          color: rgb(223, 81, 15);
+
+          margin-right: 0.5vw;
+        }
+
+        p {
+          line-height: 1.2;
+          text-align: center;
+
+          margin: 0;
+          padding: 0;
+        }
+      }
+
+      .fltr-sel-col-wrn.active {
+        visibility: visible;
+        opacity: 1;
+      }
     }
 
-    input[type='date'] {
-      color: var(--form-element-in-valid-value-text-color);
+    .cnt-btn {
+      font-family: var(--tbl-lable-font-family);
+      font-size: 1em;
+      font-optical-sizing: var(--tbl-lable-font-optical-sizing);
+      font-weight: var(--tbl-lable-font-weight);
     }
 
-    input[type='date']:valid {
-      color: var(--form-element-valid-value-text-color);
+    button,
+    select,
+    input {
+      height: 4vh;
+      width: 90%;
+
+      @include mixins.border-round();
     }
 
-    .fltr-form-query-field,
-    .fltr-form-query-additional-field {
-      display: none;
+    .fltr-form-query-fields-container {
+      @include mixins.flex-center($gap: 1vw);
 
-      transform: translateX(-50%);
+      .fltr-form-query-item {
+        width: 11.5vw;
+      }
 
-      @include mixins.transition-all-04-in-out((transform));
-    }
+      input[type='date'] {
+        color: var(--form-element-in-valid-value-text-color);
+      }
 
-    .fltr-form-query-field.active,
-    .fltr-form-query-additional-field.active {
-      display: block;
+      input[type='date']:valid {
+        color: var(--form-element-valid-value-text-color);
+      }
 
-      transform: translateX(0);
-    }
+      .fltr-form-query-field,
+      .fltr-form-query-additional-field {
+        display: none;
 
-    .fltr-form-query-text-op {
-      display: none;
+        transform: translateX(-50%);
 
-      transform: translateX(-50%);
+        @include mixins.transition-all-04-in-out((transform));
+      }
 
-      @include mixins.transition-all-04-in-out((transform));
-    }
+      .fltr-form-query-field.active,
+      .fltr-form-query-additional-field.active {
+        display: block;
 
-    .fltr-form-query-text-op.active {
-      display: block;
+        transform: translateX(0);
+      }
 
-      transform: translateX(0);
-    }
+      .fltr-form-query-text-op {
+        display: none;
 
-    .fltr-form-query-date-op {
-      display: none;
+        transform: translateX(-50%);
 
-      transform: translateX(-50%);
+        @include mixins.transition-all-04-in-out((transform));
+      }
 
-      @include mixins.transition-all-04-in-out((transform));
-    }
+      .fltr-form-query-text-op.active {
+        display: block;
 
-    .fltr-form-query-date-op.active {
-      display: block;
+        transform: translateX(0);
+      }
 
-      transform: translateX(0);
+      .fltr-form-query-date-op {
+        display: none;
+
+        transform: translateX(-50%);
+
+        @include mixins.transition-all-04-in-out((transform));
+      }
+
+      .fltr-form-query-date-op.active {
+        display: block;
+
+        transform: translateX(0);
+      }
     }
   }
 }

@@ -46,18 +46,33 @@ describe('Тесты функций хедера', () => {
 
       cy.get('.searchToggle').find('.search').as('searchIcon')
       cy.get('.searchToggle').find('.cancel').as('cancelIcon')
+      cy.get('.searchBox').find('.searchToggle').as('searchToggle')
+      cy.get('.searchBox').find('.search-field').as('searchField')
+
+      //Наводим мышь на иконку поиск
+      cy.get('@searchIcon').scrollIntoView()
+      cy.get('@searchIcon').realHover({
+        position: 'center',
+        force: true
+      })
 
       //Проверка видимости поля ввода поискового запроса при нажатии на иконку поиск
-      cy.get('@searchIcon').click()
-      cy.get('.search-field').should('be.visible')
+      cy.get('@searchIcon').click({ force: true })
+      cy.wait(3000)
+      cy.get('@searchToggle').should('have.class', 'active')
+      cy.get('@searchField').should('be.visible')
 
       //Проверка закрытия окна ввода поискового запроса при нажатии на иконку закрыть
-      cy.get('@cancelIcon').click()
-      cy.get('.search-field').should('be.not.visible')
+      cy.get('@cancelIcon').click({ force: true })
+      cy.wait(3000)
+      cy.get('@searchToggle').should('have.not.class', 'active')
+      cy.get('@searchField').should('be.not.visible')
 
       //Проверка редиректа на страницу результатов поиска при нажатии на кнопку поиск в окне поиска
-      cy.get('@searchIcon').click()
-      cy.get('.search-field').find('.search').click()
+      cy.get('@searchIcon').click({ force: true })
+      cy.wait(3000)
+      cy.get('@searchToggle').should('have.class', 'active')
+      cy.get('@searchField').find('.search').click({ force: true })
       cy.url().should('match', /searchingResult/)
     })
   })
@@ -69,8 +84,16 @@ describe('Тесты функций хедера', () => {
       cy.get('#user').as('userIcon')
       cy.get('.sign-in-container').as('signInContainer')
 
+      //Наводим мышь на иконку юзера
+      cy.get('@userIcon').scrollIntoView()
+      cy.get('@userIcon').realHover({
+        position: 'center',
+        force: true
+      })
+
       //Проверка отображения окна
       cy.get('@userIcon').click()
+      cy.wait(1000)
       cy.get('@signInContainer').should('be.visible')
 
       //Проверка работы иконки отображения/скрытия пароля
@@ -88,15 +111,21 @@ describe('Тесты функций хедера', () => {
 
       //Проверка закрытия окна при нажатии на иконку юзера
       cy.get('@userIcon').click()
+      cy.wait(1000)
       cy.get('@signInContainer').should('be.not.visible')
 
       //Проверка закрытия окна при нажатии на кнопку закрыть окно
       cy.get('@userIcon').click()
+      cy.wait(1000)
       cy.get('.sign-in-form-cancel').click()
+
+      cy.wait(1000)
+
       cy.get('@signInContainer').should('be.not.visible')
 
       //Проверка редиректа на страницу регистрации юзера при нажатии на кнопку "Зарегистрироваться"
       cy.get('@userIcon').click()
+      cy.wait(1000)
       cy.get('.register').find('.sign-in-form-link').click()
       cy.url().should('match', /userSignUp/)
     })
@@ -109,24 +138,36 @@ describe('Тесты функций хедера', () => {
       cy.get('#user').as('userIcon')
       cy.get('#user-information-container').as('userInformationContainer')
 
+      //Наводим мышь на иконку юзера
+      cy.get('@userIcon').scrollIntoView()
+      cy.get('@userIcon').realHover({
+        position: 'center',
+        force: true
+      })
+
       //Проверка отображения окна
       cy.get('@userIcon').click()
       cy.get('.sign-in-container').as('signInContainer')
       cy.get('@signInContainer').find('.sign-in-button').click()
+      cy.wait(1000)
       cy.get('@userIcon').click()
+      cy.wait(1000)
       cy.get('@userInformationContainer').should('be.visible')
 
       //Проверка закрытия окна при нажатии на иконку юзера
       cy.get('@userIcon').click()
+      cy.wait(1000)
       cy.get('@userInformationContainer').should('be.not.visible')
 
       //Проверка закрытия окна при нажатии на кнопку закрыть окно
       cy.get('@userIcon').click()
+      cy.wait(1000)
       cy.get('.user-information-form-cancel').click()
       cy.get('@userInformationContainer').should('be.not.visible')
 
       //Проверка редиректа на страницу регистрации юзера при нажатии на кнопку "Зарегистрироваться"
       cy.get('@userIcon').click()
+      cy.wait(1000)
       cy.get('.user-fw-profile-link').click()
       cy.url().should('match', /userProfile/)
     })
@@ -139,17 +180,28 @@ describe('Тесты функций хедера', () => {
       cy.get('#notification-svg').as('notificationIcon')
       cy.get('.notification-container').as('notificationContainer')
 
+      //Наводим мышь на иконку юзера
+      cy.get('@notificationIcon').scrollIntoView()
+      cy.get('@notificationIcon').realHover({
+        position: 'center',
+        force: true
+      })
+
       //Проверка отображения окна
       cy.get('@notificationIcon').click()
+      cy.wait(1000)
       cy.get('@notificationContainer').should('be.visible')
 
       //Проверка закрытия окна при нажатии на иконку юзера
       cy.get('@notificationIcon').click()
+      cy.wait(1000)
       cy.get('@notificationContainer').should('be.not.visible')
 
       //Проверка закрытия окна при нажатии на кнопку закрыть окно
       cy.get('@notificationIcon').click()
+      cy.wait(1000)
       cy.get('.notification-form-cancel').click()
+      cy.wait(1000)
       cy.get('@notificationContainer').should('be.not.visible')
     })
   })

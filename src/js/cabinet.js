@@ -1,19 +1,12 @@
 import { loadTextFileAsElement } from './initFragments.js'
 
-document.addEventListener('DOMContentLoaded', function () {
-  changeModalEditInformationHeight()
-})
-
 //Функция для вёрстки контента сайдбара
-
 document.addEventListener('DOMContentLoaded', function () {
-  const activeMenuId = localStorage.getItem(expandSidebarActiveMenuIdKey)
-  const activeSubMenuId = localStorage.getItem(sidebarActiveSubmenuIdKey)
+  //showOrHideSidebarContent('link-will')
 
-  document.getElementById(activeMenuId).closest('li').classList.add('active')
-  document.getElementById(activeSubMenuId).classList.add('active')
+  changeModalEditInformationHeight()
 
-  showOrHideSidebarContent(activeSubMenuId)
+  changeFilterWindowHeight()
 })
 
 //Переменная-ключ для добавления контента активного меню сайдбара
@@ -274,258 +267,134 @@ function changeVisibilityOfSubMenuItems(item) {
 //Секция контента сайдбара
 const cntContainer = document.querySelector('.cabinet-content')
 
-//Общий слушатель клика для контента страницы "Кабинет Искателя"
-cntContainer.addEventListener('click', e => {
-  const target = e.target
-
-  //Переключения формата отображения контента
-  if (target.classList.contains('cnt-tab')) {
-    const cntItem = target.closest('.sb-cnt')
-    const cntTabsContainer = target.closest('.cnt-tabs')
-    const cntTab = target
-
-    if (!cntTab.classList.contains('active')) {
-      for (const tab of cntTabsContainer.children) {
-        if (tab.classList.contains('active')) {
-          tab.classList.remove('active')
-        }
-      }
-      cntTab.classList.add('active')
-    }
-    toggleContentFormat(cntItem, cntTab.getAttribute('tab-id'))
-  }
-
-  //Функция изменения иконки "избранное"
-  if (target.classList.contains('bx-star')) {
-    target.classList.remove('bx-star')
-    target.classList.add('bxs-star', 'active')
-    target.title = 'Удалить из избранного'
-  } else if (target.classList.contains('bxs-star')) {
-    target.classList.remove('bxs-star', 'active')
-    target.classList.add('bx-star')
-    target.title = 'Добавить в избранное'
-  }
-
-  //Функция изменения иконки "показать/скрыть" запись куратору
-  if (target.classList.contains('bx-show')) {
-    target.classList.remove('bx-show')
-    target.classList.add('bx-hide')
-    target.title = 'Сделать запись доступной куратору'
-  } else if (target.classList.contains('bx-hide')) {
-    target.classList.add('bx-show')
-    target.classList.remove('bx-hide')
-    target.title = 'Сделать запись не доступной куратору'
-  }
-
-  //Вызов модального окна при нажатии на иконку редактирования записи контента
-  if (target.classList.contains('cnt-edit-icon')) {
-    if (target.classList.contains('title-edit-icon')) {
-      showModalWillEditInformation(
-        target.closest('.sb-cnt-title-container-item')
-      )
-    } else {
-      showModalWillEditInformation(target.closest('tr'))
-    }
-  }
-
-  //Функция удаления записи контента
-  if (target.classList.contains('cnt-dlt-icon')) {
-    let cntContainer
-    let cell = target.closest('tr')
-
-    if (target.classList.contains('tbl-dlt-icon')) {
-      cntContainer = target.closest('table')
-      cell = target.closest('tr')
-    } else {
-      cntContainer = target.closest('.sb-cnt-title-container')
-      cell = target.closest('.sb-cnt-title-container-item')
-    }
-
-    if (cell) {
-      cell.remove()
-    } else {
-      console.log('Cell not found')
-    }
-  }
-
-  //--------------------------------------------------------------------------------
-  //ФИЛЬТР
-  //Отображения окна фильтрации контента
-  if (target.classList.contains('cnt-fltr-link')) {
-    const fltrLink = target
-    const captionSelectEl = fltrLink
-      .closest('.cnt-caption')
-      .querySelector('.cnt-search-sl-col')
-    const cntFilterContainer = document.querySelector(
-      '.cnt-fltr-form-container'
-    )
-    const filterSelectEl =
-      cntFilterContainer.querySelector('.cnt-search-sl-col')
-
-    if (filterSelectEl.length <= 1) {
-      const options = captionSelectEl.options
-      for (let i = 1; i < options.length; i++) {
-        filterSelectEl.add(new Option(options[i].text, options[i].value))
-      }
-    }
-
-    setFilterContainerPosition(fltrLink)
-
-    cntFilterContainer.classList.toggle('active')
-  }
-})
-
-const cntFiltrContainer = document.querySelector('.cnt-fltr-form-container')
-//Общий слушатель изменения значения элемента select для контента страницы "Кабинет Искателя"
-cntFiltrContainer.addEventListener('click', e => {
-  const target = e.target
-  const form = target.closest('form')
-  const pathToSelectedFilterContainer =
-    './partials/sidebarContent/filterContainer/selectedFilterContainer.txt'
-
-  if (target.classList.contains('cnt-fltr-btn-execute')) {
-    //Инициализация элементов формы
-    const selectedFilteres = form.querySelector(
-      '.cnt-fltr-form-selected-filteres'
-    )
-    const fltrFormColumnSelEl = form.querySelector('.cnt-fltr-sl-col')
-    const fltrFormQuerySelElForText = form.querySelector(
-      '.fltr-form-query-text-op'
-    )
-    const fltrFormQuerySelElForDate = form.querySelector(
-      '.fltr-form-query-date-op'
-    )
-    const fltrFormQueryInputField = form.querySelector('.fltr-form-query-field')
-    const fltrFormQuryInputAddField = form.querySelector(
-      '.fltr-form-query-additional-field'
-    )
-
-    //Инициализация параметров фильтрования
-    const selectedColForFiltering =
-      fltrFormColumnSelEl.options[fltrFormColumnSelEl.selectedIndex].text
-
-    if (fltrFormColumnSelEl.selectedIndex != 0) {
-      if (!selectedColForFiltering.includes('Дата')) {
-        const fltrQueryText =
-          selectedColForFiltering +
-          ' ' +
-          fltrFormQuerySelElForText.options[
-            fltrFormQuerySelElForText.selectedIndex
-          ].value +
-          ' ' +
-          fltrFormQueryInputField.value
-
-        loadTextFileAsElement(pathToSelectedFilterContainer).then(
-          selectedFltrElement => {
-            if (selectedFltrElement) {
-              selectedFltrElement.querySelector('p').textContent = fltrQueryText
-              selectedFilteres.classList.add('active')
-
-              toggleVisibilityZeroCountTextElementSelectedFilter(form, false)
-
-              selectedFilteres.appendChild(selectedFltrElement)
-            }
-          }
-        )
-      } else {
-        let fltrQueryText
-
-        if (fltrFormQuerySelElForDate.selectedIndex == 3) {
-          fltrQueryText =
-            selectedColForFiltering +
-            ' ' +
-            ' от ' +
-            convertDateForTbl(fltrFormQueryInputField.value) +
-            ' до ' +
-            convertDateForTbl(fltrFormQuryInputAddField.value)
-        } else {
-          fltrQueryText =
-            selectedColForFiltering +
-            ' ' +
-            fltrFormQuerySelElForDate.options[
-              fltrFormQuerySelElForDate.selectedIndex
-            ].value +
-            ' ' +
-            convertDateForTbl(fltrFormQueryInputField.value)
-        }
-
-        loadTextFileAsElement(pathToSelectedFilterContainer).then(
-          selectedFltrElement => {
-            if (selectedFltrElement) {
-              selectedFltrElement.querySelector('p').textContent = fltrQueryText
-              selectedFilteres.classList.add('active')
-
-              toggleVisibilityZeroCountTextElementSelectedFilter(form, false)
-
-              selectedFilteres.appendChild(selectedFltrElement)
-            }
-          }
-        )
-      }
-    }
-  }
-
-  if (target.classList.contains('cnt-fltr-form-close-icon')) {
-    const fltrFormCloseIcon = target.querySelector('.cnt-fltr-form-close-icon')
-
-    cntFiltrContainer.classList.remove('active')
-  }
-
-  if (target.classList.contains('fltr-form-selected-filter-close-icon')) {
-    const selectedFilterContainer = target.closest(
-      '.cnt-fltr-form-selected-filter'
-    )
-
-    selectedFilterContainer.remove()
-  }
-})
-
-//Общий слушатель изменения значения элемента select для контента страницы "Кабинет Искателя"
-cntFiltrContainer.addEventListener('change', e => {
-  const target = e.target
-
-  if (target.classList.contains('cnt-fltr-sl-col')) {
-    const slElement = target
-    const form = slElement.closest('form')
-    const inputField = form
-      ? form.querySelector('.fltr-form-query-field')
-      : null
-    const additionInputField = target
-      .closest('form')
-      .querySelector('.fltr-form-query-additional-field')
-    const selElementForText = form.querySelector('.fltr-form-query-text-op')
-    const selElementForDate = form.querySelector('.fltr-form-query-date-op')
-
-    if (!inputField) {
-      console.warn('inputField не найден!')
-      return
-    }
-
-    const selectedText = slElement.options[slElement.selectedIndex].text
-
-    inputField.classList.add('active')
-    if (selectedText.includes('Дата')) {
-      inputField.type = 'date'
-      selElementForDate.classList.add('active')
-      selElementForText.classList.remove('active')
-      toggleVisibilityFilterAddInputField()
-    } else {
-      inputField.type = 'text'
-      selElementForDate.classList.remove('active')
-      selElementForText.classList.add('active')
-      additionInputField.classList.remove('active')
-      toggleVisibilityFilterAddInputField()
-    }
-  }
-
-  if (target.classList.contains('fltr-form-query-date-op')) {
-    toggleVisibilityFilterAddInputField()
-  }
-})
-
 if (cntContainer) {
   const cntTables = document.getElementsByTagName('table')
   const cntTitles = document.querySelectorAll('.sb-cnt-title-container')
+
+  //Общий слушатель клика для контента страницы "Кабинет Искателя"
+  cntContainer.addEventListener('click', e => {
+    const target = e.target
+
+    //Переключения формата отображения контента
+    if (target.classList.contains('cnt-tab')) {
+      const cntItem = target.closest('.sb-cnt')
+      const cntTabsContainer = target.closest('.cnt-tabs')
+      const cntTab = target
+
+      if (!cntTab.classList.contains('active')) {
+        for (const tab of cntTabsContainer.children) {
+          if (tab.classList.contains('active')) {
+            tab.classList.remove('active')
+          }
+        }
+        cntTab.classList.add('active')
+      }
+      toggleContentFormat(cntItem, cntTab.getAttribute('tab-id'))
+    }
+
+    //Функция изменения иконки "избранное"
+    if (target.classList.contains('bx-star')) {
+      target.classList.remove('bx-star')
+      target.classList.add('bxs-star', 'active')
+      target.title = 'Удалить из избранного'
+    } else if (target.classList.contains('bxs-star')) {
+      target.classList.remove('bxs-star', 'active')
+      target.classList.add('bx-star')
+      target.title = 'Добавить в избранное'
+    }
+
+    //Функция изменения иконки "показать/скрыть" запись куратору
+    if (target.classList.contains('bx-show')) {
+      target.classList.remove('bx-show')
+      target.classList.add('bx-hide')
+      target.title = 'Сделать запись доступной куратору'
+    } else if (target.classList.contains('bx-hide')) {
+      target.classList.add('bx-show')
+      target.classList.remove('bx-hide')
+      target.title = 'Сделать запись не доступной куратору'
+    }
+
+    //Вызов модального окна при нажатии на иконку редактирования записи контента
+    if (target.classList.contains('cnt-edit-icon')) {
+      if (target.classList.contains('title-edit-icon')) {
+        showModalWillEditInformation(
+          target.closest('.sb-cnt-title-container-item')
+        )
+      } else {
+        showModalWillEditInformation(target.closest('tr'))
+      }
+    }
+
+    //Функция удаления записи контента
+    if (target.classList.contains('cnt-dlt-icon')) {
+      let cntContainer
+      let cell = target.closest('tr')
+
+      if (target.classList.contains('tbl-dlt-icon')) {
+        cntContainer = target.closest('table')
+        cell = target.closest('tr')
+      } else {
+        cntContainer = target.closest('.sb-cnt-title-container')
+        cell = target.closest('.sb-cnt-title-container-item')
+      }
+
+      if (cell) {
+        cell.remove()
+      } else {
+        console.log('Cell not found')
+      }
+    }
+
+    //--------------------------------------------------------------------------------
+    //ФИЛЬТР
+    //Отображения окна фильтрации контента
+    if (target.classList.contains('cnt-fltr-link')) {
+      const fltrLink = target
+      const captionSelectEl = fltrLink
+        .closest('.cnt-caption')
+        .querySelector('.cnt-search-sl-col')
+      const cntFilterContainer = document.querySelector(
+        '.cnt-fltr-form-container'
+      )
+      const form = cntFilterContainer.querySelector('form')
+      const filterSelectEl =
+        cntFilterContainer.querySelector('.cnt-search-sl-col')
+      console.log(
+        `filterSelectEl.options.length = ${filterSelectEl.options.length}`
+      )
+      console.log(
+        `captionSelectEl.options.length = ${captionSelectEl.options.length}`
+      )
+      if (
+        filterSelectEl.options.length <= 1 &&
+        filterSelectEl.options.length <= captionSelectEl.options.length
+      ) {
+        const options = captionSelectEl.options
+        for (let i = 1; i < options.length; i++) {
+          filterSelectEl.add(new Option(options[i].text, options[i].value))
+        }
+      }
+
+      //Устанавливаем форме атрибут "cnt-id"
+      let cntId
+
+      if (isTable(cntContainer.id)) {
+        cntId = fltrLink
+          .closest('.sb-cnt-tbl-container')
+          .querySelector('table').id
+
+        form.setAttribute('cnt-id', cntId)
+      } else {
+        cntId = fltrLink.closest('.sb-cnt-title-container').id
+
+        form.setAttribute('cnt-id', cntId)
+      }
+
+      setFilterContainerPosition(fltrLink)
+
+      cntFilterContainer.classList.toggle('active')
+    }
+  })
 
   if (cntTables) {
     //Подключение сервисов и функций для работы с таблицами контента сайдбара
@@ -542,6 +411,201 @@ if (cntContainer) {
       initTitleService(cntTitles[i].id)
     }
   }
+
+  const cntFiltrContainer = document.querySelector('.cnt-fltr-form-container')
+  //Общий слушатель "клика" для окна фильтрования
+  cntFiltrContainer.addEventListener('click', e => {
+    const target = e.target
+    const form = target.closest('form')
+    const pathToSelectedFilterContainer =
+      './partials/sidebarContent/filterContainer/selectedFilterContainer.txt'
+    let cnt
+    let cntFltrLink
+
+    if (form) {
+      cnt = document.getElementById(form.getAttribute('cnt-id'))
+      cntFltrLink = cnt.querySelector('.cnt-fltr-link')
+    }
+
+    if (target.classList.contains('cnt-fltr-btn-execute')) {
+      //Инициализация элементов формы
+      const selectedFilteres = form.querySelector(
+        '.cnt-fltr-form-selected-filteres'
+      )
+      const fltrFormColumnSelEl = form.querySelector('.cnt-fltr-sl-col')
+      const fltrFormQuerySelElForText = form.querySelector(
+        '.fltr-form-query-text-op'
+      )
+      const fltrFormQuerySelElForDate = form.querySelector(
+        '.fltr-form-query-date-op'
+      )
+      const fltrFormQueryInputField = form.querySelector(
+        '.fltr-form-query-field'
+      )
+      const fltrFormQuryInputAddField = form.querySelector(
+        '.fltr-form-query-additional-field'
+      )
+      const fltrFormSelWarnWindow = form.querySelector('.fltr-sel-col-wrn')
+
+      //Инициализация параметров фильтрования
+      const selectedColForFiltering =
+        fltrFormColumnSelEl.options[fltrFormColumnSelEl.selectedIndex].text
+
+      //Проверка выбрана ли колонка для фильтрации
+      if (fltrFormColumnSelEl.selectedIndex != 0) {
+        //Проверка содержит ли выбранная колонка формат данных "Дата"
+        if (!selectedColForFiltering.includes('Дата')) {
+          //Инициализация теста для отображения в контейнере выбранных фильтров
+          const fltrQueryText =
+            selectedColForFiltering +
+            ' ' +
+            fltrFormQuerySelElForText.options[
+              fltrFormQuerySelElForText.selectedIndex
+            ].value +
+            ' ' +
+            fltrFormQueryInputField.value
+
+          //Загружаем элемент selectedFilterContainer и добавляем его в окно фильтра
+          loadTextFileAsElement(pathToSelectedFilterContainer).then(
+            selectedFltrElement => {
+              if (selectedFltrElement) {
+                //Добавляем тест запроса фильтрации
+                selectedFltrElement.querySelector('p').textContent =
+                  fltrQueryText
+                //Делаем видимым контейнер выбранных фильтров
+                selectedFilteres.classList.add('active')
+
+                //Убираем с контейнера выбранных фильтров текст "Список пуст"
+                toggleVisibilityZeroCountTextElementSelectedFilter(form, false)
+
+                selectedFilteres.appendChild(selectedFltrElement)
+
+                //Изменяем отображения количества выбранных фильтров в тексте ссылки отображения окна фильтра
+                changeCountSelectedFilteresInFltrLink(cntFltrLink)
+              }
+            }
+          )
+        } else {
+          let fltrQueryText
+
+          //Если выбранный оператор "между" датами создаём соответсвующий текст запроса
+          if (fltrFormQuerySelElForDate.selectedIndex == 3) {
+            fltrQueryText =
+              selectedColForFiltering +
+              ': от ' +
+              convertDateForTbl(fltrFormQueryInputField.value) +
+              ' до ' +
+              convertDateForTbl(fltrFormQuryInputAddField.value)
+          } else {
+            //Для всех остальных опрераторов создаём стандартный текст запроса
+            fltrQueryText =
+              selectedColForFiltering +
+              ' ' +
+              fltrFormQuerySelElForDate.options[
+                fltrFormQuerySelElForDate.selectedIndex
+              ].value +
+              ' ' +
+              convertDateForTbl(fltrFormQueryInputField.value)
+          }
+
+          //Загружаем элемент selectedFilterContainer и добавляем его в окно фильтра
+          loadTextFileAsElement(pathToSelectedFilterContainer).then(
+            selectedFltrElement => {
+              if (selectedFltrElement) {
+                //Добавляем тест запроса фильтрации
+                selectedFltrElement.querySelector('p').textContent =
+                  fltrQueryText
+                //Делаем видимым контейнер выбранных фильтров
+                selectedFilteres.classList.add('active')
+
+                //Убираем с контейнера выбранных фильтров текст "Список пуст"
+                toggleVisibilityZeroCountTextElementSelectedFilter(form, false)
+
+                selectedFilteres.appendChild(selectedFltrElement)
+
+                //Изменяем отображения количества выбранных фильтров в тексте ссылки отображения окна фильтра
+                changeCountSelectedFilteresInFltrLink(cntFltrLink)
+              }
+            }
+          )
+        }
+      } else {
+        fltrFormSelWarnWindow.classList.add('active')
+      }
+    }
+
+    if (target.classList.contains('cnt-fltr-form-close-icon')) {
+      cntFiltrContainer.classList.remove('active')
+    }
+
+    if (target.classList.contains('fltr-form-selected-filter-close-icon')) {
+      const selectedFilterContainer = target.closest(
+        '.cnt-fltr-form-selected-filter'
+      )
+      const selectedFilteres = selectedFilterContainer
+        .closest('.cnt-fltr-form-selected-filteres')
+        .querySelectorAll('.cnt-fltr-form-selected-filter')
+
+      selectedFilterContainer.remove()
+
+      changeCountSelectedFilteresInFltrLink(cntFltrLink)
+
+      console.log(selectedFilteres.length)
+      if (selectedFilteres.length <= 1) {
+        toggleVisibilityZeroCountTextElementSelectedFilter(form, true)
+      }
+    }
+  })
+
+  //Общий слушатель изменения значения элемента select для контента страницы "Кабинет Искателя"
+  cntFiltrContainer.addEventListener('change', e => {
+    const target = e.target
+
+    if (target.classList.contains('cnt-fltr-sl-col')) {
+      const slElement = target
+      const form = slElement.closest('form')
+      const inputField = form
+        ? form.querySelector('.fltr-form-query-field')
+        : null
+      const additionInputField = target
+        .closest('form')
+        .querySelector('.fltr-form-query-additional-field')
+      const selElementForText = form.querySelector('.fltr-form-query-text-op')
+      const selElementForDate = form.querySelector('.fltr-form-query-date-op')
+
+      if (!inputField) {
+        console.warn('inputField не найден!')
+        return
+      }
+
+      if (slElement.selectedIndex > 0) {
+        const fltrFormSelColWarnWindow =
+          cntFiltrContainer.querySelector('.fltr-sel-col-wrn')
+        const selectedText = slElement.options[slElement.selectedIndex].text
+
+        if (fltrFormSelColWarnWindow.classList.contains('active'))
+          fltrFormSelColWarnWindow.classList.remove('active')
+
+        inputField.classList.add('active')
+        if (selectedText.includes('Дата')) {
+          inputField.type = 'date'
+          selElementForDate.classList.add('active')
+          selElementForText.classList.remove('active')
+          toggleVisibilityFilterAddInputField()
+        } else {
+          inputField.type = 'text'
+          selElementForDate.classList.remove('active')
+          selElementForText.classList.add('active')
+          additionInputField.classList.remove('active')
+          toggleVisibilityFilterAddInputField()
+        }
+      }
+    }
+
+    if (target.classList.contains('fltr-form-query-date-op')) {
+      toggleVisibilityFilterAddInputField()
+    }
+  })
 
   //Глобальный слушатель иконок закрытия модального окна
   const closeIcon = document.querySelector('.edit-modal-close-icon')
@@ -613,15 +677,16 @@ if (cntContainer) {
 }
 
 function toggleContentFormat(cntItem, tabId) {
-  const cntTbl = cntItem.querySelector('.sb-cnt-tbl-container')
+  const cntTblContainer = cntItem.querySelector('.sb-cnt-tbl-container')
+  const cntTbl = cntTblContainer.querySelector('table')
   const cntTitle = cntItem.querySelector('.sb-cnt-title-container')
 
   if (tabId == 'title') {
-    cntTbl.classList.remove('active')
+    cntTblContainer.classList.remove('active')
     cntTitle.classList.add('active')
     initTitleService(cntTitle.id)
   } else {
-    cntTbl.classList.add('active')
+    cntTblContainer.classList.add('active')
     cntTitle.classList.remove('active')
     initTableServices(cntTbl.id)
   }
@@ -688,7 +753,7 @@ let matches = []
 let matchesCells = []
 function initTableServices(tblId) {
   const tbl = document.getElementById(tblId)
-  console.log(tbl)
+
   const tblContainer = tbl.closest('div')
 
   tblMultiSlctService(tblId)
@@ -718,6 +783,39 @@ function isTable(cntId) {
   if (cntId.includes('tbl')) return true
 }
 
+//Функция изменения количества выбранных фильтров в названии ссылки
+function changeCountSelectedFilteresInFltrLink(cntFltrLink) {
+  const selectedFilteres = document.querySelectorAll(
+    '.cnt-fltr-form-selected-filter'
+  )
+  const cntFiltrLinkContainer = cntFltrLink.closest('div')
+
+  if (selectedFilteres.length > 0) {
+    let countSelFltresSpan = cntFltrLink.querySelector('span')
+
+    if (!countSelFltresSpan) {
+      countSelFltresSpan = document.createElement('span')
+      countSelFltresSpan.textContent =
+        '(' +
+        document.querySelectorAll('.cnt-fltr-form-selected-filter').length +
+        ')'
+      cntFiltrLinkContainer.classList.add('selected')
+      cntFltrLink.appendChild(countSelFltresSpan)
+    } else {
+      countSelFltresSpan.textContent =
+        '(' +
+        document.querySelectorAll('.cnt-fltr-form-selected-filter').length +
+        ')'
+    }
+  } else {
+    const countSelFltresSpan = cntFltrLink.querySelector('span')
+
+    if (countSelFltresSpan) {
+      cntFiltrLinkContainer.classList.remove('selected')
+      countSelFltresSpan.remove()
+    }
+  }
+}
 //Функция отображения/скрытия дополнительного инпута для фильтрации между датами
 function toggleVisibilityFilterAddInputField() {
   const filterQueryItems = document.querySelectorAll('.fltr-form-query-item')
@@ -727,22 +825,31 @@ function toggleVisibilityFilterAddInputField() {
   const selEl = document.querySelector('.fltr-form-query-date-op')
   const selectedValue = selEl.options[selEl.selectedIndex].value
 
+  //Проверка отображения элемента select для фильтрации дат
   if (selEl.classList.contains('active')) {
+    //Проверка выбрано ли меню фильтрации "Между" датами
     if (selectedValue.includes('<>')) {
       additionInputField.classList.add('active')
+      additionInputField.disabled = false
 
+      //Изменение ширины основного input и select
       filterQueryItems.forEach(item => {
         item.style.width = '7.5vw'
       })
     } else {
+      //Если меню фильтрации "Между" датами не выбрано убираем видимость дополнительного инпута
       additionInputField.classList.remove('active')
+      additionInputField.disabled = true
 
+      //Изменение стандартную ширину основного input и select
       filterQueryItems.forEach(item => {
         item.style.width = '11.5vw'
       })
     }
   } else {
+    //Если выбран столбец не содержащий формат данных "Дата" убираем видимость дополнительного инпута
     additionInputField.classList.remove('active')
+    additionInputField.disabled = true
 
     filterQueryItems.forEach(item => {
       item.style.width = '11.5vw'
@@ -1274,6 +1381,7 @@ function showOrHideWarningSelectWindow(cntId, isShow) {
   }
 }
 
+//Функция определения положения окна фильтрования относительно контейнера "cnt-fltr-container"
 function setFilterContainerPosition(fltrLink) {
   const cntContainer = document.querySelector('.cabinet-content')
   const cntCaption = fltrLink.closest('.cnt-caption')
@@ -1289,7 +1397,32 @@ function setFilterContainerPosition(fltrLink) {
     20 -
     cntContainer.getBoundingClientRect().top
   filtrFormContainer.style.top = `${filtrContainerHeight}px`
-  filtrFormContainer.style.left = `${cntCaption.getBoundingClientRect().left}px`
+  filtrFormContainer.style.left = `${
+    cntCaption.getBoundingClientRect().left + 20
+  }px`
+}
+
+function changeFilterWindowHeight() {
+  const filterContainer = document.querySelector('.cnt-fltr-form-container')
+  const filterForm = filterContainer?.querySelector('.cnt-fltr-form')
+
+  if (
+    !filterContainer ||
+    !filterForm ||
+    filterContainer.style.display === 'none'
+  )
+    return
+
+  const observer = new ResizeObserver(() => {
+    const contentHeight = filterForm.scrollHeight
+    const containerHeight = filterContainer.clientHeight
+
+    if (contentHeight > containerHeight) {
+      filterContainer.style.height = contentHeight + 80 + 'px'
+    }
+  })
+
+  observer.observe(filterForm) // наблюдаем за изменением контента внутри
 }
 
 //Функция вкл/выкл модального окна редактирования информации записей таблиц контента сайдбара
@@ -1360,10 +1493,14 @@ function convertDateForTbl(date) {
 function changeModalEditInformationHeight() {
   const modalDialog = document.querySelector('.edit-modal-dialog')
 
+  if (modalDialog == null) return
   if (modalDialog.style.display == 'none') return
+
+  let resizeTimeout
 
   const observer = new ResizeObserver(() => {
     let modalBody = document.querySelector('.edit-modal-body')
+    clearTimeout(resizeTimeout)
     resizeTimeout = setTimeout(() => {
       modalDialog.style.height = modalBody.scrollHeight + 300 + 'px'
     }, 100)
@@ -1449,6 +1586,9 @@ function tblOffsetService(tblId) {
 
 /*
 --------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
 Секция функций плитки контента сайдбара
 */
 let matchesTitle = []
@@ -1509,6 +1649,8 @@ function titleMultiSlctService(titleId) {
           titleItem.classList.add('selected')
         }
 
+        countCheckedboxes[titleId] = titleLbCheckBoxes.length
+
         if (titleCheckboxes.length > 0) {
           showOrHideTitleDeleteAllBtn(title.id, true)
         }
@@ -1545,9 +1687,7 @@ function titleMultiSlctService(titleId) {
       //Меняем значение переменной countCheckedboxes при изменении состояния чекбокса
       checkbox.addEventListener('change', () => {
         const titleItem = checkbox.closest('.sb-cnt-title-container-item')
-        if (glCheckbox.checked) {
-          countCheckedboxes[titleId] = titleCheckboxes.length
-        }
+
         if (checkbox.checked) {
           countCheckedboxes[titleId]++
           titleItem.classList.add('selected')
@@ -1559,6 +1699,14 @@ function titleMultiSlctService(titleId) {
           glCheckbox.checked = false
         }
 
+        if (glCheckbox.checked) {
+          countCheckedboxes[titleId] = titleCheckboxes.length
+        }
+
+        console.log(
+          `Количество отмеченых чекбоксов - ${countCheckedboxes[titleId]}`
+        )
+        console.log(`Количество чекбоксов - ${titleCheckboxes.length}`)
         //Если все чекбоксы в таблице отмечены, то делаем чекбокс в заголовке checked
         if (countCheckedboxes[titleId] === titleCheckboxes.length) {
           glCheckbox.checked = true

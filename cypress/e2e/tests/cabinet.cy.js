@@ -1,7 +1,5 @@
 const { DateTime } = require('luxon')
-/*TODO
-
-*/
+import '../../support/commands.js'
 
 describe('Тесты сайдбара страницы "Кабинет искателя" ', () => {
   it('Тестирование отображение контента при нажатии на меню сайдбара', () => {
@@ -169,7 +167,11 @@ describe('Тесты сайдбара страницы "Кабинет иска�
   })
 })
 
-//-----------------------------------------------------------------------------------------------------------------------------------------
+/*
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+*/
 
 describe('Тесты переключателя между форматом отображения контента таблицы и плитки', () => {
   it('Тестирование переключателя между форматом отображения контента таблицы и плитки', () => {
@@ -216,33 +218,26 @@ describe('Тесты переключателя между форматом от
   })
 })
 
-//-----------------------------------------------------------------------------------------------------------------------------------------
+/*
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+*/
 
 describe('Тесты таблиц контента страницы Кабинета юзера', () => {
+  beforeEach(() => {
+    cy.visitCabinetPage()
+    cy.initTableAliases()
+  })
   it('Тестирование изменение положения каретки сортировки при нажатии на заголовок таблицы', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
+    cy.get('@glLbCheckbox').scrollIntoView()
+    cy.get('@glLbCheckbox').realHover({
       position: 'center',
       force: true
     })
+    cy.wait(3000)
 
-    cy.wait(1000)
-
-    cy.get('#link-will').click()
-
-    cy.get('#link-will-sb-cnt').find('.sb-cnt-title').scrollIntoView()
-    cy.get('#link-will-sb-cnt').find('.sb-cnt-title').realHover({
-      position: 'center',
-      force: true
-    })
-
-    cy.wait(1000)
-
-    cy.get('#will-tbl')
+    cy.get('@willTable')
       .find('th')
       .each(($el, index, $list) => {
         if (index < $list.length - 2) {
@@ -258,28 +253,13 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование кнопки "Добавить запись" в таблицу', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
     //Находим и жмём на кнопку добавить запись
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-btn-add')
-      .then($btn => {
-        cy.wrap($btn).click()
-      })
+    cy.get('@btnAddCell').then($btn => {
+      cy.wrap($btn).click()
+    })
 
     //Считываем количество строк до добавления записи
-    cy.get('#will-tbl').find('tbody tr').its('length').as('rowCount')
+    cy.get('@tblRows').its('length').as('rowCount')
     cy.log('@rowCount')
     cy.get('@rowCount').then(rowCount => {
       cy.wrap(rowCount + 1).as('rowCount')
@@ -288,7 +268,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.wait(2000)
 
     //Проверка видимости модального окна добавления записи
-    cy.get('.edit-modal-container').should('be.visible')
+    cy.get('@editModalContainer').should('be.visible')
 
     //Переменные для заполнения
     const date = '2025-03-25'
@@ -296,63 +276,38 @@ describe('Тесты таблиц контента страницы Кабине
     const description = 'Необходимо сделать ближайшие 2 дня'
 
     //Заполняем элементы формы данными
-    cy.get('.edit-modal-container')
-      .find('.input-field')
-      .each(($el, $index, $list) => {
-        cy.wrap($list.eq(0)).type(date)
-        cy.wrap($list.eq(1)).type(briefDescription)
-        cy.wrap($list.eq(2)).type(description)
-        return false
-      })
+    cy.get('@editFormInputField').each(($el, $index, $list) => {
+      cy.wrap($list.eq(0)).type(date)
+      cy.wrap($list.eq(1)).type(briefDescription)
+      cy.wrap($list.eq(2)).type(description)
+      return false
+    })
 
     // Блокируем перезагрузку страницы после добавления записи
-    cy.get('.edit-modal-save-btn').then($btn => {
+    cy.get('@editModalSaveBtn').then($btn => {
       $btn.on('click', e => e.preventDefault())
     })
     //Жмём на кнопку сохранить
-    cy.get('.edit-modal-container').find('.edit-modal-save-btn').click()
+    cy.get('@editModalSaveBtn').click()
 
     //Проверка количества строк после добавления записи
-    cy.get('#will-tbl').find('tbody tr').its('length').as('executedRowCount')
+    cy.get('@tblRows').its('length').as('executedRowCount')
     cy.get('@executedRowCount').then(executedRowCount => {
       cy.get('@rowCount').should('eq', executedRowCount)
     })
 
-    cy.get('#will-tbl')
-      .find('tbody tr')
-      .each(($el, $index, $list) => {
-        if ($index === $list.length - 1) {
-          cy.wrap($el).should('have.attr', 'obj-id', $list.length)
+    cy.get('@tblRows').each(($el, $index, $list) => {
+      if ($index === $list.length - 1) {
+        cy.wrap($el).should('have.attr', 'obj-id', $list.length)
 
-          cy.wrap($el).find('td').eq(0).should('have.text', '25.03.2025')
-          cy.wrap($el).find('td').eq(1).should('have.text', briefDescription)
-          cy.wrap($el).find('td').eq(2).should('have.text', description)
-        }
-      })
+        cy.wrap($el).find('td').eq(0).should('have.text', '25.03.2025')
+        cy.wrap($el).find('td').eq(1).should('have.text', briefDescription)
+        cy.wrap($el).find('td').eq(2).should('have.text', description)
+      }
+    })
   })
 
   it('Тестирование чекбоксов мультивыбора таблицы', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-gl-lb-checkbox')
-      .as('glLbCheckbox')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-gl-checkbox').as('glCheckbox')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-gl-checkmark').as('glChecmark')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-checkmark').as('tblChecmarks')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-checkbox').as('tblCheckboxes')
-
     cy.get('@glLbCheckbox').click({ force: true })
     cy.wait(2000)
 
@@ -411,24 +366,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование стилей выбраной ячейки таблицы', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
-    //Инициализация alias
-    cy.get('.sb-cnt-tbl-container').find('.cnt-gl-checkbox').as('glCheckbox')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-checkbox').as('tblCheckboxes')
-    cy.get('.sb-cnt-tbl-container').find('.tbl-body-row').as('tblRows')
-
     cy.get('@glCheckbox').click({ force: true })
     cy.get('@glCheckbox').click({ force: true })
     cy.wait(2000)
@@ -454,24 +391,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование отображения кнопки "Удалить записи" и работы кнопки при всех отмеченных чекбоксах в таблице', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-gl-lb-checkbox')
-      .as('glLbCheckbox')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-dlt-all').as('btnDltAll')
-
     //Активируем главный чекбокс и отмечаем все чекбоксы в таблице
     cy.get('@glLbCheckbox').click({ force: true })
     cy.get('@glLbCheckbox').click({ force: true })
@@ -484,30 +403,12 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@btnDltAll').click()
 
     //Проверка наличия записей в таблице
-    cy.get('#will-tbl').find('.tbl-row').should('have.length', 0)
+    cy.get('@willTable').find('.tbl-row').should('have.length', 0)
   })
 
   it('Тестирование отображения кнопки "Удалить записи" и работы кнопки при двух отмеченных чекбоксах в таблице', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-gl-lb-checkbox')
-      .as('glLbCheckbox')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-dlt-all').as('btnDltAll')
-
     //Считываем количество строк до удаления записей
-    cy.get('#will-tbl').find('tbody tr').its('length').as('rowCount')
+    cy.get('@willTable').find('tbody tr').its('length').as('rowCount')
     cy.log('@rowCount')
     cy.get('@rowCount').then(rowCount => {
       cy.wrap(rowCount - 2).as('rowCount')
@@ -517,7 +418,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@glLbCheckbox').click({ force: true })
 
     //Отмечаем один чекбокс в таблице
-    cy.get('#will-tbl')
+    cy.get('@willTable')
       .find('.tbl-body-row')
       .eq(0)
       .find('.tbl-lb-checkbox')
@@ -531,7 +432,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.wait(2000)
 
     //Отмечаем ещё один чекбокс в таблице
-    cy.get('#will-tbl')
+    cy.get('@willTable')
       .find('.tbl-body-row')
       .eq(1)
       .find('.tbl-lb-checkbox')
@@ -545,7 +446,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.wait(2000)
 
     //Считываем количество строк после удаления записи
-    cy.get('#will-tbl').find('tbody tr').its('length').as('executedRowCount')
+    cy.get('@willTable').find('tbody tr').its('length').as('executedRowCount')
 
     //Проверка наличия записей в таблице
     cy.get('@rowCount').then(rowCount => {
@@ -554,25 +455,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование скрытия отображения кнопки "Удалить записи" при отсутствии отмеченных чекбоксов', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-gl-lb-checkbox')
-      .as('glLbCheckbox')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-checkmark').as('tblChecmarks')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-dlt-all').as('btnDltAll')
-
     cy.get('@glLbCheckbox').click({ force: true })
     cy.get('@glLbCheckbox').click({ force: true })
 
@@ -586,25 +468,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование работы иконки "Добавить в избранное"', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-
-    cy.wait(1000)
-
-    cy.get('#link-will').click()
-
-    cy.wait(1000)
-
-    //Инициализация alias и проверка видимости иконки "Добавить в избранное"
-    cy.get('#will-tbl').find('.favicon').as('favIcons')
-
     //Проверка видимости иконки "Добавить в избранное"
     cy.get('@favIcons').each($el => {
       cy.wrap($el).should('have.class', 'bx-star')
@@ -629,21 +492,8 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование работы иконки "Редактировать" в таблице (сравнение значений таблицы с значениями в модальном окне)', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
     //Сравниваем значения в таблице с значениями в модальном окне
-    cy.get('#will-tbl')
+    cy.get('@willTable')
       .find('.tbl-body-row')
       .each(($el, $index, $list) => {
         let expectedId = $list.eq($index).attr('obj-id')
@@ -669,9 +519,7 @@ describe('Тесты таблиц контента страницы Кабине
 
             cy.get('.edit-modal-container').should('be.visible')
 
-            cy.get('.edit-modal-container')
-              .find('.edit-from')
-              .should('have.attr', 'obj-id', expectedId)
+            cy.get('@editForm').should('have.attr', 'obj-id', expectedId)
 
             // Ожидаем появления модального окна и проверяем значения в формах
             cy.get('.edit-modal-input-field').each(($input, $index) => {
@@ -689,32 +537,20 @@ describe('Тесты таблиц контента страницы Кабине
             })
 
             //Закрываем модельное окно и проверяем его видимость
-            cy.get('.edit-from').find('.edit-modal-close-icon').click()
+            cy.get('.edit-form').find('.edit-modal-close-icon').click()
             cy.get('.edit-modal-container').should('be.not.visible')
           })
       })
   })
 
   it('Тестирование работы иконки "Редактировать" в таблице (сравнение отредактированных значений таблицы)', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    cy.get('.edit-modal-container').find('.edit-from').as('editFrom')
     const date = '2025-03-25'
     const expectedDate = '25.03.2025'
     const expectedBriefDescription = 'Краткое описание'
     const expectedDescription = 'Описание'
 
     //Кликаем на иконку редактирования
-    cy.get('#will-tbl')
+    cy.get('@willTable')
       .find('.tbl-body-row')
       .eq(0)
       .then($cells => {
@@ -726,31 +562,31 @@ describe('Тесты таблиц контента страницы Кабине
 
         cy.wrap($cells).find('.tbl-edit-icon').click({ force: true })
 
-        cy.get('@editFrom')
+        cy.get('@editForm')
           .find('.edit-modal-input-field')
           .eq(0)
           .clear()
           .type(date)
-        cy.get('@editFrom')
+        cy.get('@editForm')
           .find('.edit-modal-input-field')
           .eq(1)
           .clear()
           .type(expectedBriefDescription)
-        cy.get('@editFrom')
+        cy.get('@editForm')
           .find('.edit-modal-input-field')
           .eq(2)
           .clear()
           .type(expectedDescription)
 
         // Блокируем перезагрузку страницы перед сохранением изменений
-        cy.get('.edit-modal-save-btn').then($btn => {
+        cy.get('@editModalSaveBtn').then($btn => {
           $btn.on('click', e => e.preventDefault())
         })
 
-        cy.get('@editFrom').find('.edit-modal-save-btn').click()
+        cy.get('@editModalSaveBtn').click()
       })
 
-    cy.get('#will-tbl')
+    cy.get('@willTable')
       .find('.tbl-body-row')
       .eq(0)
       .then($cells => {
@@ -770,63 +606,28 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование работы иконки "Удалить" в таблице', () => {
-    cy.visit('/cabinet.html')
+    cy.get('@tblRows').each(($row, $index, $list) => {
+      if ($index == $list.length - 1) return false
 
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    cy.get('#will-tbl')
-      .find('.tbl-body-row')
-      .each(($row, $index, $list) => {
-        if ($index == $list.length - 1) return false
-
-        //Считываем количество строк до удаления записи
-        cy.get('#will-tbl').find('tbody tr').its('length').as('rowCount')
-        cy.log('@rowCount')
-        cy.get('@rowCount').then(rowCount => {
-          cy.wrap(rowCount - 1).as('rowCount')
-        })
-
-        //Кликаем на иконку удаления
-        cy.wrap($row).find('.tbl-dlt-icon').click({ force: true })
-
-        //Проверка количества строк после удаления записи
-        cy.get('#will-tbl')
-          .find('tbody tr')
-          .its('length')
-          .as('executedRowCount')
-        cy.get('@executedRowCount').then(executedRowCount => {
-          cy.get('@rowCount').should('eq', executedRowCount)
-        })
+      //Считываем количество строк до удаления записи
+      cy.get('@willTable').find('tbody tr').its('length').as('rowCount')
+      cy.log('@rowCount')
+      cy.get('@rowCount').then(rowCount => {
+        cy.wrap(rowCount - 1).as('rowCount')
       })
+
+      //Кликаем на иконку удаления
+      cy.wrap($row).find('.tbl-dlt-icon').click({ force: true })
+
+      //Проверка количества строк после удаления записи
+      cy.get('@willTable').find('tbody tr').its('length').as('executedRowCount')
+      cy.get('@executedRowCount').then(executedRowCount => {
+        cy.get('@rowCount').should('eq', executedRowCount)
+      })
+    })
   })
 
   it('Тестирование работы иконки "Сделать запись доступной куратору" в таблице', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-
-    cy.wait(1000)
-
-    cy.get('#link-will').click()
-
-    cy.wait(1000)
-
-    //Инициализация alias и проверка видимости иконки "Сделать запись не доступной куратору"
-    cy.get('#will-tbl').find('.curator-access-icon').as('curatorAccessIcons')
-
     //Проверка видимости иконки "Сделать запись не доступной куратору"
     cy.get('@curatorAccessIcons').each($el => {
       cy.wrap($el).should('have.class', 'bx-show')
@@ -862,28 +663,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование отображения окна предупреждения при поиске без выбранного столбца поиска', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('.sb-cnt-tbl-container').find('.bx-search').as('searchIcon')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-search').as('searchBtn')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-input')
-      .as('searchInputField')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-sl-col')
-      .as('searchSelCol')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Кликаем по иконке поиска
     cy.get('@searchIcon').click()
     cy.wait(1000)
@@ -898,16 +677,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@searchWrnCnt').should('be.not.visible')
 
     //Повторная проверка для кнопки поиска
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
+    cy.visitCabinetPage()
 
     //Кликаем по кнопке поиска
     cy.get('@searchBtn').click()
@@ -923,16 +693,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@searchWrnCnt').should('be.not.visible')
 
     //Повторная проверка для клавиши Enter
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
+    cy.visitCabinetPage()
 
     //Кликаем по кнопке поиска
     cy.get('@searchInputField').type('{enter}')
@@ -949,34 +710,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска с текстом "Поиск не дал результатов" при пустой строке поиска', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('.sb-cnt-tbl-container').find('.bx-search').as('searchIcon')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-search').as('searchBtn')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-input')
-      .as('searchInputField')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result')
-      .as('searchResultCnt')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-sl-col')
-      .as('searchSelCol')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
 
@@ -1001,16 +734,7 @@ describe('Тесты таблиц контента страницы Кабине
       .should('be.not.visible')
 
     //Повторная проверка при нажатии кнопки поиска
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
+    cy.visitCabinetPage()
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -1036,16 +760,7 @@ describe('Тесты таблиц контента страницы Кабине
       .should('be.not.visible')
 
     //Повторная проверка при нажатии на клавишу Enter
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
+    cy.visitCabinetPage()
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -1072,34 +787,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска с текстом "Поиск не дал результатов" при ложном запросе поиска', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('.sb-cnt-tbl-container').find('.bx-search').as('searchIcon')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-search').as('searchBtn')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-input')
-      .as('searchInputField')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result')
-      .as('searchResultCnt')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-sl-col')
-      .as('searchSelCol')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
 
@@ -1127,16 +814,7 @@ describe('Тесты таблиц контента страницы Кабине
       .should('be.not.visible')
 
     //Повторная проверка при нажатии на кнопку поиска
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
+    cy.visitCabinetPage()
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -1165,16 +843,7 @@ describe('Тесты таблиц контента страницы Кабине
       .should('be.not.visible')
 
     //Повторная проверка при нажатии на клавишу Enter
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
+    cy.visitCabinetPage()
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -1204,34 +873,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('.sb-cnt-tbl-container').find('.bx-search').as('searchIcon')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-search').as('searchBtn')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-input')
-      .as('searchInputField')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result')
-      .as('searchResultCnt')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-sl-col')
-      .as('searchSelCol')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(2)
 
@@ -1260,34 +901,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Дата принятия"', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('.sb-cnt-tbl-container').find('.bx-search').as('searchIcon')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-search').as('searchBtn')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-input')
-      .as('searchInputField')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result')
-      .as('searchResultCnt')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-sl-col')
-      .as('searchSelCol')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
 
@@ -1302,7 +915,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@searchResultCnt').should('be.visible')
 
     //Инициализация количества результатов поиска
-    cy.get('#will-tbl').find('.highlight').as('highlights')
+    cy.get('@willTable').find('.highlight').as('highlights')
     cy.get('@highlights').its('length').as('highlightsCount')
     cy.get('@highlightsCount').should('be.gt', 1)
 
@@ -1381,34 +994,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Краткое описание"', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('.sb-cnt-tbl-container').find('.bx-search').as('searchIcon')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-search').as('searchBtn')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-input')
-      .as('searchInputField')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result')
-      .as('searchResultCnt')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-sl-col')
-      .as('searchSelCol')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(2)
 
@@ -1423,7 +1008,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@searchResultCnt').should('be.visible')
 
     //Инициализация количества результатов поиска
-    cy.get('#will-tbl').find('.highlight').as('highlights')
+    cy.get('@willTable').find('.highlight').as('highlights')
     cy.get('@highlights').its('length').as('highlightsCount')
     cy.get('@highlightsCount').should('be.gt', 1)
 
@@ -1502,34 +1087,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Описание"', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('.sb-cnt-tbl-container').find('.bx-search').as('searchIcon')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-search').as('searchBtn')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-input')
-      .as('searchInputField')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result')
-      .as('searchResultCnt')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-sl-col')
-      .as('searchSelCol')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(3)
 
@@ -1544,7 +1101,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@searchResultCnt').should('be.visible')
 
     //Инициализация количества результатов поиска
-    cy.get('#will-tbl').find('.highlight').as('highlights')
+    cy.get('@willTable').find('.highlight').as('highlights')
     cy.get('@highlights').its('length').as('highlightsCount')
     cy.get('@highlightsCount').should('be.gt', 1)
 
@@ -1623,35 +1180,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование работы кнопки очистки поиска (при нажатии на кнопку и клавишу Escape)', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('.sb-cnt-tbl-container').find('.bx-search').as('searchIcon')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-btn-search').as('searchBtn')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-input')
-      .as('searchInputField')
-    cy.get('.sb-cnt-tbl-container').find('.bx-x').as('clearInputField')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result')
-      .as('searchResultCnt')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-sl-col')
-      .as('searchSelCol')
-    cy.get('.sb-cnt-tbl-container')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('.sb-cnt-tbl-container').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(3)
 
@@ -1673,16 +1201,7 @@ describe('Тесты таблиц контента страницы Кабине
     cy.get('@searchInputField').should('have.value', '')
 
     //Повторная проверка очистки поля с помощью клавиши Escape
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
+    cy.visitCabinetPage()
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(3)
@@ -1706,22 +1225,6 @@ describe('Тесты таблиц контента страницы Кабине
   })
 
   it('Тестирование работы кастомного select в подвале таблицы', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Элементы кастомного select
-    cy.get('.tbl-footer-container').find('.custom-select').as('customSelect')
-    cy.get('.tbl-footer-container').find('.selected').as('selectedOption')
-    cy.get('.tbl-footer-container').find('.options').as('options')
-
     //Проверка отображения текста в кастомном select
     cy.get('@selectedOption').should('have.text', 'Выберите')
 
@@ -1769,47 +1272,35 @@ describe('Тесты таблиц контента страницы Кабине
   })
 })
 
-//-----------------------------------------------------------------------------------------------------------------------------------------
+/*
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+*/
 
 describe('Тесты плитки контента страницы Кабинета юзера', () => {
+  beforeEach(() => {
+    cy.visitCabinetPage()
+    cy.tabContentFormat('title')
+    cy.initTitleAliases()
+  })
   it('Тестирование кнопки "Добавить запись" в плитку', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
     //Считываем количество строк до добавления записи
-    cy.get('#will-title')
-      .find('.sb-cnt-title-container-item')
-      .its('length')
-      .as('rowCount')
+    cy.get('@titleItems').its('length').as('rowCount')
     cy.log('@rowCount')
     cy.get('@rowCount').then(rowCount => {
       cy.wrap(rowCount + 1).as('rowCount')
     })
 
     //Находим и жмём на кнопку добавить запись
-    cy.get('#will-title')
-      .find('.cnt-btn-add')
-      .then($btn => {
-        cy.wrap($btn).click()
-      })
+    cy.get('@btnAddItem').then($btn => {
+      cy.wrap($btn).click()
+    })
 
     cy.wait(2000)
 
     //Проверка видимости модального окна добавления записи
-    cy.get('.edit-modal-container').should('be.visible')
+    cy.get('@editModalContainer').should('be.visible')
 
     //Переменные для заполнения
     const date = '2025-03-25'
@@ -1817,76 +1308,41 @@ describe('Тесты плитки контента страницы Кабине
     const description = 'Необходимо сделать ближайшие 2 дня'
 
     //Заполняем элементы формы данными
-    cy.get('.edit-modal-container')
-      .find('.input-field')
-      .each(($el, $index, $list) => {
-        cy.wrap($list.eq(0)).type(date)
-        cy.wrap($list.eq(1)).type(briefDescription)
-        cy.wrap($list.eq(2)).type(description)
-        return false
-      })
+    cy.get('@editFormInputFields').each(($el, $index, $list) => {
+      cy.wrap($list.eq(0)).type(date)
+      cy.wrap($list.eq(1)).type(briefDescription)
+      cy.wrap($list.eq(2)).type(description)
+      return false
+    })
 
     // Блокируем перезагрузку страницы после добавления записи
-    cy.get('.edit-modal-save-btn').then($btn => {
+    cy.get('@editModalSaveBtn').then($btn => {
       $btn.on('click', e => e.preventDefault())
     })
     //Жмём на кнопку сохранить
-    cy.get('.edit-modal-container').find('.edit-modal-save-btn').click()
+    cy.get('@editModalSaveBtn').click()
 
     //Проверка количества строк после добавления записи
-    cy.get('#will-title')
-      .find('.sb-cnt-title-container-item')
-      .its('length')
-      .as('executedRowCount')
+    cy.get('@titleItems').its('length').as('executedRowCount')
     cy.get('@executedRowCount').then(executedRowCount => {
       cy.get('@rowCount').should('eq', executedRowCount)
     })
 
-    cy.get('#will-title')
-      .find('.sb-cnt-title-container-item')
-      .each(($el, $index, $list) => {
-        if ($index === $list.length - 1) {
-          cy.wrap($el).should('have.attr', 'obj-id', $list.length)
+    cy.get('@titleItems').each(($el, $index, $list) => {
+      if ($index === $list.length - 1) {
+        cy.wrap($el).should('have.attr', 'obj-id', $list.length)
 
-          cy.wrap($el)
-            .find('.title-data')
-            .eq(0)
-            .should('have.text', '25.03.2025')
-          cy.wrap($el)
-            .find('.title-data')
-            .eq(1)
-            .should('have.text', briefDescription)
-          cy.wrap($el)
-            .find('.title-data')
-            .eq(2)
-            .should('have.text', description)
-        }
-      })
+        cy.wrap($el).find('.title-data').eq(0).should('have.text', '25.03.2025')
+        cy.wrap($el)
+          .find('.title-data')
+          .eq(1)
+          .should('have.text', briefDescription)
+        cy.wrap($el).find('.title-data').eq(2).should('have.text', description)
+      }
+    })
   })
 
   it('Тестирование чекбоксов мультивыбора плитки', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
-    cy.get('#will-title').find('.cnt-gl-lb-checkbox').as('glLbCheckbox')
-    cy.get('#will-title').find('.cnt-gl-checkbox').as('glCheckbox')
-    cy.get('#will-title').find('.cnt-gl-checkmark').as('glChecmark')
-    cy.get('#will-title').find('.cnt-checkmark').as('titleChecmarks')
-    cy.get('#will-title').find('.cnt-checkbox').as('titleCheckboxes')
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
     cy.get('@glLbCheckbox').click({ force: true })
     cy.wait(2000)
 
@@ -1945,31 +1401,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование стилей выбраной ячейки таблицы', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация alias
-    cy.get('.sb-cnt-title-container').find('.cnt-gl-checkbox').as('glCheckbox')
-    cy.get('.sb-cnt-title-container')
-      .find('.cnt-checkbox')
-      .as('titleCheckboxes')
-    cy.get('.sb-cnt-title-container')
-      .find('.sb-cnt-title-container-item')
-      .as('titleItems')
-
     cy.get('@glCheckbox').click({ force: true })
     cy.get('@glCheckbox').click({ force: true })
     cy.wait(2000)
@@ -1995,25 +1426,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование отображения кнопки "Удалить записи" и работы кнопки при всех отмеченных чекбоксах в плитке', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
-    cy.get('#will-title').find('.cnt-gl-lb-checkbox').as('glLbCheckbox')
-    cy.get('#will-title').find('.cnt-btn-dlt-all').as('btnDltAll')
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
     //Активируем главный чекбокс и отмечаем все чекбоксы в плитке
     cy.get('@glLbCheckbox').click({ force: true })
     cy.get('@glLbCheckbox').click({ force: true })
@@ -2032,30 +1444,8 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование отображения кнопки "Удалить записи" и работы кнопки при двух отмеченных чекбоксах в плитке', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    cy.get('#will-title').find('.cnt-gl-lb-checkbox').as('glLbCheckbox')
-    cy.get('#will-title').find('.cnt-btn-dlt-all').as('btnDltAll')
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
     //Считываем количество строк до удаления записей
-    cy.get('#will-title')
-      .find('.sb-cnt-title-container-item')
-      .its('length')
-      .as('rowCount')
+    cy.get('@titleItems').its('length').as('rowCount')
     cy.log('@rowCount')
     cy.get('@rowCount').then(rowCount => {
       cy.wrap(rowCount - 2).as('rowCount')
@@ -2105,26 +1495,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование скрытия отображения кнопки "Удалить записи" при отсутствии отмеченных чекбоксов', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(2000)
-    cy.get('#link-will').click()
-
-    cy.get('#will-title').find('.title-gl-lb-checkbox').as('glLbCheckbox')
-    cy.get('#will-title').find('.cnt-checkmark').as('cntChecmarks')
-    cy.get('#will-title').find('.cnt-btn-dlt-all').as('btnDltAll')
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
     cy.get('@glLbCheckbox').click({ force: true })
     cy.get('@glLbCheckbox').click({ force: true })
 
@@ -2138,28 +1508,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование работы иконки "Добавить в избранное"', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-
-    cy.wait(1000)
-
-    cy.get('#link-will').click()
-
-    cy.wait(1000)
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация alias и проверка видимости иконки "Добавить в избранное"
-    cy.get('#will-title').find('.favicon').as('favIcons')
-
     //Проверка видимости иконки "Добавить в избранное"
     cy.get('@favIcons').each($el => {
       cy.wrap($el).should('have.class', 'bx-star')
@@ -2184,99 +1532,65 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование работы иконки "Редактировать" в плитке (сравнение значений плитки с значениями в модальном окне)', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
     //Сравниваем значения в плитке с значениями в модальном окне
-    cy.get('#will-title')
-      .find('.sb-cnt-title-container-item')
-      .each(($el, $index, $list) => {
-        let expectedId = $list.eq($index).attr('obj-id')
+    cy.get('@titleItems').each(($el, $index, $list) => {
+      let expectedId = $list.eq($index).attr('obj-id')
 
-        cy.wrap($el).find('.cnt-edit-icon').as('titleEditIcon')
-        cy.wrap($el)
-          .find('.title-data')
-          .then($cells => {
-            const date = $cells.eq(0).text().trim()
-            const [day, month, year] = date.split('.')
-            const expectedDate = `${year}-${month}-${day}`
-            const expectedBriefDescription = $cells.eq(1).text().trim()
-            const expectedDescription = $cells.eq(2).text().trim()
+      cy.wrap($el).find('.cnt-edit-icon').as('titleEditIcon')
+      cy.wrap($el)
+        .find('.title-data')
+        .then($cells => {
+          const date = $cells.eq(0).text().trim()
+          const [day, month, year] = date.split('.')
+          const expectedDate = `${year}-${month}-${day}`
+          const expectedBriefDescription = $cells.eq(1).text().trim()
+          const expectedDescription = $cells.eq(2).text().trim()
 
-            // Сохраняем значения в alias
-            cy.wrap(expectedId).as('expectedId')
-            cy.wrap(expectedDate).as('expectedDate')
-            cy.wrap(expectedBriefDescription).as('expectedBriefDescription')
-            cy.wrap(expectedDescription).as('expectedDescription')
+          // Сохраняем значения в alias
+          cy.wrap(expectedId).as('expectedId')
+          cy.wrap(expectedDate).as('expectedDate')
+          cy.wrap(expectedBriefDescription).as('expectedBriefDescription')
+          cy.wrap(expectedDescription).as('expectedDescription')
 
-            // Кликаем на иконку редактирования
-            cy.get('@titleEditIcon').click({ force: true })
+          // Кликаем на иконку редактирования
+          cy.get('@titleEditIcon').click({ force: true })
 
-            cy.get('.edit-modal-container').should('be.visible')
+          cy.get('.edit-modal-container').should('be.visible')
 
-            cy.get('.edit-modal-container')
-              .find('.edit-from')
-              .should('have.attr', 'obj-id', expectedId)
+          cy.get('.edit-modal-container')
+            .find('.edit-form')
+            .should('have.attr', 'obj-id', expectedId)
 
-            // Ожидаем появления модального окна и проверяем значения в формах
-            cy.get('.edit-modal-input-field').each(($input, $index) => {
-              switch ($index) {
-                case 0:
-                  cy.wrap($input).should('have.value', expectedDate)
-                  break
-                case 1:
-                  cy.wrap($input).should('have.value', expectedBriefDescription)
-                  break
-                case 2:
-                  cy.wrap($input).should('have.value', expectedDescription)
-                  break
-              }
-            })
-
-            //Закрываем модельное окно и проверяем его видимость
-            cy.get('.edit-from').find('.edit-modal-close-icon').click()
-            cy.get('.edit-modal-container').should('be.not.visible')
+          // Ожидаем появления модального окна и проверяем значения в формах
+          cy.get('.edit-modal-input-field').each(($input, $index) => {
+            switch ($index) {
+              case 0:
+                cy.wrap($input).should('have.value', expectedDate)
+                break
+              case 1:
+                cy.wrap($input).should('have.value', expectedBriefDescription)
+                break
+              case 2:
+                cy.wrap($input).should('have.value', expectedDescription)
+                break
+            }
           })
-      })
+
+          //Закрываем модельное окно и проверяем его видимость
+          cy.get('.edit-form').find('.edit-modal-close-icon').click()
+          cy.get('.edit-modal-container').should('be.not.visible')
+        })
+    })
   })
 
   it('Тестирование работы иконки "Редактировать" в плитке (сравнение отредактированных значений плитки)', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    cy.get('.edit-modal-container').find('.edit-from').as('editFrom')
     const date = '2025-03-25'
     const expectedDate = '25.03.2025'
     const expectedBriefDescription = 'Краткое описание'
     const expectedDescription = 'Описание'
 
     //Кликаем на иконку редактирования
-    cy.get('#will-title')
-      .find('.sb-cnt-title-container-item')
+    cy.get('@titleItems')
       .eq(0)
       .then($cells => {
         // Сохраняем значения в alias
@@ -2287,32 +1601,22 @@ describe('Тесты плитки контента страницы Кабине
 
         cy.wrap($cells).find('.cnt-edit-icon').click({ force: true })
 
-        cy.get('@editFrom')
-          .find('.edit-modal-input-field')
-          .eq(0)
-          .clear()
-          .type(date)
-        cy.get('@editFrom')
-          .find('.edit-modal-input-field')
+        cy.get('@editFormInputFields').eq(0).clear().type(date)
+        cy.get('@editFormInputFields')
           .eq(1)
           .clear()
           .type(expectedBriefDescription)
-        cy.get('@editFrom')
-          .find('.edit-modal-input-field')
-          .eq(2)
-          .clear()
-          .type(expectedDescription)
+        cy.get('@editFormInputFields').eq(2).clear().type(expectedDescription)
 
         // Блокируем перезагрузку страницы перед сохранением изменений
-        cy.get('.edit-modal-save-btn').then($btn => {
+        cy.get('@editModalSaveBtn').then($btn => {
           $btn.on('click', e => e.preventDefault())
         })
 
-        cy.get('@editFrom').find('.edit-modal-save-btn').click()
+        cy.get('@editModalSaveBtn').click()
       })
 
-    cy.get('#will-title')
-      .find('.sb-cnt-title-container-item')
+    cy.get('@titleItems')
       .eq(0)
       .then($cells => {
         cy.wrap($cells)
@@ -2331,72 +1635,34 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование работы иконки "Удалить" в плитке', () => {
-    cy.visit('/cabinet.html')
+    cy.get('@titleItems').each(($row, $index, $list) => {
+      if ($index == $list.length - 1) return false
 
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    cy.get('#will-title')
-      .find('.sb-cnt-title-container-item')
-      .each(($row, $index, $list) => {
-        if ($index == $list.length - 1) return false
-
-        //Считываем количество строк до удаления записи
-        cy.get('#will-title')
-          .find('.sb-cnt-title-container-item')
-          .its('length')
-          .as('rowCount')
-        cy.log('@rowCount')
-        cy.get('@rowCount').then(rowCount => {
-          cy.wrap(rowCount - 1).as('rowCount')
-        })
-
-        //Кликаем на иконку удаления
-        cy.wrap($row).find('.cnt-dlt-icon').click({ force: true })
-
-        //Проверка количества строк после удаления записи
-        cy.get('#will-title')
-          .find('.sb-cnt-title-container-item')
-          .its('length')
-          .as('executedRowCount')
-        cy.get('@executedRowCount').then(executedRowCount => {
-          cy.get('@rowCount').should('eq', executedRowCount)
-        })
+      //Считываем количество строк до удаления записи
+      cy.get('#will-title')
+        .find('.sb-cnt-title-container-item')
+        .its('length')
+        .as('rowCount')
+      cy.log('@rowCount')
+      cy.get('@rowCount').then(rowCount => {
+        cy.wrap(rowCount - 1).as('rowCount')
       })
+
+      //Кликаем на иконку удаления
+      cy.wrap($row).find('.cnt-dlt-icon').click({ force: true })
+
+      //Проверка количества строк после удаления записи
+      cy.get('#will-title')
+        .find('.sb-cnt-title-container-item')
+        .its('length')
+        .as('executedRowCount')
+      cy.get('@executedRowCount').then(executedRowCount => {
+        cy.get('@rowCount').should('eq', executedRowCount)
+      })
+    })
   })
 
   it('Тестирование работы иконки "Сделать запись доступной куратору" в таблице', () => {
-    cy.visit('/cabinet.html')
-
-    cy.wait(2000)
-
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-
-    cy.wait(1000)
-
-    cy.get('#link-will').click()
-
-    cy.wait(1000)
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация alias и проверка видимости иконки "Сделать запись доступной/недоступной куратору"
-    cy.get('#will-title').find('.curator-access-icon').as('curatorAccessIcons')
-
     //Проверка видимости иконки "Сделать запись не доступной куратору"
     cy.get('@curatorAccessIcons').each($el => {
       cy.wrap($el).should('have.class', 'bx-show')
@@ -2432,27 +1698,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование отображения окна предупреждения при поиске без выбранного столбца поиска', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('#will-title').find('.bx-search').as('searchIcon')
-    cy.get('#will-title').find('.cnt-btn-search').as('searchBtn')
-    cy.get('#will-title').find('.cnt-search-input').as('searchInputField')
-    cy.get('#will-title').find('.cnt-search-sl-col').as('searchSelCol')
-    cy.get('#will-title').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Кликаем по иконке поиска
     cy.get('@searchIcon').click()
     cy.wait(1000)
@@ -2470,16 +1715,8 @@ describe('Тесты плитки контента страницы Кабине
     cy.visit('/cabinet.html')
 
     //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+    cy.visitCabinetPage()
+    cy.tabContentFormat('title')
 
     //Кликаем по кнопке поиска
     cy.get('@searchBtn').click()
@@ -2495,19 +1732,8 @@ describe('Тесты плитки контента страницы Кабине
     cy.get('@searchWrnCnt').should('be.not.visible')
 
     //Повторная проверка для клавиши Enter
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+    cy.visitCabinetPage()
+    cy.tabContentFormat('title')
 
     //Кликаем по кнопке поиска
     cy.get('@searchInputField').type('{enter}')
@@ -2524,31 +1750,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска с текстом "Поиск не дал результатов" при пустой строке поиска', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('#will-title').find('.bx-search').as('searchIcon')
-    cy.get('#will-title').find('.cnt-btn-search').as('searchBtn')
-    cy.get('#will-title').find('.cnt-search-input').as('searchInputField')
-    cy.get('#will-title').find('.cnt-search-result').as('searchResultCnt')
-    cy.get('#will-title').find('.cnt-search-sl-col').as('searchSelCol')
-    cy.get('#will-title')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('#will-title').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
 
@@ -2573,19 +1774,8 @@ describe('Тесты плитки контента страницы Кабине
       .should('be.not.visible')
 
     //Повторная проверка при нажатии кнопки поиска
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+    cy.visitCabinetPage()
+    cy.tabContentFormat('title')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -2611,19 +1801,8 @@ describe('Тесты плитки контента страницы Кабине
       .should('be.not.visible')
 
     //Повторная проверка при нажатии на клавишу Enter
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+    cy.visitCabinetPage()
+    cy.tabContentFormat('title')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -2650,31 +1829,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска с текстом "Поиск не дал результатов" при ложном запросе поиска', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('#will-title').find('.bx-search').as('searchIcon')
-    cy.get('#will-title').find('.cnt-btn-search').as('searchBtn')
-    cy.get('#will-title').find('.cnt-search-input').as('searchInputField')
-    cy.get('#will-title').find('.cnt-search-result').as('searchResultCnt')
-    cy.get('#will-title').find('.cnt-search-sl-col').as('searchSelCol')
-    cy.get('#will-title')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('#will-title').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
 
@@ -2702,19 +1856,8 @@ describe('Тесты плитки контента страницы Кабине
       .should('be.not.visible')
 
     //Повторная проверка при нажатии на кнопку поиска
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+    cy.visitCabinetPage()
+    cy.tabContentFormat('title')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -2743,19 +1886,8 @@ describe('Тесты плитки контента страницы Кабине
       .should('be.not.visible')
 
     //Повторная проверка при нажатии на клавишу Enter
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+    cy.visitCabinetPage()
+    cy.tabContentFormat('title')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
@@ -2785,31 +1917,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('#will-title').find('.bx-search').as('searchIcon')
-    cy.get('#will-title').find('.cnt-btn-search').as('searchBtn')
-    cy.get('#will-title').find('.cnt-search-input').as('searchInputField')
-    cy.get('#will-title').find('.cnt-search-result').as('searchResultCnt')
-    cy.get('#will-title').find('.cnt-search-sl-col').as('searchSelCol')
-    cy.get('#will-title')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('#will-title').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(2)
 
@@ -2838,31 +1945,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Дата принятия"', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('#will-title').find('.bx-search').as('searchIcon')
-    cy.get('#will-title').find('.cnt-btn-search').as('searchBtn')
-    cy.get('#will-title').find('.cnt-search-input').as('searchInputField')
-    cy.get('#will-title').find('.cnt-search-result').as('searchResultCnt')
-    cy.get('#will-title').find('.cnt-search-sl-col').as('searchSelCol')
-    cy.get('#will-title')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('#will-title').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(1)
 
@@ -2956,31 +2038,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Краткое описание"', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('#will-title').find('.bx-search').as('searchIcon')
-    cy.get('#will-title').find('.cnt-btn-search').as('searchBtn')
-    cy.get('#will-title').find('.cnt-search-input').as('searchInputField')
-    cy.get('#will-title').find('.cnt-search-result').as('searchResultCnt')
-    cy.get('#will-title').find('.cnt-search-sl-col').as('searchSelCol')
-    cy.get('#will-title')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('#will-title').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(2)
 
@@ -3074,31 +2131,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование отображения контейнера с результатами поиска при правильном запросе поиска в столбце "Описание"', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('#will-title').find('.bx-search').as('searchIcon')
-    cy.get('#will-title').find('.cnt-btn-search').as('searchBtn')
-    cy.get('#will-title').find('.cnt-search-input').as('searchInputField')
-    cy.get('#will-title').find('.cnt-search-result').as('searchResultCnt')
-    cy.get('#will-title').find('.cnt-search-sl-col').as('searchSelCol')
-    cy.get('#will-title')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('#will-title').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(3)
 
@@ -3192,32 +2224,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование работы кнопки очистки поиска (при нажатии на кнопку и клавишу Escape)', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Инициализация элементов поиска в alias
-    cy.get('#will-title').find('.bx-search').as('searchIcon')
-    cy.get('#will-title').find('.cnt-btn-search').as('searchBtn')
-    cy.get('#will-title').find('.cnt-search-input').as('searchInputField')
-    cy.get('#will-title').find('.bx-x').as('clearInputField')
-    cy.get('#will-title').find('.cnt-search-result').as('searchResultCnt')
-    cy.get('#will-title').find('.cnt-search-sl-col').as('searchSelCol')
-    cy.get('#will-title')
-      .find('.cnt-search-result-cevrons')
-      .as('searchChevronsCnt')
-    cy.get('#will-title').find('.cnt-search-wrn').as('searchWrnCnt')
-
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(3)
 
@@ -3242,16 +2248,8 @@ describe('Тесты плитки контента страницы Кабине
     cy.visit('/cabinet.html')
 
     //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
+    cy.visitCabinetPage()
+    cy.tabContentFormat('title')
 
     //Выбираем столбец для поиска
     cy.get('@searchSelCol').select(3)
@@ -3275,37 +2273,6 @@ describe('Тесты плитки контента страницы Кабине
   })
 
   it('Тестирование работы кастомного select в подвале плитки', () => {
-    cy.visit('/cabinet.html')
-
-    //Наводим мышь на меню "Господь" и кликаем по подменю "Воля"
-    cy.get('#God').scrollIntoView()
-    cy.get('#God').realHover({
-      position: 'center',
-      force: true
-    })
-    cy.wait(1000)
-    cy.get('#link-will').click()
-
-    //Инициализация alias
-    cy.get('#link-will-sb-cnt').as('willTitleCnt')
-
-    //Включаем режим отображения контента - "Плитка"
-    cy.get('#link-will-sb-cnt').find('.cnt-tab').eq(1).click()
-
-    //Элементы кастомного select
-    cy.get('@willTitleCnt')
-      .find('.title-footer-container')
-      .find('.custom-select')
-      .as('customSelect')
-    cy.get('@willTitleCnt')
-      .find('.title-footer-container')
-      .find('.selected')
-      .as('selectedOption')
-    cy.get('@willTitleCnt')
-      .find('.title-footer-container')
-      .find('.options')
-      .as('options')
-
     //Проверка отображения текста в кастомном select
     cy.get('@selectedOption').should('have.text', 'Выберите')
 
@@ -3349,6 +2316,295 @@ describe('Тесты плитки контента страницы Кабине
           .then(text => {
             cy.wrap($option).should('have.attr', 'data-value', text)
           })
+      })
+  })
+})
+
+/*
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+describe('Тесты окна фильтрации', () => {
+  beforeEach(() => {
+    cy.visitCabinetPage()
+    cy.tabContentFormat('title')
+    cy.initFilterAliases()
+  })
+
+  it('Тесты отображения окна фильтрации', () => {
+    //Открываем окно фильтрации
+    cy.get('@filterLink').click()
+
+    //Проверка отображения окна фильтрации
+    cy.get('@filterFormContainer').should('be.visible')
+    cy.get('@filterFormContainer').should('have.class', 'active')
+
+    //Закрываем окно нажатием на ссылку "Фильтр"
+    cy.get('@filterLink').click()
+
+    //Проверка скрытия окна фильтрации
+    cy.get('@filterFormContainer').should('be.not.visible')
+    cy.get('@filterFormContainer').should('have.not.class', 'active')
+
+    //Повторно открываем для теста закрытия окна по нажатию на иконку "закрыть окно"
+    cy.get('@filterLink').click()
+    cy.get('@filterFormCloseIcon').click()
+
+    //Проверка скрытия окна фильтрации
+    cy.get('@filterFormContainer').should('be.not.visible')
+    cy.get('@filterFormContainer').should('have.not.class', 'active')
+  })
+
+  it('Тесты работы окна фильтрации', () => {
+    //Открываем окно фильтрации
+    cy.get('@filterLink').click()
+
+    //Нажимаем на кнопку применить фильтр
+    cy.get('@executeFilterButton').click()
+
+    //Проверка отображения окна предупреждения
+    cy.get('@selectColumnWarnWindow').should('have.class', 'active')
+    cy.get('@selectColumnWarnWindow').should('be.visible')
+
+    //Проверка скрытия окна предупреждения
+    cy.get('@selectColumn').select(1)
+    cy.get('@selectColumnWarnWindow').should('have.not.class', 'active')
+    cy.get('@selectColumnWarnWindow').should('be.not.visible')
+  })
+
+  it('Тесты изменения элемента select при выборе колонки для фильтрации "Дата" и "Короткое описание"', () => {
+    //Открываем окно фильтрации
+    cy.get('@filterLink').click()
+    //Выбираем колонку для фильтрации с форматом данных "Дата"
+    cy.get('@selectColumn').select(1)
+    //Проверка отображения окна ввода даты
+    cy.get('@mainInputField').should('have.class', 'active')
+    cy.get('@mainInputField').should('have.attr', 'type', 'date')
+    cy.get('@mainInputField').should('be.visible')
+    //Проверка наличия соответсвующего select
+    cy.get('@selectDateOperator').should('have.class', 'active')
+    cy.get('@selectDateOperator').should('be.visible')
+    cy.get('@selectTextOperator').should('have.not.class', 'active')
+    cy.get('@selectTextOperator').should('be.not.visible')
+    //Изменяем колонку фильтрации
+    cy.get('@selectColumn').select(2)
+    //Проверка изменения type input
+    cy.get('@mainInputField').should('have.class', 'active')
+    cy.get('@mainInputField').should('have.attr', 'type', 'text')
+    cy.get('@mainInputField').should('be.visible')
+    //Проверка изменения select
+    cy.get('@selectTextOperator').should('have.class', 'active')
+    cy.get('@selectTextOperator').should('be.visible')
+    cy.get('@selectDateOperator').should('have.not.class', 'active')
+    cy.get('@selectDateOperator').should('be.not.visible')
+  })
+
+  it('Тесты отображения/скрытия дополнительного окна ввода даты при выборе оператора фильтрации "Между"', () => {
+    //Открываем окно фильтрации
+    cy.get('@filterLink').click()
+    //Выбираем колонку для фильтрации с форматом данных "Дата"
+    cy.get('@selectColumn').select(1)
+    //Выбираем оператор фильтрации "Между"
+    cy.get('@selectDateOperator').select(3)
+    //Проверка наличия дополнительного окна ввода даты
+    cy.get('@addInputField').should('have.class', 'active')
+    cy.get('@addInputField').should('be.visible')
+    cy.get('@addInputField').should('have.attr', 'type', 'date')
+  })
+
+  it('Тесты отображения/скрытия контейнера выбранного фильтра при правильном запросе фильтрации', () => {
+    const dateFrom = '2025-04-09'
+    const dateTo = '2026-04-09'
+
+    //Открываем окно фильтрации
+    cy.get('@filterLink').click()
+
+    //Выбираем колонку для фильтрации с форматом данных "Дата"
+    cy.get('@selectColumn').select(1).find(':selected').as('selectedColumnText')
+
+    //Выбираем оператор фильтрации "Между"
+    cy.get('@selectDateOperator').select(3)
+
+    //Вводим данные
+    cy.get('@mainInputField').type(dateFrom)
+    cy.get('@addInputField').type(dateTo)
+
+    // Блокируем перезагрузку страницы после добавления записи
+    cy.get('@executeFilterButton').then($btn => {
+      $btn.on('click', e => e.preventDefault())
+    })
+
+    //Нажимаем на кнопку применить фильтр
+    cy.get('@executeFilterButton').click()
+
+    //Проверка скрытия дефолтной записи
+    cy.get('@filterZeroCountText').should('have.not.class', 'active')
+    cy.get('@filterZeroCountText').should('be.not.visible')
+
+    //Проверка наличия контейнера выбранного фильтра
+    cy.get('@filterLink').find('span').as('selectedFilterCount')
+    cy.get('@selectedFilterCount').its('length').should('eq', 1)
+    cy.get('@selectedFilterCount')
+      .invoke('text')
+      .then($actualText => {
+        const expectedText = '(1)'
+
+        expect($actualText.trim().normalize('NFC')).to.equal(
+          expectedText.trim().normalize('NFC')
+        )
+      })
+    cy.get('@selectedFilteresContainer').should('have.class', 'active')
+    cy.get('@selectedFilteresContainer').should('be.visible')
+    cy.get('@selectedFilteresContainer')
+      .find('.cnt-fltr-form-selected-filter')
+      .its('length')
+      .should('eq', 1)
+
+    cy.get('@selectedColumnText').then($text => {
+      //Проверка текста выбранного фильтра
+      let [yearFrom, monthFrom, dayFrom] = dateFrom.split('-')
+      const expectedDateFrom = `${dayFrom}.${monthFrom}.${yearFrom}`
+      let [yearTo, monthTo, dayTo] = dateTo.split('-')
+      const expectedDateTo = `${dayTo}.${monthTo}.${yearTo}`
+      const expectedText = `${$text
+        .text()
+        .trim()
+        .normalize('NFC')}: от ${expectedDateFrom
+        .trim()
+        .normalize('NFC')} до ${expectedDateTo.trim().normalize('NFC')}`
+      cy.get('@selectedFilteresContainer')
+        .find('.cnt-fltr-form-selected-filter')
+        .as('selectedFilter')
+      cy.get('@selectedFilter').should('be.visible')
+      cy.get('@selectedFilter').as('actualText')
+
+      cy.get('@actualText').then($actualText => {
+        const actualText = $actualText.text().trim().normalize('NFC')
+        expect(expectedText).eq(actualText)
+      })
+    })
+  })
+
+  it('Тесты отображения/скрытия контейнера выбранного фильтра при неправильном запросе фильтрации', () => {
+    //Открываем окно фильтрации
+    cy.get('@filterLink').click()
+
+    //Выбираем колонку для фильтрации "Дата принятия"
+    cy.get('@selectColumn')
+      .select(1)
+      .find(':selected')
+      .invoke('text')
+      .as('selectedColumnText')
+
+    //Проверка теста выбранного фильтра при всех операторах
+    cy.get('@selectDateOperator')
+      .find('option')
+      .each(($el, $index, $list) => {
+        //Убираем из проверки оператор "Между"
+        if ($index < $list.length - 1) {
+          cy.get('@selectedColumnText').then($text => {
+            const selectedColumnText = $text.trim().normalize('NFC')
+            const selectedOperatorText = $el
+              .attr('value')
+              .trim()
+              .normalize('NFC')
+            const queryText = '2025-04-10'
+            const queryForExpectedText = '10.04.2025'
+            const expectedText = `${selectedColumnText} ${selectedOperatorText} ${queryForExpectedText}`
+            cy.get('@mainInputField').type(queryText)
+
+            // Блокируем перезагрузку страницы после добавления записи
+            cy.get('@executeFilterButton').then($btn => {
+              $btn.on('click', e => e.preventDefault())
+            })
+            cy.get('@executeFilterButton').click()
+
+            cy.get('@selectedFilteresContainer')
+              .find('.cnt-fltr-form-selected-filter')
+              .eq($index)
+              .then($selectedFilter => {
+                const actualText = $selectedFilter
+                  .text()
+                  .trim()
+                  .normalize('NFC')
+                expect(expectedText).to.eq(actualText)
+
+                cy.get('@filterLink').find('span').as('selectedFilterCount')
+                cy.get('@selectedFilterCount')
+                  .invoke('text')
+                  .then($actualText => {
+                    const expectedText = $index + 1
+
+                    expect($actualText.trim().normalize('NFC')).to.contains(
+                      expectedText
+                    )
+                  })
+              })
+          })
+
+          cy.get('@selectDateOperator').select($index + 1)
+        }
+      })
+
+    //Удаляем выбраные фильтры
+    cy.get('@selectedFilteresContainer')
+      .find('.cnt-fltr-form-selected-filter')
+      .each($el => {
+        cy.wrap($el).find('.fltr-form-selected-filter-close-icon').click()
+      })
+
+    cy.get('@selectedFilteresContainer').children().should('have.length', 0)
+
+    //Выбираем колонку для фильтрации с форматом данных "Краткое описание"
+    cy.get('@selectColumn')
+      .select(2)
+      .find(':selected')
+      .invoke('text')
+      .as('nextSelectedColumnText')
+    //Проверка теста выбранного фильтра при всех операторах
+    cy.get('@selectTextOperator')
+      .find('option')
+      .each(($el, $index, $list) => {
+        cy.get('@nextSelectedColumnText').then($text => {
+          cy.log($text)
+          const selectedColumnText = $text.trim().normalize('NFC')
+          const selectedOperatorText = $el.attr('value').trim().normalize('NFC')
+          const queryText = 'Посещение'
+          const expectedText = `${selectedColumnText} ${selectedOperatorText} ${queryText}`
+          cy.get('@mainInputField').clear()
+          cy.get('@mainInputField').type(queryText)
+
+          // Блокируем перезагрузку страницы после добавления записи
+          cy.get('@executeFilterButton').then($btn => {
+            $btn.on('click', e => e.preventDefault())
+          })
+          cy.get('@executeFilterButton').click()
+
+          cy.get('@selectedFilteresContainer')
+            .find('.cnt-fltr-form-selected-filter')
+            .eq($index)
+            .then($selectedFilter => {
+              const actualText = $selectedFilter.text().trim().normalize('NFC')
+              expect(expectedText).to.eq(actualText)
+
+              cy.get('@filterLink').find('span').as('selectedFilterCount')
+              cy.get('@selectedFilterCount')
+                .invoke('text')
+                .then($actualText => {
+                  const expectedText = $index + 1
+
+                  expect($actualText.trim().normalize('NFC')).to.contains(
+                    expectedText
+                  )
+                })
+            })
+        })
+
+        if ($index < $list.length - 1) {
+          cy.get('@selectTextOperator').select($index + 1)
+        }
       })
   })
 })
