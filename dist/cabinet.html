@@ -197,11 +197,23 @@
           <div class="sb-cnt-tabs-cnt">
             <h4>Формат отображения записей:</h4>
             <div class="cnt-tabs">
-              <a href="#" class="cnt-tab active" tab-id="tbl">Таблица</a>
-              <a href="#" class="cnt-tab" tab-id="title">Плитка</a>
+              <a href="#" class="cnt-tab" tab-id="tbl">Таблица</a>
+              <a href="#" class="cnt-tab active" tab-id="title">Плитка</a>
             </div>
           </div>
-          <div class="sb-cnt-tbl-container active">
+          <div class="sb-sorting-container">
+            <h4 class="sb-sorting-title">Сортировать записи:</h4>
+            <div class="sb-sorting-links-controls">
+              <select class="sb-sorting-links-select">
+                <option disabled selected>По столбцу</option>
+              </select>
+              <div class="sb-sorting-links-container">
+                <a href="#" class="sb-sorting-link">По возрастанию</a>
+                <a href="#" class="sb-sorting-link">По убыванию</a>
+              </div>
+            </div>
+          </div>
+          <div class="sb-cnt-item sb-cnt-tbl-container">
             <div class="cnt-caption">
               <div class="cnt-fltr-container tbl-fltr-container">
                 <i class="bx bx-filter" id="tbl-fltr-svg"></i>
@@ -549,14 +561,14 @@
               </div>
             </div>
           </div>
-          <div class="sb-cnt-title-container" id="will-title">
+          <div
+            class="sb-cnt-item sb-cnt-title-container active"
+            id="will-title"
+          >
             <div class="cnt-caption">
               <div class="cnt-fltr-container title-fltr-container">
                 <i class="bx bx-filter" id="title-fltr-svg"></i>
                 <a class="cnt-fltr-link" href="#">Фильтр</a>
-              </div>
-              <div class="cnt-sorting-container title-sorting-container">
-                <a href="#">Сортировка</a>
               </div>
               <div class="cnt-search-field title-search-field">
                 <input

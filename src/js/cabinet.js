@@ -2,7 +2,7 @@ import { loadTextFileAsElement } from './initFragments.js'
 
 //Функция для вёрстки контента сайдбара
 document.addEventListener('DOMContentLoaded', function () {
-  //showOrHideSidebarContent('link-will')
+  showOrHideSidebarContent('link-will')
 
   changeModalEditInformationHeight()
 
@@ -292,6 +292,24 @@ if (cntContainer) {
       toggleContentFormat(cntItem, cntTab.getAttribute('tab-id'))
     }
 
+    //Переключения между способами сортировки контента
+    if (target.classList.contains('sb-sorting-link')) {
+      const selectedSortingLink = target
+      const sortingLinks = selectedSortingLink
+        .closest('.sb-sorting-links-container')
+        .querySelectorAll('.sb-sorting-link')
+
+      //Убираем активное состояние у остальных ссылок
+      if (!selectedSortingLink.classList.contains('active')) {
+        for (const link of sortingLinks) {
+          if (link != selectedSortingLink) {
+            link.classList.remove('active')
+          }
+        }
+        selectedSortingLink.classList.add('active')
+      }
+    }
+
     //Функция изменения иконки "избранное"
     if (target.classList.contains('bx-star')) {
       target.classList.remove('bx-star')
@@ -349,8 +367,9 @@ if (cntContainer) {
     //ФИЛЬТР
     //Отображения окна фильтрации контента
     if (target.classList.contains('cnt-fltr-link')) {
-      const fltrLink = target
-      const captionSelectEl = fltrLink
+      const filterLink = target
+      const filterLinkContainer = filterLink.closest('.cnt-fltr-container')
+      const captionSelectEl = filterLink
         .closest('.cnt-caption')
         .querySelector('.cnt-search-sl-col')
       const cntFilterContainer = document.querySelector(
@@ -359,12 +378,7 @@ if (cntContainer) {
       const form = cntFilterContainer.querySelector('form')
       const filterSelectEl =
         cntFilterContainer.querySelector('.cnt-search-sl-col')
-      console.log(
-        `filterSelectEl.options.length = ${filterSelectEl.options.length}`
-      )
-      console.log(
-        `captionSelectEl.options.length = ${captionSelectEl.options.length}`
-      )
+
       if (
         filterSelectEl.options.length <= 1 &&
         filterSelectEl.options.length <= captionSelectEl.options.length
@@ -378,19 +392,19 @@ if (cntContainer) {
       //Устанавливаем форме атрибут "cnt-id"
       let cntId
 
-      if (isTable(cntContainer.id)) {
-        cntId = fltrLink
+      if (filterLinkContainer.classList.contains('tbl-fltr-container')) {
+        cntId = filterLink
           .closest('.sb-cnt-tbl-container')
           .querySelector('table').id
 
         form.setAttribute('cnt-id', cntId)
       } else {
-        cntId = fltrLink.closest('.sb-cnt-title-container').id
+        cntId = filterLink.closest('.sb-cnt-title-container').id
 
         form.setAttribute('cnt-id', cntId)
       }
 
-      setFilterContainerPosition(fltrLink)
+      setFilterContainerPosition(filterLink)
 
       cntFilterContainer.classList.toggle('active')
     }
@@ -424,7 +438,11 @@ if (cntContainer) {
 
     if (form) {
       cnt = document.getElementById(form.getAttribute('cnt-id'))
-      cntFltrLink = cnt.querySelector('.cnt-fltr-link')
+      if (isTable(cnt.id)) {
+        cntFltrLink = cnt.closest('div').querySelector('.cnt-fltr-link')
+      } else {
+        cntFltrLink = cnt.querySelector('.cnt-fltr-link')
+      }
     }
 
     if (target.classList.contains('cnt-fltr-btn-execute')) {
@@ -692,6 +710,17 @@ function toggleContentFormat(cntItem, tabId) {
   }
 }
 
+//Функции управления сортировкой контента
+function insertToSortingSelectColumnNames(sortingSelectEl, columnNames) {
+  if (columnNames.length == 0) return
+
+  if (sortingSelectEl.options.length <= columnNames.length) {
+    for (let i = 0; i < columnNames.length; i++) {
+      sortingSelectEl.add(new Option(columnNames[i].textContent))
+    }
+  }
+}
+
 function deleteAllDataFromCntContainer(cntContainerId) {
   let btnDltAll
   //Кнопка удалить все записи
@@ -753,14 +782,24 @@ let matches = []
 let matchesCells = []
 function initTableServices(tblId) {
   const tbl = document.getElementById(tblId)
-
+  const cntContainer = tbl.closest('.sb-cnt')
   const tblContainer = tbl.closest('div')
+  const tblRowsNames = tbl.querySelectorAll('.tbl-title-link')
+  const tblSortingContainer = cntContainer.querySelector(
+    '.sb-sorting-container'
+  )
+  const sortingSelectEl = tblSortingContainer.querySelector(
+    '.sb-sorting-links-select'
+  )
 
   tblMultiSlctService(tblId)
   addNewRowToTblService(tblId)
   searchTable(tblId)
   deleteAllDataFromCntContainer(tblId)
   tblPaggination(tblId)
+
+  //Наполнение select сортировки столбцами таблицы
+  insertToSortingSelectColumnNames(sortingSelectEl, tblRowsNames)
 
   //Переключение иконки сортировки
   const tblHeaderCell = tbl.getElementsByTagName('th')
@@ -1598,11 +1637,21 @@ function tblOffsetService(tblId) {
 let matchesTitle = []
 let matchesTitleItems = []
 function initTitleService(titleId) {
+  const title = document.getElementById(titleId)
+  const cntContainer = title.closest('.sb-cnt')
+  const sortingSelectEl = cntContainer.querySelector('.sb-sorting-links-select')
+  const titleFieldsNames = title
+    .querySelectorAll('.sb-cnt-title-container-item')[0]
+    .getElementsByTagName('h4')
+
   searchTitle(titleId)
   titleMultiSlctService(titleId)
   addNewDataToTitleService(titleId)
   deleteAllDataFromCntContainer(titleId)
   titlePaggination(titleId)
+
+  //Наполнение элемента select сортировки названиями полей контента
+  insertToSortingSelectColumnNames(sortingSelectEl, titleFieldsNames)
 }
 /*
   Функция работы с чекбокса в заголовке таблице
