@@ -163,6 +163,7 @@
 
   .sb-sorting-links-controls {
     @include mixins.flex-center(column, $gap: 1vh);
+    position: relative;
 
     width: 13vw;
     height: auto;
@@ -339,6 +340,51 @@
     }
   }
 
+  .cnt-search-wrn {
+    @include mixins.flex-center($direction: row, $gap: 0);
+    position: absolute;
+
+    visibility: hidden;
+    opacity: 0;
+
+    top: 0vh;
+    left: 0vw;
+
+    width: 10vw;
+
+    font-size: 0.8em;
+    font-weight: 400;
+
+    padding: 0.5vh 1vw 0.5vh 1vw;
+
+    background-color: var(--cabinet-page-content-background-color);
+    @include mixins.backdrop-filter();
+
+    @include mixins.transition-all-04-in-out(visibility);
+    @include mixins.transition-all-04-in-out(opacity);
+
+    z-index: var(--z-index-for-icons-in-form);
+
+    i {
+      color: rgb(223, 81, 15);
+
+      margin-right: 0.5vw;
+    }
+
+    p {
+      line-height: 1.2;
+      text-align: center;
+
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .cnt-search-wrn.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
   .cnt-search-field {
     @include mixins.flex-center($direction: row, $gap: 0);
 
@@ -397,51 +443,6 @@
 
     .bx-search.hide {
       display: none;
-    }
-
-    .cnt-search-wrn {
-      @include mixins.flex-center($direction: row, $gap: 0);
-      position: absolute;
-
-      visibility: hidden;
-      opacity: 0;
-
-      top: 4.5vh;
-      left: 20.5vw;
-
-      width: 10vw;
-
-      font-size: 0.8em;
-      font-weight: 400;
-
-      padding: 0.5vh 1vw 0.5vh 1vw;
-
-      background-color: var(--cabinet-page-content-background-color);
-      @include mixins.backdrop-filter();
-
-      @include mixins.transition-all-04-in-out(visibility);
-      @include mixins.transition-all-04-in-out(opacity);
-
-      z-index: var(--z-index-for-icons-in-form);
-
-      i {
-        color: rgb(223, 81, 15);
-
-        margin-right: 0.5vw;
-      }
-
-      p {
-        line-height: 1.2;
-        text-align: center;
-
-        margin: 0;
-        padding: 0;
-      }
-    }
-
-    .cnt-search-wrn.active {
-      visibility: visible;
-      opacity: 1;
     }
 
     .cnt-search-result {
