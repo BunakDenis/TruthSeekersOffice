@@ -2,7 +2,7 @@ import { loadTextFileAsElement } from './initFragments.js'
 
 //Функция для вёрстки контента сайдбара
 document.addEventListener('DOMContentLoaded', function () {
-  showOrHideSidebarContent('link-will')
+  //showOrHideSidebarContent('link-will')
 
   changeModalEditInformationHeight()
 
