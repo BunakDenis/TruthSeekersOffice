@@ -7,11 +7,11 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-self["webpackHotUpdatetruthseekersoffice"]("cabinet",{},
+self["webpackHotUpdatetruthseekersoffice"]("initFragments",{},
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ /* webpack/runtime/getFullHash */
 /******/ (() => {
-/******/ 	__webpack_require__.h = () => ("fd252281e31b85b0812f")
+/******/ 	__webpack_require__.h = () => ("7e33bfdc7fe8a90e9488")
 /******/ })();
 /******/ 
 /******/ }

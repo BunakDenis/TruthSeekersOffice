@@ -2,7 +2,7 @@ import { loadTextFileAsElement } from './initFragments.js'
 
 //Функция для вёрстки контента сайдбара
 document.addEventListener('DOMContentLoaded', function () {
-  //showOrHideSidebarContent('link-will')
+  showOrHideSidebarContent('link-will')
 
   changeModalEditInformationHeight()
 
@@ -295,18 +295,29 @@ if (cntContainer) {
     //Переключения между способами сортировки контента
     if (target.classList.contains('sb-sorting-link')) {
       const selectedSortingLink = target
-      const sortingLinks = selectedSortingLink
-        .closest('.sb-sorting-links-container')
-        .querySelectorAll('.sb-sorting-link')
+      const cntContainer = selectedSortingLink.closest('.sb-cnt')
+      const sortingLinksConainer = selectedSortingLink.closest(
+        '.sb-sorting-links-container'
+      )
+      const selectEl = sortingLinksConainer
+        .closest('.sb-sorting-links-controls')
+        .querySelector('.sb-sorting-links-select')
+      const sortingLinks =
+        sortingLinksConainer.querySelectorAll('.sb-sorting-link')
 
-      //Убираем активное состояние у остальных ссылок
-      if (!selectedSortingLink.classList.contains('active')) {
-        for (const link of sortingLinks) {
-          if (link != selectedSortingLink) {
-            link.classList.remove('active')
+      //Если колонка для сортировки не выбрана включаем окно предупреждения
+      if (selectEl.selectedIndex != 0) {
+        //Убираем активное состояние у остальных ссылок
+        if (!selectedSortingLink.classList.contains('active')) {
+          for (const link of sortingLinks) {
+            if (link != selectedSortingLink) {
+              link.classList.remove('active')
+            }
           }
+          selectedSortingLink.classList.add('active')
         }
-        selectedSortingLink.classList.add('active')
+      } else {
+        toggleVisibilitySelectSortingWarningWindow(cntContainer.id, true)
       }
     }
 
@@ -407,6 +418,22 @@ if (cntContainer) {
       setFilterContainerPosition(filterLink)
 
       cntFilterContainer.classList.toggle('active')
+    }
+  })
+
+  //Скрытие окна предупреждения элемента select сортировки контента
+  cntContainer.addEventListener('change', e => {
+    const target = e.target
+
+    if (target.classList.contains('sb-sorting-links-select')) {
+      const selectEl = target
+      const warningWindow = selectEl
+        .closest('.sb-sorting-links-controls')
+        .querySelector('.cnt-search-wrn')
+
+      if (selectEl.selectedIndex > 0) {
+        warningWindow.classList.remove('active')
+      }
     }
   })
 
@@ -710,6 +737,10 @@ function toggleContentFormat(cntItem, tabId) {
   }
 }
 
+/*
+--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+*/
 //Функции управления сортировкой контента
 function insertToSortingSelectColumnNames(sortingSelectEl, columnNames) {
   if (columnNames.length == 0) return
@@ -721,6 +752,23 @@ function insertToSortingSelectColumnNames(sortingSelectEl, columnNames) {
   }
 }
 
+function toggleVisibilitySelectSortingWarningWindow(cntId, isShow) {
+  const cnt = document.getElementById(cntId)
+  const warningWindow = cnt
+    .querySelector('.sb-sorting-container')
+    .querySelector('.cnt-search-wrn')
+
+  if (isShow) {
+    warningWindow.classList.add('active')
+  } else {
+    warningWindow.classList.remove('active')
+  }
+}
+
+/*
+--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+*/
 function deleteAllDataFromCntContainer(cntContainerId) {
   let btnDltAll
   //Кнопка удалить все записи
