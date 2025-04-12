@@ -41,22 +41,29 @@ jobs:
         run: serve -p 3000 &
         working-directory: ./dist
 
+      - name: Wait for app to be ready
+        uses: jakejarvis/wait-on-action@v1
+        with:
+          url: http://localhost:3000
+          timeout: 300000 # 5 minutes
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v5
         with:
-          start: npx cypress run
+          browser: chrome
+          headed: false
           wait-on: 'http://localhost:3000'
-          config: baseUrl=http://localhost:3000
           wait-on-timeout: 300
-        env:
-          DISPLAY: :99.0
+          
       - name: Generate coverage report
         run: npx nyc report --reporter=lcov --reporter=text-summary
+        
       - name: Upload to Codecov
         uses: codecov/codecov-action@v3
         with:
           file: ./coverage/lcov.info
           token: ${{ secrets.CODECOV_TOKEN }}
+          
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1
