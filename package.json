@@ -44,7 +44,7 @@
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development --port 3000",
     "pretest": "npm run clean && npm run build",
-    "start": "serve -p 3000 ./dist",
+    "start": "serve -p 3000 ./dist > /dev/null 2>&1",
     "cy:run": "cypress run",
     "cy:open": "cypress open --browser chrome",
     "report": "nyc report --reporter=html && npx http-server coverage -p 3001",

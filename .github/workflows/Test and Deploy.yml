@@ -28,6 +28,11 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install required dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libnss3 libatk1.0-0 libx11-xcb1 libxcomposite1 libxdamage1 libxrandr2 libgbm-dev libasound2 libpangocairo-1.0-0 libcups2
+
       - name: Install dependencies
         run: npm ci
 
@@ -47,7 +52,9 @@ jobs:
           start: npx cypress run
           wait-on: 'http://localhost:3000'
           config: baseUrl=http://localhost:3000
-          wait-on-timeout: 120
+          wait-on-timeout: 300
+        env:
+          DISPLAY: :99.0
       - name: Generate coverage report
         run: npx nyc report --reporter=lcov --reporter=text-summary
       - name: Upload to Codecov

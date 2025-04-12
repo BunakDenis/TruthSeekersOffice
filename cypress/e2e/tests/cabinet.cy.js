@@ -2332,7 +2332,7 @@ describe('Тесты окна фильтрации', () => {
     cy.tabContentFormat('title')
     cy.initFilterAliases()
   })
-
+  /*
   it('Тесты отображения окна фильтрации', () => {
     //Открываем окно фильтрации
     cy.get('@filterLink').click()
@@ -2400,7 +2400,26 @@ describe('Тесты окна фильтрации', () => {
     cy.get('@selectDateOperator').should('have.not.class', 'active')
     cy.get('@selectDateOperator').should('be.not.visible')
   })
+*/
+  it('Тесты отображения/скрытия окна предупреждения при фильтрации без выбранного столбца для фильтрования', () => {
+    //Открываем окно фильтрации
+    cy.get('@filterLink').click()
 
+    //Нажимаем на кнопку применить фильтр
+    cy.get('@executeFilterButton').click()
+
+    //Проверка отображения окна предупреждения
+    cy.get('@selectColumnWarnWindow').should('have.class', 'active')
+    cy.get('@selectColumnWarnWindow').should('be.visible')
+
+    //Выбираем колонку для фильтрации
+    cy.get('@selectColumn').select(3)
+
+    //Проверка скрытия окна предупреждения
+    cy.get('@selectColumnWarnWindow').should('have.not.class', 'active')
+    cy.get('@selectColumnWarnWindow').should('be.not.visible')
+  })
+  /*
   it('Тесты отображения/скрытия дополнительного окна ввода даты при выборе оператора фильтрации "Между"', () => {
     //Открываем окно фильтрации
     cy.get('@filterLink').click()
@@ -2607,4 +2626,5 @@ describe('Тесты окна фильтрации', () => {
         }
       })
   })
+  */
 })

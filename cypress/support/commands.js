@@ -170,6 +170,7 @@ Cypress.Commands.add('initFilterAliases', () => {
   cy.get('@filterForm')
     .find('.fltr-form-query-date-op')
     .as('selectDateOperator')
+  cy.get('@filterForm').find('.fltr-sel-col-wrn').as('selectColumnWarnWindow')
   //Элементы Input
   cy.get('@filterForm').find('.fltr-form-query-field').as('mainInputField')
   cy.get('@filterForm')
